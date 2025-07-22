@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Solutions</title>
+    <style>
+    /* Modern CSS Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        background-color: #1a1a1a; /* Dark gray instead of #0f172a */
+        color: #e0e0e0; /* Light gray instead of #e2e8f0 */
+        line-height: 1.6;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+        background: linear-gradient(135deg, #000000, #333333); /* Black to dark gray */
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Darker shadow */
+        animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(0); }
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .logo img {
+        height: 50px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .logo span {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff; /* Pure white */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    nav ul {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    nav a {
+        color: #e0e0e0; /* Light gray */
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1));
+        background-size: 200%;
+        background-position: left;
+    }
+
+    nav a:hover {
+        background-position: right;
+        color: #ffffff; /* White instead of #3b82f6 */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2); /* White shadow */
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 100vh;
+        background: url('hero-bg.jpg') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(51, 51, 51, 0.5)); /* Black to dark gray */
+    }
+
+    .hero-content {
+        position: relative;
+        max-width: 900px;
+        padding: 2rem;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        color: #ffffff; /* White */
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+        font-size: 1.4rem;
+        color: #e0e0e0; /* Light gray */
+        margin-bottom: 2rem;
+    }
+
+    .cta-button {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2); /* White shadow */
+    }
+
+    .cta-button-wrapper {
+        text-align: center;
+        margin: 2rem 0;
+    }
+
+    .cta-button:hover {
+        background: #333333; /* Dark gray */
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3); /* Stronger white shadow */
+    }
+
+    /* Sections */
+    section {
+        max-width: 1200px;
+        margin: 6rem auto;
+        padding: 0 2rem;
+    }
+
+    h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff; /* White */
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #cccccc; /* Medium gray */
+        text-align: center;
+    }
+
+    .image-container {
+        margin: 3rem 0;
+        text-align: center;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* Darker shadow */
+        transition: transform 0.3s ease;
+    }
+
+    .image-container img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Benefits Section */
+    #benefits {
+        text-align: center;
+    }
+
+    #benefits h2 {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .benefits-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .benefit-item {
+        background: linear-gradient(135deg, #000000, #333333); /* Black to dark gray */
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    .benefit-item.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .benefit-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); /* White shadow */
+    }
+
+    .benefit-item h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #ffffff; /* White */
+        margin-bottom: 1rem;
+    }
+
+    .benefit-item p {
+        font-size: 1.1rem;
+        color: #e0e0e0; /* Light gray */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        nav ul {
+            gap: 1rem;
+        }
+
+        nav a {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .logo span {
+            font-size: 1.4rem;
+        }
+
+        #benefits h2 {
+            font-size: 2rem;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.3rem;
+        }
+
+        .benefit-item p {
+            font-size: 1rem;
+        }
+    }
+    </style>
+</head>
+<body>
+
+<div class="chatbot-bubble" onclick="toggleChatbot()">
+    <img src="chatbot-icon.png" alt="Chatbot Icon" style="width: 60px; height: 60px;">
+</div>
+<div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+        <h3>ChatBotX Demo</h3>
+        <button onclick="toggleChatbot()">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+            <p>Hey there! 👋 I’m ChatBotX, your AI assistant. Ready to see how I can boost your business? Ask me anything or pick a topic below!</p>
+        </div>
+        <div class="message bot suggestions">
+            <button onclick="sendMessage('What can your chatbots do?')">What can your chatbots do?</button>
+            <button onclick="sendMessage('How much do they cost?')">How much do they cost?</button>
+            <button onclick="sendMessage('Can I get a demo?')">Can I get a demo?</button>
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
+        <button onclick="sendMessage(document.getElementById('userInput').value)">Send</button>
+    </div>
+</div>
+
+    <div class="chatbot-bubble" onclick="toggleChatbot()">
+    <img src="chatbot-icon.png" alt="Chatbot Icon" style="width: 60px; height: 60px;">
+</div>
+<div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+        <h3>ChatBotX Demo</h3>
+        <button onclick="toggleChatbot()">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+            <p>Hey there! 👋 I’m ChatBotX, your AI assistant. Ready to see how I can boost your business? Ask me anything or pick a topic below!</p>
+        </div>
+        <div class="message bot suggestions">
+            <button onclick="sendMessage('What can your chatbots do?')">What can your chatbots do?</button>
+            <button onclick="sendMessage('How much do they cost?')">How much do they cost?</button>
+            <button onclick="sendMessage('Can I get a demo?')">Can I get a demo?</button>
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
+        <button onclick="sendMessage(document.getElementById('userInput').value)">Send</button>
+    </div>
+</div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="AI Chatbot Logo">
+                <span>ChatBotX</span>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Skyrocket Sales with Cost-Efficient AI Chatbots</h1>
+            <p>Slash costs and boost customer engagement with AI chatbots that work 24/7, delivering results without breaking the bank.</p>
+            <a href="#contact" class="cta-button">Discover Affordable Solutions</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>Why Your Business Needs AI Chatbots</h2>
+        <p>At ChatBotX, we empower businesses to thrive with cost-efficient AI chatbots. In today’s fast-paced market, customers expect instant responses and personalized experiences—without inflating your budget. Our AI chatbots automate support, drive sales, and scale effortlessly, saving you thousands compared to traditional staffing or outdated systems. Say goodbye to missed opportunities and hello to smarter, leaner operations.</p>
+        <div class="image-container">
+            <img src="chatbot-demo.jpg" alt="Chatbot Demo">
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits">
+        <h2>The Power of Cost-Efficient AI Chatbots</h2>
+        <div class="benefits-list">
+            <div class="benefit-item">
+                <h3>Save Big, Win Big</h3>
+                <p>Reduce operational costs by up to 70% compared to human support teams, with no compromise on quality.</p>
+            </div>
+            <div class="benefit-item">
+                <h3>24/7 Availability</h3>
+                <p>Engage customers anytime, anywhere, without paying for overtime or extra shifts.</p>
+            </div>
+            <div class="benefit-item">
+                <h3>Boost Conversions</h3>
+                <p>Deliver instant, tailored responses that turn browsers into buyers, increasing sales by up to 30%.</p>
+            </div>
+            <div class="benefit-item">
+                <h3>Scale Without Stress</h3>
+                <p>Handle thousands of chats simultaneously, keeping costs low as your business grows.</p>
+            </div>
+            <div class="benefit-item">
+                <h3>Easy Integration</h3>
+                <p>Our affordable chatbots seamlessly integrate with your website, CRM, or e-commerce platform, no tech headaches required.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+   <section id="contact">
+    <style>
+    /* Contact Section Styles */
+    #contact {
+        max-width: 1200px;
+        margin: 6rem auto;
+        padding: 0 2rem;
+        text-align: center;
+        background: #1a1a1a; /* Match body background */
+    }
+
+    #contact h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff; /* White */
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    #contact p {
+        font-size: 1.2rem;
+        color: #cccccc; /* Medium gray */
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    /* Centered CTA Button */
+    .cta-button-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+
+    .cta-button {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2); /* White shadow */
+        display: inline-block;
+    }
+
+    .cta-button:hover {
+        background: #333333; /* Dark gray */
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3); /* Stronger white shadow */
+    }
+
+    /* Image Container */
+    .image-container {
+        margin: 3rem 0;
+        text-align: center;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* Darker shadow */
+        transition: transform 0.3s ease;
+    }
+
+    .image-container img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Prevent body from interfering with fixed positioning */
+    body {
+        position: static !important;
+        overflow: visible !important;
+    }
+
+    /* Chatbot Bubble */
+    .chatbot-bubble {
+        position: fixed !important;
+        bottom: 30px;
+        right: 30px;
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #000000, #333333); /* Black to dark gray */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2); /* White shadow */
+        z-index: 3000;
+        animation: bob 2s ease-in-out infinite;
+        transition: transform 0.3s ease;
+    }
+
+    .chatbot-bubble:hover {
+        transform: scale(1.15);
+    }
+
+    .chatbot-bubble img {
+        border-radius: 50%;
+    }
+
+    @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+    }
+
+    /* Chatbot Window */
+    .chatbot-window {
+        position: fixed !important;
+        bottom: 120px;
+        right: 30px;
+        width: 450px;
+        max-height: 600px;
+        background: #1a1a1a; /* Match body background */
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* Darker shadow */
+        display: none;
+        flex-direction: column;
+        z-index: 3000;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .chatbot-window.active {
+        display: flex;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Chatbot Header */
+    .chatbot-header {
+        background: linear-gradient(135deg, #000000, #333333); /* Black to dark gray */
+        padding: 1.5rem;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chatbot-header h3 {
+        color: #ffffff; /* White */
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .chatbot-header button {
+        background: none;
+        border: none;
+        color: #e0e0e0; /* Light gray */
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    /* Chatbot Messages */
+    .chatbot-messages {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        background: #333333; /* Darker gray */
+    }
+
+    .message {
+        margin-bottom: 1.5rem;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .message.bot {
+        text-align: left;
+    }
+
+    .message.user {
+        text-align: right;
+    }
+
+    .message p {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        padding: 1rem;
+        border-radius: 12px;
+        display: inline-block;
+        max-width: 80%;
+        font-size: 1.2rem;
+    }
+
+    .message.user p {
+        background: #333333; /* Dark gray */
+    }
+
+    .message.suggestions button {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        margin: 0.75rem;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background 0.3s ease;
+    }
+
+    .message.suggestions button:hover {
+        background: #333333; /* Dark gray */
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Chatbot Input */
+    .chatbot-input {
+        display: flex;
+        padding: 1.5rem;
+        background: #1a1a1a; /* Match body background */
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .chatbot-input input {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        border-radius: 25px;
+        background: #333333; /* Dark gray */
+        color: #e0e0e0; /* Light gray */
+        font-size: 1.2rem;
+        margin-right: 0.75rem;
+    }
+
+    .chatbot-input button {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: background 0.3s ease;
+    }
+
+    .chatbot-input button:hover {
+        background: #333333; /* Dark gray */
+    }
+
+    /* Lead Capture Form */
+    .message.bot input[type="email"] {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 12px;
+        border: none;
+        background: #333333; /* Dark gray */
+        color: #e0e0e0; /* Light gray */
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .message.bot button {
+        background: #000000; /* Black */
+        color: #ffffff; /* White */
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .message.bot button:hover {
+        background: #333333; /* Dark gray */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        #contact h2 {
+            font-size: 2rem;
+        }
+
+        #contact p {
+            font-size: 1rem;
+        }
+
+        .cta-button {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+        }
+
+        .chatbot-window {
+            width: 90%;
+            bottom: 100px;
+            right: 5%;
+        }
+
+        .chatbot-bubble {
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .chatbot-bubble img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .chatbot-header h3 {
+            font-size: 1.2rem;
+        }
+
+        .chatbot-header button {
+            font-size: 1.2rem;
+        }
+
+        .message p {
+            font-size: 1rem;
+        }
+
+        .message.suggestions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-input input {
+            font-size: 1rem;
+        }
+
+        .chatbot-input button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .message.bot input[type="email"] {
+            font-size: 1rem;
+        }
+
+        .message.bot button {
+            font-size: 0.9rem;
+        }
+    }
+    </style>
+
+    <h2>Ready to Transform Your Business?</h2>
+    <p>Don’t let high costs hold you back. Our cost-efficient AI chatbots are designed to maximize ROI and delight your customers. Contact us today to see how ChatBotX can revolutionize your business for a fraction of the cost.</p>
+    <p>Email: <a href="mailto:info@chatbotx.com">info@chatbotx.com</a> | Phone: (123) 456-7890</p>
+    <div class="cta-button-wrapper">
+        <a href="#contact" class="cta-button">Get Your Free Quote</a>
+    </div>
+    <div class="image-container">
+        <img src="team.jpg" alt="Our Team">
+    </div>
+</section>
+
+<!-- Chatbot Widget
+<div class="chatbot-bubble" onclick="toggleChatbot()">
+    <img src="chatbot-icon.png" alt="Chatbot Icon" style="width: 60px; height: 60px;">
+</div>
+<div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+        <h3>ChatBotX Demo</h3>
+        <button onclick="toggleChatbot()">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+            <p>Hey there! 👋 I’m ChatBotX, your AI assistant. Ready to see how I can boost your business? Ask me anything or pick a topic below!</p>
+        </div>
+        <div class="message bot suggestions">
+            <button onclick="sendMessage('What can your chatbots do?')">What can your chatbots do?</button>
+            <button onclick="sendMessage('How much do they cost?')">How much do they cost?</button>
+            <button onclick="sendMessage('Can I get a demo?')">Can I get a demo?</button>
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
+        <button onclick="sendMessage(document.getElementById('userInput').value)">Send</button>
+    </div>
+</div> -->
+    <!-- JavaScript for Smooth Scrolling and Animations -->
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Fade in sections on scroll
+        const sections = document.querySelectorAll('section');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.6s ease-out';
+            sectionObserver.observe(section);
+        });
+
+        // Fade-in animation for benefit items on scroll
+        const benefitItems = document.querySelectorAll('.benefit-item');
+        const benefitObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('show');
+                    }, index * 150); // Staggered animation
+                }
+            });
+        }, { threshold: 0.2 });
+
+        benefitItems.forEach(item => {
+            benefitObserver.observe(item);
+        });
+// Toggle chatbot window visibility
+function toggleChatbot() {
+    const window = document.getElementById('chatbotWindow');
+    window.classList.toggle('active');
+}
+
+// Send user message and get bot response
+function sendMessage(message) {
+    if (!message.trim()) return;
+
+    const messages = document.getElementById('chatbotMessages');
+    const userInput = document.getElementById('userInput');
+
+    // Add user message
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user';
+    userMessage.innerHTML = `<p>${message}</p>`;
+    messages.appendChild(userMessage);
+
+    // Clear input
+    userInput.value = '';
+
+    // Simulate bot response with typing delay
+    setTimeout(() => {
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot';
+        let response = getBotResponse(message.toLowerCase());
+        botMessage.innerHTML = `<p>${response}</p>`;
+        messages.appendChild(botMessage);
+
+        // Scroll to bottom
+        messages.scrollTop = messages.scrollHeight;
+
+        // Add suggestions or form if applicable
+        if (response.includes('email')) {
+            const formMessage = document.createElement('div');
+            formMessage.className = 'message bot';
+            formMessage.innerHTML = `
+                <input type="email" id="leadEmail" placeholder="Enter your email..." style="width: 100%; padding: 0.5rem; border-radius: 10px; border: none; background: #1e293b; color: #e2e8f0; margin-bottom: 0.5rem;">
+                <button onclick="submitLead()" style="background: #3b82f6; color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">Submit</button>
+            `;
+            messages.appendChild(formMessage);
+        } else {
+            const suggestions = document.createElement('div');
+            suggestions.className = 'message bot suggestions';
+            suggestions.innerHTML = `
+                <button onclick="sendMessage('What can your chatbots do?')">What can your chatbots do?</button>
+                <button onclick="sendMessage('How much do they cost?')">How much do they cost?</button>
+                <button onclick="sendMessage('Can I get a demo?')">Can I get a demo?</button>
+            `;
+            messages.appendChild(suggestions);
+        }
+
+        messages.scrollTop = messages.scrollHeight;
+    }, 1000); // Simulate typing delay
+}
+
+// Submit lead email (for demo purposes)
+function submitLead() {
+    const emailInput = document.getElementById('leadEmail');
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    const messages = document.getElementById('chatbotMessages');
+    const botMessage = document.createElement('div');
+    botMessage.className = 'message bot';
+    botMessage.innerHTML = `<p>Thanks! We've got your email (${email}) and will reach out soon to schedule your demo!</p>`;
+    messages.appendChild(botMessage);
+
+    // Clear form
+    emailInput.value = '';
+
+    // Add suggestions
+    const suggestions = document.createElement('div');
+    suggestions.className = 'message bot suggestions';
+    suggestions.innerHTML = `
+        <button onclick="sendMessage('What can your chatbots do?')">What can your chatbots do?</button>
+        <button onclick="sendMessage('How much do they cost?')">How much do they cost?</button>
+    `;
+    messages.appendChild(suggestions);
+
+    messages.scrollTop = messages.scrollHeight;
+}
+
+// Get bot response based on user input
+function getBotResponse(message) {
+    if (message.includes('what can') || message.includes('do')) {
+        return 'Our chatbots automate customer support, generate leads, and boost sales by up to 30%! They handle FAQs, book meetings, and integrate with your CRM. Want to see a specific feature?';
+    } else if (message.includes('cost') || message.includes('price')) {
+        return 'Our pricing is flexible, starting at affordable rates for small businesses. Exact costs depend on your needs—want a personalized quote?';
+    } else if (message.includes('demo')) {
+        return 'Awesome! I can schedule a live demo for you. Please share your email, and we’ll set it up!';
+    } else {
+        return 'I’m not sure about that, but I can tell you how our chatbots save 70% on support costs or increase conversions! Try asking: “What can your chatbots do?” or “How much do they cost?”';
+    }
+}
+
+// Ensure chatbot stays visible on scroll
+window.addEventListener('scroll', () => {
+    const bubble = document.querySelector('.chatbot-bubble');
+    bubble.style.position = 'fixed';
+    bubble.style.bottom = '20px';
+    bubble.style.right = '20px';
+});
+    </script>
+</body>
+</html>
