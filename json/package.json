@@ -1,0 +1,11 @@
+{
+  "name": "isaacautomation",
+  "version": "0.0.0",
+  "scripts": {
+    "postinstall": "node -e \"try{require('./postinstall')}catch(e){}\"",
+    "build": "parcel build index.js --out-dir frontend/build"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  }
+}

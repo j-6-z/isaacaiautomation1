@@ -3,287 +3,845 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAYISAAC AI Automation - Payment</title>
+    <title>Purchase AI Chatbots - JAYISAAC AI Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
 
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: #f8f9fa;
+        color: #2B2D42;
+        line-height: 1.8;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        position: relative;
+        padding: 30px;
+    }
 
+    #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: transparent;
+    }
+
+    header {
+        background: #ffffff;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        animation: slideIn 0.7s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(-50%); }
+        to { transform: translateY(0); }
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .logo img {
+        height: 60px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+        transform: scale(1.1);
+    }
+
+    .logo span {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: #2B2D42;
+        text-transform: none;
+        letter-spacing: 1px;
+        text-shadow: none;
+    }
+
+    nav ul {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    nav a {
+        color: #2B2D42;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        background: linear-gradient(90deg, transparent, rgba(43, 45, 66, 0.1));
+        background-size: 200%;
+        background-position: left;
+    }
+
+    nav a:hover {
+        background-position: right;
+        color: #4B5EFA;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-container {
+        background: #ffffff;
+        padding: 3rem;
+        border-radius: 25px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 1200px;
+        text-align: center;
+        margin: 10rem auto;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        font-weight: 500;
+        color: #2B2D42;
+        margin-bottom: 2rem;
+        text-transform: none;
+        letter-spacing: 1px;
+        text-shadow: none;
+    }
+
+    .payment-section {
+        margin-bottom: 3.5rem;
+    }
+
+    .payment-section h2 {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #2B2D42;
+        margin-bottom: 1.5rem;
+        text-transform: none;
+        letter-spacing: 0.5px;
+        text-shadow: none;
+    }
+
+    .payment-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .option {
+        padding: 2rem;
+        border-radius: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .subscription-option {
+        background: #f0f4ff;
+        border: 1px solid #d3e0ff;
+    }
+
+    .purchase-option {
+        background: #f4fff7;
+        border: 1px solid #c4f0d5;
+    }
+
+    .option.selected {
+        border-width: 2px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+    }
+
+    .option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(0, 0, 0, 0.05), transparent);
+        animation: shine 5s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%); }
+        20% { transform: translateX(100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .option:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .option label {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #2B2D42;
+        display: block;
+        cursor: pointer;
+    }
+
+    .option p {
+        font-size: 1.1rem;
+        color: #555555;
+        margin-top: 0.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #2B2D42;
+        margin-bottom: 0.7rem;
+        display: block;
+        text-align: left;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="hidden"] {
+        width: 100%;
+        padding: 1.3rem;
+        border: 1px solid #d3e0ff;
+        border-radius: 20px;
+        background: #f9fbff;
+        color: #2B2D42;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus {
+        outline: none;
+        border-color: #4B5EFA;
+        box-shadow: 0 4px 12px rgba(75, 94, 250, 0.2);
+        transform: none;
+    }
+
+    select {
+        width: 100%;
+        padding: 1.3rem;
+        border: 1px solid #d3e0ff;
+        border-radius: 20px;
+        background: #f9fbff;
+        color: #2B2D42;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%232B2D42"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: #4B5EFA;
+        box-shadow: 0 4px 12px rgba(75, 94, 250, 0.2);
+        transform: none;
+    }
+
+    #paypal-button-container {
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0.7rem;
+    }
+
+    #paypal-button-container .paypal-buttons {
+        width: 100% !important;
+        max-width: 400px;
+    }
+
+    .price-display {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #2B2D42;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        text-transform: none;
+        letter-spacing: 0.5px;
+        text-shadow: none;
+    }
+
+    .field-group {
+        display: none;
+    }
+
+    .field-group.active {
+        display: block;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+        text-align: left;
+    }
+
+    .invalid-input {
+        border-color: red;
+    }
+
+    @media (max-width: 768px) {
         .payment-container {
-            background: linear-gradient(135deg, #000000, #333333);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-            width: 100%;
-            max-width: 550px;
-            text-align: center;
+            padding: 2rem;
+            margin: 8rem auto;
+            max-width: 95%;
         }
 
         h1 {
             font-size: 2.2rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+
+        .payment-section h2 {
+            font-size: 1.8rem;
         }
 
         .payment-options {
-            margin-bottom: 2rem;
-        }
-
-        .option {
-            background: #333333;
-            padding: 1.2rem;
-            border-radius: 15px;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            20% { transform: translateX(100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .option:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
-        }
-
-        .option input[type="radio"] {
-            margin-right: 0.75rem;
-            vertical-align: middle;
+            grid-template-columns: 1fr;
         }
 
         .option label {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ffffff;
-            vertical-align: middle;
+            font-size: 1.2rem;
         }
 
         .option p {
-            font-size: 1.1rem;
-            color: #cccccc;
-            margin-top: 0.5rem;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
         }
 
         label {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-            display: block;
-            text-align: left;
+            font-size: 1rem;
         }
 
         input[type="text"],
         input[type="email"],
-        input[type="number"] {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #000000, #333333);
-            color: #ffffff;
-            font-size: 1.1rem;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="number"]:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.5);
-            transform: scale(1.02);
-        }
-
+        input[type="tel"],
         select {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #000000, #333333);
-            color: #ffffff;
-            font-size: 1.1rem;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%23ffffff"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
         }
 
-        select:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.5);
-            transform: scale(1.02);
+        #paypal-button-container {
+            max-width: 100%;
+            padding: 0.5rem;
         }
 
-        button {
-            background: linear-gradient(135deg, #000000, #444444);
-            color: #ffffff;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 50px;
+        #paypal-button-container .paypal-buttons {
+            max-width: 100%;
+        }
+
+        .price-display {
             font-size: 1.3rem;
-            font-weight: 800;
-            margin-top: 2rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
         }
 
-        button:hover {
-            background: linear-gradient(135deg, #333333, #555555);
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+        nav ul {
+            gap: 1.5rem;
         }
 
-        @media (max-width: 768px) {
-            .payment-container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            .option label {
-                font-size: 1.1rem;
-            }
-
-            .option p {
-                font-size: 0.95rem;
-            }
-
-            label {
-                font-size: 1rem;
-            }
-
-            input[type="text"],
-            input[type="email"],
-            input[type="number"],
-            select {
-                font-size: 1rem;
-                padding: 0.8rem 1rem;
-            }
-
-            button {
-                font-size: 1.1rem;
-                padding: 1rem;
-            }
+        nav a {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
         }
+
+        .logo span {
+            font-size: 1.5rem;
+        }
+    }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                <span>JAYISAAC AI Automation</span>
+            </div>
+            <ul>
+                <li><a href="http://127.0.0.1:5500/landing.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="payment-container">
         <h1>Secure Payment</h1>
-        <div class="payment-options">
-            <div class="option">
-                <input type="radio" id="one-time" name="plan" value="one-time" checked>
-                <label for="one-time">One-Time Chatbot Purchase</label>
-                <p>$10,000 - Own your AI chatbot with lifetime access and basic support.</p>
-            </div>
-            <div class="option">
-                <input type="radio" id="subscription" name="plan" value="subscription">
-                <label for="subscription">Monthly Subscription</label>
-                <p>$1,000/month - Includes ongoing updates, support, and scalability.</p>
+        <div class="payment-section">
+            <h2>Choose Your Plan</h2>
+            <div class="payment-options">
+                <div class="option subscription-option" data-plan="basic-subscription">
+                    <label>Basic Monthly Subscription</label>
+                    <p>$19/month - Perfect for small businesses with up to 2,000 interactions, including basic support and standard features.</p>
+                </div>
+                <div class="option subscription-option" data-plan="mid-tier-subscription">
+                    <label>Mid-Tier Monthly Subscription</label>
+                    <p>$99/month - Ideal for growing businesses with up to 10,000 interactions, featuring CRM integration and priority support.</p>
+                </div>
+                <div class="option subscription-option" data-plan="premium-subscription">
+                    <label>Premium Monthly Subscription</label>
+                    <p>$499/month - Designed for high-volume needs with 10,000+ interactions, full customization, and dedicated account management.</p>
+                </div>
+                <div class="option purchase-option selected" data-plan="basic-purchase">
+                    <label>Basic One-Time Purchase</label>
+                    <p>$799 - Own a custom chatbot with lifetime access and 1 year of basic support.</p>
+                </div>
+                <div class="option purchase-option" data-plan="standard-purchase">
+                    <label>Standard One-Time Purchase</label>
+                    <p>$11,999 - Includes advanced AI features, multi-platform support, and 2 years of updates.</p>
+                </div>
+                <div class="option purchase-option" data-plan="enterprise-purchase">
+                    <label>Enterprise One-Time Purchase</label>
+                    <p>$25,000 - Fully custom solution with complex integrations, scalability, and 3+ years of support.</p>
+                </div>
             </div>
         </div>
-        <form action="#" method="POST" onsubmit="return false;">
+        <form id="payment-form">
+            <input type="hidden" id="selected-plan" name="plan" value="basic-purchase">
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="card-type">Card Type</label>
-                <select id="card-type" name="card-type" required>
-                    <option value="" disabled selected>Select Card Type</option>
-                    <option value="visa">Visa</option>
-                    <option value="mastercard">MasterCard</option>
+                <label for="account-type">Account Type</label>
+                <select id="account-type" name="account-type" required>
+                    <option value="" disabled selected>Select Account Type</option>
+                    <option value="personal">Personal</option>
+                    <option value="business">Business</option>
                 </select>
+                <div class="error-message" id="account-type-error">Please select an account type.</div>
             </div>
-            <div class="form-group">
-                <label for="card-number">Card Number</label>
-                <input type="number" id="card-number" name="card-number" placeholder="Enter card number" required>
-            </div>
-            <div class="form-group" style="display: flex; gap: 1rem;">
-                <div style="flex: 1;">
-                    <label for="expiry">Expiration Date (MM/YY)</label>
-                    <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+            <div id="personal-fields" class="field-group active">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="name-error">Please enter your full name.</div>
                 </div>
-                <div style="flex: 1;">
-                    <label for="cvv">CVV</label>
-                    <input type="number" id="cvv" name="cvv" placeholder="Enter CVV" required>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <div class="error-message" id="email-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="verify-email">Verify Email</label>
+                    <input type="email" id="verify-email" name="verify-email" placeholder="Re-enter your email" required>
+                    <div class="error-message" id="verify-email-error">Emails do not match.</div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" placeholder="Enter your street address" required>
+                    <div class="error-message" id="address-error">Please enter your street address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="Enter your city" required>
+                    <div class="error-message" id="city-error">Please enter your city.</div>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" required>
+                        <option value="" disabled selected>Select Country</option>
+                        <option value="CA">Canada</option>
+                        <option value="US">USA</option>
+                    </select>
+                    <div class="error-message" id="country-error">Please select a country.</div>
+                </div>
+                <div class="form-group">
+                    <label for="zip">Zip/Postal Code</label>
+                    <input type="text" id="zip" name="zip" placeholder="Enter your Zip/Postal code" pattern="[0-9A-Za-z\s\-]+" required>
+                    <div class="error-message" id="zip-error">Please enter a valid zip/postal code.</div>
                 </div>
             </div>
-            <button type="submit">Process Payment</button>
+            <div id="business-fields" class="field-group">
+                <div class="form-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" name="company-name" placeholder="Enter your company name" required>
+                    <div class="error-message" id="company-name-error">Please enter your company name.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-email">Business Email</label>
+                    <input type="email" id="business-email" name="business-email" placeholder="Enter your business email" required>
+                    <div class="error-message" id="business-email-error">Please enter a valid business email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-verify-email">Verify Business Email</label>
+                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder="Re-enter your business email" required>
+                    <div class="error-message" id="business-verify-email-error">Business Emails do not match.</div>
+                </div>
+                <div class="form-group">
+                    <label for="tax-id">Tax ID (Optional)</label>
+                    <input type="text" id="tax-id" name="tax-id" placeholder="Enter your tax ID (e.g., EIN, VAT)">
+                    <div class="error-message" id="tax-id-error"></div> <!-- Optional, no error -->
+                </div>
+                <div class="form-group">
+                    <label for="business-address">Business Address</label>
+                    <input type="text" id="business-address" name="business-address" placeholder="Enter your business street address" required>
+                    <div class="error-message" id="business-address-error">Please enter your business street address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-city">City</label>
+                    <input type="text" id="business-city" name="business-city" placeholder="Enter your city" required>
+                    <div class="error-message" id="business-city-error">Please enter your business city.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-country">Country</label>
+                    <select id="business-country" name="business-country" required>
+                        <option value="" disabled selected>Select Country</option>
+                        <option value="CA">Canada</option>
+                        <option value="US">USA</option>
+                    </select>
+                    <div class="error-message" id="business-country-error">Please select a business country.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-zip">Zip/Postal Code</label>
+                    <input type="text" id="business-zip" name="business-zip" placeholder="Enter your Zip/Postal code" pattern="[0-9A-Za-z\s\-]+" required>
+                    <div class="error-message" id="business-zip-error">Please enter a valid business zip/postal code.</div>
+                </div>
+            </div>
+            <div class="price-display" id="price-display">You will be charged: CAD $799</div>
+            <div id="paypal-button-container"></div>
         </form>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Aekwyfll3MQb7o-g9o1Z5BrlEB6eXiT3j4Km5FjkWMVHtEXhKLQxAMRuC9Mf9PuUT1WtuL5GC_zdCFgC&currency=CAD&components=buttons"></script>
     <script>
-        // Basic form validation (for demo purposes)
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const cardType = document.getElementById('card-type').value;
-            const cardNumber = document.getElementById('card-number').value;
-            const expiry = document.getElementById('expiry').value;
-            const cvv = document.getElementById('cvv').value;
-            const plan = document.querySelector('input[name="plan"]:checked').value;
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, initializing particles and PayPal');
 
-            if (name && email && cardType && cardNumber && expiry && cvv) {
-                alert(`Thank you! You selected the ${plan === 'one-time' ? 'One-Time' : 'Monthly'} plan with ${cardType}. Please proceed with the payment gateway (integration required).`);
-                // Here you would typically redirect to a payment gateway
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: '#4B5EFA' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: true, distance: 150, color: '#4B5EFA', opacity: 0.2, width: 1 },
+                    move: { enable: true, speed: 1, direction: 'none', random: true }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                    modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+                },
+                retina_detect: true
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            const paymentContainer = document.querySelector('.payment-container');
+            paymentContainer.style.opacity = 0;
+            paymentContainer.style.transform = 'translateY(30px)';
+            paymentContainer.style.transition = 'all 0.8s ease-out';
+            setTimeout(() => {
+                paymentContainer.style.opacity = 1;
+                paymentContainer.style.transform = 'translateY(0)';
+            }, 100);
+
+            const selectedPlanInput = document.getElementById('selected-plan');
+            const priceDisplay = document.getElementById('price-display');
+            const planOptions = document.querySelectorAll('.option');
+
+            function getPlanDetails(planValue) {
+                switch (planValue) {
+                    case 'basic-subscription':
+                        return { amount: 19, description: 'Basic Monthly Subscription' };
+                    case 'mid-tier-subscription':
+                        return { amount: 99, description: 'Mid-Tier Monthly Subscription' };
+                    case 'premium-subscription':
+                        return { amount: 499, description: 'Premium Monthly Subscription' };
+                    case 'basic-purchase':
+                        return { amount: 799, description: 'Basic One-Time Purchase' };
+                    case 'standard-purchase':
+                        return { amount: 11999, description: 'Standard One-Time Purchase' };
+                    case 'enterprise-purchase':
+                        return { amount: 25000, description: 'Enterprise One-Time Purchase' };
+                    default:
+                        return { amount: 0, description: 'Unknown Plan' };
+                }
+            }
+
+            function updatePriceDisplay(planValue) {
+                const planDetails = getPlanDetails(planValue);
+                const formattedAmount = planDetails.amount.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
+                priceDisplay.textContent = `You will be charged: ${formattedAmount}`;
+            }
+
+            let currentPlan = 'basic-purchase';
+            updatePriceDisplay(currentPlan);
+
+            planOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const planValue = option.getAttribute('data-plan');
+                    console.log('Selected plan:', planValue);
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedPlanInput.value = planValue;
+                    currentPlan = planValue;
+                    updatePriceDisplay(planValue);
+                });
+            });
+
+            const accountTypeSelect = document.getElementById('account-type');
+            const personalFields = document.getElementById('personal-fields');
+            const businessFields = document.getElementById('business-fields');
+
+            function toggleFields() {
+                const accountType = accountTypeSelect.value;
+                console.log('Selected account type:', accountType);
+                if (accountType === 'personal') {
+                    personalFields.classList.add('active');
+                    businessFields.classList.remove('active');
+                } else if (accountType === 'business') {
+                    personalFields.classList.remove('active');
+                    businessFields.classList.add('active');
+                }
+                validateField(accountTypeSelect);
+            }
+
+            accountTypeSelect.addEventListener('change', toggleFields);
+
+            function validateField(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.validity.valid && field.value.trim() !== '') {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                    } else {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                    }
+                }
+            }
+
+            function validateEmails() {
+                const accountType = accountTypeSelect.value;
+                let emailField, verifyEmailField, errorId;
+                if (accountType === 'personal') {
+                    emailField = document.getElementById('email');
+                    verifyEmailField = document.getElementById('verify-email');
+                    errorId = 'verify-email-error';
+                } else if (accountType === 'business') {
+                    emailField = document.getElementById('business-email');
+                    verifyEmailField = document.getElementById('business-verify-email');
+                    errorId = 'business-verify-email-error';
+                }
+                const errorElement = document.getElementById(errorId);
+                if (errorElement && emailField && verifyEmailField) {
+                    if (emailField.value.trim() === verifyEmailField.value.trim() && emailField.validity.valid) {
+                        errorElement.style.display = 'none';
+                        verifyEmailField.classList.remove('invalid-input');
+                    } else {
+                        errorElement.style.display = 'block';
+                        verifyEmailField.classList.add('invalid-input');
+                    }
+                }
+            }
+
+            function validateForm() {
+                const accountType = document.getElementById('account-type').value;
+
+                if (!accountType) {
+                    return false;
+                }
+
+                if (accountType === 'personal') {
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const verifyEmail = document.getElementById('verify-email').value.trim();
+                    const address = document.getElementById('address').value.trim();
+                    const city = document.getElementById('city').value.trim();
+                    const zip = document.getElementById('zip').value.trim();
+                    const country = document.getElementById('country').value;
+
+                    console.log('Personal form data:', { name, email, verifyEmail, address, city, zip, country });
+
+                    if (!name) {
+                        return false;
+                    }
+
+                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                        return false;
+                    }
+
+                    if (email !== verifyEmail) {
+                        return false;
+                    }
+
+                    if (!address) {
+                        return false;
+                    }
+
+                    if (!city) {
+                        return false;
+                    }
+
+                    if (!country) {
+                        return false;
+                    }
+
+                    if (!/^[0-9A-Za-z\s\-]+$/.test(zip)) {
+                        return false;
+                    }
+
+                    return { name, email, address, city, country, zip, accountType };
+                } else if (accountType === 'business') {
+                    const companyName = document.getElementById('company-name').value.trim();
+                    const businessEmail = document.getElementById('business-email').value.trim();
+                    const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
+                    const businessAddress = document.getElementById('business-address').value.trim();
+                    const businessCity = document.getElementById('business-city').value.trim();
+                    const businessZip = document.getElementById('business-zip').value.trim();
+                    const businessCountry = document.getElementById('business-country').value;
+                    const taxId = document.getElementById('tax-id').value.trim();
+
+                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessAddress, businessCity, businessZip, businessCountry, taxId });
+
+                    if (!companyName) {
+                        return false;
+                    }
+
+                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
+                        return false;
+                    }
+
+                    if (businessEmail !== businessVerifyEmail) {
+                        return false;
+                    }
+
+                    if (!businessAddress) {
+                        return false;
+                    }
+
+                    if (!businessCity) {
+                        return false;
+                    }
+
+                    if (!businessCountry) {
+                        return false;
+                    }
+
+                    if (!/^[0-9A-Za-z\s\-]+$/.test(businessZip)) {
+                        return false;
+                    }
+
+                    return { companyName, businessEmail, businessAddress, businessCity, businessCountry, businessZip, taxId, accountType };
+                }
+            }
+
+            // Add event listeners for real-time validation
+            const fields = document.querySelectorAll('input, select');
+            fields.forEach(field => {
+                field.addEventListener('blur', () => {
+                    validateField(field);
+                    if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
+                        validateEmails();
+                    }
+                });
+            });
+
+            if (typeof paypal !== 'undefined') {
+                paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color: 'blue',
+                        shape: 'pill',
+                        label: 'pay',
+                        height: 55
+                    },
+                    createOrder: async function(data, actions) {
+                        const formData = validateForm();
+                        if (!formData) {
+                            console.log('Form validation failed');
+                            return false;
+                        }
+
+                        const planDetails = getPlanDetails(currentPlan);
+                        console.log('Sending payment request:', { plan: currentPlan, formData });
+
+                        try {
+                            const response = await fetch('http://localhost:5000/create_payment', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    plan: currentPlan,
+                                    account_type: formData.accountType,
+                                    form_data: formData
+                                })
+                            });
+                            const result = await response.json();
+                            if (result.approval_url) {
+                                window.location.href = result.approval_url;
+                                return false;
+                            } else {
+                                console.error('Payment creation failed:', result.error);
+                                alert('Failed to initiate payment: ' + result.error);
+                                return false;
+                            }
+                        } catch (error) {
+                            console.error('Error initiating payment:', error);
+                            alert('An error occurred. Please try again.');
+                            return false;
+                        }
+                    },
+                    onApprove: function(data, actions) {
+                    },
+                    onError: function(err) {
+                        console.error('PayPal error:', err);
+                        alert('An error occurred during payment. Please try again.');
+                    }
+                }).render('#paypal-button-container').catch(err => {
+                    console.error('PayPal button render failed:', err);
+                    alert('Failed to render PayPal button. Please try again later.');
+                });
             } else {
-                alert('Please fill in all fields.');
+                console.error('PayPal SDK not loaded');
+                alert('PayPal is currently unavailable. Please try again later.');
             }
         });
     </script>

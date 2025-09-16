@@ -1,0 +1,9 @@
+{
+"terminal.integrated.profiles.windows": {
+    "WSL": {
+        "path": "wsl.exe",
+        "args": []
+    }
+},
+"terminal.integrated.defaultProfile.windows": "WSL"
+}

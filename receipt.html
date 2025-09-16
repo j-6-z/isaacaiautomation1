@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAYISAAC AI Automation - Receipt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+        body {
+            background: #f9fafb;
+            color: #000000;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .receipt-container {
+            background: #ffffff;
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .receipt-header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .receipt-header .logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        .receipt-header .logo img:hover {
+            transform: rotate(360deg);
+        }
+        .receipt-header .logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .receipt-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .receipt-details {
+            margin-bottom: 2rem;
+        }
+        .receipt-details h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .receipt-details p {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+        .receipt-items {
+            margin-bottom: 2rem;
+        }
+        .receipt-items h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .receipt-items table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .receipt-items th, .receipt-items td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        .receipt-items th {
+            background: rgba(249, 250, 251, 0.8);
+            font-weight: 600;
+            color: #000000;
+        }
+        .receipt-items .total {
+            font-weight: 700;
+            color: #000000;
+        }
+        .receipt-footer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #4b5563;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+        }
+        .receipt-footer a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .receipt-footer a:hover {
+            color: #4b5563;
+        }
+        @media (max-width: 600px) {
+            .receipt-container {
+                padding: 1rem;
+            }
+            .receipt-header h1 {
+                font-size: 1.5rem;
+            }
+            .receipt-details h2, .receipt-items h2 {
+                font-size: 1rem;
+            }
+            .receipt-items th, .receipt-items td {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <div class="logo">
+                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
+                <span>JAYISAAC AI AUTOMATION</span>
+            </div>
+            <h1>Receipt</h1>
+        </div>
+        <div class="receipt-details">
+            <h2>Customer Information</h2>
+            <p><strong>Name:</strong> <span id="customer-name">John Doe</span></p>
+            <p><strong>Email:</strong> <span id="customer-email">john.doe@example.com</span></p>
+            <p><strong>Transaction ID:</strong> <span id="transaction-id">TXN123456789</span></p>
+            <p><strong>Date:</strong> <span id="transaction-date">September 16, 2025</span></p>
+        </div>
+        <div class="receipt-items">
+            <h2>Order Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chatbot Subscription</td>
+                        <td>Monthly Pro Plan</td>
+                        <td>$99.00</td>
+                    </tr>
+                    <tr>
+                        <td class="total">Total</td>
+                        <td></td>
+                        <td class="total">$99.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="receipt-footer">
+            <p>Thank you for choosing JAYISAAC AI Automation!</p>
+            <p>Contact us at <a href="mailto:support@jayisaac.ai">support@jayisaac.ai</a> for support.</p>
+        </div>
+    </div>
+</body>
+</html>
