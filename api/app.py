@@ -17,9 +17,9 @@ logging.basicConfig(level=logging.INFO)
 
 # Plan IDs from PayPal Developer Dashboard
 PLAN_IDS = {
-    "basic-subscription": "P-XXXXXXXXXXXXXXX",  # Replace with your Basic Plan ID
-    "mid-tier-subscription": "P-XXXXXXXXXXXXXXX",  # Replace with your Mid Plan ID
-    "premium-subscription": "P-XXXXXXXXXXXXXXX"  # Replace with your Premium Plan ID
+    "basic-subscription": "P-6VF10848V2487410NNDE3Y5A",  # Replace with your Basic Plan ID
+    "mid-tier-subscription": "P-24M92406D46068305NDE3ZOI",  # Replace with your Mid Plan ID
+    "premium-subscription": "P-7S597632MR070600RNDE327Q"  # Replace with your Premium Plan ID
 }
 
 # Plan details for one-time purchases
@@ -75,8 +75,8 @@ def create_payment():
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
                 "redirect_urls": {
-                    "return_url": "isaacaiautomation1-git-main-jay-turners-projects-16621d09.vercel.app",  # Replace with your Vercel URL
-                    "cancel_url": "https://your-vercel-url.vercel.app/cancel_payment"
+                    "return_url": "https://isaacaiautomation1-git-main-jay-turners-projects-16621d09.vercel.app/execute_payment",
+                    "cancel_url": "https://isaacaiautomation1-git-main-jay-turners-projects-16621d09.vercel.app/cancel_payment"
                 },
                 "transactions": [{
                     "amount": {
@@ -109,13 +109,210 @@ def execute_payment():
         payment = paypalrestsdk.Payment.find(payment_id)
         if payment.execute({"payer_id": payer_id}):
             logging.info(f"Payment {payment_id} executed successfully")
-            return jsonify({"status": "success", "message": "Payment completed"})
+            plan_description = payment.transactions[0].description if payment.transactions else "Unknown Plan"
+            amount = payment.transactions[0].amount.total if payment.transactions else "0.00"
+            return redirect(f"/receipt?payment_id={payment_id}&plan={plan_description}&amount={amount}")
         else:
             logging.error(f"Payment execution failed: {payment.error}")
             return jsonify({"error": str(payment.error)}), 500
     except Exception as e:
         logging.error(f"Error executing payment: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+@app.route('/receipt')
+def receipt():
+    payment_id = request.args.get('payment_id', 'N/A')
+    plan = request.args.get('plan', 'Unknown Plan')
+    amount = request.args.get('amount', '0.00')
+    
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Payment Receipt - JAYISAAC AI Automation</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Roboto', sans-serif;
+            }
+            body {
+                background: #f8f9fa;
+                color: #2B2D42;
+                line-height: 1.8;
+                scroll-behavior: smooth;
+                overflow-x: hidden;
+                position: relative;
+                padding: 30px;
+            }
+            header {
+                background: #ffffff;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                z-index: 1000;
+                padding: 1.5rem 2rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                animation: slideIn 0.7s ease-out;
+            }
+            @keyframes slideIn {
+                from { transform: translateY(-50%); }
+                to { transform: translateY(0); }
+            }
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .logo img {
+                height: 60px;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+                transition: transform 0.3s ease;
+            }
+            .logo img:hover {
+                transform: scale(1.1);
+            }
+            .logo span {
+                font-size: 1.8rem;
+                font-weight: 500;
+                color: #2B2D42;
+                text-transform: none;
+                letter-spacing: 1px;
+                text-shadow: none;
+            }
+            nav ul {
+                display: flex;
+                gap: 2rem;
+                list-style: none;
+            }
+            nav a {
+                color: #2B2D42;
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 500;
+                padding: 0.5rem 1.5rem;
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                background: linear-gradient(90deg, transparent, rgba(43, 45, 66, 0.1));
+                background-size: 200%;
+                background-position: left;
+            }
+            nav a:hover {
+                background-position: right;
+                color: #4B5EFA;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .receipt-container {
+                background: #ffffff;
+                padding: 3rem;
+                border-radius: 25px;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+                width: 100%;
+                max-width: 1200px;
+                text-align: center;
+                margin: 10rem auto;
+            }
+            h1 {
+                font-size: 2.8rem;
+                font-weight: 500;
+                color: #2B2D42;
+                margin-bottom: 2rem;
+                text-transform: none;
+                letter-spacing: 1px;
+                text-shadow: none;
+            }
+            p {
+                font-size: 1.2rem;
+                color: #555555;
+                margin-bottom: 1.5rem;
+            }
+            .receipt-details {
+                font-size: 1.2rem;
+                color: #2B2D42;
+                margin-bottom: 1rem;
+            }
+            .home-button {
+                display: inline-block;
+                background: #4B5EFA;
+                color: #ffffff;
+                padding: 1rem 2rem;
+                border-radius: 25px;
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                margin-top: 2rem;
+            }
+            .home-button:hover {
+                background: #3b4cca;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            @media (max-width: 768px) {
+                .receipt-container {
+                    padding: 2rem;
+                    margin: 8rem auto;
+                    max-width: 95%;
+                }
+                h1 {
+                    font-size: 2.2rem;
+                }
+                p, .receipt-details {
+                    font-size: 1rem;
+                }
+                .home-button {
+                    font-size: 1rem;
+                    padding: 0.8rem 1.5rem;
+                }
+                nav ul {
+                    gap: 1.5rem;
+                }
+                nav a {
+                    font-size: 1rem;
+                    padding: 0.5rem 1rem;
+                }
+                .logo span {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                    <span>JAYISAAC AI Automation</span>
+                </div>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="receipt-container">
+            <h1>Thank You for Your Purchase!</h1>
+            <p>An email will be sent shortly with your purchase details.</p>
+            <div class="receipt-details">Payment ID: {{ payment_id }}</div>
+            <div class="receipt-details">Plan: {{ plan }}</div>
+            <div class="receipt-details">Amount: CAD ${{ amount }}</div>
+            <a href="/index.html" class="home-button">Return to Home</a>
+        </div>
+    </body>
+    </html>
+    """
+    return render_template_string(html_content, payment_id=payment_id, plan=plan, amount=amount)
 
 @app.route('/cancel_payment')
 def cancel_payment():
@@ -147,3 +344,6 @@ def webhook():
     except Exception as e:
         logging.error(f"Webhook error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
