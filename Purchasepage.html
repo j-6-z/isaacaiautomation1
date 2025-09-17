@@ -233,7 +233,9 @@
     input[type="text"],
     input[type="email"],
     input[type="tel"],
-    input[type="hidden"] {
+    input[type="url"],
+    input[type="hidden"],
+    textarea {
         width: 100%;
         padding: 1.3rem;
         border: 1px solid #d3e0ff;
@@ -245,9 +247,16 @@
         transition: all 0.3s ease;
     }
 
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
     input[type="text"]:focus,
     input[type="email"]:focus,
-    input[type="tel"]:focus {
+    input[type="tel"]:focus,
+    input[type="url"]:focus,
+    textarea:focus {
         outline: none;
         border-color: #4B5EFA;
         box-shadow: 0 4px 12px rgba(75, 94, 250, 0.2);
@@ -359,7 +368,9 @@
         input[type="text"],
         input[type="email"],
         input[type="tel"],
-        select {
+        input[type="url"],
+        select,
+        textarea {
             font-size: 1rem;
             padding: 1rem;
             border-radius: 15px;
@@ -465,6 +476,11 @@
                     <div class="error-message" id="verify-email-error">Emails do not match.</div>
                 </div>
                 <div class="form-group">
+                    <label for="website-url">Website URL (Optional)</label>
+                    <input type="url" id="website-url" name="website-url" placeholder="Enter your website URL">
+                    <div class="error-message" id="website-url-error">Please enter a valid URL.</div>
+                </div>
+                <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" id="address" name="address" placeholder="Enter your street address" required>
                     <div class="error-message" id="address-error">Please enter your street address.</div>
@@ -488,6 +504,11 @@
                     <input type="text" id="zip" name="zip" placeholder="Enter your Zip/Postal code" pattern="[0-9A-Za-z\s\-]+" required>
                     <div class="error-message" id="zip-error">Please enter a valid zip/postal code.</div>
                 </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <textarea id="notes" name="notes" placeholder="Add any additional notes"></textarea>
+                    <div class="error-message" id="notes-error"></div>
+                </div>
             </div>
             <div id="business-fields" class="field-group">
                 <div class="form-group">
@@ -506,9 +527,14 @@
                     <div class="error-message" id="business-verify-email-error">Business Emails do not match.</div>
                 </div>
                 <div class="form-group">
+                    <label for="business-website-url">Website URL (Optional)</label>
+                    <input type="url" id="business-website-url" name="business-website-url" placeholder="Enter your business website URL">
+                    <div class="error-message" id="business-website-url-error">Please enter a valid URL.</div>
+                </div>
+                <div class="form-group">
                     <label for="tax-id">Tax ID (Optional)</label>
                     <input type="text" id="tax-id" name="tax-id" placeholder="Enter your tax ID (e.g., EIN, VAT)">
-                    <div class="error-message" id="tax-id-error"></div> <!-- Optional, no error -->
+                    <div class="error-message" id="tax-id-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="business-address">Business Address</label>
@@ -533,6 +559,11 @@
                     <label for="business-zip">Zip/Postal Code</label>
                     <input type="text" id="business-zip" name="business-zip" placeholder="Enter your Zip/Postal code" pattern="[0-9A-Za-z\s\-]+" required>
                     <div class="error-message" id="business-zip-error">Please enter a valid business zip/postal code.</div>
+                </div>
+                <div class="form-group">
+                    <label for="business-notes">Notes (Optional)</label>
+                    <textarea id="business-notes" name="business-notes" placeholder="Add any additional notes"></textarea>
+                    <div class="error-message" id="business-notes-error"></div>
                 </div>
             </div>
             <div class="price-display" id="price-display">You will be charged: CAD $799</div>
@@ -652,7 +683,7 @@
                     if (field.validity.valid && field.value.trim() !== '') {
                         errorElement.style.display = 'none';
                         field.classList.remove('invalid-input');
-                    } else {
+                    } else if (field.hasAttribute('required')) {
                         errorElement.style.display = 'block';
                         field.classList.add('invalid-input');
                     }
@@ -683,10 +714,25 @@
                 }
             }
 
+            function validateUrl(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.value.trim() === '' || /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(field.value.trim())) {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                    } else {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                    }
+                }
+            }
+
             function validateForm() {
                 const accountType = document.getElementById('account-type').value;
 
                 if (!accountType) {
+                    validateField(document.getElementById('account-type'));
                     return false;
                 }
 
@@ -694,91 +740,123 @@
                     const name = document.getElementById('name').value.trim();
                     const email = document.getElementById('email').value.trim();
                     const verifyEmail = document.getElementById('verify-email').value.trim();
+                    const websiteUrl = document.getElementById('website-url').value.trim();
                     const address = document.getElementById('address').value.trim();
                     const city = document.getElementById('city').value.trim();
                     const zip = document.getElementById('zip').value.trim();
                     const country = document.getElementById('country').value;
+                    const notes = document.getElementById('notes').value.trim();
 
-                    console.log('Personal form data:', { name, email, verifyEmail, address, city, zip, country });
+                    console.log('Personal form data:', { name, email, verifyEmail, websiteUrl, address, city, zip, country, notes });
 
                     if (!name) {
+                        validateField(document.getElementById('name'));
                         return false;
                     }
 
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                        validateField(document.getElementById('email'));
                         return false;
                     }
 
                     if (email !== verifyEmail) {
+                        validateEmails();
+                        return false;
+                    }
+
+                    if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
+                        validateUrl(document.getElementById('website-url'));
                         return false;
                     }
 
                     if (!address) {
+                        validateField(document.getElementById('address'));
                         return false;
                     }
 
                     if (!city) {
+                        validateField(document.getElementById('city'));
                         return false;
                     }
 
                     if (!country) {
+                        validateField(document.getElementById('country'));
                         return false;
                     }
 
                     if (!/^[0-9A-Za-z\s\-]+$/.test(zip)) {
+                        validateField(document.getElementById('zip'));
                         return false;
                     }
 
-                    return { name, email, address, city, country, zip, accountType };
+                    return { name, email, websiteUrl, address, city, country, zip, notes, accountType };
                 } else if (accountType === 'business') {
                     const companyName = document.getElementById('company-name').value.trim();
                     const businessEmail = document.getElementById('business-email').value.trim();
                     const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
+                    const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
+                    const taxId = document.getElementById('tax-id').value.trim();
                     const businessAddress = document.getElementById('business-address').value.trim();
                     const businessCity = document.getElementById('business-city').value.trim();
                     const businessZip = document.getElementById('business-zip').value.trim();
                     const businessCountry = document.getElementById('business-country').value;
-                    const taxId = document.getElementById('tax-id').value.trim();
+                    const businessNotes = document.getElementById('business-notes').value.trim();
 
-                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessAddress, businessCity, businessZip, businessCountry, taxId });
+                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, taxId, businessAddress, businessCity, businessZip, businessCountry, businessNotes });
 
                     if (!companyName) {
+                        validateField(document.getElementById('company-name'));
                         return false;
                     }
 
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
+                        validateField(document.getElementById('business-email'));
                         return false;
                     }
 
                     if (businessEmail !== businessVerifyEmail) {
+                        validateEmails();
+                        return false;
+                    }
+
+                    if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
+                        validateUrl(document.getElementById('business-website-url'));
                         return false;
                     }
 
                     if (!businessAddress) {
+                        validateField(document.getElementById('business-address'));
                         return false;
                     }
 
                     if (!businessCity) {
+                        validateField(document.getElementById('business-city'));
                         return false;
                     }
 
                     if (!businessCountry) {
+                        validateField(document.getElementById('business-country'));
                         return false;
                     }
 
                     if (!/^[0-9A-Za-z\s\-]+$/.test(businessZip)) {
+                        validateField(document.getElementById('business-zip'));
                         return false;
                     }
 
-                    return { companyName, businessEmail, businessAddress, businessCity, businessCountry, businessZip, taxId, accountType };
+                    return { companyName, businessEmail, businessWebsiteUrl, taxId, businessAddress, businessCity, businessCountry, businessZip, businessNotes, accountType };
                 }
             }
 
             // Add event listeners for real-time validation
-            const fields = document.querySelectorAll('input, select');
+            const fields = document.querySelectorAll('input, select, textarea');
             fields.forEach(field => {
                 field.addEventListener('blur', () => {
-                    validateField(field);
+                    if (field.id === 'website-url' || field.id === 'business-website-url') {
+                        validateUrl(field);
+                    } else if (field.id !== 'notes' && field.id !== 'business-notes' && field.id !== 'tax-id') {
+                        validateField(field);
+                    }
                     if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
                         validateEmails();
                     }

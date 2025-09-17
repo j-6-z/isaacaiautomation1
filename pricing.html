@@ -48,7 +48,7 @@
     }
     nav {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         max-width: 1400px;
         margin: 0 auto;
@@ -57,6 +57,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     .logo img {
         height: 40px;
@@ -66,32 +67,41 @@
         transform: rotate(360deg);
     }
     .logo span {
-        font-family: 'Orbitron', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         color: #000000;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    nav ul {
+    .nav-links {
         display: flex;
-        justify-content: center;
-        gap: 1.5rem;
+        gap: 1rem;
         list-style: none;
     }
-    nav a {
+    .nav-links a {
         color: #000000;
         text-decoration: none;
         font-size: 1rem;
-        font-weight: 400;
-        padding: 0.5rem 1rem;
-        border-radius: 30px;
+        font-weight: 500;
+        padding: 0.5rem 1.2rem;
+        border-radius: 20px;
         transition: all 0.3s ease;
-        background: transparent;
+        background: #f9fafb;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    nav a:hover {
+    .nav-links a:hover {
         color: #4b5563;
-        background: rgba(0, 0, 0, 0.05);
+        background: #e5e7eb;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: #000000;
+        cursor: pointer;
     }
     .secondary-header {
         background: transparent;
@@ -627,6 +637,35 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     @media (max-width: 768px) {
+        header {
+            padding: 1rem;
+        }
+        .logo span {
+            font-size: 1.2rem;
+        }
+        .logo img {
+            height: 30px;
+        }
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 0;
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
         .secondary-header {
             top: 75px;
             padding: 0 1rem;
@@ -702,7 +741,7 @@
             font-size: 10px;
         }
     }
-    </style>
+</style>
 </head>
 <body>
     <div id="particles-js"></div>
@@ -736,14 +775,11 @@
                 <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
                 <span>JAYISAAC AI AUTOMATION</span>
             </div>
-        </nav>
-    </header>
-    <header class="secondary-header">
-        <nav class="container mx-auto px-4 flex justify-between items-center max-w-1400">
-            <ul class="flex space-x-6">
-                <li><a href="/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
-                <li><a href="/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
-                <li><a href="/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
             </ul>
         </nav>
     </header>
@@ -939,6 +975,10 @@
                     console.log('Notification badge hidden on chat open');
                 }
             }
+        }
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
         }
         function sendMessage(message) {
             if (!message.trim()) return;

@@ -40,7 +40,7 @@
         top: 0;
         z-index: 1000;
         padding: 1rem 2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         animation: slideIn 0.5s ease-out;
     }
     @keyframes slideIn {
@@ -49,7 +49,7 @@
     }
     nav {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         max-width: 1400px;
         margin: 0 auto;
@@ -58,6 +58,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     .logo img {
         height: 40px;
@@ -73,25 +74,35 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    nav ul {
+    .nav-links {
         display: flex;
-        justify-content: center;
-        gap: 1.5rem;
+        gap: 1rem;
         list-style: none;
     }
-    nav a {
+    .nav-links a {
         color: #000000;
         text-decoration: none;
         font-size: 1rem;
         font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 30px;
+        padding: 0.5rem 1.2rem;
+        border-radius: 20px;
         transition: all 0.3s ease;
-        background: transparent;
+        background: #f5f5f5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    nav a:hover {
-        color: #4b5563;
-        background: rgba(0, 0, 0, 0.05);
+    .nav-links a:hover {
+        color: #ffffff;
+        background: #333333;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: #000000;
+        cursor: pointer;
     }
     .secondary-header {
         background: transparent;
@@ -126,10 +137,10 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
     .secondary-header a:hover {
-        color: #4b5563;
-        background: #f9fafb;
+        color: #ffffff;
+        background: #333333;
         transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     .secondary-header .cta-button {
         background: #000000;
@@ -141,7 +152,7 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
     .secondary-header .cta-button:hover {
-        background: #333333;
+        background: #4d4d4d;
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
@@ -190,15 +201,15 @@
     .policy-item {
         padding: 1.5rem;
         border-radius: 15px;
-        background: #e6f0ff;
-        border: 2px solid #4b5efa;
+        background: #f5f5f5;
+        border: 2px solid #000000;
         transition: transform 0.4s ease, box-shadow 0.4s ease;
         position: relative;
         overflow: hidden;
     }
     .policy-item:hover {
         transform: scale(1.02);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
     .policy-item::before {
         content: '';
@@ -226,13 +237,13 @@
         color: #000000;
     }
     footer {
-        background: rgba(249, 250, 251, 0.7);
+        background: #e5e5e5;
         padding: 2rem;
         text-align: left;
         position: relative;
         z-index: 800;
-        border-top: 1px solid #e5e7eb;
-        pointer-events: none;
+        border-top: 1px solid #000000;
+        pointer-events: auto;
     }
     .footer-content {
         max-width: 1400px;
@@ -267,7 +278,7 @@
     }
     .footer-company p {
         font-size: 0.875rem;
-        color: #4b5563;
+        color: #333333;
         max-width: 250px;
     }
     .footer-terms {
@@ -283,7 +294,7 @@
         transition: color 0.3s ease;
     }
     .footer-terms a:hover {
-        color: #4b5563;
+        color: #666666;
     }
     .chatbot-bubble {
         position: fixed;
@@ -297,18 +308,18 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
         z-index: 3000;
         transition: all 0.3s ease;
         animation: pulseGlow 2s infinite alternate;
     }
     @keyframes pulseGlow {
-        0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); }
-        100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5); }
+        0% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); }
+        100% { box-shadow: 0 0 25px rgba(0, 0, 0, 0.5); }
     }
     .chatbot-bubble:hover {
         transform: scale(1.1) rotate(10deg);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     }
     .chatbot-bubble img {
         width: 45px;
@@ -325,16 +336,14 @@
         right: 30px;
         width: 420px;
         max-height: 650px;
-        background: rgba(0, 0, 0, 0.85);
+        background: #000000;
         border: 2px solid #ffffff;
         border-radius: 16px;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
         display: none;
         flex-direction: column;
         z-index: 3000;
         animation: fadeIn 0.5s ease-out;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
     }
     .chatbot-window.active {
         display: flex;
@@ -351,7 +360,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
     .chatbot-header img {
         width: 40px;
@@ -395,20 +404,20 @@
         to { opacity: 1; transform: translateY(0); }
     }
     .message p {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
         color: #ffffff;
         padding: 1rem;
         border-radius: 12px;
         max-width: 80%;
         font-size: 1rem;
-        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         transition: transform 0.2s ease;
     }
     .message.user p {
-        background: #000000;
+        background: #333333;
         color: #ffffff;
         margin-left: auto;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
     .message.bot.suggestions {
         display: flex;
@@ -425,38 +434,38 @@
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         transform: translateZ(0);
     }
     .message.bot.suggestions button:hover {
         background: #ffffff;
         color: #000000;
         transform: scale(1.05) translateZ(5px);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
     .chatbot-input {
         display: flex;
         padding: 1rem;
-        background: rgba(0, 0, 0, 0.9);
+        background: #000000;
         border-bottom-left-radius: 16px;
         border-bottom-right-radius: 16px;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
     .chatbot-input input {
         flex: 1;
         padding: 1rem;
         border: none;
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.1);
+        background: #333333;
         color: #ffffff;
         font-size: 1rem;
         margin-right: 1rem;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         transition: box-shadow 0.3s ease;
     }
     .chatbot-input input:focus {
         outline: none;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
     }
     .chatbot-input button {
         background: #ffffff;
@@ -467,13 +476,13 @@
         cursor: pointer;
         font-size: 1rem;
         transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
     .chatbot-input button:hover {
-        background: #000000;
+        background: #333333;
         color: #ffffff;
         transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
     .purchase-button {
         position: fixed;
@@ -492,11 +501,40 @@
         z-index: 1000;
     }
     .purchase-button:hover {
-        background: #333333;
+        background: #4d4d4d;
         transform: translateX(-50%) scale(1.05);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     @media (max-width: 768px) {
+        header {
+            padding: 1rem;
+        }
+        .logo span {
+            font-size: 1.2rem;
+        }
+        .logo img {
+            height: 30px;
+        }
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 0;
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
         .secondary-header {
             top: 75px;
             padding: 0 1rem;
@@ -559,7 +597,7 @@
             height: 35px;
         }
     }
-    </style>
+</style>
 </head>
 <body>
     <div id="particles-js"></div>
@@ -574,7 +612,7 @@
         </div>
         <div class="chatbot-messages" id="chatbotMessages">
             <div class="message bot">
-                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I\'m JAYISAAC AI, your supercharged assistant ready to answer your questions. Want to know about our terms, privacy, or cookie policies? Just ask!</p>
+                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to answer your questions. Want to know about our terms, privacy, or cookie policies? Just ask!</p>
             </div>
             <div class="message bot suggestions">
                 <button onclick="sendMessage('What are your terms of service?')">What are your terms of service?</button>
@@ -593,14 +631,11 @@
                 <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
                 <span>JAYISAAC AI AUTOMATION</span>
             </div>
-        </nav>
-    </header>
-    <header class="secondary-header">
-        <nav class="container mx-auto px-4 flex justify-between items-center max-w-1400">
-            <ul class="flex space-x-6">
-                <li><a href="/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
-                <li><a href="/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
-                <li><a href="/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
             </ul>
         </nav>
     </header>
@@ -698,6 +733,7 @@
             </div>
         </div>
     </footer>
+    <a href="/Purchasepage.html" class="purchase-button">Purchase Epic AI Chatbots</a>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles-js', {
@@ -756,6 +792,10 @@
             const window = document.getElementById('chatbotWindow');
             window.classList.toggle('active');
         }
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
         function sendMessage(message) {
             if (!message.trim()) return;
             const messages = document.getElementById('chatbotMessages');
@@ -800,7 +840,7 @@
             const messages = document.getElementById('chatbotMessages');
             const botMessage = document.createElement('div');
             botMessage.className = 'message bot';
-            botMessage.innerHTML = `<p>THANKS A TON! We\'ve locked in your email (${email}) and our team will reach out ASAP! 🔥</p>`;
+            botMessage.innerHTML = `<p>THANKS A TON! We've locked in your email (${email}) and our team will reach out ASAP! 🔥</p>`;
             messages.appendChild(botMessage);
             emailInput.value = '';
             const suggestions = document.createElement('div');
@@ -814,11 +854,11 @@
         }
         function getBotResponse(message) {
             if (message.includes("hi") || message.includes("hello") || message.includes("hey")) {
-                return "HEY THERE, CHAMPION! 🚀 I\'m JAYISAAC AI, ready to help you understand our terms, privacy, or cookie policies. What\'s on your mind?";
+                return "HEY THERE, CHAMPION! 🚀 I'm JAYISAAC AI, ready to help you understand our terms, privacy, or cookie policies. What's on your mind?";
             } else if (message.includes("how are you") || message.includes("how you doing")) {
-                return "I\'M CRUSHING IT! 💥 Thanks for asking—now let\'s dive into our policies or any other questions you have!";
+                return "I'M CRUSHING IT! 💥 Thanks for asking—now let's dive into our policies or any other questions you have!";
             } else if (message.includes("thanks") || message.includes("thank you")) {
-                return "NO PROBS, YOU\'RE A LEGEND! 🌟 Need more info on our policies or something else? Just say the word!";
+                return "NO PROBS, YOU'RE A LEGEND! 🌟 Need more info on our policies or something else? Just say the word!";
             } else if (message.includes("bye") || message.includes("goodbye") || message.includes("see you")) {
                 return "CATCH YOU LATER, ALLIGATOR! 🐊 Come back anytime to review our policies or learn about our epic AI chatbots!";
             } else if (message.includes("terms") || message.includes("terms of service")) {
@@ -828,17 +868,17 @@
             } else if (message.includes("cookie") || message.includes("cookie policy")) {
                 return "COOKIES MADE SIMPLE! 🍪 Our Cookie Policy covers how we use cookies to enhance your experience. Check the Cookie Policy section on this page. Any specific questions?";
             } else if (message.includes("contact") || message.includes("get in touch") || message.includes("reach")) {
-                return "LET\'S CONNECT! 📞 Reach us at support@jayisaac.ai or call +1 (800) 555-1234. Want us to reach out? Drop your email!";
+                return "LET'S CONNECT! 📞 Reach us at support@jayisaac.ai or call +1 (800) 555-1234. Want us to reach out? Drop your email!";
             } else if (message.includes("support hours") || message.includes("hours") || message.includes("availability")) {
-                return "WE\'RE HERE FOR YOU! 🕒 Our support team is available 24/7 via email (support@jayisaac.ai) or phone (+1 (800) 555-1234). Got a specific question? Let me know!";
+                return "WE'RE HERE FOR YOU! 🕒 Our support team is available 24/7 via email (support@jayisaac.ai) or phone (+1 (800) 555-1234). Got a specific question? Let me know!";
             } else if (message.includes("demo") || message.includes("schedule demo") || message.includes("try")) {
-                return "READY FOR A MIND-BLOWING DEMO? 🔥 Drop your email, and we\'ll schedule a personalized demo to show you our AI chatbots in action!";
+                return "READY FOR A MIND-BLOWING DEMO? 🔥 Drop your email, and we'll schedule a personalized demo to show you our AI chatbots in action!";
             } else if (message.includes("benefit") || message.includes("feature") || message.includes("what can")) {
                 return "OUR CHATBOTS ARE EPIC! 💪 They cut support costs by 70%, boost sales by 30%, and offer 24/7 engagement. Want to dive deeper or have a question about our policies?";
             } else if (message.includes("pricing") || message.includes("cost") || message.includes("price")) {
                 return "PRICING THAT PACKS A PUNCH! 🤑 Monthly subs from $19 to $499, or one-time buys from $799. Want a custom quote? Email us at support@jayisaac.ai!";
             } else {
-                return "WILD CARD DETECTED! 🃏 I\'m ready to help—try asking about our terms, privacy policy, cookie policy, or contacting our team. Or just drop your email for a quick response!";
+                return "WILD CARD DETECTED! 🃏 I'm ready to help—try asking about our terms, privacy policy, cookie policy, or contacting our team. Or just drop your email for a quick response!";
             }
         }
         window.addEventListener('scroll', () => {

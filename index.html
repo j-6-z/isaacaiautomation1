@@ -27,7 +27,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         z-index: 1;
         background: transparent;
         pointer-events: auto;
@@ -72,7 +72,7 @@
     }
     nav {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         max-width: 1400px;
         margin: 0 auto;
@@ -81,6 +81,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     .logo img {
         height: 40px;
@@ -96,133 +97,53 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    nav ul {
+    .nav-links {
         display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        list-style: none;
-    }
-    nav a {
-        color: #000000;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 30px;
-        transition: all 0.3s ease;
-        background: transparent;
-    }
-    nav a:hover {
-        color: #4b5563;
-        background: rgba(0, 0, 0, 0.05);
-    }
-    .secondary-header {
-        background: transparent;
-        position: fixed;
-        top: 85px;
-        width: 100%;
-        z-index: 900;
-        padding: 0 2rem;
-        box-shadow: none;
-    }
-    .secondary-header .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .secondary-header ul {
-        display: flex;
-        list-style: none;
         gap: 1rem;
+        list-style: none;
     }
-    .secondary-header a {
+    .nav-links a {
+        color: #000000;
         text-decoration: none;
         font-size: 1rem;
         font-weight: 500;
         padding: 0.5rem 1.2rem;
         border-radius: 20px;
         transition: all 0.3s ease;
-        background: #ffffff;
-        color: #000000;
+        background: #f9fafb;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    .secondary-header a:hover {
+    .nav-links a:hover {
         color: #4b5563;
-        background: #f9fafb;
+        background: #e5e7eb;
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    .secondary-header .cta-button {
-        background: #000000;
-        color: #ffffff;
-        padding: 0.5rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: #000000;
+        cursor: pointer;
     }
-    .secondary-header .cta-button:hover {
-        background: #333333;
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem;
-        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-        margin-top: 120px;
-        z-index: 2;
-        pointer-events: none;
-        position: relative;
-        overflow: hidden;
-    }
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        z-index: -1;
-    }
-    .hero h1 {
-        font-size: 4rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-        animation: neonPulse 2s infinite alternate;
-    }
-    @keyframes neonPulse {
-        0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
-        100% { text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.7); }
-    }
-    .hero p {
-        font-size: 1.25rem;
-        color: #cccccc;
-        max-width: 700px;
+    .content-section {
+        max-width: 1400px;
         margin: 0 auto;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 1rem;
+        background: #ffffff; /* Solid white background for content */
+        padding: 2rem;
         border-radius: 8px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        border: 1px solid #ffffff;
+        position: relative;
+        z-index: 2;
     }
     .what-we-do {
         padding: 4rem 2rem;
-        background: rgba(249, 250, 251, 0.7);
         text-align: center;
         z-index: 2;
-        pointer-events: none;
+        margin-top: 100px; /* Adjusted for header height */
+    }
+    .what-we-do .content-section {
+        padding: 2rem;
     }
     .what-we-do h2 {
         font-size: 2.5rem;
@@ -244,10 +165,11 @@
     }
     .our-team {
         padding: 4rem 2rem;
-        background: rgba(249, 250, 251, 0.7);
         text-align: center;
         z-index: 2;
-        pointer-events: none;
+    }
+    .our-team .content-section {
+        padding: 2rem;
     }
     .our-team h2 {
         font-size: 2.5rem;
@@ -269,10 +191,11 @@
     }
     .why-jayisaac {
         padding: 4rem 2rem;
-        background: rgba(255, 255, 255, 0.7);
         text-align: center;
         z-index: 2;
-        pointer-events: none;
+    }
+    .why-jayisaac .content-section {
+        padding: 2rem;
     }
     .why-jayisaac h2 {
         font-size: 2.5rem;
@@ -294,10 +217,11 @@
     }
     .faq-section {
         padding: 4rem 2rem;
-        background: rgba(249, 250, 251, 0.7);
         text-align: center;
         z-index: 2;
-        pointer-events: none;
+    }
+    .faq-section .content-section {
+        padding: 2rem;
     }
     .faq-section h2 {
         font-size: 2.5rem;
@@ -317,20 +241,19 @@
     }
     .faq-question {
         padding: 1rem;
-        background: rgba(249, 250, 251, 0.8);
+        background: #ffffff;
         font-size: 1.125rem;
         font-weight: 600;
         text-align: left;
     }
     .faq-answer {
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.8);
+        background: #ffffff;
         color: #4b5563;
         text-align: left;
         font-size: 1rem;
     }
     footer {
-        background: rgba(249, 250, 251, 0.7);
         padding: 2rem;
         text-align: left;
         position: relative;
@@ -344,6 +267,9 @@
         justify-content: space-between;
         align-items: flex-start;
         gap: 2rem;
+        background: #ffffff; /* Solid white background for footer */
+        padding: 2rem;
+        border-radius: 8px;
     }
     .footer-company {
         flex: 1;
@@ -618,29 +544,37 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     @media (max-width: 768px) {
-        .secondary-header {
-            top: 75px;
-            padding: 0 1rem;
+        header {
+            padding: 1rem;
         }
-        .secondary-header .nav-content {
-            gap: 0.8rem;
+        .logo span {
+            font-size: 1.2rem;
         }
-        .secondary-header ul {
-            gap: 0.8rem;
+        .logo img {
+            height: 30px;
         }
-        .secondary-header a {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 0;
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .nav-links a {
             font-size: 0.9rem;
             padding: 0.4rem 0.8rem;
         }
-        .secondary-header .cta-button {
-            padding: 0.4rem 1rem;
-            font-size: 0.9rem;
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
-        .hero h1 {
-            font-size: 2.5rem;
-        }
-        .hero p {
-            font-size: 1rem;
+        .what-we-do {
+            margin-top: 120px;
         }
         .what-we-do h2 {
             font-size: 2rem;
@@ -703,6 +637,9 @@
             height: 20px;
             font-size: 10px;
         }
+        .content-section {
+            padding: 1rem;
+        }
     }
     </style>
 </head>
@@ -742,43 +679,34 @@
                 <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
                 <span>JAYISAAC AI AUTOMATION</span>
             </div>
-        </nav>
-    </header>
-    <header class="secondary-header">
-        <nav class="container mx-auto px-4 flex justify-between items-center max-w-1400">
-            <ul class="flex space-x-6">
-                <li><a href="/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
-                <li><a href="/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
-                <li><a href="/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
             </ul>
         </nav>
     </header>
-    <section class="hero">
-        <div class="container mx-auto px-4">
-            <h1>Supercharge Your Business with JAYISAAC AI</h1>
-            <p>Discover the power of intelligent automation with our cutting-edge AI chatbots. Streamline customer support, boost sales, and engage users like never before.</p>
-        </div>
-    </section>
     <section class="what-we-do">
-        <div class="container mx-auto px-4">
+        <div class="content-section">
             <h2>What We Do at JAYISAAC AI Automation</h2>
             <p>At JAYISAAC AI Automation, we are a team of junior developers dedicated to creating custom AI chatbot solutions. We hand-craft code tailored to your website's design, ensuring seamless integration and a unique user experience. Our process involves writing bespoke scripts to match your brand, providing personalized automation that enhances functionality and engagement.</p>
         </div>
     </section>
     <section class="our-team">
-        <div class="container mx-auto px-4">
+        <div class="content-section">
             <h2>Our Dedicated Team</h2>
             <p>We are a dynamic team of <span class="highlight">junior developers</span> committed to excellence, working diligently to craft custom AI chatbots that seamlessly align with your website's unique design and branding. Our collaborative approach ensures meticulous attention to detail, delivering tailored solutions that elevate user engagement and drive business success. With a passion for innovation and a focus on quality, we partner closely with you to create <span class="highlight">personalized automation</span> that reflects your vision and enhances your digital presence.</p>
         </div>
     </section>
     <section class="why-jayisaac">
-        <div class="container mx-auto px-4">
+        <div class="content-section">
             <h2>Why JAYISAAC AI Chatbots?</h2>
             <p>At JAYISAAC, we craft <span class="highlight">AI chatbots</span> that are <span class="highlight">competitively priced</span> to fit your budget without compromising quality. Our chatbots are designed to seamlessly <span class="highlight">integrate with your website’s current design</span>, ensuring a cohesive and branded experience that enhances user engagement and drives results.</p>
         </div>
     </section>
     <section class="faq-section">
-        <div class="container mx-auto px-4">
+        <div class="content-section">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <div class="faq-question">What is JAYISAAC AI?</div>
@@ -869,6 +797,10 @@
                     console.log('Notification badge hidden on chat open');
                 }
             }
+        }
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
         }
         function sendMessage(message) {
             if (!message.trim()) return;
