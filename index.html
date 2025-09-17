@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAYISAAC AI Chatbot Pricing</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>JAYISAAC AI Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: 'Orbitron', sans-serif;
     }
     body {
         font-family: 'Orbitron', sans-serif;
@@ -20,17 +21,40 @@
         overflow-x: hidden;
         position: relative;
         padding-bottom: 200px;
-        font-weight: 400;
     }
     #particles-js {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 120vh;
+        height: 100vh;
         z-index: 1;
         background: transparent;
         pointer-events: auto;
+    }
+    .particle-space {
+        height: 100vh;
+        width: 100%;
+        background: transparent;
+        z-index: 0;
+        position: relative;
+    }
+    .scroll-down-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #000000;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        animation: fadePulse 2s infinite alternate;
+    }
+    @keyframes fadePulse {
+        0% { opacity: 0.7; }
+        100% { opacity: 1; }
     }
     header {
         background: #ffffff;
@@ -66,7 +90,6 @@
         transform: rotate(360deg);
     }
     .logo span {
-        font-family: 'Orbitron', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         color: #000000;
@@ -83,7 +106,7 @@
         color: #000000;
         text-decoration: none;
         font-size: 1rem;
-        font-weight: 400;
+        font-weight: 500;
         padding: 0.5rem 1rem;
         border-radius: 30px;
         transition: all 0.3s ease;
@@ -117,8 +140,7 @@
     .secondary-header a {
         text-decoration: none;
         font-size: 1rem;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
+        font-weight: 500;
         padding: 0.5rem 1.2rem;
         border-radius: 20px;
         transition: all 0.3s ease;
@@ -131,11 +153,6 @@
         background: #f9fafb;
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .secondary-header a.active {
-        background: #000000;
-        color: #ffffff;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
     .secondary-header .cta-button {
         background: #000000;
@@ -151,185 +168,166 @@
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    section {
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        margin-top: 120px;
+        z-index: 2;
+        pointer-events: none;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        z-index: -1;
+    }
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+        animation: neonPulse 2s infinite alternate;
+    }
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
+        100% { text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.7); }
+    }
+    .hero p {
+        font-size: 1.25rem;
+        color: #cccccc;
+        max-width: 700px;
+        margin: 0 auto;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        border: 1px solid #ffffff;
+    }
+    .what-we-do {
         padding: 4rem 2rem;
+        background: rgba(249, 250, 251, 0.7);
         text-align: center;
         z-index: 2;
-        position: relative;
+        pointer-events: none;
     }
-    h2 {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 3rem;
+    .what-we-do h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000000;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .what-we-do p {
+        font-size: 1.125rem;
+        color: #4b5563;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+    }
+    .what-we-do .highlight {
+        color: #000000;
+        font-weight: 600;
+    }
+    .our-team {
+        padding: 4rem 2rem;
+        background: rgba(249, 250, 251, 0.7);
+        text-align: center;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .our-team h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000000;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .our-team p {
+        font-size: 1.125rem;
+        color: #4b5563;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+    }
+    .our-team .highlight {
+        color: #000000;
+        font-weight: 600;
+    }
+    .why-jayisaac {
+        padding: 4rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .why-jayisaac h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000000;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .why-jayisaac p {
+        font-size: 1.125rem;
+        color: #4b5563;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+    }
+    .why-jayisaac .highlight {
+        color: #000000;
+        font-weight: 600;
+    }
+    .faq-section {
+        padding: 4rem 2rem;
+        background: rgba(249, 250, 251, 0.7);
+        text-align: center;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .faq-section h2 {
+        font-size: 2.5rem;
         font-weight: 700;
         color: #000000;
         margin-bottom: 2rem;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        letter-spacing: 1px;
     }
-    .hero-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        margin-top: 120px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .hero-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .hero-section p {
-        font-size: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    .pricing-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .pricing-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(6, auto);
-        gap: 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .pricing-card {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid #ffffff;
-        border-radius: 12px;
-        padding: 2rem;
-        text-align: center;
-        color: #ffffff;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        transition: all 0.3s ease;
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    .pricing-card.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .pricing-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.2);
-    }
-    .pricing-card h3 {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
+    .faq-item {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
         margin-bottom: 1rem;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
-    .pricing-card .price {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 1rem;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
-    .pricing-card ul {
-        list-style: none;
-        margin-bottom: 1.5rem;
-        font-size: 1rem;
-        color: #cccccc;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
-    }
-    .pricing-card ul li {
-        margin-bottom: 0.5rem;
-    }
-    .pricing-card a {
-        display: inline-block;
-        background: #ffffff;
-        color: #000000;
-        padding: 0.8rem 1.5rem;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 400;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        font-family: 'Orbitron', sans-serif;
-    }
-    .pricing-card a:hover {
-        background: #000000;
-        color: #ffffff;
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    }
-    .features-section {
-        background: #ffffff;
-    }
-    .features-section h2 {
-        color: #000000;
-    }
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .feature-card {
-        padding: 2rem;
-        text-align: center;
-    }
-    .feature-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    .benefits-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .benefits-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .benefits-list {
-        max-width: 1400px;
-        margin: 0 auto;
+    .faq-question {
+        padding: 1rem;
+        background: rgba(249, 250, 251, 0.8);
+        font-size: 1.125rem;
+        font-weight: 600;
         text-align: left;
     }
-    .benefits-list ul {
-        list-style: none;
-        font-size: 1.2rem;
-    }
-    .benefits-list ul li {
-        margin-bottom: 1rem;
-    }
-    .contact-section {
-        background: #ffffff;
-    }
-    .contact-section h2 {
-        color: #000000;
-    }
-    .contact-info {
-        max-width: 1400px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    .contact-info p {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-    .contact-info a {
-        color: #000000;
-        text-decoration: none;
-        font-weight: 700;
-    }
-    .contact-info a:hover {
+    .faq-answer {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
         color: #4b5563;
+        text-align: left;
+        font-size: 1rem;
     }
     footer {
         background: rgba(249, 250, 251, 0.7);
@@ -338,7 +336,6 @@
         position: relative;
         z-index: 800;
         border-top: 1px solid #e5e7eb;
-        pointer-events: auto;
     }
     .footer-content {
         max-width: 1400px;
@@ -365,7 +362,6 @@
         transform: rotate(360deg);
     }
     .footer-company .footer-logo span {
-        font-family: 'Orbitron', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         color: #000000;
@@ -376,8 +372,6 @@
         font-size: 0.875rem;
         color: #4b5563;
         max-width: 250px;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
     }
     .footer-terms {
         flex: 1;
@@ -390,8 +384,6 @@
         text-decoration: none;
         font-size: 0.875rem;
         transition: color 0.3s ease;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
     }
     .footer-terms a:hover {
         color: #4b5563;
@@ -482,11 +474,20 @@
         align-items: center;
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
+    .chatbot-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+    .chatbot-header img:hover {
+        transform: rotate(360deg);
+    }
     .chatbot-header h3 {
-        font-family: 'Orbitron', sans-serif;
-        color: #ffffff;
         font-size: 1.6rem;
         font-weight: 700;
+        color: #ffffff;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
     }
     .chatbot-header button {
@@ -496,7 +497,6 @@
         font-size: 1.6rem;
         cursor: pointer;
         transition: transform 0.3s ease;
-        font-family: 'Orbitron', sans-serif;
     }
     .chatbot-header button:hover {
         transform: rotate(90deg);
@@ -524,8 +524,6 @@
         font-size: 1rem;
         box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
         transition: transform 0.2s ease;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
     }
     .message.user p {
         background: #000000;
@@ -546,12 +544,10 @@
         padding: 0.6rem 1.2rem;
         border-radius: 20px;
         font-size: 0.9rem;
-        font-family: 'Orbitron', sans-serif;
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         transform: translateZ(0);
-        font-weight: 400;
     }
     .message.bot.suggestions button:hover {
         background: #ffffff;
@@ -578,8 +574,6 @@
         margin-right: 1rem;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         transition: box-shadow 0.3s ease;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 400;
     }
     .chatbot-input input:focus {
         outline: none;
@@ -593,10 +587,8 @@
         border-radius: 12px;
         cursor: pointer;
         font-size: 1rem;
-        font-family: 'Orbitron', sans-serif;
         transition: all 0.3s ease;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        font-weight: 400;
     }
     .chatbot-input button:hover {
         background: #000000;
@@ -615,11 +607,10 @@
         border-radius: 30px;
         text-decoration: none;
         font-size: 1.2rem;
-        font-weight: 700;
+        font-weight: 600;
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        font-family: 'Orbitron', sans-serif;
     }
     .purchase-button:hover {
         background: #333333;
@@ -645,33 +636,37 @@
             padding: 0.4rem 1rem;
             font-size: 0.9rem;
         }
-        .hero-section, .pricing-section, .features-section, .benefits-section, .contact-section {
-            margin-top: 0;
+        .hero h1 {
+            font-size: 2.5rem;
         }
-        .hero-section {
-            margin-top: 100px;
+        .hero p {
+            font-size: 1rem;
         }
-        .hero-section h2, .pricing-section h2, .features-section h2, .benefits-section h2, .contact-section h2 {
+        .what-we-do h2 {
             font-size: 2rem;
         }
-        .pricing-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(12, auto);
+        .what-we-do p {
+            font-size: 1rem;
         }
-        .pricing-card, .feature-card {
-            padding: 1.5rem;
+        .our-team h2 {
+            font-size: 2rem;
         }
-        .pricing-card h3, .feature-card h3 {
-            font-size: 1.3rem;
+        .our-team p {
+            font-size: 1rem;
         }
-        .pricing-card .price {
-            font-size: 1.8rem;
+        .why-jayisaac h2 {
+            font-size: 2rem;
         }
-        .pricing-card ul, .benefits-list ul {
-            font-size: 0.9rem;
+        .why-jayisaac p {
+            font-size: 1rem;
         }
-        .pricing-card a {
-            padding: 0.6rem 1.2rem;
+        .faq-section h2 {
+            font-size: 2rem;
+        }
+        .faq-question {
+            font-size: 1rem;
+        }
+        .faq-answer {
             font-size: 0.9rem;
         }
         .footer-content {
@@ -696,6 +691,13 @@
             width: 40px;
             height: 40px;
         }
+        .chatbot-header img {
+            width: 35px;
+            height: 35px;
+        }
+        .scroll-down-text {
+            font-size: 1.2rem;
+        }
         .notification-badge {
             width: 20px;
             height: 20px;
@@ -706,23 +708,27 @@
 </head>
 <body>
     <div id="particles-js"></div>
+    <section class="particle-space">
+        <div class="scroll-down-text" id="scrollDownText">Scroll Down</div>
+    </section>
     <div class="chatbot-bubble" onclick="toggleChatbot()">
         <img src="images/chtabot lololol.jpg" alt="Chatbot Icon">
         <div class="notification-badge" style="display: none;">1</div>
     </div>
     <div class="chatbot-window" id="chatbotWindow">
         <div class="chatbot-header">
+            <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Assistant">
             <h3>JAYISAAC AI Assistant</h3>
             <button onclick="toggleChatbot()">✕</button>
         </div>
         <div class="chatbot-messages" id="chatbotMessages">
             <div class="message bot">
-                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to blast you with pricing details. Ask me ANYTHING about our plans or how to get started!</p>
+                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to blow your mind with our epic chatbots. Ask me ANYTHING about how they can revolutionize your business—features, pricing, integrations, or even wild custom ideas!</p>
             </div>
             <div class="message bot suggestions">
+                <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
                 <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
                 <button onclick="sendMessage('How can I try a chatbot?')">How can I try a chatbot?</button>
-                <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
             </div>
         </div>
         <div class="chatbot-input">
@@ -741,132 +747,69 @@
     <header class="secondary-header">
         <nav class="container mx-auto px-4 flex justify-between items-center max-w-1400">
             <ul class="flex space-x-6">
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
+                <li><a href="http://127.0.0.1:5500/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
+                <li><a href="http://127.0.0.1:5500/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
             </ul>
         </nav>
     </header>
-    <section class="hero-section" id="hero">
-        <h2>Welcome to JAYISAAC AI Pricing</h2>
-        <p>Discover the perfect chatbot solution for your business with our flexible pricing plans.</p>
-    </section>
-    <section class="pricing-section" id="pricing">
-        <h2>Pricing That Packs a Punch!</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Basic Monthly Subscription</h3>
-                <div class="price">$19/month</div>
-                <ul>
-                    <li>Perfect for small businesses</li>
-                    <li>Up to 2,000 interactions</li>
-                    <li>Basic support and standard features</li>
-                </ul>
-                <a href="http://127.0.0.1:5500/Purchasepage.html">Get Started 🚀</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Mid-Tier Monthly Subscription</h3>
-                <div class="price">$99/month</div>
-                <ul>
-                    <li>Ideal for growing businesses</li>
-                    <li>Up to 10,000 interactions</li>
-                    <li>CRM integration and priority support</li>
-                </ul>
-                <a href="http://127.0.0.1:5500/Purchasepage.html">Level Up 💥</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Premium Monthly Subscription</h3>
-                <div class="price">$499/month</div>
-                <ul>
-                    <li>Designed for high-volume needs</li>
-                    <li>10,000+ interactions</li>
-                    <li>Full customization and dedicated account management</li>
-                </ul>
-                <a href="http://127.0.0.1:5500/Purchasepage.html">Go Premium 📞</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Basic One-Time Purchase</h3>
-                <div class="price">$799</div>
-                <ul>
-                    <li>Own a custom chatbot</li>
-                    <li>Lifetime access</li>
-                    <li>1 year of basic support</li>
-                </ul>
-                <a href="http://127.0.0.1:5500/Purchasepage.html">Buy Now 🚀</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Standard One-Time Purchase</h3>
-                <div class="price">$11,999</div>
-                <ul>
-                    <li>Includes advanced AI features</li>
-                    <li>Multi-platform support</li>
-                    <li>2 years of updates</li>
-                </ul>
-                <a href="http://127.0.0.1:5500/Purchasepage.html">Upgrade 💥</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Enterprise One-Time Purchase</h3>
-                <div class="price">$25,000</div>
-                <ul>
-                    <li>Fully custom solution</li>
-                    <li>Complex integrations and scalability</li>
-                    <li>3+ years of support</li>
-                </ul>
-                <a href="#contact">Contact Us 📞</a>
-            </div>
+    <section class="hero">
+        <div class="container mx-auto px-4">
+            <h1>Supercharge Your Business with JAYISAAC AI</h1>
+            <p>Discover the power of intelligent automation with our cutting-edge AI chatbots. Streamline customer support, boost sales, and engage users like never before.</p>
         </div>
     </section>
-    <section class="features-section" id="features">
-        <h2>Key Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>24/7 Support</h3>
-                <p>Always available to assist your customers.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Custom Integration</h3>
-                <p>Seamlessly integrates with your existing systems.</p>
-            </div>
-            <div class="feature-card">
-                <h3>AI-Powered</h3>
-                <p>Leverages advanced AI for smart responses.</p>
-            </div>
+    <section class="what-we-do">
+        <div class="container mx-auto px-4">
+            <h2>What We Do at JAYISAAC AI Automation</h2>
+            <p>At JAYISAAC AI Automation, we are a team of junior developers dedicated to creating custom AI chatbot solutions. We hand-craft code tailored to your website's design, ensuring seamless integration and a unique user experience. Our process involves writing bespoke scripts to match your brand, providing personalized automation that enhances functionality and engagement.</p>
         </div>
     </section>
-    <section class="benefits-section" id="benefits">
-        <h2>Benefits of JAYISAAC AI</h2>
-        <div class="benefits-list">
-            <ul>
-                <li>Reduces support costs by up to 70%</li>
-                <li>Increases sales by 30% with smart engagement</li>
-                <li>Offers 24/7 customer availability</li>
-                <li>Scalable for any business size</li>
-            </ul>
+    <section class="our-team">
+        <div class="container mx-auto px-4">
+            <h2>Our Dedicated Team</h2>
+            <p>We are a dynamic team of <span class="highlight">junior developers</span> committed to excellence, working diligently to craft custom AI chatbots that seamlessly align with your website's unique design and branding. Our collaborative approach ensures meticulous attention to detail, delivering tailored solutions that elevate user engagement and drive business success. With a passion for innovation and a focus on quality, we partner closely with you to create <span class="highlight">personalized automation</span> that reflects your vision and enhances your digital presence.</p>
         </div>
     </section>
-    <section class="contact-section" id="contact">
-        <h2>Get in Touch</h2>
-        <div class="contact-info">
-            <p>Ready to get started? Contact us at <a href="mailto:support@jayisaac.ai">support@jayisaac.ai</a> or call +1 (800) 555-1234.</p>
+    <section class="why-jayisaac">
+        <div class="container mx-auto px-4">
+            <h2>Why JAYISAAC AI Chatbots?</h2>
+            <p>At JAYISAAC, we craft <span class="highlight">AI chatbots</span> that are <span class="highlight">competitively priced</span> to fit your budget without compromising quality. Our chatbots are designed to seamlessly <span class="highlight">integrate with your website’s current design</span>, ensuring a cohesive and branded experience that enhances user engagement and drives results.</p>
+        </div>
+    </section>
+    <section class="faq-section">
+        <div class="container mx-auto px-4">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">What is JAYISAAC AI?</div>
+                <div class="faq-answer">JAYISAAC AI is a platform offering custom AI chatbot solutions for businesses, designed to automate customer support and boost engagement.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I get started?</div>
+                <div class="faq-answer">Simply contact us via our website or email at support@jayisaac.ai to schedule a consultation or demo.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Are your chatbots customizable?</div>
+                <div class="faq-answer">Yes, our junior developers hand-craft code to tailor chatbots to your website's design and specific needs.</div>
+            </div>
         </div>
     </section>
     <footer>
         <div class="footer-content">
             <div class="footer-company">
                 <div class="footer-logo">
-                    <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                    <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
                 <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at support@jayisaac.ai.</p>
             </div>
             <div class="footer-terms">
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Terms of Service</a>
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Privacy Policy</a>
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Cookie Policy</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Terms of Service</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Privacy Policy</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Cookie Policy</a>
             </div>
         </div>
     </footer>
-    <a href="http://127.0.0.1:5500/Purchasepage.html" class="purchase-button">Purchase Epic AI Chatbots</a>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles-js', {
@@ -888,7 +831,7 @@
         });
         const canvas = document.querySelector('#particles-js canvas');
         if (canvas) {
-            canvas.height = window.innerHeight * 1.2;
+            canvas.height = window.innerHeight;
             console.log('Canvas adjusted to:', canvas.width, 'x', canvas.height);
         }
         console.log('Particles.js initialized');
@@ -915,19 +858,6 @@
             section.style.transform = 'translateY(50px)';
             section.style.transition = 'all 0.8s ease-out';
             sectionObserver.observe(section);
-        });
-        const pricingCards = document.querySelectorAll('.pricing-card');
-        const pricingObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('show');
-                    }, index * 200);
-                }
-            });
-        }, { threshold: 0.2 });
-        pricingCards.forEach(card => {
-            pricingObserver.observe(card);
         });
         function toggleChatbot() {
             const window = document.getElementById('chatbotWindow');
@@ -982,9 +912,9 @@
                     const suggestions = document.createElement('div');
                     suggestions.className = 'message bot suggestions';
                     suggestions.innerHTML = `
+                        <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
                         <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
                         <button onclick="sendMessage('How can I try a chatbot?')">How can I try a chatbot?</button>
-                        <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
                     `;
                     messages.appendChild(suggestions);
                     if (!document.getElementById('chatbotWindow').classList.contains('active')) {
@@ -1012,8 +942,8 @@
             const suggestions = document.createElement('div');
             suggestions.className = 'message bot suggestions';
             suggestions.innerHTML = `
-                <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
                 <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
+                <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
             `;
             messages.appendChild(suggestions);
             if (!document.getElementById('chatbotWindow').classList.contains('active')) {
@@ -1037,7 +967,7 @@
             } else if (message.includes('benefit') || message.includes('what can') || message.includes('do') || message.includes('feature')) {
                 return 'OUR CHATBOTS ARE BEAST MODE ACTIVATED! 💪 They slash support costs by 70%, skyrocket sales by 30%, deliver 24/7 engagement, personalized recs, CRM integration, and more. Tell me what feature you want to deep-dive into!';
             } else if (message.includes('pricing') || message.includes('cost') || message.includes('price') || message.includes('how much')) {
-                return 'PRICING THAT PACKS A PUNCH! 🤑 Monthly: $19 (Basic), $99 (Mid-Tier), $499 (Premium). One-Time: $799 (Basic), $11,999 (Standard), $25,000 (Enterprise). Need details? Drop your email!';
+                return 'PRICING THAT PACKS A PUNCH! 🤑 Flexible monthly subs from $99 to $799, or one-time buys starting at $12K—customized to crush your goals. Need a tailor-made quote? Drop your email and let\'s make magic happen!';
             } else if (message.includes('try') || message.includes('demo') || message.includes('test')) {
                 return 'LET\'S IGNITE THIS! 🔥 I\'ll hook you up with a FREE trial or live demo that\'ll blow your socks off. Share your email, and we\'ll launch it into orbit!';
             } else if (message.includes('integrate') || message.includes('website') || message.includes('platform')) {

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - JAYISAAC AI Automation</title>
+    <title>Policies - JAYISAAC AI Automation</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+    /* Modern CSS Reset */
     * {
         margin: 0;
         padding: 0;
@@ -144,17 +145,17 @@
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    .contact-container {
+    .policies-container {
         background: #ffffff;
         padding: 2.5rem;
         border-radius: 20px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 1200px;
-        text-align: center;
-        margin: 8rem auto;
+        text-align: left;
+        margin: 120px auto 0;
     }
-    .contact-container h1 {
+    .policies-container h1 {
         font-size: 3.5rem;
         font-weight: 700;
         color: #000000;
@@ -163,15 +164,16 @@
         letter-spacing: 2px;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         animation: pulse 2s infinite;
+        text-align: center;
     }
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
     }
-    .contact-section {
+    .policy-section {
         margin-bottom: 3rem;
     }
-    .contact-section h2 {
+    .policy-section h2 {
         font-size: 2.5rem;
         font-weight: 700;
         color: #000000;
@@ -180,13 +182,12 @@
         letter-spacing: 1px;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
-    .contact-info {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    .policy-content {
+        display: flex;
+        flex-direction: column;
         gap: 2rem;
-        margin-bottom: 2rem;
     }
-    .info-item {
+    .policy-item {
         padding: 1.5rem;
         border-radius: 15px;
         background: #e6f0ff;
@@ -195,11 +196,11 @@
         position: relative;
         overflow: hidden;
     }
-    .info-item:hover {
-        transform: scale(1.05);
+    .policy-item:hover {
+        transform: scale(1.02);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
-    .info-item::before {
+    .policy-item::before {
         content: '';
         position: absolute;
         top: 0;
@@ -214,77 +215,15 @@
         20% { transform: translateX(100%); }
         100% { transform: translateX(100%); }
     }
-    .info-item h3 {
+    .policy-item h3 {
         font-size: 1.5rem;
         font-weight: 600;
         color: #000000;
         margin-bottom: 0.5rem;
     }
-    .info-item p {
+    .policy-item p {
         font-size: 1.2rem;
         color: #000000;
-    }
-    .contact-form {
-        display: flex;
-        flex-direction: column;
-    }
-    .form-group {
-        position: relative;
-        margin-bottom: 1.5rem;
-    }
-    .form-group label {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #000000;
-        margin-bottom: 0.5rem;
-        display: block;
-        text-align: left;
-    }
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 1.2rem;
-        border: none;
-        border-radius: 15px;
-        background: #ffffff;
-        color: #000000;
-        font-size: 1.3rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-    .form-group textarea {
-        resize: vertical;
-        min-height: 150px;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        transform: scale(1.02);
-    }
-    .contact-form button {
-        background: linear-gradient(90deg, #1a1a1a, #000000);
-        color: #ffffff;
-        padding: 1.2rem;
-        border: none;
-        border-radius: 50px;
-        font-size: 1.4rem;
-        font-weight: 700;
-        margin-top: 2rem;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: all 0.4s ease;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .contact-form button:hover {
-        background: linear-gradient(90deg, #000000, #1a1a1a);
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
     footer {
         background: rgba(249, 250, 251, 0.7);
@@ -293,7 +232,7 @@
         position: relative;
         z-index: 800;
         border-top: 1px solid #e5e7eb;
-        pointer-events: auto;
+        pointer-events: none;
     }
     .footer-content {
         max-width: 1400px;
@@ -380,24 +319,6 @@
     .chatbot-bubble img:hover {
         transform: rotate(360deg);
     }
-    .notification-badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background: #ff0000;
-        color: #ffffff;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        z-index: 3100;
-    }
     .chatbot-window {
         position: fixed;
         bottom: 110px;
@@ -431,6 +352,16 @@
         justify-content: space-between;
         align-items: center;
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    .chatbot-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+    .chatbot-header img:hover {
+        transform: rotate(360deg);
     }
     .chatbot-header h3 {
         font-size: 1.6rem;
@@ -544,6 +475,27 @@
         transform: scale(1.05);
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     }
+    .purchase-button {
+        position: fixed;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #000000;
+        color: #ffffff;
+        padding: 1rem 3rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+    .purchase-button:hover {
+        background: #333333;
+        transform: translateX(-50%) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
     @media (max-width: 768px) {
         .secondary-header {
             top: 75px;
@@ -563,38 +515,22 @@
             padding: 0.4rem 1rem;
             font-size: 0.9rem;
         }
-        .contact-container {
+        .policies-container {
             padding: 1.5rem;
-            margin: 6rem auto;
+            margin: 100px auto 0;
             max-width: 90%;
         }
-        .contact-container h1 {
+        .policies-container h1 {
             font-size: 2.5rem;
         }
-        .contact-section h2 {
+        .policy-section h2 {
             font-size: 2rem;
         }
-        .contact-info {
-            grid-template-columns: 1fr;
-        }
-        .info-item h3 {
+        .policy-item h3 {
             font-size: 1.3rem;
         }
-        .info-item p {
+        .policy-item p {
             font-size: 1.1rem;
-        }
-        .form-group label {
-            font-size: 1.1rem;
-        }
-        .form-group input,
-        .form-group textarea {
-            font-size: 1.1rem;
-            padding: 1rem;
-        }
-        .contact-form button {
-            font-size: 1.2rem;
-            padding: 1rem;
-            max-width: 100%;
         }
         .footer-content {
             flex-direction: column;
@@ -618,10 +554,9 @@
             width: 40px;
             height: 40px;
         }
-        .notification-badge {
-            width: 20px;
-            height: 20px;
-            font-size: 10px;
+        .chatbot-header img {
+            width: 35px;
+            height: 35px;
         }
     }
     </style>
@@ -629,22 +564,22 @@
 <body>
     <div id="particles-js"></div>
     <div class="chatbot-bubble" onclick="toggleChatbot()">
-        <img src="images/chtabot lololol.jpg" alt="Chatbot Icon">
-        <div class="notification-badge" style="display: none;">1</div>
+        <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Chatbot">
     </div>
     <div class="chatbot-window" id="chatbotWindow">
         <div class="chatbot-header">
+            <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Assistant">
             <h3>JAYISAAC AI Assistant</h3>
             <button onclick="toggleChatbot()">✕</button>
         </div>
         <div class="chatbot-messages" id="chatbotMessages">
             <div class="message bot">
-                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to answer your questions. Want to talk about our chatbots or need help with something else? Just ask!</p>
+                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I\'m JAYISAAC AI, your supercharged assistant ready to answer your questions. Want to know about our terms, privacy, or cookie policies? Just ask!</p>
             </div>
             <div class="message bot suggestions">
-                <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
-                <button onclick="sendMessage('Can I schedule a demo?')">Can I schedule a demo?</button>
+                <button onclick="sendMessage('What are your terms of service?')">What are your terms of service?</button>
+                <button onclick="sendMessage('What is your privacy policy?')">What is your privacy policy?</button>
+                <button onclick="sendMessage('What is your cookie policy?')">What is your cookie policy?</button>
             </div>
         </div>
         <div class="chatbot-input">
@@ -663,49 +598,88 @@
     <header class="secondary-header">
         <nav class="container mx-auto px-4 flex justify-between items-center max-w-1400">
             <ul class="flex space-x-6">
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
-                <li><a href="http://127.0.0.1:5500/jayisaacaiautomation/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Home</a></li>
+                <li><a href="http://127.0.0.1:5500/pricing.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Pricing</a></li>
+                <li><a href="http://127.0.0.1:5500/contact.html" class="text-black hover:text-gray-800 font-semibold transition-colors duration-300">Contact Us</a></li>
             </ul>
         </nav>
     </header>
-    <section class="contact-container">
-        <h1>Contact Us</h1>
-        <div class="contact-section">
-            <h2>Get in Touch</h2>
-            <div class="contact-info">
-                <div class="info-item">
-                    <h3>Email</h3>
-                    <p>support@jayisaac.ai</p>
+    <section class="policies-container">
+        <h1>Our Policies</h1>
+        <div class="policy-section">
+            <h2>Terms of Service</h2>
+            <div class="policy-content">
+                <div class="policy-item">
+                    <h3>1. Introduction</h3>
+                    <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
                 </div>
-                <div class="info-item">
-                    <h3>Phone</h3>
-                    <p>+1 (800) 555-1234</p>
+                <div class="policy-item">
+                    <h3>2. Use of Services</h3>
+                    <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
                 </div>
-                <div class="info-item">
-                    <h3>Address</h3>
-                    <p>123 AI Avenue, Tech City, TX 12345, USA</p>
+                <div class="policy-item">
+                    <h3>3. Payment Terms</h3>
+                    <p>All payment information is securely collected and processed by our third-party payment processor, PayPal. JAYISAAC AI Automation does not collect or store payment details. You are responsible for providing accurate billing information to PayPal. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>4. Intellectual Property</h3>
+                    <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>5. Limitation of Liability</h3>
+                    <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
                 </div>
             </div>
-            <form class="contact-form" onsubmit="return validateForm(event);">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="policy-section">
+            <h2>Privacy Policy</h2>
+            <div class="policy-content">
+                <div class="policy-item">
+                    <h3>1. Information Collection</h3>
+                    <p>We collect personal information such as your name, email, address, and related details when you use our services or contact us. Payment information is collected and processed securely by our third-party payment processor, PayPal, and is not stored by JAYISAAC AI Automation.</p>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="policy-item">
+                    <h3>2. Use of Information</h3>
+                    <p>Your name, email, address, and related details are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled by PayPal to ensure secure transactions.</p>
                 </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+                <div class="policy-item">
+                    <h3>3. Data Sharing</h3>
+                    <p>We do not sell your personal data. We may share your name, email, and address with trusted third-party service providers to facilitate our services, such as customer support or delivery of services, subject to confidentiality agreements. Payment information is managed solely by PayPal and is not shared with us.</p>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+                <div class="policy-item">
+                    <h3>4. Data Security</h3>
+                    <p>We implement reasonable security measures to protect your name, email, address, and related details. Payment information is secured by PayPal's systems, and we do not have access to it. However, no system is completely secure, and you use our services at your own risk.</p>
                 </div>
-                <button type="submit">Send Message</button>
-            </form>
+                <div class="policy-item">
+                    <h3>5. Your Rights</h3>
+                    <p>You have the right to access, correct, or delete your personal data held by us, such as your name, email, and address. Contact us at support@jayisaac.ai to exercise these rights. For payment-related data, please contact PayPal directly.</p>
+                </div>
+            </div>
+        </div>
+        <div class="policy-section">
+            <h2>Cookie Policy</h2>
+            <div class="policy-content">
+                <div class="policy-item">
+                    <h3>1. What Are Cookies</h3>
+                    <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>2. Types of Cookies</h3>
+                    <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>3. Managing Cookies</h3>
+                    <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>4. Third-Party Cookies</h3>
+                    <p>Some cookies are set by third-party services (e.g., analytics tools). These are governed by their respective privacy policies.</p>
+                </div>
+                <div class="policy-item">
+                    <h3>5. Contact Us</h3>
+                    <p>For questions about our cookie policy, reach out to us at support@jayisaac.ai or call +1 (800) 555-1234.</p>
+                </div>
+            </div>
         </div>
     </section>
     <footer>
@@ -718,9 +692,9 @@
                 <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at support@jayisaac.ai.</p>
             </div>
             <div class="footer-terms">
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Terms of Service</a>
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Privacy Policy</a>
-                <a href="http://127.0.0.1:5500/jayisaacaiautomation/TOS_SUCH.html">Cookie Policy</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Terms of Service</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Privacy Policy</a>
+                <a href="http://127.0.0.1:5500/TOS_SUCH.html">Cookie Policy</a>
             </div>
         </div>
     </footer>
@@ -781,17 +755,9 @@
         function toggleChatbot() {
             const window = document.getElementById('chatbotWindow');
             window.classList.toggle('active');
-            if (window.classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'none';
-                    console.log('Notification badge hidden on chat open');
-                }
-            }
         }
         function sendMessage(message) {
             if (!message.trim()) return;
-            console.log('Sending message:', message);
             const messages = document.getElementById('chatbotMessages');
             const userInput = document.getElementById('userInput');
             const userMessage = document.createElement('div');
@@ -805,13 +771,7 @@
                 let response = getBotResponse(message.toLowerCase());
                 botMessage.innerHTML = `<p>${response}</p>`;
                 messages.appendChild(botMessage);
-                if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                    const badge = document.querySelector('.notification-badge');
-                    if (badge) {
-                        badge.style.display = 'flex';
-                        console.log('Notification badge shown for bot message');
-                    }
-                }
+                messages.scrollTop = messages.scrollHeight;
                 if (response.includes('email')) {
                     const formMessage = document.createElement('div');
                     formMessage.className = 'message bot';
@@ -820,29 +780,15 @@
                         <button onclick="submitLead()">Submit</button>
                     `;
                     messages.appendChild(formMessage);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for email form');
-                        }
-                    }
                 } else {
                     const suggestions = document.createElement('div');
                     suggestions.className = 'message bot suggestions';
                     suggestions.innerHTML = `
-                        <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                        <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
-                        <button onclick="sendMessage('Can I schedule a demo?')">Can I schedule a demo?</button>
+                        <button onclick="sendMessage('What are your terms of service?')">What are your terms of service?</button>
+                        <button onclick="sendMessage('What is your privacy policy?')">What is your privacy policy?</button>
+                        <button onclick="sendMessage('What is your cookie policy?')">What is your cookie policy?</button>
                     `;
                     messages.appendChild(suggestions);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for suggestions');
-                        }
-                    }
                 }
                 messages.scrollTop = messages.scrollHeight;
             }, 800);
@@ -851,50 +797,48 @@
             const emailInput = document.getElementById('leadEmail');
             const email = emailInput.value.trim();
             if (!email) return;
-            console.log('Email submitted:', email);
             const messages = document.getElementById('chatbotMessages');
             const botMessage = document.createElement('div');
             botMessage.className = 'message bot';
-            botMessage.innerHTML = `<p>THANKS A TON! We've locked in your email (${email}) and our team will reach out ASAP! 🔥</p>`;
+            botMessage.innerHTML = `<p>THANKS A TON! We\'ve locked in your email (${email}) and our team will reach out ASAP! 🔥</p>`;
             messages.appendChild(botMessage);
             emailInput.value = '';
             const suggestions = document.createElement('div');
             suggestions.className = 'message bot suggestions';
             suggestions.innerHTML = `
-                <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
+                <button onclick="sendMessage('What are your terms of service?')">What are your terms of service?</button>
+                <button onclick="sendMessage('What is your privacy policy?')">What is your privacy policy?</button>
             `;
             messages.appendChild(suggestions);
-            if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'flex';
-                    console.log('Notification badge shown for email submission');
-                }
-            }
             messages.scrollTop = messages.scrollHeight;
         }
         function getBotResponse(message) {
             if (message.includes("hi") || message.includes("hello") || message.includes("hey")) {
-                return "HEY THERE, CHAMPION! 🚀 I'm JAYISAAC AI, ready to help you connect with our team. Got a question about contacting us or something else? Fire away!";
+                return "HEY THERE, CHAMPION! 🚀 I\'m JAYISAAC AI, ready to help you understand our terms, privacy, or cookie policies. What\'s on your mind?";
             } else if (message.includes("how are you") || message.includes("how you doing")) {
-                return "I'M CRUSHING IT! 💥 Thanks for asking—now let's get you in touch with our awesome team. What's on your mind?";
+                return "I\'M CRUSHING IT! 💥 Thanks for asking—now let\'s dive into our policies or any other questions you have!";
             } else if (message.includes("thanks") || message.includes("thank you")) {
-                return "NO PROBS, YOU'RE A LEGEND! 🌟 Need more help with contacting us or exploring our chatbots? Just say the word!";
+                return "NO PROBS, YOU\'RE A LEGEND! 🌟 Need more info on our policies or something else? Just say the word!";
             } else if (message.includes("bye") || message.includes("goodbye") || message.includes("see you")) {
-                return "CATCH YOU LATER, ALLIGATOR! 🐊 Come back anytime to connect with our team or learn about our epic AI chatbots!";
+                return "CATCH YOU LATER, ALLIGATOR! 🐊 Come back anytime to review our policies or learn about our epic AI chatbots!";
+            } else if (message.includes("terms") || message.includes("terms of service")) {
+                return "OUR TERMS ARE STRAIGHTFORWARD! 📜 They cover your use of our AI chatbots, payment policies, and more. Check the Terms of Service section on this page for details. Got a specific question? Let me know!";
+            } else if (message.includes("privacy") || message.includes("privacy policy")) {
+                return "WE TAKE YOUR PRIVACY SERIOUSLY! 🔒 Our Privacy Policy explains how we collect, use, and protect your data. See the Privacy Policy section on this page. Need more details? Ask away!";
+            } else if (message.includes("cookie") || message.includes("cookie policy")) {
+                return "COOKIES MADE SIMPLE! 🍪 Our Cookie Policy covers how we use cookies to enhance your experience. Check the Cookie Policy section on this page. Any specific questions?";
             } else if (message.includes("contact") || message.includes("get in touch") || message.includes("reach")) {
-                return "LET'S CONNECT! 📞 You can reach us at support@jayisaac.ai, call +1 (800) 555-1234, or fill out the contact form on this page. Want us to reach out to you? Drop your email!";
+                return "LET\'S CONNECT! 📞 Reach us at support@jayisaac.ai or call +1 (800) 555-1234. Want us to reach out? Drop your email!";
             } else if (message.includes("support hours") || message.includes("hours") || message.includes("availability")) {
-                return "WE'RE HERE FOR YOU! 🕒 Our support team is available 24/7 via email (support@jayisaac.ai) or phone (+1 (800) 555-1234). Got a specific question? Let me know!";
+                return "WE\'RE HERE FOR YOU! 🕒 Our support team is available 24/7 via email (support@jayisaac.ai) or phone (+1 (800) 555-1234). Got a specific question? Let me know!";
             } else if (message.includes("demo") || message.includes("schedule demo") || message.includes("try")) {
-                return "READY FOR A MIND-BLOWING DEMO? 🔥 Drop your email, and we'll schedule a personalized demo to show you our AI chatbots in action!";
+                return "READY FOR A MIND-BLOWING DEMO? 🔥 Drop your email, and we\'ll schedule a personalized demo to show you our AI chatbots in action!";
             } else if (message.includes("benefit") || message.includes("feature") || message.includes("what can")) {
-                return "OUR CHATBOTS ARE EPIC! 💪 They cut support costs by 70%, boost sales by 30%, and offer 24/7 engagement. Want to dive deeper? Or prefer to contact our team about this?";
+                return "OUR CHATBOTS ARE EPIC! 💪 They cut support costs by 70%, boost sales by 30%, and offer 24/7 engagement. Want to dive deeper or have a question about our policies?";
             } else if (message.includes("pricing") || message.includes("cost") || message.includes("price")) {
-                return "PRICING THAT PACKS A PUNCH! 🤑 Monthly subs from $99 to $799, or one-time buys from $12K. Want a custom quote? Email us at support@jayisaac.ai!";
+                return "PRICING THAT PACKS A PUNCH! 🤑 Monthly subs from $19 to $499, or one-time buys from $799. Want a custom quote? Email us at support@jayisaac.ai!";
             } else {
-                return "WILD CARD DETECTED! 🃏 I'm ready to help—try asking about contacting our team, support hours, or scheduling a demo. Or just drop your email for a quick response!";
+                return "WILD CARD DETECTED! 🃏 I\'m ready to help—try asking about our terms, privacy policy, cookie policy, or contacting our team. Or just drop your email for a quick response!";
             }
         }
         window.addEventListener('scroll', () => {
@@ -902,14 +846,6 @@
             bubble.style.position = 'fixed';
             bubble.style.bottom = '30px';
             bubble.style.right = '30px';
-        });
-        window.addEventListener('load', () => {
-            console.log('Page loaded, chatbot bubble initialized');
-            const badge = document.querySelector('.notification-badge');
-            if (badge) {
-                badge.style.display = 'flex';
-                console.log('Initial notification badge shown for welcome message');
-            }
         });
     </script>
 </body>
