@@ -357,204 +357,6 @@
     .footer-terms a:hover {
         color: #4b5563;
     }
-    .chatbot-bubble {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 70px;
-        height: 70px;
-        background: #000000;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
-        z-index: 3000;
-        transition: all 0.3s ease;
-        animation: pulseGlow 2s infinite alternate;
-    }
-    @keyframes pulseGlow {
-        0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); }
-        100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5); }
-    }
-    .chatbot-bubble:hover {
-        transform: scale(1.1) rotate(10deg);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.4);
-    }
-    .chatbot-bubble img {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        transition: transform 0.3s ease;
-    }
-    .chatbot-bubble img:hover {
-        transform: rotate(360deg);
-    }
-    .notification-badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background: #ff0000;
-        color: #ffffff;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        z-index: 3100;
-    }
-    .chatbot-window {
-        position: fixed;
-        bottom: 110px;
-        right: 30px;
-        width: 420px;
-        max-height: 650px;
-        background: rgba(0, 0, 0, 0.85);
-        border: 2px solid #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        display: none;
-        flex-direction: column;
-        z-index: 3000;
-        animation: fadeIn 0.5s ease-out;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .chatbot-window.active {
-        display: flex;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(40px) scale(0.95); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .chatbot-header {
-        background: #000000;
-        padding: 1.2rem;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-    .chatbot-header h3 {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .chatbot-header button {
-        background: none;
-        border: none;
-        color: #ffffff;
-        font-size: 1.6rem;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    .chatbot-header button:hover {
-        transform: rotate(90deg);
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-    .chatbot-messages {
-        flex: 1;
-        padding: 1.5rem;
-        overflow-y: auto;
-        background: transparent;
-    }
-    .message {
-        animation: messageFadeIn 0.3s ease-out;
-    }
-    @keyframes messageFadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .message p {
-        background: rgba(255, 255, 255, 0.15);
-        color: #ffffff;
-        padding: 1rem;
-        border-radius: 12px;
-        max-width: 80%;
-        font-size: 1rem;
-        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
-        transition: transform 0.2s ease;
-    }
-    .message.user p {
-        background: #000000;
-        color: #ffffff;
-        margin-left: auto;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-    .message.bot.suggestions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: flex-start;
-    }
-    .message.bot.suggestions button {
-        background: transparent;
-        color: #ffffff;
-        border: 1px solid #ffffff;
-        padding: 0.6rem 1.2rem;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        transform: translateZ(0);
-    }
-    .message.bot.suggestions button:hover {
-        background: #ffffff;
-        color: #000000;
-        transform: scale(1.05) translateZ(5px);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    }
-    .chatbot-input {
-        display: flex;
-        padding: 1rem;
-        background: rgba(0, 0, 0, 0.9);
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
-    .chatbot-input input {
-        flex: 1;
-        padding: 1rem;
-        border: none;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-        font-size: 1rem;
-        margin-right: 1rem;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        transition: box-shadow 0.3s ease;
-    }
-    .chatbot-input input:focus {
-        outline: none;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
-    .chatbot-input button {
-        background: #ffffff;
-        color: #000000;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-    .chatbot-input button:hover {
-        background: #000000;
-        color: #ffffff;
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    }
     @media (max-width: 768px) {
         header {
             padding: 1rem;
@@ -646,52 +448,11 @@
         .footer-terms {
             margin-top: 1rem;
         }
-        .chatbot-window {
-            width: 90%;
-            right: 5%;
-        }
-        .chatbot-bubble {
-            width: 60px;
-            height: 60px;
-        }
-        .chatbot-bubble img {
-            width: 40px;
-            height: 40px;
-        }
-        .notification-badge {
-            width: 20px;
-            height: 20px;
-            font-size: 10px;
-        }
     }
 </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <div class="chatbot-bubble" onclick="toggleChatbot()">
-        <img src="images/chtabot lololol.jpg" alt="Chatbot Icon">
-        <div class="notification-badge" style="display: none;">1</div>
-    </div>
-    <div class="chatbot-window" id="chatbotWindow">
-        <div class="chatbot-header">
-            <h3>JAYISAAC AI Assistant</h3>
-            <button onclick="toggleChatbot()">✕</button>
-        </div>
-        <div class="chatbot-messages" id="chatbotMessages">
-            <div class="message bot">
-                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to answer your questions. Want to talk about our chatbots or need help with something else? Just ask!</p>
-            </div>
-            <div class="message bot suggestions">
-                <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
-                <button onclick="sendMessage('Can I schedule a demo?')">Can I schedule a demo?</button>
-            </div>
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="userInput" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
-            <button onclick="sendMessage(document.getElementById('userInput').value)">Send</button>
-        </div>
-    </div>
     <header>
         <nav>
             <div class="logo">
@@ -714,14 +475,6 @@
                 <div class="info-item">
                     <h3>Email</h3>
                     <p>support@jayisaac.ai</p>
-                </div>
-                <div class="info-item">
-                    <h3>Phone</h3>
-                    <p>+1 (800) 555-1234</p>
-                </div>
-                <div class="info-item">
-                    <h3>Address</h3>
-                    <p>123 AI Avenue, Tech City, TX 12345, USA</p>
                 </div>
             </div>
             <form class="contact-form" onsubmit="return validateForm(event);">
@@ -762,6 +515,8 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         particlesJS('particles-js', {
             particles: {
@@ -815,143 +570,10 @@
             section.style.transition = 'all 0.8s ease-out';
             sectionObserver.observe(section);
         });
-        function toggleChatbot() {
-            const window = document.getElementById('chatbotWindow');
-            window.classList.toggle('active');
-            if (window.classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'none';
-                    console.log('Notification badge hidden on chat open');
-                }
-            }
-        }
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-        function sendMessage(message) {
-            if (!message.trim()) return;
-            console.log('Sending message:', message);
-            const messages = document.getElementById('chatbotMessages');
-            const userInput = document.getElementById('userInput');
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message user';
-            userMessage.innerHTML = `<p>${message}</p>`;
-            messages.appendChild(userMessage);
-            userInput.value = '';
-            setTimeout(() => {
-                const botMessage = document.createElement('div');
-                botMessage.className = 'message bot';
-                let response = getBotResponse(message.toLowerCase());
-                botMessage.innerHTML = `<p>${response}</p>`;
-                messages.appendChild(botMessage);
-                if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                    const badge = document.querySelector('.notification-badge');
-                    if (badge) {
-                        badge.style.display = 'flex';
-                        console.log('Notification badge shown for bot message');
-                    }
-                }
-                if (response.includes('email')) {
-                    const formMessage = document.createElement('div');
-                    formMessage.className = 'message bot';
-                    formMessage.innerHTML = `
-                        <input type="email" id="leadEmail" placeholder="Enter your email...">
-                        <button onclick="submitLead()">Submit</button>
-                    `;
-                    messages.appendChild(formMessage);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for email form');
-                        }
-                    }
-                } else {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'message bot suggestions';
-                    suggestions.innerHTML = `
-                        <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                        <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
-                        <button onclick="sendMessage('Can I schedule a demo?')">Can I schedule a demo?</button>
-                    `;
-                    messages.appendChild(suggestions);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for suggestions');
-                        }
-                    }
-                }
-                messages.scrollTop = messages.scrollHeight;
-            }, 800);
-        }
-        function submitLead() {
-            const emailInput = document.getElementById('leadEmail');
-            const email = emailInput.value.trim();
-            if (!email) return;
-            console.log('Email submitted:', email);
-            const messages = document.getElementById('chatbotMessages');
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot';
-            botMessage.innerHTML = `<p>THANKS A TON! We've locked in your email (${email}) and our team will reach out ASAP! 🔥</p>`;
-            messages.appendChild(botMessage);
-            emailInput.value = '';
-            const suggestions = document.createElement('div');
-            suggestions.className = 'message bot suggestions';
-            suggestions.innerHTML = `
-                <button onclick="sendMessage('How can I contact your team?')">How can I contact your team?</button>
-                <button onclick="sendMessage('What are your support hours?')">What are your support hours?</button>
-            `;
-            messages.appendChild(suggestions);
-            if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'flex';
-                    console.log('Notification badge shown for email submission');
-                }
-            }
-            messages.scrollTop = messages.scrollHeight;
-        }
-        function getBotResponse(message) {
-            if (message.includes("hi") || message.includes("hello") || message.includes("hey")) {
-                return "HEY THERE, CHAMPION! 🚀 I'm JAYISAAC AI, ready to help you connect with our team. Got a question about contacting us or something else? Fire away!";
-            } else if (message.includes("how are you") || message.includes("how you doing")) {
-                return "I'M CRUSHING IT! 💥 Thanks for asking—now let's get you in touch with our awesome team. What's on your mind?";
-            } else if (message.includes("thanks") || message.includes("thank you")) {
-                return "NO PROBS, YOU'RE A LEGEND! 🌟 Need more help with contacting us or exploring our chatbots? Just say the word!";
-            } else if (message.includes("bye") || message.includes("goodbye") || message.includes("see you")) {
-                return "CATCH YOU LATER, ALLIGATOR! 🐊 Come back anytime to connect with our team or learn about our epic AI chatbots!";
-            } else if (message.includes("contact") || message.includes("get in touch") || message.includes("reach")) {
-                return "LET'S CONNECT! 📞 You can reach us at support@jayisaac.ai, call +1 (800) 555-1234, or fill out the contact form on this page. Want us to reach out to you? Drop your email!";
-            } else if (message.includes("support hours") || message.includes("hours") || message.includes("availability")) {
-                return "WE'RE HERE FOR YOU! 🕒 Our support team is available 24/7 via email (support@jayisaac.ai) or phone (+1 (800) 555-1234). Got a specific question? Let me know!";
-            } else if (message.includes("demo") || message.includes("schedule demo") || message.includes("try")) {
-                return "READY FOR A MIND-BLOWING DEMO? 🔥 Drop your email, and we'll schedule a personalized demo to show you our AI chatbots in action!";
-            } else if (message.includes("benefit") || message.includes("feature") || message.includes("what can")) {
-                return "OUR CHATBOTS ARE EPIC! 💪 They cut support costs by 70%, boost sales by 30%, and offer 24/7 engagement. Want to dive deeper? Or prefer to contact our team about this?";
-            } else if (message.includes("pricing") || message.includes("cost") || message.includes("price")) {
-                return "PRICING THAT PACKS A PUNCH! 🤑 Monthly subs from $99 to $799, or one-time buys from $12K. Want a custom quote? Email us at support@jayisaac.ai!";
-            } else {
-                return "WILD CARD DETECTED! 🃏 I'm ready to help—try asking about contacting our team, support hours, or scheduling a demo. Or just drop your email for a quick response!";
-            }
-        }
-        window.addEventListener('scroll', () => {
-            const bubble = document.querySelector('.chatbot-bubble');
-            bubble.style.position = 'fixed';
-            bubble.style.bottom = '30px';
-            bubble.style.right = '30px';
-        });
-        window.addEventListener('load', () => {
-            console.log('Page loaded, chatbot bubble initialized');
-            const badge = document.querySelector('.notification-badge');
-            if (badge) {
-                badge.style.display = 'flex';
-                console.log('Initial notification badge shown for welcome message');
-            }
-        });
     </script>
 </body>
 </html>

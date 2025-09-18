@@ -27,9 +27,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Moved behind all content */
+            z-index: -1;
             background: transparent;
-            pointer-events: none; /* Prevents blocking clicks */
+            pointer-events: none;
         }
         .particle-space {
             height: 100vh;
@@ -138,23 +138,23 @@
         .video1 {
             padding: 4rem 0;
             text-align: center;
-            z-index: 10; /* Increased to ensure above particles */
-            margin-top: 100px; /* Adjusted for fixed header */
+            z-index: 10;
+            margin-top: 100px;
         }
         .video1 .content-section {
-            max-width: 100%; /* Allow video to break out of 1400px constraint */
-            padding: 0; /* Remove padding to maximize video size */
+            max-width: 100%;
+            padding: 0;
         }
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            max-width: 1800px; /* Ultra-large base size */
-            width: 98vw; /* Nearly full viewport width */
-            margin: 0 auto; /* Perfectly centered */
-            z-index: 10; /* Ensure above particles */
-            pointer-events: auto; /* Allow interaction */
+            max-width: 1800px;
+            width: 98vw;
+            margin: 0 auto;
+            z-index: 10;
+            pointer-events: auto;
         }
         .video-container iframe {
             position: absolute;
@@ -162,7 +162,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: auto; /* Ensure clickable */
+            pointer-events: auto;
         }
         .video-container figure {
             margin: 0;
@@ -338,213 +338,6 @@
         .footer-terms a:hover {
             color: #4b5563;
         }
-        .chatbot-bubble {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: #000000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
-            z-index: 3000;
-            transition: all 0.3s ease;
-            animation: pulseGlow 2s infinite alternate;
-        }
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); }
-            100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5); }
-        }
-        .chatbot-bubble:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.4);
-        }
-        .chatbot-bubble img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-        .chatbot-bubble img:hover {
-            transform: rotate(360deg);
-        }
-        .notification-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #ff0000;
-            color: #ffffff;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-            z-index: 3100;
-        }
-        .chatbot-window {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 420px;
-            max-height: 650px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-            display: none;
-            flex-direction: column;
-            z-index: 3000;
-            animation: fadeIn 0.5s ease-out;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        .chatbot-window.active {
-            display: flex;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .chatbot-header {
-            background: #000000;
-            padding: 1.2rem;
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-        .chatbot-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-        .chatbot-header img:hover {
-            transform: rotate(360deg);
-        }
-        .chatbot-header h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-        }
-        .chatbot-header button {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .chatbot-header button:hover {
-            transform: rotate(90deg);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        .chatbot-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            background: transparent;
-        }
-        .message {
-            animation: messageFadeIn 0.3s ease-out;
-        }
-        @keyframes messageFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .message p {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            padding: 1rem;
-            border-radius: 12px;
-            max-width: 80%;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
-            transition: transform 0.2s ease;
-        }
-        .message.user p {
-            background: #000000;
-            color: #ffffff;
-            margin-left: auto;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        .message.bot.suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: flex-start;
-        }
-        .message.bot.suggestions button {
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            transform: translateZ(0);
-        }
-        .message.bot.suggestions button:hover {
-            background: #ffffff;
-            color: #000000;
-            transform: scale(1.05) translateZ(5px);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-        .chatbot-input {
-            display: flex;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.9);
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-        .chatbot-input input {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            font-size: 1rem;
-            margin-right: 1rem;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            transition: box-shadow 0.3s ease;
-        }
-        .chatbot-input input:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-        }
-        .chatbot-input button {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        .chatbot-input button:hover {
-            background: #000000;
-            color: #ffffff;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
@@ -580,7 +373,7 @@
                 padding: 2rem 0;
             }
             .video-container {
-                width: 100vw; /* Full width on mobile */
+                width: 100vw;
             }
             .what-we-do {
                 margin-top: 120px;
@@ -622,37 +415,13 @@
             .footer-terms {
                 margin-top: 1rem;
             }
-            .chatbot-window {
-                width: 90%;
-                right: 5%;
-            }
-            .chatbot-bubble {
-                width: 60px;
-                height: 60px;
-            }
-            .chatbot-bubble img {
-                width: 40px;
-                height: 40px;
-            }
-            .chatbot-header img {
-                width: 35px;
-                height: 35px;
-            }
-            .scroll-down-text {
-                font-size: 1.2rem;
-            }
-            .notification-badge {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-            }
             .content-section {
                 padding: 1rem;
             }
         }
         @media (max-width: 1850px) {
             .video-container {
-                width: 95vw; /* Slightly smaller for medium screens */
+                width: 95vw;
             }
         }
     </style>
@@ -662,31 +431,6 @@
     <section class="particle-space">
         <div class="scroll-down-text" id="scrollDownText">Scroll Down</div>
     </section>
-    <div class="chatbot-bubble" onclick="toggleChatbot()">
-        <img src="images/chtabot lololol.jpg" alt="Chatbot Icon">
-        <div class="notification-badge" style="display: none;">1</div>
-    </div>
-    <div class="chatbot-window" id="chatbotWindow">
-        <div class="chatbot-header">
-            <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Assistant">
-            <h3>JAYISAAC AI Assistant</h3>
-            <button onclick="toggleChatbot()">✕</button>
-        </div>
-        <div class="chatbot-messages" id="chatbotMessages">
-            <div class="message bot">
-                <p>WELCOME TO THE ULTIMATE AI CHATBOT EXPERIENCE! 🚀 I'm JAYISAAC AI, your supercharged assistant ready to blow your mind with our epic chatbots. Ask me ANYTHING about how they can revolutionize your business—features, pricing, integrations, or even wild custom ideas!</p>
-            </div>
-            <div class="message bot suggestions">
-                <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
-                <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
-                <button onclick="sendMessage('How can I try a chatbot?')">How can I try a chatbot?</button>
-            </div>
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="userInput" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
-            <button onclick="sendMessage(document.getElementById('userInput').value)">Send</button>
-        </div>
-    </div>
     <header>
         <nav>
             <div class="logo">
@@ -763,6 +507,8 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         particlesJS('particles-js', {
             particles: {
@@ -811,163 +557,10 @@
             section.style.transition = 'all 0.8s ease-out';
             sectionObserver.observe(section);
         });
-        function toggleChatbot() {
-            const window = document.getElementById('chatbotWindow');
-            window.classList.toggle('active');
-            if (window.classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'none';
-                    console.log('Notification badge hidden on chat open');
-                }
-            }
-        }
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-        function sendMessage(message) {
-            if (!message.trim()) return;
-            console.log('Sending message:', message);
-            const messages = document.getElementById('chatbotMessages');
-            const userInput = document.getElementById('userInput');
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message user';
-            userMessage.innerHTML = `<p>${message}</p>`;
-            messages.appendChild(userMessage);
-            userInput.value = '';
-            setTimeout(() => {
-                const botMessage = document.createElement('div');
-                botMessage.className = 'message bot';
-                let response = getBotResponse(message.toLowerCase());
-                botMessage.innerHTML = `<p>${response}</p>`;
-                messages.appendChild(botMessage);
-                if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                    const badge = document.querySelector('.notification-badge');
-                    if (badge) {
-                        badge.style.display = 'flex';
-                        console.log('Notification badge shown for bot message');
-                    }
-                }
-                if (response.includes('email')) {
-                    const formMessage = document.createElement('div');
-                    formMessage.className = 'message bot';
-                    formMessage.innerHTML = `
-                        <input type="email" id="leadEmail" placeholder="Enter your email...">
-                        <button onclick="submitLead()">Submit</button>
-                    `;
-                    messages.appendChild(formMessage);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for email form');
-                        }
-                    }
-                } else {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'message bot suggestions';
-                    suggestions.innerHTML = `
-                        <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
-                        <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
-                        <button onclick="sendMessage('How can I try a chatbot?')">How can I try a chatbot?</button>
-                    `;
-                    messages.appendChild(suggestions);
-                    if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                        const badge = document.querySelector('.notification-badge');
-                        if (badge) {
-                            badge.style.display = 'flex';
-                            console.log('Notification badge shown for suggestions');
-                        }
-                    }
-                }
-                messages.scrollTop = messages.scrollHeight;
-            }, 800);
-        }
-        function submitLead() {
-            const emailInput = document.getElementById('leadEmail');
-            const email = emailInput.value.trim();
-            if (!email) return;
-            console.log('Email submitted:', email);
-            const messages = document.getElementById('chatbotMessages');
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot';
-            botMessage.innerHTML = `<p>THANKS A TON! We've locked in your email (${email}) and our team will blast you with details to kick off your epic trial or demo ASAP! 🔥</p>`;
-            messages.appendChild(botMessage);
-            emailInput.value = '';
-            const suggestions = document.createElement('div');
-            suggestions.className = 'message bot suggestions';
-            suggestions.innerHTML = `
-                <button onclick="sendMessage('What benefits do your chatbots offer?')">What benefits do your chatbots offer?</button>
-                <button onclick="sendMessage('What are the pricing options?')">What are the pricing options?</button>
-            `;
-            messages.appendChild(suggestions);
-            if (!document.getElementById('chatbotWindow').classList.contains('active')) {
-                const badge = document.querySelector('.notification-badge');
-                if (badge) {
-                    badge.style.display = 'flex';
-                    console.log('Notification badge shown for email submission');
-                }
-            }
-            messages.scrollTop = messages.scrollHeight;
-        }
-        function getBotResponse(message) {
-            if (message.includes('hi') || message.includes('hello') || message.includes('hey')) {
-                return 'HEY THERE, CHAMPION! 🚀 I\'m JAYISAAC AI, your supercharged assistant ready to unleash the power of our mind-blowing chatbots on your business. What\'s the first epic question on your mind?';
-            } else if (message.includes('how are you') || message.includes('how you doing')) {
-                return 'I\'m ON FIRE, ABSOLUTELY CRUSHING IT! 💥 Thanks for asking—now let\'s get you fired up about our AI chatbots. Shoot me your burning questions on features, pricing, or demos!';
-            } else if (message.includes('thanks') || message.includes('thank you')) {
-                return 'NO PROBS, YOU\'RE A LEGEND! 🌟 Anything else I can supercharge for you? Dive into our chatbot features or snag a demo?';
-            } else if (message.includes('bye') || message.includes('goodbye') || message.includes('see you')) {
-                return 'CATCH YOU LATER, ALLIGATOR! 🐊 Don\'t be a stranger—come back anytime to conquer the world with our AI chatbots. If you need a demo, just say the word!';
-            } else if (message.includes('benefit') || message.includes('what can') || message.includes('do') || message.includes('feature')) {
-                return 'OUR CHATBOTS ARE BEAST MODE ACTIVATED! 💪 They slash support costs by 70%, skyrocket sales by 30%, deliver 24/7 engagement, personalized recs, CRM integration, and more. Tell me what feature you want to deep-dive into!';
-            } else if (message.includes('pricing') || message.includes('cost') || message.includes('price') || message.includes('how much')) {
-                return 'PRICING THAT PACKS A PUNCH! 🤑 Flexible monthly subs from $99 to $799, or one-time buys starting at $12K—customized to crush your goals. Need a tailor-made quote? Drop your email and let\'s make magic happen!';
-            } else if (message.includes('try') || message.includes('demo') || message.includes('test')) {
-                return 'LET\'S IGNITE THIS! 🔥 I\'ll hook you up with a FREE trial or live demo that\'ll blow your socks off. Share your email, and we\'ll launch it into orbit!';
-            } else if (message.includes('integrate') || message.includes('website') || message.includes('platform')) {
-                return 'INTEGRATION SO SMOOTH IT\'S LIKE BUTTER! 🧈 Hooks up seamlessly with Shopify, WordPress, custom sites—you name it. Matches your brand vibe perfectly. Got a specific platform in mind?';
-            } else if (message.includes('support') || message.includes('customer service') || message.includes('helpdesk')) {
-                return 'SUPPORT ON STEROIDS! ⚡ 24/7 FAQ blasting, user guiding, response times obliterated—cut costs by 70%! Ready to level up your customer game?';
-            } else if (message.includes('sales') || message.includes('conversion') || message.includes('revenue')) {
-                return 'SALES EXPLOSION INCOMING! 💣 Engage visitors like a boss, product recs that convert, guide to checkout—30% growth guaranteed! How can we amp up your revenue?';
-            } else if (message.includes('custom') || message.includes('personalize') || message.includes('tailor')) {
-                return 'CUSTOMIZATION OVERDRIVE! 🎨 Tailor the voice, design, flows—make it YOURS. From basic tweaks to insane overhauls, we got you. What\'s your vision?';
-            } else if (message.includes('scale') || message.includes('grow') || message.includes('business size')) {
-                return 'SCALE LIKE A ROCKET! 🚀 From startup hustle to enterprise domination, handles massive traffic without flinching. Grow without limits—let\'s talk your expansion plans!';
-            } else if (message.includes('technical') || message.includes('tech') || message.includes('how it works')) {
-                return 'TECH DEEP DIVE ACTIVATED! 🤖 Powered by cutting-edge AI for real-time smarts, CRM syncs, and bulletproof security. Want the nitty-gritty on APIs or algo magic?';
-            } else if (message.includes('compare') || message.includes('different') || message.includes('competitor')) {
-                return 'WE CRUSH THE COMPETITION! 🏆 Better pricing, insane integration, customization that slays. Spill the deets on who you\'re comparing, and I\'ll show why JAYISAAC reigns supreme!';
-            } else if (message.includes('contact') || message.includes('talk') || message.includes('more info')) {
-                return 'LET\'S CONNECT AND CONQUER! 📞 Drop your email, and our elite team will hit you with all the intel, demos, or custom plans you need. Ready to dominate?';
-            } else if (message.includes('joke') || message.includes('funny') || message.includes('tell me a joke')) {
-                return 'WHY DID THE CHATBOT BREAK UP WITH THE INTERNET? It had too many bad connections! 😂 Now, back to business—how can our AI chatbots make YOUR day epic?';
-            } else if (message.includes('weather') || message.includes('time') || message.includes('news')) {
-                return 'WHOA, THAT\'S OUTSIDE MY AI FORTRESS! But I can tell you our chatbots are always sunny-side up for your business. Redirect to chatbot awesomeness—what\'s your question?';
-            } else if (message.includes('bad') || message.includes('suck') || message.includes('hate')) {
-                return 'OOF, THAT HURTS! 😤 But I\'m here to turn that frown upside down. Tell me what\'s bugging you about chatbots, and I\'ll show how ours fix it like a boss!';
-            } else if (message.includes('good') || message.includes('awesome') || message.includes('love')) {
-                return 'YOU\'RE MAKING ME BLUSH! 😎 Glad you\'re vibing with it. Let\'s amp it up—what feature or demo can I unleash to make it even more legendary?';
-            } else {
-                return 'WILD CARD DETECTED! 🃏 I\'m locked and loaded for any chatbot query, but that one\'s a curveball. Rephrase or try benefits, pricing, demos—or email me for custom firepower!';
-            }
-        }
-        window.addEventListener('scroll', () => {
-            const bubble = document.querySelector('.chatbot-bubble');
-            bubble.style.position = 'fixed';
-            bubble.style.bottom = '30px';
-            bubble.style.right = '30px';
-        });
-        window.addEventListener('load', () => {
-            console.log('Page loaded, chatbot bubble initialized');
-            const badge = document.querySelector('.notification-badge');
-            if (badge) {
-                badge.style.display = 'flex';
-                console.log('Initial notification badge shown for welcome message');
-            }
-        });
     </script>
 </body>
 </html>
