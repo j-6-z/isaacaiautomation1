@@ -7,11 +7,11 @@
       "config": { "maxLambdaSize": "50mb" }
     },
     {
-      "src": "*.html",
+      "src": "**/*.html",
       "use": "@vercel/static"
     },
     {
-      "src": "images/*",
+      "src": "images/**",
       "use": "@vercel/static"
     }
   ],
