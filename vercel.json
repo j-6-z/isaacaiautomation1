@@ -2,9 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "api/index.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb", "includeFiles": ["app.py", "*.html", "images/*"] }
+      "config": { 
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["app.py", "*.html", "images/*"]
+      }
     },
     {
       "src": "*.html",
@@ -17,9 +20,9 @@
   ],
   "routes": [
     {
-      "src": "/(create_payment|execute_payment|debug|success|cancel)",
+      "src": "^/(create_payment|execute_payment|debug|success|cancel)$",
       "methods": ["GET", "POST", "OPTIONS"],
-      "dest": "app.py",
+      "dest": "api/index.py",
       "headers": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -28,9 +31,9 @@
       }
     },
     {
-      "src": "/api/.*",
+      "src": "^/api/.*$",
       "methods": ["GET", "POST", "OPTIONS"],
-      "dest": "app.py",
+      "dest": "api/index.py",
       "headers": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -39,19 +42,39 @@
       }
     },
     {
-      "src": "/(index|Purchasepage|pricing|contact|TOS_SUCH|receipt)\\.html",
-      "dest": "$1.html"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "images/$1"
-    },
-    {
-      "src": "/",
+      "src": "^/index\\.html$",
       "dest": "index.html"
     },
     {
-      "src": "/.*",
+      "src": "^/Purchasepage\\.html$",
+      "dest": "Purchasepage.html"
+    },
+    {
+      "src": "^/pricing\\.html$",
+      "dest": "pricing.html"
+    },
+    {
+      "src": "^/contact\\.html$",
+      "dest": "contact.html"
+    },
+    {
+      "src": "^/TOS_SUCH\\.html$",
+      "dest": "TOS_SUCH.html"
+    },
+    {
+      "src": "^/receipt\\.html$",
+      "dest": "receipt.html"
+    },
+    {
+      "src": "^/images/(.*)$",
+      "dest": "images/$1"
+    },
+    {
+      "src": "^/$",
+      "dest": "index.html"
+    },
+    {
+      "src": "^/.*$",
       "dest": "index.html"
     }
   ]
