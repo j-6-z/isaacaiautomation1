@@ -139,10 +139,6 @@
         overflow: hidden;
         cursor: pointer;
     }
-    .subscription-option {
-        background: #f0f4ff;
-        border: 1px solid #d3e0ff;
-    }
     .purchase-option {
         background: #f4fff7;
         border: 1px solid #c4f0d5;
@@ -363,18 +359,6 @@
         <div class="payment-section">
             <h2>Choose Your Plan</h2>
             <div class="payment-options">
-                <div class="option subscription-option" data-plan="basic-subscription">
-                    <label>Basic Monthly Subscription</label>
-                    <p>$19/month - Perfect for small businesses with up to 2,000 interactions, including basic support and standard features.</p>
-                </div>
-                <div class="option subscription-option" data-plan="mid-tier-subscription">
-                    <label>Mid-Tier Monthly Subscription</label>
-                    <p>$99/month - Ideal for growing businesses with up to 10,000 interactions, featuring CRM integration and priority support.</p>
-                </div>
-                <div class="option subscription-option" data-plan="premium-subscription">
-                    <label>Premium Monthly Subscription</label>
-                    <p>$499/month - Designed for high-volume needs with 10,000+ interactions, full customization, and dedicated account management.</p>
-                </div>
                 <div class="option purchase-option selected" data-plan="basic-purchase">
                     <label>Basic One-Time Purchase</label>
                     <p>$799 - Own a custom chatbot with lifetime access and 1 year of basic support.</p>
@@ -497,12 +481,6 @@
 
             function getPlanDetails(planValue) {
                 switch (planValue) {
-                    case 'basic-subscription':
-                        return { amount: 19, description: 'Basic Monthly Subscription', isSubscription: true };
-                    case 'mid-tier-subscription':
-                        return { amount: 99, description: 'Mid-Tier Monthly Subscription', isSubscription: true };
-                    case 'premium-subscription':
-                        return { amount: 499, description: 'Premium Monthly Subscription', isSubscription: true };
                     case 'basic-purchase':
                         return { amount: 799, description: 'Basic One-Time Purchase', isSubscription: false };
                     case 'standard-purchase':
@@ -517,7 +495,7 @@
             function updatePriceDisplay(planValue) {
                 const planDetails = getPlanDetails(planValue);
                 const formattedAmount = planDetails.amount.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
-                priceDisplay.textContent = `You will be charged: ${formattedAmount}${planDetails.isSubscription ? '/month' : ''}`;
+                priceDisplay.textContent = `You will be charged: ${formattedAmount}`;
             }
 
             let currentPlan = 'basic-purchase';
@@ -714,12 +692,13 @@
                         console.log('Plan details:', planDetails);
 
                         try {
+                            const apiBaseUrl = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://www.jayisaacai.com';
                             console.log('Sending payment request to server:', { 
                                 plan: currentPlan, 
                                 account_type: formData.accountType, 
                                 form_data: formData 
                             });
-                            const response = await fetch('http://localhost:5000/create_payment', {
+                            const response = await fetch(`${apiBaseUrl}/create_payment`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -729,9 +708,9 @@
                                 })
                             });
 
-                            console.log('Server response status:', response.status);
+                            console.log('Server response status:', response.status, 'OK:', response.ok);
                             const result = await response.json();
-                            console.log('Server response data:', result);
+                            console.log('Server response data:', JSON.stringify(result, null, 2));
 
                             if (!response.ok || result.error) {
                                 console.error('Server error:', result.error, result.details || '');
@@ -739,38 +718,24 @@
                                 throw new Error(result.error || 'Server error');
                             }
 
-                            if (planDetails.isSubscription) {
-                                if (result.approval_url) {
-                                    console.log('Redirecting to approval URL for subscription:', result.approval_url);
-                                    window.location.href = result.approval_url;
-                                    return; // Exit for subscriptions
-                                }
-                                console.error('No approval_url in response for subscription');
-                                alert('Failed to initiate subscription: No approval URL provided');
-                                throw new Error('No approval URL provided');
-                            } else {
-                                if (result.order_id && typeof result.order_id === 'string') {
-                                    console.log('Returning order_id for one-time payment:', result.order_id);
-                                    return result.order_id; // Return order_id for one-time payments
-                                }
-                                console.error('Invalid or missing order_id in response:', result);
-                                alert('Failed to initiate payment: Invalid or missing order ID');
-                                throw new Error('Invalid or missing order ID');
+                            if (result.order_id && typeof result.order_id === 'string' && result.order_id.match(/^[0-9A-Z]{8,}$/)) {
+                                console.log('Returning valid order_id for one-time payment:', result.order_id);
+                                return result.order_id;
                             }
+                            console.error('Invalid or missing order_id in response:', result);
+                            alert('Failed to initiate payment: Invalid or missing Order ID');
+                            throw new Error('Invalid or missing Order ID');
                         } catch (error) {
-                            console.error('Error in createOrder:', error);
+                            console.error('Error in createOrder:', error.message, error.stack);
                             alert('Error initiating payment: ' + error.message);
                             throw error;
                         }
                     },
                     onApprove: async function(data, actions) {
-                        if (getPlanDetails(currentPlan).isSubscription) {
-                            console.log('Subscription approval handled via redirect, skipping onApprove');
-                            return;
-                        }
                         try {
+                            const apiBaseUrl = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://www.jayisaacai.com';
                             console.log('Executing one-time payment for orderID:', data.orderID, 'payerID:', data.payerID);
-                            const response = await fetch('http://localhost:5000/execute_payment', {
+                            const response = await fetch(`${apiBaseUrl}/execute_payment`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -779,26 +744,26 @@
                                 })
                             });
                             const result = await response.json();
-                            console.log('Execute payment response:', result);
+                            console.log('Execute payment response:', JSON.stringify(result, null, 2));
                             if (result.status === 'success') {
                                 console.log('Payment executed successfully:', result.payment_id);
                                 alert('Payment completed successfully!');
-                                window.location.href = '/success';
+                                window.location.href = `${apiBaseUrl}/success`;
                             } else {
                                 console.error('Payment execution failed:', result.error, result.details || '');
                                 alert(`Payment failed: ${result.error || 'Unknown error'}${result.details ? ` (${result.details})` : ''}`);
                             }
                         } catch (error) {
-                            console.error('Error executing payment:', error);
+                            console.error('Error executing payment:', error.message, error.stack);
                             alert('Payment failed: ' + error.message);
                         }
                     },
                     onError: function(err) {
-                        console.error('PayPal SDK error:', err);
+                        console.error('PayPal SDK error:', err.message, err.stack);
                         alert('An error occurred during payment: ' + err.message);
                     }
                 }).render('#paypal-button-container').catch(err => {
-                    console.error('PayPal button render failed:', err);
+                    console.error('PayPal button render failed:', err.message, err.stack);
                     alert('Failed to render PayPal button. Please try again later.');
                 });
             } else {
