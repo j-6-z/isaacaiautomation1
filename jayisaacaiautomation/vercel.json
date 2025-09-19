@@ -26,15 +26,35 @@
       "dest": "app.py"
     },
     {
-      "src": "/(index.html|Purchasepage.html|pricing.html|contact.html|TOS_SUCH.html|receipt.html)",
-      "dest": "$1"
+      "src": "/Purchasepage.html",
+      "dest": "Purchasepage.html"
+    },
+    {
+      "src": "/index.html",
+      "dest": "index.html"
+    },
+    {
+      "src": "/pricing.html",
+      "dest": "pricing.html"
+    },
+    {
+      "src": "/contact.html",
+      "dest": "contact.html"
+    },
+    {
+      "src": "/TOS_SUCH.html",
+      "dest": "TOS_SUCH.html"
+    },
+    {
+      "src": "/receipt.html",
+      "dest": "receipt.html"
     },
     {
       "src": "/images/(.*)",
       "dest": "images/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "index.html"
     }
   ]

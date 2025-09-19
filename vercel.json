@@ -2,8 +2,9 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "50mb" }
     },
     {
       "src": "*.html",
@@ -16,20 +17,46 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
+      "src": "/(create_payment|execute_payment|debug|success|cancel)",
+      "methods": ["GET", "POST"],
+      "dest": "app.py"
     },
     {
-      "src": "/(.*\\.html)",
-      "dest": "/$1"
+      "src": "/api/(.*)",
+      "methods": ["GET", "POST"],
+      "dest": "app.py"
+    },
+    {
+      "src": "/Purchasepage.html",
+      "dest": "Purchasepage.html"
+    },
+    {
+      "src": "/index.html",
+      "dest": "index.html"
+    },
+    {
+      "src": "/pricing.html",
+      "dest": "pricing.html"
+    },
+    {
+      "src": "/contact.html",
+      "dest": "contact.html"
+    },
+    {
+      "src": "/TOS_SUCH.html",
+      "dest": "TOS_SUCH.html"
+    },
+    {
+      "src": "/receipt.html",
+      "dest": "receipt.html"
     },
     {
       "src": "/images/(.*)",
-      "dest": "/images/$1"
+      "dest": "images/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "index.html"
     }
   ]
 }
