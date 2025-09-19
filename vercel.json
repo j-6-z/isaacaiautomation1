@@ -4,7 +4,7 @@
     {
       "src": "app.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb" }
+      "config": { "maxLambdaSize": "50mb", "includeFiles": ["app.py", "*.html", "images/*"] }
     },
     {
       "src": "*.html",
@@ -17,61 +17,41 @@
   ],
   "routes": [
     {
-      "src": "^/(create_payment|execute_payment|debug|success|cancel)$",
-      "methods": ["GET", "POST"],
-      "dest": "app.py",
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Content-Type": "application/json"
-      }
-    },
-    {
-      "src": "^/api/.*$",
+      "src": "/(create_payment|execute_payment|debug|success|cancel)",
       "methods": ["GET", "POST", "OPTIONS"],
       "dest": "app.py",
       "headers": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Content-Type": "application/json"
       }
     },
     {
-      "src": "^/index\\.html$",
-      "dest": "index.html"
+      "src": "/api/.*",
+      "methods": ["GET", "POST", "OPTIONS"],
+      "dest": "app.py",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Content-Type": "application/json"
+      }
     },
     {
-      "src": "^/Purchasepage\\.html$",
-      "dest": "Purchasepage.html"
+      "src": "/(index|Purchasepage|pricing|contact|TOS_SUCH|receipt)\\.html",
+      "dest": "$1.html"
     },
     {
-      "src": "^/pricing\\.html$",
-      "dest": "pricing.html"
-    },
-    {
-      "src": "^/contact\\.html$",
-      "dest": "contact.html"
-    },
-    {
-      "src": "^/TOS_SUCH\\.html$",
-      "dest": "TOS_SUCH.html"
-    },
-    {
-      "src": "^/receipt\\.html$",
-      "dest": "receipt.html"
-    },
-    {
-      "src": "^/images/(.*)$",
+      "src": "/images/(.*)",
       "dest": "images/$1"
     },
     {
-      "src": "^/$",
+      "src": "/",
       "dest": "index.html"
     },
     {
-      "src": "^/.*$",
+      "src": "/.*",
       "dest": "index.html"
     }
   ]
