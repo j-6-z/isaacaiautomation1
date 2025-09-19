@@ -117,8 +117,9 @@
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid #e6e6ff;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
         .subscription-option {
             background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
@@ -126,14 +127,21 @@
         .one-time-option {
             background: linear-gradient(135deg, #f0fff7 0%, #e6fafa 100%);
         }
+        .option:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            border-color: #3b4de6;
+            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
+        }
         .option.selected {
             border: 2px solid #3b4de6;
             transform: scale(1.02);
             box-shadow: 0 4px 12px rgba(59, 77, 230, 0.2);
+            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
-        .option:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .subscription-option:hover,
+        .one-time-option:hover {
+            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
         .option label {
             font-size: 1.3rem;
@@ -482,8 +490,8 @@
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
 
-            // Initialize Stripe
-            const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your Stripe test publishable key
+            // Initialize Stripe with publishable key
+            const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your publishable key
             const elements = stripe.elements();
             const card = elements.create('card', {
                 style: {
@@ -759,13 +767,17 @@
 
                     if (!paymentResponse.ok || paymentResult.error) {
                         console.error('Payment error:', paymentResult.error || 'Unknown error');
-                        alert(`Payment failed: ${paymentResult.error || 'Server error'}`);
+                        let errorMessage = paymentResult.error || 'Server error';
+                        if (paymentResult.error?.includes('api_key')) {
+                            errorMessage = 'Payment blocked due to an issue with the server configuration. Please contact support.';
+                        }
+                        alert(`Payment failed: ${errorMessage}`);
                         return;
                     }
 
                     console.log('Payment successful:', paymentResult);
                     alert('Purchase completed successfully! We will contact you soon.');
-                    window.location.href = '/success.html';
+                    window.location.href = '/receipt.html'; // Redirect to receipt page
                     orderForm.reset();
                     card.clear();
                     toggleFields();
@@ -778,7 +790,7 @@
                     updatePriceDisplay(currentPlan);
                 } catch (error) {
                     console.error('Submission error:', error.message);
-                    alert('Error processing purchase: ' + error.message);
+                    alert('Error processing purchase: ' + (error.message.includes('api_key') ? 'Server configuration issue. Please contact support.' : error.message));
                 }
             });
         });

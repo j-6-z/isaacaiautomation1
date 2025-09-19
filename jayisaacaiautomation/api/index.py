@@ -1,3 +1,4 @@
+```python
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
@@ -25,10 +26,18 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Set Stripe API key (add to Vercel environment variables)
-stripe.api_key = os.environ.get('sk_test_51S94dt40fBt8mCexAupOMzcDR1hOvIBnccrLZT57ZI8CB7fMwmcvNCDKA5kPv8B5L9MiNuEieP8O3OZnbFxz8aWc00M2leWPtK')
+# Set Stripe API key from environment variable
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 if not stripe.api_key:
     logger.error("Missing STRIPE_SECRET_KEY environment variable")
+    raise ValueError("STRIPE_SECRET_KEY environment variable is not set")
+
+# Map plan names to Stripe Price IDs (replace with actual Price IDs from Stripe Dashboard)
+PLAN_PRICE_IDS = {
+    'basic-monthly': 'price_basic_monthly',  # Replace with actual Price ID (e.g., price_123...)
+    'standard-monthly': 'price_standard_monthly',
+    'enterprise-monthly': 'price_enterprise_monthly'
+}
 
 @app.route('/api/debug', methods=['GET'])
 def debug():
@@ -94,25 +103,37 @@ def process_payment():
             logger.error("Missing fields - plan: %s, plan_type: %s, amount: %s, stripe_token: %s", plan, plan_type, amount, stripe_token)
             return jsonify({"error": "Missing required fields"}), 400
 
-        if not stripe.api_key:
-            logger.error("Stripe API key not configured")
-            return jsonify({"error": "Server configuration error: Missing Stripe key"}), 500
+        # Validate plan and amount
+        valid_plans = {
+            'basic-monthly': 4900,
+            'standard-monthly': 14900,
+            'enterprise-monthly': 49900,
+            'basic-purchase': 79900,
+            'standard-purchase': 999900,
+            'enterprise-purchase': 2500000
+        }
+        if plan not in valid_plans or valid_plans[plan] != amount:
+            logger.error("Invalid plan or amount - plan: %s, amount: %s", plan, amount)
+            return jsonify({"error": "Invalid plan or amount"}), 400
 
         try:
             # Extract email from form data
             email = form_data.get('email') if form_data.get('accountType') == 'personal' else form_data.get('businessEmail')
 
             if is_subscription:
+                if plan not in PLAN_PRICE_IDS:
+                    logger.error("No Price ID for plan: %s", plan)
+                    return jsonify({"error": f"No Price ID configured for plan {plan}"}), 400
+
                 # Create customer
                 customer = stripe.Customer.create(
                     email=email,
                     source=stripe_token
                 )
-                # Create subscription (assumes plan ID like 'basic-monthly' is a recurring price in Stripe)
+                # Create subscription
                 subscription = stripe.Subscription.create(
                     customer=customer.id,
-                    items=[{'price': plan}],  # Use 'price' instead of 'plan' for modern Stripe API
-                    billing_cycle_anchor=stripe.utils.utc_now(),
+                    items=[{'price': PLAN_PRICE_IDS[plan]}],
                     expand=['latest_invoice.payment_intent']
                 )
                 logger.debug("Subscription created: %s", subscription.id)
@@ -127,9 +148,15 @@ def process_payment():
                 )
                 logger.debug("Charge created: %s", charge.id)
                 return jsonify({"status": "success", "charge_id": charge.id}), 200
-        except stripe.error.StripeError as e:
-            logger.error("Stripe error: %s", str(e))
+        except stripe.error.AuthenticationError as e:
+            logger.error("Stripe authentication error: %s", str(e))
+            return jsonify({"error": "Server configuration error: Invalid Stripe API key"}), 401
+        except stripe.error.InvalidRequestError as e:
+            logger.error("Stripe invalid request: %s", str(e))
             return jsonify({"error": f"Payment failed: {str(e)}"}), 400
+        except stripe.error.CardError as e:
+            logger.error("Stripe card error: %s", str(e))
+            return jsonify({"error": f"Payment declined: {str(e)}"}), 402
         except Exception as e:
             logger.error("Unexpected Stripe exception: %s", str(e))
             return jsonify({"error": f"Payment processing error: {str(e)}"}), 500
@@ -146,5 +173,3 @@ def success():
 def hello():
     logger.debug("Serving /api")
     return jsonify({"message": "Hello from Flask on Vercel!"})
-
-# Vercel handles serverless execution; no app.run() needed
