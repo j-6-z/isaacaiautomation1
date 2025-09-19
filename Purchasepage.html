@@ -407,17 +407,17 @@
             </div>
             <div id="business-fields" class="field-group">
                 <div class="form-group">
-                    <input type="text" id="company-name" name="company-name" placeholder=" " required>
+                    <input type="text" id="company-name" name="company-name" placeholder=" ">
                     <label for="company-name">Company Name</label>
                     <div class="error-message" id="company-name-error">Please enter your company name.</div>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="business-email" name="business-email" placeholder=" " required>
+                    <input type="email" id="business-email" name="business-email" placeholder=" ">
                     <label for="business-email">Business Email</label>
                     <div class="error-message" id="business-email-error">Please enter a valid business email address.</div>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder=" " required>
+                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder=" ">
                     <label for="business-verify-email">Verify Business Email</label>
                     <div class="error-message" id="business-verify-email-error">Business Emails do not match.</div>
                 </div>
@@ -440,7 +440,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Page loaded, initializing particles and Stripe');
 
-            // Initialize particles.js
+            // Initialize particles.js with error handling
             if (window.particlesJS) {
                 particlesJS('particles-js', {
                     particles: {
@@ -461,7 +461,7 @@
                 });
                 console.log('Particles.js initialized');
             } else {
-                console.error('Particles.js failed to load');
+                console.error('Particles.js failed to load. Please check your network or the CDN URL.');
             }
 
             // Fade-in animation for order container
@@ -482,7 +482,7 @@
                     if (typeof Stripe === 'undefined') {
                         throw new Error('Stripe.js not loaded');
                     }
-                    const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your Stripe test publishable key
+                    const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s');
                     const elements = stripe.elements();
                     const card = elements.create('card', {
                         style: {
@@ -517,7 +517,7 @@
                         setTimeout(initializeStripe, 1000);
                     } else {
                         const cardErrorElement = document.getElementById('card-error');
-                        cardErrorElement.textContent = 'Failed to load payment form. Please try again or contact support.';
+                        cardErrorElement.textContent = 'Failed to load payment form. Please check your network or contact support.';
                         cardErrorElement.style.display = 'block';
                     }
                 }
@@ -576,9 +576,30 @@
                 console.log('Selected account type:', accountType);
                 personalFields.classList.toggle('active', accountType === 'personal');
                 businessFields.classList.toggle('active', accountType === 'business');
+
+                // Toggle required attributes
+                const personalInputs = personalFields.querySelectorAll('input');
+                const businessInputs = businessFields.querySelectorAll('input');
+
+                if (accountType === 'personal') {
+                    personalInputs.forEach(input => {
+                        if (input.id !== 'website-url') input.setAttribute('required', '');
+                        else input.removeAttribute('required');
+                    });
+                    businessInputs.forEach(input => input.removeAttribute('required'));
+                } else if (accountType === 'business') {
+                    personalInputs.forEach(input => input.removeAttribute('required'));
+                    businessInputs.forEach(input => {
+                        if (input.id !== 'business-website-url') input.setAttribute('required', '');
+                        else input.removeAttribute('required');
+                    });
+                }
+
                 validateField(accountTypeSelect);
             }
 
+            // Initialize required attributes on page load
+            toggleFields();
             accountTypeSelect.addEventListener('change', toggleFields);
 
             function validateField(field) {
@@ -743,12 +764,16 @@
                         })
                     });
 
+                    if (!validateResponse.ok) {
+                        throw new Error(`HTTP error! Status: ${validateResponse.status}`);
+                    }
+
                     const validateResult = await validateResponse.json();
                     console.log('Validate response:', validateResult);
 
-                    if (!validateResponse.ok || validateResult.error) {
-                        console.error('Form validation error:', validateResult.error || 'Unknown error');
-                        alert(`Failed to validate form: ${validateResult.error || 'Server error'}`);
+                    if (validateResult.error) {
+                        console.error('Form validation error:', validateResult.error);
+                        alert(`Failed to validate form: ${validateResult.error}`);
                         return;
                     }
 
@@ -781,12 +806,16 @@
                         })
                     });
 
+                    if (!paymentResponse.ok) {
+                        throw new Error(`HTTP error! Status: ${paymentResponse.status}`);
+                    }
+
                     const paymentResult = await paymentResponse.json();
                     console.log('Payment response:', paymentResult);
 
-                    if (!paymentResponse.ok || paymentResult.error) {
-                        console.error('Payment error:', paymentResult.error || 'Unknown error');
-                        alert(`Payment failed: ${paymentResult.error || 'Server error'}`);
+                    if (paymentResult.error) {
+                        console.error('Payment error:', paymentResult.error);
+                        alert(`Payment failed: ${paymentResult.error}`);
                         return;
                     }
 
@@ -805,7 +834,7 @@
                     updatePriceDisplay(currentPlan);
                 } catch (error) {
                     console.error('Submission error:', error.message);
-                    alert('Error processing purchase: ' + error.message);
+                    alert('Error processing purchase: Unable to connect to the server. Please check your network or try again later.');
                 }
             });
         });
