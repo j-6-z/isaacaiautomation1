@@ -754,13 +754,13 @@
                             const responseText = await response.text();
                             console.log('Execute payment response:', responseText);
                             let result;
-                            try {
-                                result = JSON.parse(responseText);
-                            } catch (e) {
-                                console.error('Failed to parse execute_payment response:', e.message);
-                                alert('Server error: Invalid response');
-                                throw new Error('Invalid JSON response from server');
-                            }
+try {
+    result = JSON.parse(responseText);
+} catch (e) {
+    console.error('Failed to parse response:', e.message, 'Response:', responseText);
+    alert('Server error: Invalid response');
+    throw new Error('Invalid JSON response from server');
+}
                             if (result.status === 'success') {
                                 console.log('Payment successful:', result.payment_id);
                                 alert('Payment completed successfully!');
