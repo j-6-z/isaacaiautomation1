@@ -63,7 +63,7 @@ def debug():
 def create_payment():
     try:
         data = request.get_json(silent=True)
-        logger.debug("Received request data: %s", data)
+        logger.debug("Received create_payment request data: %s", data)
         if not data:
             logger.error("No JSON data in request")
             return jsonify({"error": "No JSON data provided"}), 400
@@ -135,8 +135,8 @@ def create_payment():
             logger.error("Order creation failed: %s - Response: %s", str(e), response.text if 'response' in locals() else 'N/A')
             return jsonify({"error": "Failed to create payment", "details": response.text if 'response' in locals() else str(e)}), 500
     except Exception as e:
-        logger.error("Error in create_payment: %s", str(e))
-        return jsonify({"error": str(e)}), 500
+        logger.error("Unexpected error in create_payment: %s", str(e))
+        return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500
 
 @app.route('/api/execute_payment', methods=['POST'])
 def execute_payment():
@@ -172,8 +172,8 @@ def execute_payment():
             logger.error("Order capture failed: %s - Response: %s", str(e), response.text if 'response' in locals() else 'N/A')
             return jsonify({"error": "Payment execution failed", "details": response.text if 'response' in locals() else str(e)}), 500
     except Exception as e:
-        logger.error("Error in execute_payment: %s", str(e))
-        return jsonify({"error": str(e)}), 500
+        logger.error("Unexpected error in execute_payment: %s", str(e))
+        return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500
 
 @app.route('/api/success')
 def success():
@@ -187,6 +187,7 @@ def cancel():
 
 @app.route('/api')
 def hello():
+    logger.debug("Serving /api")
     return jsonify({"message": "Hello from Flask on Vercel!"})
 
 # Vercel handles serverless execution; no app.run() needed
