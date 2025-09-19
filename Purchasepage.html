@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
@@ -67,6 +68,7 @@
             display: flex;
             gap: 1.5rem;
             list-style: none;
+            justify-content: center;
         }
         nav a {
             color: #1a1a3d;
@@ -244,6 +246,12 @@
             background: #2a3cb7;
             transform: translateY(-2px);
         }
+        #checkout-button:disabled {
+            background: #3b4de6;
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
         .price-display {
             font-size: 1.3rem;
             font-weight: 500;
@@ -280,6 +288,21 @@
         }
         .test-button:hover {
             background: #2a3cb7;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #ffffff;
+            color: #1a1a3d;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        footer a {
+            color: #1a1a3d;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #3b4de6;
         }
         @media (max-width: 768px) {
             .order-container {
@@ -343,7 +366,8 @@
 </head>
 <body>
     <div id="particles-js"></div>
-    <button class="test-button" onclick="testAPI()">Test API</button>
+    <button class="test-button" onclick="testAPI()">Test One-Time API</button>
+    <button class="test-button" style="right: 150px;" onclick="testSubscriptionAPI()">Test Subscription API</button>
     <header>
         <nav>
             <div class="logo">
@@ -352,7 +376,7 @@
             </div>
             <ul>
                 <li><a href="/index.html">Home</a></li>
-                <li><a href="/purchase.html">Pricing</a></li>
+                <li><a href="/Purchasepage.html">Pricing</a></li>
                 <li><a href="/contact.html">Contact</a></li>
                 <li><a href="/terms.html">Terms</a></li>
             </ul>
@@ -386,7 +410,7 @@
                 </div>
                 <div class="option one-time-option" data-plan="standard-purchase" data-type="one-time">
                     <label>Standard One-Time Purchase</label>
-                    <p>$9,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
+                    <p>$11,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
                 </div>
                 <div class="option one-time-option" data-plan="enterprise-purchase" data-type="one-time">
                     <label>Enterprise One-Time Purchase</label>
@@ -451,13 +475,15 @@
                 </div>
             </div>
             <div class="price-display" id="price-display">You will be charged: CAD $799</div>
-            <div class="form-group">
-                <div id="card-element" class="card-element"></div>
-                <div class="error-message" id="card-error"></div>
+            <div id="payment-section" style="margin-top: 20px; text-align: center;">
+                <button id="checkout-button" type="button" disabled>Pay Securely with Stripe</button>
+                <div class="error-message" id="payment-error">Please fill out all required fields correctly.</div>
             </div>
-            <button type="submit">Purchase Now</button>
         </form>
     </div>
+    <footer>
+        <p>&copy; 2025 JAYISAAC AI. <a href="/contact.html">Contact Us</a></p>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize particles.js
@@ -480,8 +506,7 @@
                     retina_detect: true
                 });
             }
-
-            // Fade-in animation for order container
+            // Fade-in animation
             const orderContainer = document.querySelector('.order-container');
             orderContainer.style.opacity = 0;
             orderContainer.style.transform = 'translateY(20px)';
@@ -490,83 +515,33 @@
                 orderContainer.style.opacity = 1;
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
-
             // Stripe setup
-            const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s');
-            const elements = stripe.elements();
-            const card = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#1a1a3d',
-                        '::placeholder': { color: 'transparent' }
-                    }
-                }
-            });
-            card.mount('#card-element');
-            card.on('change', (event) => {
-                const cardErrorElement = document.getElementById('card-error');
-                if (event.error) {
-                    cardErrorElement.textContent = event.error.message;
-                    cardErrorElement.style.display = 'block';
-                } else {
-                    cardErrorElement.textContent = '';
-                    cardErrorElement.style.display = 'none';
-                }
-            });
-
-            // Test API function
-            window.testAPI = async function() {
-                const testFormData = {
-                    plan: 'basic-purchase',
-                    account_type: 'personal',
-                    form_data: {
-                        name: 'John Doe',
-                        email: 'test@example.com',
-                        verifyEmail: 'test@example.com'
-                    }
-                };
-                try {
-                    const response = await fetch('/api/stripe', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(testFormData)
-                    });
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-                    alert('API Test Successful!\nClient Secret: ' + data.clientSecret);
-                } catch (error) {
-                    alert('API Test Failed!\nError: ' + error.message);
-                }
-            };
-
-            // Plan selection logic
+            const stripe = Stripe('pk_live_51S94dl3jvJSv2v9HnjZKuzoec68rIbBFULBh0ihi1kg5yRPq92JCv4xFT5MFJNwLCfKuBWqcI19xakCggReg9Y2F00vG2bvqk9');
+            // Plan selection
             const selectedPlanInput = document.getElementById('selected-plan');
             const planTypeInput = document.getElementById('plan-type');
             const priceDisplay = document.getElementById('price-display');
             const planOptions = document.querySelectorAll('.option');
-
+            const checkoutButton = document.getElementById('checkout-button');
+            const paymentError = document.getElementById('payment-error');
             function getPlanDetails(planValue) {
                 const plans = {
-                    'basic-monthly': { amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
-                    'standard-monthly': { amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
-                    'enterprise-monthly': { amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
+                    'basic-monthly': { priceId: 'price_1S94dt40fBt8mCex_basic_monthly', amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
+                    'standard-monthly': { priceId: 'price_1S94dt40fBt8mCex_standard_monthly', amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
+                    'enterprise-monthly': { priceId: 'price_1S94dt40fBt8mCex_enterprise_monthly', amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
                     'basic-purchase': { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false, priceText: '$799' },
-                    'standard-purchase': { amount: 999900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$9,999' },
+                    'standard-purchase': { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$11,999' },
                     'enterprise-purchase': { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false, priceText: '$25,000' }
                 };
                 return plans[planValue] || { amount: 0, description: 'Unknown Plan', isSubscription: false, priceText: 'Unknown' };
             }
-
             function updatePriceDisplay(planValue) {
                 const planDetails = getPlanDetails(planValue);
                 priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
             }
-
             let currentPlan = 'basic-purchase';
             let currentPlanType = 'one-time';
             updatePriceDisplay(currentPlan);
-
             planOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     const planValue = option.getAttribute('data-plan');
@@ -578,22 +553,19 @@
                     currentPlan = planValue;
                     currentPlanType = planType;
                     updatePriceDisplay(planValue);
+                    validateForm();
                 });
             });
-
-            // Form field toggling and validation
+            // Form validation
             const accountTypeSelect = document.getElementById('account-type');
             const personalFields = document.getElementById('personal-fields');
             const businessFields = document.getElementById('business-fields');
-
             function toggleFields() {
                 const accountType = accountTypeSelect.value;
                 personalFields.classList.toggle('active', accountType === 'personal');
                 businessFields.classList.toggle('active', accountType === 'business');
-
                 const personalInputs = personalFields.querySelectorAll('input');
                 const businessInputs = businessFields.querySelectorAll('input');
-
                 if (accountType === 'personal') {
                     personalInputs.forEach(input => {
                         if (input.id !== 'website-url') input.setAttribute('required', '');
@@ -607,13 +579,13 @@
                         else input.removeAttribute('required');
                     });
                 }
-
                 validateField(accountTypeSelect);
             }
-
             toggleFields();
-            accountTypeSelect.addEventListener('change', toggleFields);
-
+            accountTypeSelect.addEventListener('change', () => {
+                toggleFields();
+                validateForm();
+            });
             function validateField(field) {
                 const errorId = field.id + '-error';
                 const errorElement = document.getElementById(errorId);
@@ -627,7 +599,6 @@
                     }
                 }
             }
-
             function validateEmails() {
                 const accountType = accountTypeSelect.value;
                 let emailField, verifyEmailField, errorId;
@@ -651,7 +622,6 @@
                     }
                 }
             }
-
             function validateUrl(field) {
                 const errorId = field.id + '-error';
                 const errorElement = document.getElementById(errorId);
@@ -665,66 +635,83 @@
                     }
                 }
             }
-
             function validateForm() {
                 const accountType = accountTypeSelect.value;
                 if (!accountType) {
                     validateField(accountTypeSelect);
+                    checkoutButton.disabled = true;
+                    paymentError.style.display = 'block';
                     return false;
                 }
-
                 if (accountType === 'personal') {
                     const name = document.getElementById('name').value.trim();
                     const email = document.getElementById('email').value.trim();
                     const verifyEmail = document.getElementById('verify-email').value.trim();
                     const websiteUrl = document.getElementById('website-url').value.trim();
-
                     if (!name) {
                         validateField(document.getElementById('name'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
                         validateField(document.getElementById('email'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (email !== verifyEmail) {
                         validateEmails();
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
                         validateUrl(document.getElementById('website-url'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
-                    return { name, email, verifyEmail, websiteUrl, accountType };
+                    checkoutButton.disabled = false;
+                    paymentError.style.display = 'none';
+                    return { name, email, websiteUrl, accountType };
                 } else if (accountType === 'business') {
                     const companyName = document.getElementById('company-name').value.trim();
                     const businessEmail = document.getElementById('business-email').value.trim();
                     const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
                     const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
-
                     if (!companyName) {
                         validateField(document.getElementById('company-name'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
                         validateField(document.getElementById('business-email'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (businessEmail !== businessVerifyEmail) {
                         validateEmails();
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
                     if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
                         validateUrl(document.getElementById('business-website-url'));
+                        checkoutButton.disabled = true;
+                        paymentError.style.display = 'block';
                         return false;
                     }
-                    return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, accountType };
+                    checkoutButton.disabled = false;
+                    paymentError.style.display = 'none';
+                    return { companyName, businessEmail, businessWebsiteUrl, accountType };
                 }
             }
-
             const fields = document.querySelectorAll('input, select');
             fields.forEach(field => {
-                field.addEventListener('blur', () => {
+                field.addEventListener('input', () => {
                     if (field.id === 'website-url' || field.id === 'business-website-url') {
                         validateUrl(field);
                     } else {
@@ -733,76 +720,89 @@
                     if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
                         validateEmails();
                     }
+                    validateForm();
                 });
             });
-
-            const orderForm = document.getElementById('order-form');
-            orderForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+            // Payment handling
+            checkoutButton.addEventListener('click', async () => {
                 const formData = validateForm();
                 if (!formData) {
-                    alert('Please fill out all required fields correctly.');
+                    paymentError.textContent = 'Please fill out all required fields correctly.';
+                    paymentError.style.display = 'block';
                     return;
                 }
-
                 const planDetails = getPlanDetails(currentPlan);
-                if (planDetails.isSubscription) {
-                    alert('Subscriptions are not yet supported. Please select a one-time purchase.');
-                    return;
-                }
-
-                const cardErrorElement = document.getElementById('card-error');
-                cardErrorElement.textContent = '';
-                cardErrorElement.style.display = 'none';
-
                 try {
-                    const response = await fetch('/api/stripe', {
+                    const response = await fetch('/api/create-checkout-session', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             plan: currentPlan,
                             account_type: formData.accountType,
-                            form_data: formData
+                            form_data: formData,
+                            amount: planDetails.amount,
+                            priceId: planDetails.isSubscription ? planDetails.priceId : undefined
                         })
                     });
-
                     const data = await response.json();
                     if (data.error) throw new Error(data.error);
-
-                    const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
-                        payment_method: {
-                            card: card,
-                            billing_details: {
-                                name: formData.accountType === 'personal' ? formData.name : formData.companyName,
-                                email: formData.accountType === 'personal' ? formData.email : formData.businessEmail
-                            }
-                        }
-                    });
-
-                    if (error) {
-                        cardErrorElement.textContent = error.message;
-                        cardErrorElement.style.display = 'block';
-                        return;
-                    }
-
-                    if (paymentIntent.status === 'succeeded') {
-                        alert('Purchase completed successfully! We will contact you soon.');
-                        orderForm.reset();
-                        card.clear();
-                        toggleFields();
-                        selectedPlanInput.value = 'basic-purchase';
-                        planTypeInput.value = 'one-time';
-                        currentPlan = 'basic-purchase';
-                        currentPlanType = 'one-time';
-                        planOptions.forEach(opt => opt.classList.remove('selected'));
-                        document.querySelector('.option[data-plan="basic-purchase"]').classList.add('selected');
-                        updatePriceDisplay(currentPlan);
-                    }
+                    stripe.redirectToCheckout({ sessionId: data.sessionId });
                 } catch (error) {
-                    cardErrorElement.textContent = 'Error processing purchase: ' + error.message;
-                    cardErrorElement.style.display = 'block';
+                    paymentError.textContent = 'Payment error: ' + error.message;
+                    paymentError.style.display = 'block';
+                    console.error(error);
                 }
             });
+            // Test API functions
+            window.testAPI = async function() {
+                const testFormData = {
+                    plan: 'basic-purchase',
+                    account_type: 'personal',
+                    form_data: {
+                        name: 'John Doe',
+                        email: 'test@example.com',
+                        websiteUrl: ''
+                    },
+                    amount: 79900
+                };
+                try {
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(testFormData)
+                    });
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error);
+                    alert('One-Time Purchase API Test Successful!\nSession ID: ' + data.sessionId);
+                } catch (error) {
+                    alert('One-Time Purchase API Test Failed!\nError: ' + error.message);
+                }
+            };
+            window.testSubscriptionAPI = async function() {
+                const testFormData = {
+                    plan: 'basic-monthly',
+                    account_type: 'personal',
+                    form_data: {
+                        name: 'John Doe',
+                        email: 'test@example.com',
+                        websiteUrl: ''
+                    },
+                    priceId: 'price_1S94dt40fBt8mCex_basic_monthly',
+                    amount: 4900
+                };
+                try {
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(testFormData)
+                    });
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error);
+                    alert('Subscription API Test Successful!\nSession ID: ' + data.sessionId);
+                } catch (error) {
+                    alert('Subscription API Test Failed!\nError: ' + error.message);
+                }
+            };
         });
     </script>
 </body>

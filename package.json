@@ -1,0 +1,11 @@
+{
+  "name": "jayisaac-ai",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "stripe": "^15.4.0"
+  },
+  "scripts": {
+    "build": "echo 'No build needed'"
+  }
+}
