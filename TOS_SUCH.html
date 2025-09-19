@@ -29,16 +29,26 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        z-index: 1;
+        z-index: 1; /* Lowest layer for particles */
         background: transparent;
         pointer-events: auto;
+    }
+    .bubble-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.7); /* Semi-transparent white for bubble effect */
+        z-index: 2; /* Above particles, below content */
+        pointer-events: none; /* Allows interaction with content */
     }
     header {
         background: #ffffff;
         position: fixed;
         width: 100%;
         top: 0;
-        z-index: 1000;
+        z-index: 1000; /* High z-index for header */
         padding: 1rem 2rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         animation: slideIn 0.5s ease-out;
@@ -109,7 +119,7 @@
         position: fixed;
         top: 85px;
         width: 100%;
-        z-index: 900;
+        z-index: 900; /* Above bubble, below header */
         padding: 0 2rem;
         box-shadow: none;
     }
@@ -157,7 +167,7 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     .policies-container {
-        background: #ffffff;
+        background: #ffffff; /* Solid white for readability */
         padding: 2.5rem;
         border-radius: 20px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -165,6 +175,8 @@
         max-width: 1200px;
         text-align: left;
         margin: 120px auto 0;
+        z-index: 3; /* Above bubble overlay */
+        position: relative;
     }
     .policies-container h1 {
         font-size: 3.5rem;
@@ -201,7 +213,7 @@
     .policy-item {
         padding: 1.5rem;
         border-radius: 15px;
-        background: #f5f5f5;
+        background: #f5f5f5; /* Slightly opaque for contrast */
         border: 2px solid #000000;
         transition: transform 0.4s ease, box-shadow 0.4s ease;
         position: relative;
@@ -237,11 +249,11 @@
         color: #000000;
     }
     footer {
-        background: #e5e5e5;
+        background: #ffffff; /* Changed to white to match body and policies */
         padding: 2rem;
         text-align: left;
         position: relative;
-        z-index: 800;
+        z-index: 800; /* Above bubble */
         border-top: 1px solid #000000;
         pointer-events: auto;
     }
@@ -310,7 +322,7 @@
         font-weight: 600;
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
+        z-index: 1000; /* Above bubble */
     }
     .purchase-button:hover {
         background: #4d4d4d;
@@ -333,6 +345,8 @@
             gap: 0.5rem;
             width: 100%;
             padding: 1rem 0;
+            align-items: center;
+            justify-content: center;
         }
         .nav-links.active {
             display: flex;
@@ -340,6 +354,7 @@
         .nav-links a {
             font-size: 0.9rem;
             padding: 0.4rem 0.8rem;
+            width: fit-content;
         }
         .menu-toggle {
             display: block;
@@ -393,10 +408,11 @@
             margin-top: 1rem;
         }
     }
-</style>
+    </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    <div class="bubble-overlay"></div>
     <header>
         <nav>
             <div class="logo">
@@ -521,16 +537,20 @@
             },
             retina_detect: true
         });
-        const canvas = document.querySelector('#particles-js canvas');
-        if (canvas) {
-            canvas.style.position = 'fixed';
-            canvas.style.top = '0';
-            canvas.style.left = '0';
-            canvas.style.width = '100%';
-            canvas.style.height = '100vh';
-            canvas.style.zIndex = '1';
-            console.log('Canvas adjusted to:', canvas.width, 'x', canvas.height);
+        function resizeCanvas() {
+            const canvas = document.querySelector('#particles-js canvas');
+            if (canvas) {
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.width = '100%';
+                canvas.style.height = '100vh';
+                canvas.style.zIndex = '1';
+                console.log('Canvas resized to:', canvas.width, 'x', canvas.height);
+            }
         }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
         console.log('Particles.js initialized');
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
