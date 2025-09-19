@@ -2,11 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "index.py",
       "use": "@vercel/python",
       "config": { 
-        "maxLambdaSize": "50mb",
-        "includeFiles": ["*.html", "images/*"]
+        "maxLambdaSize": "50mb"
       }
     },
     {
@@ -20,25 +19,13 @@
   ],
   "routes": [
     {
-      "src": "/api/(create_payment|execute_payment|debug|success|cancel)",
-      "methods": ["GET", "POST", "OPTIONS"],
-      "dest": "api/index.py",
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Content-Type": "application/json"
-      }
-    },
-    {
       "src": "/api/.*",
       "methods": ["GET", "POST", "OPTIONS"],
-      "dest": "api/index.py",
+      "dest": "index.py",
       "headers": {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://www.jayisaacai.com",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Content-Type": "application/json"
+        "Access-Control-Allow-Headers": "Content-Type, Authorization"
       }
     },
     {
