@@ -3,271 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchase AI Chatbots - JAYISAAC AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Order AI Chatbots - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter', sans-serif;
     }
     body {
-        background: #f8f9fa;
-        color: #2B2D42;
-        line-height: 1.8;
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        position: relative;
-        padding: 30px;
-    }
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: transparent;
+        background: linear-gradient(135deg, #e6f0fa 0%, #f9f9ff 100%);
+        color: #1a1a3d;
+        line-height: 1.6;
+        padding: 20px;
+        min-height: 100vh;
     }
     header {
         background: #ffffff;
-        position: fixed;
-        width: 100%;
+        position: sticky;
         top: 0;
         z-index: 1000;
-        padding: 1.5rem 2rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        animation: slideIn 0.7s ease-out;
-    }
-    @keyframes slideIn {
-        from { transform: translateY(-50%); }
-        to { transform: translateY(0); }
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
     }
     nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
     }
     .logo {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
     }
     .logo img {
-        height: 60px;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-        transition: transform 0.3s ease;
+        height: 50px;
+        transition: transform 0.2s ease;
     }
     .logo img:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
     .logo span {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: 500;
-        color: #2B2D42;
-        text-transform: none;
-        letter-spacing: 1px;
-        text-shadow: none;
+        color: #1a1a3d;
     }
     nav ul {
         display: flex;
-        gap: 2rem;
+        gap: 1.5rem;
         list-style: none;
     }
     nav a {
-        color: #2B2D42;
+        color: #1a1a3d;
         text-decoration: none;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 500;
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        background: linear-gradient(90deg, transparent, rgba(43, 45, 66, 0.1));
-        background-size: 200%;
-        background-position: left;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: background 0.2s ease, color 0.2s ease;
     }
     nav a:hover {
-        background-position: right;
-        color: #4B5EFA;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #e6f0fa;
+        color: #3b4de6;
     }
-    .payment-container {
+    .order-container {
         background: #ffffff;
-        padding: 3rem;
-        border-radius: 25px;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-        width: 100%;
-        max-width: 1200px;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        max-width: 1000px;
+        margin: 6rem auto 2rem;
         text-align: center;
-        margin: 10rem auto;
     }
     h1 {
-        font-size: 2.8rem;
-        font-weight: 500;
-        color: #2B2D42;
-        margin-bottom: 2rem;
-        text-transform: none;
-        letter-spacing: 1px;
-        text-shadow: none;
-    }
-    .payment-section {
-        margin-bottom: 3.5rem;
-    }
-    .payment-section h2 {
-        font-size: 2rem;
-        font-weight: 500;
-        color: #2B2D42;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #1a1a3d;
         margin-bottom: 1.5rem;
-        text-transform: none;
-        letter-spacing: 0.5px;
-        text-shadow: none;
     }
-    .payment-options {
+    .order-section {
+        margin-bottom: 2rem;
+    }
+    .order-section h2 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #1a1a3d;
+        margin-bottom: 1rem;
+    }
+    .order-options {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
     }
     .option {
-        padding: 2rem;
-        border-radius: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
+        background: #f9f9ff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #e6e6ff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         cursor: pointer;
     }
-    .purchase-option {
-        background: #f4fff7;
-        border: 1px solid #c4f0d5;
+    .subscription-option {
+        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+    }
+    .one-time-option {
+        background: linear-gradient(135deg, #f0fff7 0%, #e6fafa 100%);
     }
     .option.selected {
-        border-width: 2px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        border: 2px solid #3b4de6;
         transform: scale(1.02);
-    }
-    .option::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(120deg, transparent, rgba(0, 0, 0, 0.05), transparent);
-        animation: shine 5s infinite;
-    }
-    @keyframes shine {
-        0% { transform: translateX(-100%); }
-        20% { transform: translateX(100%); }
-        100% { transform: translateX(100%); }
+        box-shadow: 0 4px 12px rgba(59, 77, 230, 0.2);
     }
     .option:hover {
-        transform: scale(1.03);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .option label {
-        font-size: 1.4rem;
-        font-weight: 500;
-        color: #2B2D42;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #1a1a3d;
+        margin-bottom: 0.5rem;
         display: block;
-        cursor: pointer;
     }
     .option p {
-        font-size: 1.1rem;
-        color: #555555;
-        margin-top: 0.5rem;
+        font-size: 0.95rem;
+        color: #4a4a6a;
     }
     form {
         display: flex;
         flex-direction: column;
+        max-width: 600px;
+        margin: 0 auto;
     }
     .form-group {
-        position: relative;
-        margin-bottom: 2rem;
-    }
-    label {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #2B2D42;
-        margin-bottom: 0.7rem;
-        display: block;
+        margin-bottom: 1.5rem;
         text-align: left;
+        position: relative;
     }
-    input[type="text"],
-    input[type="email"],
-    input[type="url"],
-    input[type="hidden"],
-    textarea {
+    .form-group label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #1a1a3d;
+        position: absolute;
+        top: 0.8rem;
+        left: 1rem;
+        transition: all 0.2s ease;
+        pointer-events: none;
+        background: transparent;
+    }
+    .form-group input:focus + label,
+    .form-group select:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group select:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+        top: -0.6rem;
+        left: 0.8rem;
+        font-size: 0.75rem;
+        color: #3b4de6;
+        background: #ffffff;
+        padding: 0 0.2rem;
+    }
+    input, select, textarea {
         width: 100%;
-        padding: 1.3rem;
+        padding: 1rem;
         border: 1px solid #d3e0ff;
-        border-radius: 20px;
-        background: #f9fbff;
-        color: #2B2D42;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
+        border-radius: 8px;
+        background: #f9f9ff;
+        font-size: 1rem;
+        color: #1a1a3d;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: transparent;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        box-shadow: 0 0 8px rgba(59, 77, 230, 0.3);
+    }
+    input::placeholder, textarea::placeholder {
+        color: transparent;
     }
     textarea {
         resize: vertical;
-        min-height: 100px;
-    }
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    input[type="url"]:focus,
-    textarea:focus {
-        outline: none;
-        border-color: #4B5EFA;
-        box-shadow: 0 4px 12px rgba(75, 94, 250, 0.2);
-        transform: none;
+        min-height: 80px;
     }
     select {
-        width: 100%;
-        padding: 1.3rem;
-        border: 1px solid #d3e0ff;
-        border-radius: 20px;
-        background: #f9fbff;
-        color: #2B2D42;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         appearance: none;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%232B2D42"/></svg>');
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%231a1a3d"/></svg>');
         background-repeat: no-repeat;
-        background-position: right 1rem center;
+        background-position: right 0.8rem center;
         cursor: pointer;
-        transition: all 0.3s ease;
     }
-    select:focus {
-        outline: none;
-        border-color: #4B5EFA;
-        box-shadow: 0 4px 12px rgba(75, 94, 250, 0.2);
-        transform: none;
+    .card-element {
+        padding: 1rem;
+        border: 1px solid #d3e0ff;
+        border-radius: 8px;
+        background: #f9f9ff;
+        margin: 1rem 0;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    #paypal-button-container {
-        margin-top: 2.5rem;
-        display: flex;
-        justify-content: center;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0.7rem;
+    .card-element.StripeElement--focus {
+        border-color: transparent;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        box-shadow: 0 0 8px rgba(59, 77, 230, 0.3);
     }
-    #paypal-button-container .paypal-buttons {
-        width: 100% !important;
-        max-width: 400px;
+    button[type="submit"] {
+        width: 100%;
+        padding: 0.9rem;
+        background: #3b4de6;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    button[type="submit"]:hover {
+        background: #2a3cb7;
+        transform: translateY(-2px);
     }
     .price-display {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         font-weight: 500;
-        color: #2B2D42;
-        margin-top: 2rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        text-transform: none;
-        letter-spacing: 0.5px;
-        text-shadow: none;
+        color: #1a1a3d;
+        margin: 1.5rem 0;
     }
     .field-group {
         display: none;
@@ -276,73 +241,71 @@
         display: block;
     }
     .error-message {
-        color: red;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
+        color: #e63946;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
         display: none;
-        text-align: left;
     }
     .invalid-input {
-        border-color: red;
+        border-color: #e63946;
     }
     @media (max-width: 768px) {
-        .payment-container {
-            padding: 2rem;
-            margin: 8rem auto;
+        .order-container {
+            padding: 1.5rem;
+            margin: 5rem auto 1rem;
             max-width: 95%;
         }
         h1 {
-            font-size: 2.2rem;
-        }
-        .payment-section h2 {
             font-size: 1.8rem;
         }
-        .payment-options {
+        .order-section h2 {
+            font-size: 1.4rem;
+        }
+        .order-options {
             grid-template-columns: 1fr;
         }
         .option label {
             font-size: 1.2rem;
         }
         .option p {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
-        label {
-            font-size: 1rem;
+        .form-group label {
+            font-size: 0.85rem;
         }
-        input[type="text"],
-        input[type="email"],
-        input[type="url"],
-        select,
-        textarea {
-            font-size: 1rem;
-            padding: 1rem;
-            border-radius: 15px;
+        input, select, textarea, .card-element, button[type="submit"] {
+            font-size: 0.95rem;
+            padding: 0.7rem;
         }
-        #paypal-button-container {
-            max-width: 100%;
-            padding: 0.5rem;
-        }
-        #paypal-button-container .paypal-buttons {
-            max-width: 100%;
+        .form-group input:focus + label,
+        .form-group select:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group select:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            font-size: 0.7rem;
         }
         .price-display {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
         nav ul {
-            gap: 1.5rem;
+            gap: 1rem;
         }
         nav a {
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
         }
         .logo span {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .logo img {
+            height: 40px;
         }
     }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
     <header>
         <nav>
             <div class="logo">
@@ -351,437 +314,477 @@
             </div>
             <ul>
                 <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/TOS_SUCH.html">Terms of Service</a></li>
             </ul>
         </nav>
     </header>
-    <div class="payment-container">
-        <h1>Secure Payment</h1>
-        <div class="payment-section">
-            <h2>Choose Your Plan</h2>
-            <div class="payment-options">
-                <div class="option purchase-option selected" data-plan="basic-purchase">
-                    <label>Basic One-Time Purchase</label>
-                    <p>$799 - Own a custom chatbot with lifetime access and 1 year of basic support.</p>
+    <div class="order-container">
+        <h1>Order Your Chatbot</h1>
+        <div class="order-section">
+            <h2>Subscription Plans</h2>
+            <div class="order-options">
+                <div class="option subscription-option selected" data-plan="basic-monthly" data-type="subscription">
+                    <label>Basic Monthly Subscription</label>
+                    <p>$49/month - Custom chatbot, core features, single-platform integration, up to 1,000 conversations, 6 months email support.</p>
                 </div>
-                <div class="option purchase-option" data-plan="standard-purchase">
-                    <label>Standard One-Time Purchase</label>
-                    <p>$11,999 - Includes advanced AI features, multi-platform support, and 2 years of updates.</p>
+                <div class="option subscription-option" data-plan="standard-monthly" data-type="subscription">
+                    <label>Standard Monthly Subscription</label>
+                    <p>$149/month - Advanced AI, multi-platform support (web, mobile, WhatsApp), up to 5,000 conversations, 1 year priority support.</p>
                 </div>
-                <div class="option purchase-option" data-plan="enterprise-purchase">
-                    <label>Enterprise One-Time Purchase</label>
-                    <p>$25,000 - Fully custom solution with complex integrations, scalability, and 3+ years of support.</p>
+                <div class="option subscription-option" data-plan="enterprise-monthly" data-type="subscription">
+                    <label>Enterprise Monthly Subscription</label>
+                    <p>$499/month - Fully custom chatbot, integrations (Salesforce, Shopify), unlimited conversations, dedicated support, analytics.</p>
                 </div>
             </div>
         </div>
-        <form id="payment-form">
-            <input type="hidden" id="selected-plan" name="plan" value="basic-purchase">
+        <div class="order-section">
+            <h2>One-Time Purchase Plans</h2>
+            <div class="order-options">
+                <div class="option one-time-option" data-plan="basic-purchase" data-type="one-time">
+                    <label>Basic One-Time Purchase</label>
+                    <p>$799 - Custom chatbot, lifetime access (self-hosted), 1 year basic support.</p>
+                </div>
+                <div class="option one-time-option" data-plan="standard-purchase" data-type="one-time">
+                    <label>Standard One-Time Purchase</label>
+                    <p>$9,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
+                </div>
+                <div class="option one-time-option" data-plan="enterprise-purchase" data-type="one-time">
+                    <label>Enterprise One-Time Purchase</label>
+                    <p>$24,999 - Fully custom solution, integrations (HubSpot, Zendesk), scalability, 3+ years support.</p>
+                </div>
+            </div>
+        </div>
+        <form id="order-form">
+            <input type="hidden" id="selected-plan" name="plan" value="basic-monthly">
+            <input type="hidden" id="plan-type" name="plan-type" value="subscription">
             <div class="form-group">
-                <label for="account-type">Account Type</label>
                 <select id="account-type" name="account-type" required>
                     <option value="" disabled selected>Select Account Type</option>
                     <option value="personal">Personal</option>
                     <option value="business">Business</option>
                 </select>
+                <label for="account-type">Account Type</label>
                 <div class="error-message" id="account-type-error">Please select an account type.</div>
             </div>
             <div id="personal-fields" class="field-group active">
                 <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder=" " required>
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                     <div class="error-message" id="name-error">Please enter your full name.</div>
                 </div>
                 <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
                     <div class="error-message" id="email-error">Please enter a valid email address.</div>
                 </div>
                 <div class="form-group">
+                    <input type="email" id="verify-email" name="verify-email" placeholder=" " required>
                     <label for="verify-email">Verify Email</label>
-                    <input type="email" id="verify-email" name="verify-email" placeholder="Re-enter your email" required>
                     <div class="error-message" id="verify-email-error">Emails do not match.</div>
                 </div>
                 <div class="form-group">
+                    <input type="url" id="website-url" name="website-url" placeholder=" ">
                     <label for="website-url">Website URL (Optional)</label>
-                    <input type="url" id="website-url" name="website-url" placeholder="Enter your website URL">
                     <div class="error-message" id="website-url-error">Please enter a valid URL.</div>
                 </div>
                 <div class="form-group">
+                    <textarea id="notes" name="notes" placeholder=" "></textarea>
                     <label for="notes">Notes (Optional)</label>
-                    <textarea id="notes" name="notes" placeholder="Add any additional notes"></textarea>
                     <div class="error-message" id="notes-error"></div>
                 </div>
             </div>
             <div id="business-fields" class="field-group">
                 <div class="form-group">
+                    <input type="text" id="company-name" name="company-name" placeholder=" " required>
                     <label for="company-name">Company Name</label>
-                    <input type="text" id="company-name" name="company-name" placeholder="Enter your company name" required>
                     <div class="error-message" id="company-name-error">Please enter your company name.</div>
                 </div>
                 <div class="form-group">
+                    <input type="email" id="business-email" name="business-email" placeholder=" " required>
                     <label for="business-email">Business Email</label>
-                    <input type="email" id="business-email" name="business-email" placeholder="Enter your business email" required>
                     <div class="error-message" id="business-email-error">Please enter a valid business email address.</div>
                 </div>
                 <div class="form-group">
+                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder=" " required>
                     <label for="business-verify-email">Verify Business Email</label>
-                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder="Re-enter your business email" required>
                     <div class="error-message" id="business-verify-email-error">Business Emails do not match.</div>
                 </div>
                 <div class="form-group">
+                    <input type="url" id="business-website-url" name="business-website-url" placeholder=" ">
                     <label for="business-website-url">Website URL (Optional)</label>
-                    <input type="url" id="business-website-url" name="business-website-url" placeholder="Enter your business website URL">
                     <div class="error-message" id="business-website-url-error">Please enter a valid URL.</div>
                 </div>
                 <div class="form-group">
+                    <textarea id="business-notes" name="business-notes" placeholder=" "></textarea>
                     <label for="business-notes">Notes (Optional)</label>
-                    <textarea id="business-notes" name="business-notes" placeholder="Add any additional notes"></textarea>
                     <div class="error-message" id="business-notes-error"></div>
                 </div>
             </div>
-            <div class="price-display" id="price-display">You will be charged: CAD $799</div>
-            <div id="paypal-button-container"></div>
+            <div class="price-display" id="price-display">Selected Plan: CAD $49/month</div>
+            <div class="form-group">
+                <div id="card-element" class="card-element"></div>
+                <div class="error-message" id="card-error"></div>
+            </div>
+            <button type="submit">Purchase Now</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=Aekwyfll3MQb7o-g9o1Z5BrlEB6eXiT3j4Km5FjkWMVHtEXhKLQxAMRuC9Mf9PuUT1WtuL5GC_zdCFgC&currency=CAD&components=buttons"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('Page loaded, initializing particles and PayPal');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, initializing particles and Stripe');
 
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: '#4B5EFA' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.3, random: true },
-                size: { value: 2, random: true },
-                line_linked: { enable: true, distance: 150, color: '#4B5EFA', opacity: 0.2, width: 1 },
-                move: { enable: true, speed: 1, direction: 'none', random: true }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
-                modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
-
-        const paymentContainer = document.querySelector('.payment-container');
-        paymentContainer.style.opacity = 0;
-        paymentContainer.style.transform = 'translateY(30px)';
-        paymentContainer.style.transition = 'all 0.8s ease-out';
-        setTimeout(() => {
-            paymentContainer.style.opacity = 1;
-            paymentContainer.style.transform = 'translateY(0)';
-        }, 100);
-
-        const selectedPlanInput = document.getElementById('selected-plan');
-        const priceDisplay = document.getElementById('price-display');
-        const planOptions = document.querySelectorAll('.option');
-
-        function getPlanDetails(planValue) {
-            switch (planValue) {
-                case 'basic-purchase':
-                    return { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false };
-                case 'standard-purchase':
-                    return { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false };
-                case 'enterprise-purchase':
-                    return { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false };
-                default:
-                    return { amount: 0, description: 'Unknown Plan', isSubscription: false };
-            }
-        }
-
-        function updatePriceDisplay(planValue) {
-            const planDetails = getPlanDetails(planValue);
-            const formattedAmount = (planDetails.amount / 100).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
-            priceDisplay.textContent = `You will be charged: ${formattedAmount}`;
-        }
-
-        let currentPlan = 'basic-purchase';
-        updatePriceDisplay(currentPlan);
-
-        planOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                const planValue = option.getAttribute('data-plan');
-                console.log('Selected plan:', planValue);
-                planOptions.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                selectedPlanInput.value = planValue;
-                currentPlan = planValue;
-                updatePriceDisplay(planValue);
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 60, density: { enable: true, value_area: 800 } },
+                    color: { value: '#3b4de6' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: true, distance: 120, color: '#3b4de6', opacity: 0.2, width: 1 },
+                    move: { enable: true, speed: 1, direction: 'none', random: true }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                    modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
+                },
+                retina_detect: true
             });
-        });
 
-        const accountTypeSelect = document.getElementById('account-type');
-        const personalFields = document.getElementById('personal-fields');
-        const businessFields = document.getElementById('business-fields');
+            const orderContainer = document.querySelector('.order-container');
+            orderContainer.style.opacity = 0;
+            orderContainer.style.transform = 'translateY(20px)';
+            orderContainer.style.transition = 'all 0.6s ease-out';
+            setTimeout(() => {
+                orderContainer.style.opacity = 1;
+                orderContainer.style.transform = 'translateY(0)';
+            }, 100);
 
-        function toggleFields() {
-            const accountType = accountTypeSelect.value;
-            console.log('Selected account type:', accountType);
-            if (accountType === 'personal') {
-                personalFields.classList.add('active');
-                businessFields.classList.remove('active');
-            } else if (accountType === 'business') {
-                personalFields.classList.remove('active');
-                businessFields.classList.add('active');
-            }
-            validateField(accountTypeSelect);
-        }
-
-        accountTypeSelect.addEventListener('change', toggleFields);
-
-        function validateField(field) {
-            const errorId = field.id + '-error';
-            const errorElement = document.getElementById(errorId);
-            if (errorElement) {
-                if (field.validity.valid && field.value.trim() !== '') {
-                    errorElement.style.display = 'none';
-                    field.classList.remove('invalid-input');
-                } else if (field.hasAttribute('required')) {
-                    errorElement.style.display = 'block';
-                    field.classList.add('invalid-input');
-                }
-            }
-        }
-
-        function validateEmails() {
-            const accountType = accountTypeSelect.value;
-            let emailField, verifyEmailField, errorId;
-            if (accountType === 'personal') {
-                emailField = document.getElementById('email');
-                verifyEmailField = document.getElementById('verify-email');
-                errorId = 'verify-email-error';
-            } else if (accountType === 'business') {
-                emailField = document.getElementById('business-email');
-                verifyEmailField = document.getElementById('business-verify-email');
-                errorId = 'business-verify-email-error';
-            }
-            const errorElement = document.getElementById(errorId);
-            if (errorElement && emailField && verifyEmailField) {
-                if (emailField.value.trim() === verifyEmailField.value.trim() && emailField.validity.valid) {
-                    errorElement.style.display = 'none';
-                    verifyEmailField.classList.remove('invalid-input');
-                } else {
-                    errorElement.style.display = 'block';
-                    verifyEmailField.classList.add('invalid-input');
-                }
-            }
-        }
-
-        function validateUrl(field) {
-            const errorId = field.id + '-error';
-            const errorElement = document.getElementById(errorId);
-            if (errorElement) {
-                if (field.value.trim() === '' || /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(field.value.trim())) {
-                    errorElement.style.display = 'none';
-                    field.classList.remove('invalid-input');
-                } else {
-                    errorElement.style.display = 'block';
-                    field.classList.add('invalid-input');
-                }
-            }
-        }
-
-        function validateForm() {
-            const accountType = document.getElementById('account-type').value;
-
-            if (!accountType) {
-                validateField(document.getElementById('account-type'));
-                return false;
-            }
-
-            if (accountType === 'personal') {
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const verifyEmail = document.getElementById('verify-email').value.trim();
-                const websiteUrl = document.getElementById('website-url').value.trim();
-                const notes = document.getElementById('notes').value.trim();
-
-                console.log('Personal form data:', { name, email, verifyEmail, websiteUrl, notes });
-
-                if (!name) {
-                    validateField(document.getElementById('name'));
-                    return false;
-                }
-
-                if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                    validateField(document.getElementById('email'));
-                    return false;
-                }
-
-                if (email !== verifyEmail) {
-                    validateEmails();
-                    return false;
-                }
-
-                if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
-                    validateUrl(document.getElementById('website-url'));
-                    return false;
-                }
-
-                return { name, email, verifyEmail, websiteUrl, notes, accountType };
-            } else if (accountType === 'business') {
-                const companyName = document.getElementById('company-name').value.trim();
-                const businessEmail = document.getElementById('business-email').value.trim();
-                const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
-                const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
-                const businessNotes = document.getElementById('business-notes').value.trim();
-
-                console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes });
-
-                if (!companyName) {
-                    validateField(document.getElementById('company-name'));
-                    return false;
-                }
-
-                if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
-                    validateField(document.getElementById('business-email'));
-                    return false;
-                }
-
-                if (businessEmail !== businessVerifyEmail) {
-                    validateEmails();
-                    return false;
-                }
-
-                if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
-                    validateUrl(document.getElementById('business-website-url'));
-                    return false;
-                }
-
-                return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes, accountType };
-            }
-        }
-
-        const fields = document.querySelectorAll('input, select, textarea');
-        fields.forEach(field => {
-            field.addEventListener('blur', () => {
-                if (field.id === 'website-url' || field.id === 'business-website-url') {
-                    validateUrl(field);
-                } else if (field.id !== 'notes' && field.id !== 'business-notes') {
-                    validateField(field);
-                }
-                if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
-                    validateEmails();
-                }
-            });
-        });
-
-        if (typeof paypal !== 'undefined') {
-            paypal.Buttons({
+            const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY'); // Replace with your Stripe publishable key
+            const elements = stripe.elements();
+            const card = elements.create('card', {
                 style: {
-                    layout: 'vertical',
-                    color: 'blue',
-                    shape: 'pill',
-                    label: 'pay',
-                    height: 55
-                },
-                createOrder: async function(data, actions) {
-                    console.log('Starting createOrder for plan:', currentPlan);
-                    const formData = validateForm();
-                    if (!formData) {
-                        console.error('Form validation failed');
-                        alert('Please fill out all required fields correctly.');
-                        throw new Error('Form validation failed');
+                    base: {
+                        fontSize: '16px',
+                        color: '#1a1a3d',
+                        '::placeholder': { color: 'transparent' }
                     }
-
-                    try {
-                        const apiBaseUrl = 'https://www.jayisaacai.com';
-                        console.log('Sending payment request to:', `${apiBaseUrl}/create_payment`, 'with data:', { 
-                            plan: currentPlan, 
-                            account_type: formData.accountType, 
-                            form_data: formData 
-                        });
-                        const response = await fetch(`${apiBaseUrl}/create_payment`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                plan: currentPlan,
-                                account_type: formData.accountType,
-                                form_data: formData
-                            })
-                        });
-
-                        console.log('Server response status:', response.status, 'OK:', response.ok);
-                        const responseText = await response.text();
-                        console.log('Raw server response:', responseText);
-
-                        let result;
-                        try {
-                            result = JSON.parse(responseText);
-                        } catch (e) {
-                            console.error('Failed to parse response:', e.message, 'Response:', responseText);
-                            alert('Server error: Invalid response');
-                            throw new Error('Invalid server response');
-                        }
-
-                        if (!response.ok || result.error) {
-                            console.error('Server error:', result.error || 'Unknown error', result.details || '');
-                            alert(`Failed to initiate payment: ${result.error || 'Server error'}`);
-                            throw new Error(result.error || 'Server error');
-                        }
-
-                        if (result.order_id) {
-                            console.log('Order ID:', result.order_id);
-                            return result.order_id;
-                        }
-                        console.error('Missing order_id:', result);
-                        alert('Failed to initiate payment: No order ID');
-                        throw new Error('No order ID');
-                    } catch (error) {
-                        console.error('createOrder error:', error.message);
-                        alert('Error initiating payment: ' + error.message);
-                        throw error;
-                    }
-                },
-                onApprove: async function(data, actions) {
-                    try {
-                        const apiBaseUrl = 'https://www.jayisaacai.com';
-                        console.log('Executing payment for orderID:', data.orderID, 'payerID:', data.payerID);
-                        const response = await fetch(`${apiBaseUrl}/execute_payment`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                payment_id: data.orderID,
-                                payer_id: data.payerID
-                            })
-                        });
-                        const responseText = await response.text();
-                        console.log('Execute payment response:', responseText);
-                        let result;
-                        try {
-                            result = JSON.parse(responseText);
-                        } catch (e) {
-                            console.error('Failed to parse execute_payment response:', e.message);
-                            alert('Server error: Invalid response');
-                            throw new Error('Invalid server response');
-                        }
-                        if (result.status === 'success') {
-                            console.log('Payment successful:', result.payment_id);
-                            alert('Payment completed successfully!');
-                            window.location.href = `${apiBaseUrl}/success`;
-                        } else {
-                            console.error('Payment failed:', result.error || 'Unknown error');
-                            alert('Payment failed: ' + (result.error || 'Unknown error'));
-                        }
-                    } catch (error) {
-                        console.error('onApprove error:', error.message);
-                        alert('Payment error: ' + error.message);
-                    }
-                },
-                onError: function(err) {
-                    console.error('PayPal SDK error:', err.message);
-                    alert('PayPal error: ' + err.message);
                 }
-            }).render('#paypal-button-container').catch(err => {
-                console.error('PayPal button render failed:', err.message);
-                alert('Failed to load PayPal button');
             });
-        } else {
-            console.error('PayPal SDK not loaded');
-            alert('PayPal unavailable, please try again later');
-        }
-    });
-</script>
+            card.mount('#card-element');
+
+            const selectedPlanInput = document.getElementById('selected-plan');
+            const planTypeInput = document.getElementById('plan-type');
+            const priceDisplay = document.getElementById('price-display');
+            const planOptions = document.querySelectorAll('.option');
+
+            function getPlanDetails(planValue, planType) {
+                const plans = {
+                    'basic-monthly': { amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
+                    'standard-monthly': { amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
+                    'enterprise-monthly': { amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
+                    'basic-purchase': { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false, priceText: '$799' },
+                    'standard-purchase': { amount: 999900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$9,999' },
+                    'enterprise-purchase': { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false, priceText: '$24,999' }
+                };
+                return plans[planValue] || { amount: 0, description: 'Unknown Plan', isSubscription: false, priceText: 'Unknown' };
+            }
+
+            function updatePriceDisplay(planValue, planType) {
+                const planDetails = getPlanDetails(planValue, planType);
+                priceDisplay.textContent = `Selected Plan: CAD ${planDetails.priceText}`;
+            }
+
+            let currentPlan = 'basic-monthly';
+            let currentPlanType = 'subscription';
+            updatePriceDisplay(currentPlan, currentPlanType);
+
+            planOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const planValue = option.getAttribute('data-plan');
+                    const planType = option.getAttribute('data-type');
+                    console.log('Selected plan:', planValue, 'Type:', planType);
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedPlanInput.value = planValue;
+                    planTypeInput.value = planType;
+                    currentPlan = planValue;
+                    currentPlanType = planType;
+                    updatePriceDisplay(planValue, planType);
+                });
+            });
+
+            const accountTypeSelect = document.getElementById('account-type');
+            const personalFields = document.getElementById('personal-fields');
+            const businessFields = document.getElementById('business-fields');
+
+            function toggleFields() {
+                const accountType = accountTypeSelect.value;
+                console.log('Selected account type:', accountType);
+                if (accountType === 'personal') {
+                    personalFields.classList.add('active');
+                    businessFields.classList.remove('active');
+                } else if (accountType === 'business') {
+                    personalFields.classList.remove('active');
+                    businessFields.classList.add('active');
+                }
+                validateField(accountTypeSelect);
+            }
+
+            accountTypeSelect.addEventListener('change', toggleFields);
+
+            function validateField(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.validity.valid && field.value.trim() !== '') {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                    } else if (field.hasAttribute('required')) {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                    }
+                }
+            }
+
+            function validateEmails() {
+                const accountType = accountTypeSelect.value;
+                let emailField, verifyEmailField, errorId;
+                if (accountType === 'personal') {
+                    emailField = document.getElementById('email');
+                    verifyEmailField = document.getElementById('verify-email');
+                    errorId = 'verify-email-error';
+                } else if (accountType === 'business') {
+                    emailField = document.getElementById('business-email');
+                    verifyEmailField = document.getElementById('business-verify-email');
+                    errorId = 'business-verify-email-error';
+                }
+                const errorElement = document.getElementById(errorId);
+                if (errorElement && emailField && verifyEmailField) {
+                    if (emailField.value.trim() === verifyEmailField.value.trim() && emailField.validity.valid) {
+                        errorElement.style.display = 'none';
+                        verifyEmailField.classList.remove('invalid-input');
+                    } else {
+                        errorElement.style.display = 'block';
+                        verifyEmailField.classList.add('invalid-input');
+                    }
+                }
+            }
+
+            function validateUrl(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.value.trim() === '' || /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(field.value.trim())) {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                    } else {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                    }
+                }
+            }
+
+            function validateForm() {
+                const accountType = document.getElementById('account-type').value;
+
+                if (!accountType) {
+                    validateField(document.getElementById('account-type'));
+                    return false;
+                }
+
+                if (accountType === 'personal') {
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const verifyEmail = document.getElementById('verify-email').value.trim();
+                    const websiteUrl = document.getElementById('website-url').value.trim();
+                    const notes = document.getElementById('notes').value.trim();
+
+                    console.log('Personal form data:', { name, email, verifyEmail, websiteUrl, notes });
+
+                    if (!name) {
+                        validateField(document.getElementById('name'));
+                        return false;
+                    }
+
+                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                        validateField(document.getElementById('email'));
+                        return false;
+                    }
+
+                    if (email !== verifyEmail) {
+                        validateEmails();
+                        return false;
+                    }
+
+                    if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
+                        validateUrl(document.getElementById('website-url'));
+                        return false;
+                    }
+
+                    return { name, email, verifyEmail, websiteUrl, notes, accountType };
+                } else if (accountType === 'business') {
+                    const companyName = document.getElementById('company-name').value.trim();
+                    const businessEmail = document.getElementById('business-email').value.trim();
+                    const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
+                    const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
+                    const businessNotes = document.getElementById('business-notes').value.trim();
+
+                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes });
+
+                    if (!companyName) {
+                        validateField(document.getElementById('company-name'));
+                        return false;
+                    }
+
+                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
+                        validateField(document.getElementById('business-email'));
+                        return false;
+                    }
+
+                    if (businessEmail !== businessVerifyEmail) {
+                        validateEmails();
+                        return false;
+                    }
+
+                    if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
+                        validateUrl(document.getElementById('business-website-url'));
+                        return false;
+                    }
+
+                    return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes, accountType };
+                }
+            }
+
+            const fields = document.querySelectorAll('input, select, textarea');
+            fields.forEach(field => {
+                field.addEventListener('blur', () => {
+                    if (field.id === 'website-url' || field.id === 'business-website-url') {
+                        validateUrl(field);
+                    } else if (field.id !== 'notes' && field.id !== 'business-notes') {
+                        validateField(field);
+                    }
+                    if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
+                        validateEmails();
+                    }
+                });
+            });
+
+            const orderForm = document.getElementById('order-form');
+            orderForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                console.log('Form submitted for plan:', currentPlan, 'Type:', currentPlanType);
+                const formData = validateForm();
+                if (!formData) {
+                    console.error('Form validation failed');
+                    alert('Please fill out all required fields correctly.');
+                    return;
+                }
+
+                const cardErrorElement = document.getElementById('card-error');
+                cardErrorElement.textContent = '';
+                cardErrorElement.style.display = 'none';
+
+                try {
+                    const apiBaseUrl = 'https://isaacaiautomation1-k20kqgdp3-jay-turners-projects-16621d09.vercel.app/api';
+                    console.log('Sending form validation request to:', `${apiBaseUrl}/validate_form`, 'with data:', { 
+                        plan: currentPlan, 
+                        account_type: formData.accountType, 
+                        form_data: formData 
+                    });
+                    const validateResponse = await fetch(`${apiBaseUrl}/validate_form`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            plan: currentPlan,
+                            account_type: formData.accountType,
+                            form_data: formData
+                        })
+                    });
+
+                    const validateText = await validateResponse.text();
+                    console.log('Validate response:', validateText);
+                    let validateResult;
+                    try {
+                        validateResult = JSON.parse(validateText);
+                    } catch (e) {
+                        console.error('Failed to parse validate response:', e.message);
+                        alert('Server error: Invalid response');
+                        return;
+                    }
+
+                    if (!validateResponse.ok || validateResult.error) {
+                        console.error('Form validation error:', validateResult.error || 'Unknown error');
+                        alert(`Failed to validate form: ${validateResult.error || 'Server error'}`);
+                        return;
+                    }
+
+                    if (validateResult.status !== 'valid') {
+                        console.error('Unexpected validation response:', validateResult);
+                        alert('Form validation failed: Unexpected response');
+                        return;
+                    }
+
+                    const planDetails = getPlanDetails(currentPlan, currentPlanType);
+                    const { token, error } = await stripe.createToken(card);
+                    if (error) {
+                        console.error('Stripe token error:', error.message);
+                        cardErrorElement.textContent = error.message;
+                        cardErrorElement.style.display = 'block';
+                        return;
+                    }
+
+                    console.log('Stripe token created:', token.id);
+                    const paymentResponse = await fetch(`${apiBaseUrl}/process_payment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            plan: currentPlan,
+                            plan_type: currentPlanType,
+                            amount: planDetails.amount,
+                            is_subscription: planDetails.isSubscription,
+                            stripe_token: token.id,
+                            form_data: formData
+                        })
+                    });
+
+                    const paymentText = await paymentResponse.text();
+                    console.log('Payment response:', paymentText);
+                    let paymentResult;
+                    try {
+                        paymentResult = JSON.parse(paymentText);
+                    } catch (e) {
+                        console.error('Failed to parse payment response:', e.message);
+                        alert('Server error: Invalid response');
+                        return;
+                    }
+
+                    if (!paymentResponse.ok || paymentResult.error) {
+                        console.error('Payment error:', paymentResult.error || 'Unknown error');
+                        alert(`Payment failed: ${paymentResult.error || 'Server error'}`);
+                        return;
+                    }
+
+                    console.log('Payment successful:', paymentResult);
+                    alert('Purchase completed successfully! We will contact you soon.');
+                    orderForm.reset();
+                    card.clear();
+                    toggleFields();
+                    selectedPlanInput.value = 'basic-monthly';
+                    planTypeInput.value = 'subscription';
+                    currentPlan = 'basic-monthly';
+                    currentPlanType = 'subscription';
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    document.querySelector('.option[data-plan="basic-monthly"]').classList.add('selected');
+                    updatePriceDisplay(currentPlan, currentPlanType);
+                } catch (error) {
+                    console.error('Submission error:', error.message);
+                    alert('Error processing purchase: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

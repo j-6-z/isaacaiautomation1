@@ -1,19 +1,18 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
-import requests
 import os
+import stripe
 
 app = Flask(__name__)
 
 # Define allowed origins
 ALLOWED_ORIGINS = [
-    "http://localhost:5500",  # Local development with Live Server
-    "https://www.jayisaacai.com",  # Production domain
-    "https://your-project.vercel.app"  # Vercel deployment URL (replace with your actual Vercel domain)
+    "http://localhost:5500",
+    "https://www.jayisaacai.com",
+    "https://isaacaiautomation1-k20kqgdp3-jay-turners-projects-16621d09.vercel.app"
 ]
 
-# Configure CORS with specific origins
 CORS(app, resources={r"/api/*": {"origins": ALLOWED_ORIGINS}})
 
 logging.basicConfig(
@@ -26,55 +25,29 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID', 'Aekwyfll3MQb7o-g9o1Z5BrlEB6eXiT3j4Km5FjkWMVHtEXhKLQxAMRuC9Mf9PuUT1WtuL5GC_zdCFgC')
-PAYPAL_CLIENT_SECRET = os.environ.get('PAYPAL_CLIENT_SECRET', 'EJJsSBmFUFn3usBfaNvKeFPkJXrUgnicCGqgszNVyhpPvjYaIWF-0UBO6aEFhQOkYqWfNgGW49BF-MNI')
-
-ONE_TIME_PLANS = {
-    "basic-purchase": {"amount": 79900, "description": "Basic One-Time Purchase"},
-    "standard-purchase": {"amount": 1199900, "description": "Standard One-Time Purchase"},
-    "enterprise-purchase": {"amount": 2500000, "description": "Enterprise One-Time Purchase"}
-}
-
-def get_paypal_access_token():
-    logger.debug("Fetching PayPal access token")
-    url = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
-    auth = (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
-    if not auth[0] or not auth[1]:
-        logger.error("Missing PayPal credentials")
-        return jsonify({"error": "Missing PayPal credentials"}), 500
-    data = {"grant_type": "client_credentials"}
-    headers = {"Accept": "application/json", "Accept-Language": "en_US"}
-    try:
-        response = requests.post(url, auth=auth, data=data, headers=headers, timeout=10)
-        response.raise_for_status()
-        token = response.json()["access_token"]
-        logger.debug("Access token retrieved successfully: %s", token[:10] + "...")
-        return token
-    except requests.RequestException as e:
-        logger.error("Token fetch failed: %s - Response: %s", str(e), response.text if 'response' in locals() else 'N/A')
-        return jsonify({"error": f"Token fetch failed: {str(e)}", "details": response.text if 'response' in locals() else 'N/A'}), 500
+# Set Stripe API key (add to Vercel environment variables)
+stripe.api_key = os.environ.get('sk_test_51S94dt40fBt8mCexAupOMzcDR1hOvIBnccrLZT57ZI8CB7fMwmcvNCDKA5kPv8B5L9MiNuEieP8O3OZnbFxz8aWc00M2leWPtK')
+if not stripe.api_key:
+    logger.error("Missing STRIPE_SECRET_KEY environment variable")
 
 @app.route('/api/debug', methods=['GET'])
 def debug():
     logger.debug("Debug endpoint accessed")
-    return jsonify({"status": "running", "env": os.environ.get('FLASK_ENV', 'unknown'), "client_id": PAYPAL_CLIENT_ID}), 200
+    return jsonify({"status": "running", "env": os.environ.get('FLASK_ENV', 'unknown')}), 200
 
-@app.route('/api/create_payment', methods=['POST'])
-def create_payment():
+@app.route('/api/validate_form', methods=['POST'])
+def validate_form():
     try:
         data = request.get_json(silent=True)
-        logger.debug("Received create_payment request data: %s", data)
+        logger.debug("Received validate_form request data: %s", data)
         if not data:
             logger.error("No JSON data in request")
             return jsonify({"error": "No JSON data provided"}), 400
 
-        plan = data.get('plan')
         account_type = data.get('account_type')
         form_data = data.get('form_data')
-        
-        logger.debug("Parsed fields - plan: %s, account_type: %s, form_data: %s", plan, account_type, form_data)
-        if not plan or not account_type or not form_data:
-            logger.error("Missing fields - plan: %s, account_type: %s, form_data: %s", plan, account_type, form_data)
+        if not account_type or not form_data:
+            logger.error("Missing fields - account_type: %s, form_data: %s", account_type, form_data)
             return jsonify({"error": "Missing required fields"}), 400
 
         if account_type == 'personal':
@@ -95,95 +68,79 @@ def create_payment():
             logger.error("Invalid account type: %s", account_type)
             return jsonify({"error": "Invalid account type"}), 400
 
-        if plan not in ONE_TIME_PLANS:
-            logger.error("Invalid plan: %s", plan)
-            return jsonify({"error": "Invalid plan selected"}), 400
-
-        logger.debug("Creating order for plan: %s", plan)
-        token = get_paypal_access_token()
-        if isinstance(token, tuple):
-            logger.error("Token fetch returned error: %s", token[0])
-            return token
-        url = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {token}"
-        }
-        plan_details = ONE_TIME_PLANS[plan]
-        body = {
-            "intent": "CAPTURE",
-            "purchase_units": [{
-                "description": plan_details['description'],
-                "amount": {
-                    "currency_code": "CAD",
-                    "value": f"{plan_details['amount'] / 100:.2f}"
-                }
-            }],
-            "application_context": {
-                "return_url": "https://www.jayisaacai.com/success",
-                "cancel_url": "https://www.jayisaacai.com/cancel"
-            }
-        }
-        logger.debug("Sending PayPal API request: %s", body)
-        try:
-            response = requests.post(url, headers=headers, json=body, timeout=10)
-            response.raise_for_status()
-            order = response.json()
-            logger.debug("Order created: %s", order['id'])
-            return jsonify({"order_id": order["id"]}), 200
-        except requests.RequestException as e:
-            logger.error("Order creation failed: %s - Response: %s", str(e), response.text if 'response' in locals() else 'N/A')
-            return jsonify({"error": "Failed to create payment", "details": response.text if 'response' in locals() else str(e)}), 500
+        logger.debug("Form data validated successfully")
+        return jsonify({"status": "valid"}), 200
     except Exception as e:
-        logger.error("Unexpected error in create_payment: %s", str(e))
+        logger.error("Unexpected error in validate_form: %s", str(e))
         return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500
 
-@app.route('/api/execute_payment', methods=['POST'])
-def execute_payment():
+@app.route('/api/process_payment', methods=['POST'])
+def process_payment():
     try:
         data = request.get_json(silent=True)
-        logger.debug("Execute payment request data: %s", data)
+        logger.debug("Received process_payment request data: %s", data)
         if not data:
             logger.error("No JSON data in request")
             return jsonify({"error": "No JSON data provided"}), 400
 
-        order_id = data.get('payment_id')
-        payer_id = data.get('payer_id')
-        if not order_id or not payer_id:
-            logger.error("Missing payment_id or payer_id - payment_id: %s, payer_id: %s", order_id, payer_id)
-            return jsonify({"error": "Missing payment_id or payer_id"}), 400
+        plan = data.get('plan')
+        plan_type = data.get('plan_type')
+        amount = data.get('amount')
+        is_subscription = data.get('is_subscription')
+        stripe_token = data.get('stripe_token')
+        form_data = data.get('form_data')
 
-        token = get_paypal_access_token()
-        if isinstance(token, tuple):
-            logger.error("Token fetch returned error: %s", token[0])
-            return token
-        url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}/capture"
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {token}"
-        }
-        logger.debug("Sending PayPal capture request for order: %s", order_id)
+        if not all([plan, plan_type, amount, stripe_token, form_data]):
+            logger.error("Missing fields - plan: %s, plan_type: %s, amount: %s, stripe_token: %s", plan, plan_type, amount, stripe_token)
+            return jsonify({"error": "Missing required fields"}), 400
+
+        if not stripe.api_key:
+            logger.error("Stripe API key not configured")
+            return jsonify({"error": "Server configuration error: Missing Stripe key"}), 500
+
         try:
-            response = requests.post(url, headers=headers, timeout=10)
-            response.raise_for_status()
-            logger.debug("Order captured: %s", order_id)
-            return jsonify({"status": "success", "payment_id": order_id}), 200
-        except requests.RequestException as e:
-            logger.error("Order capture failed: %s - Response: %s", str(e), response.text if 'response' in locals() else 'N/A')
-            return jsonify({"error": "Payment execution failed", "details": response.text if 'response' in locals() else str(e)}), 500
+            # Extract email from form data
+            email = form_data.get('email') if form_data.get('accountType') == 'personal' else form_data.get('businessEmail')
+
+            if is_subscription:
+                # Create customer
+                customer = stripe.Customer.create(
+                    email=email,
+                    source=stripe_token
+                )
+                # Create subscription (assumes plan ID like 'basic-monthly' is a recurring price in Stripe)
+                subscription = stripe.Subscription.create(
+                    customer=customer.id,
+                    items=[{'price': plan}],  # Use 'price' instead of 'plan' for modern Stripe API
+                    billing_cycle_anchor=stripe.utils.utc_now(),
+                    expand=['latest_invoice.payment_intent']
+                )
+                logger.debug("Subscription created: %s", subscription.id)
+                return jsonify({"status": "success", "subscription_id": subscription.id}), 200
+            else:
+                # Create one-time charge
+                charge = stripe.Charge.create(
+                    amount=amount,
+                    currency='cad',
+                    source=stripe_token,
+                    description=f"{plan} for {form_data.get('name') or form_data.get('companyName')}"
+                )
+                logger.debug("Charge created: %s", charge.id)
+                return jsonify({"status": "success", "charge_id": charge.id}), 200
+        except stripe.error.StripeError as e:
+            logger.error("Stripe error: %s", str(e))
+            return jsonify({"error": f"Payment failed: {str(e)}"}), 400
+        except Exception as e:
+            logger.error("Unexpected Stripe exception: %s", str(e))
+            return jsonify({"error": f"Payment processing error: {str(e)}"}), 500
     except Exception as e:
-        logger.error("Unexpected error in execute_payment: %s", str(e))
+        logger.error("Unexpected error in process_payment: %s", str(e))
         return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500
 
 @app.route('/api/success')
 def success():
     logger.debug("Serving /success")
     return jsonify({"message": "Payment completed successfully"})
-
-@app.route('/api/cancel')
-def cancel():
-    logger.debug("Serving /cancel")
-    return jsonify({"message": "Payment cancelled"})
 
 @app.route('/api')
 def hello():
