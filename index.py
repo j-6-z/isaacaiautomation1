@@ -5,7 +5,16 @@ import requests
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Define allowed origins
+ALLOWED_ORIGINS = [
+    "http://localhost:5500",  # Local development with Live Server
+    "https://www.jayisaacai.com",  # Production domain
+    "https://your-project.vercel.app"  # Vercel deployment URL (replace with your actual Vercel domain)
+]
+
+# Configure CORS with specific origins
+CORS(app, resources={r"/api/*": {"origins": ALLOWED_ORIGINS}})
 
 logging.basicConfig(
     level=logging.DEBUG,
