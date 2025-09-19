@@ -354,6 +354,8 @@
                 gap: 0.5rem;
                 width: 100%;
                 padding: 1rem 0;
+                align-items: center;
+                justify-content: center;
             }
             .nav-links.active {
                 display: flex;
@@ -361,6 +363,7 @@
             .nav-links a {
                 font-size: 0.9rem;
                 padding: 0.4rem 0.8rem;
+                width: fit-content;
             }
             .menu-toggle {
                 display: block;
@@ -527,11 +530,16 @@
             },
             retina_detect: true
         });
-        const canvas = document.querySelector('#particles-js canvas');
-        if (canvas) {
-            canvas.height = window.innerHeight;
-            console.log('Canvas adjusted to:', canvas.width, 'x', canvas.height);
+        function resizeCanvas() {
+            const canvas = document.querySelector('#particles-js canvas');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                console.log('Canvas resized to:', canvas.width, 'x', canvas.height);
+            }
         }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
         console.log('Particles.js initialized');
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {

@@ -121,6 +121,9 @@
             cursor: pointer;
             position: relative;
         }
+        .subscription-option {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+        }
         .one-time-option {
             background: linear-gradient(135deg, #f0fff7 0%, #e6fafa 100%);
         }
@@ -136,6 +139,7 @@
             box-shadow: 0 4px 12px rgba(59, 77, 230, 0.2);
             background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
+        .subscription-option:hover,
         .one-time-option:hover {
             background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
@@ -174,10 +178,8 @@
         }
         .form-group input:focus + label,
         .form-group select:focus + label,
-        .form-group textarea:focus + label,
         .form-group input:not(:placeholder-shown) + label,
-        .form-group select:not(:placeholder-shown) + label,
-        .form-group textarea:not(:placeholder-shown) + label {
+        .form-group select:not(:placeholder-shown) + label {
             top: -0.6rem;
             left: 0.8rem;
             font-size: 0.75rem;
@@ -185,7 +187,7 @@
             background: #ffffff;
             padding: 0 0.2rem;
         }
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 1rem;
             border: 1px solid #d3e0ff;
@@ -195,18 +197,14 @@
             color: #1a1a3d;
             transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: transparent;
             background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
             box-shadow: 0 0 8px rgba(59, 77, 230, 0.3);
         }
-        input::placeholder, textarea::placeholder {
+        input::placeholder {
             color: transparent;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 80px;
         }
         select {
             appearance: none;
@@ -221,8 +219,9 @@
             border-radius: 8px;
             background: #f9f9ff;
             margin: 1rem 0;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            min-height: 40px; /* Ensure visibility */
+            min-height: 44px;
+            min-width: 100%;
+            box-sizing: border-box;
         }
         .card-element.StripeElement--focus {
             border-color: transparent;
@@ -290,16 +289,14 @@
             .form-group label {
                 font-size: 0.85rem;
             }
-            input, select, textarea, .card-element, button[type="submit"] {
+            input, select, .card-element, button[type="submit"] {
                 font-size: 0.95rem;
                 padding: 0.7rem;
             }
             .form-group input:focus + label,
             .form-group select:focus + label,
-            .form-group textarea:focus + label,
             .form-group input:not(:placeholder-shown) + label,
-            .form-group select:not(:placeholder-shown) + label,
-            .form-group textarea:not(:placeholder-shown) + label {
+            .form-group select:not(:placeholder-shown) + label {
                 top: -0.5rem;
                 font-size: 0.7rem;
             }
@@ -341,7 +338,24 @@
     <div class="order-container">
         <h1>Secure Payment</h1>
         <div class="order-section">
-            <h2>Choose Your Plan</h2>
+            <h2>Subscription Plans</h2>
+            <div class="order-options">
+                <div class="option subscription-option" data-plan="basic-monthly" data-type="subscription">
+                    <label>Basic Monthly Subscription</label>
+                    <p>$49/month - Custom chatbot, core features, single-platform integration, up to 1,000 conversations, 6 months email support.</p>
+                </div>
+                <div class="option subscription-option" data-plan="standard-monthly" data-type="subscription">
+                    <label>Standard Monthly Subscription</label>
+                    <p>$149/month - Advanced AI, multi-platform support (web, mobile, WhatsApp), up to 5,000 conversations, 1 year priority support.</p>
+                </div>
+                <div class="option subscription-option" data-plan="enterprise-monthly" data-type="subscription">
+                    <label>Enterprise Monthly Subscription</label>
+                    <p>$499/month - Fully custom chatbot, integrations (Salesforce, Shopify), unlimited conversations, dedicated support, analytics.</p>
+                </div>
+            </div>
+        </div>
+        <div class="order-section">
+            <h2>One-Time Purchase Plans</h2>
             <div class="order-options">
                 <div class="option one-time-option selected" data-plan="basic-purchase" data-type="one-time">
                     <label>Basic One-Time Purchase</label>
@@ -349,11 +363,11 @@
                 </div>
                 <div class="option one-time-option" data-plan="standard-purchase" data-type="one-time">
                     <label>Standard One-Time Purchase</label>
-                    <p>$11,999 - Advanced AI, multi-platform support, 2 years updates.</p>
+                    <p>$9,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
                 </div>
                 <div class="option one-time-option" data-plan="enterprise-purchase" data-type="one-time">
                     <label>Enterprise One-Time Purchase</label>
-                    <p>$25,000 - Fully custom solution, complex integrations, scalability, 3+ years support.</p>
+                    <p>$25,000 - Fully custom solution, integrations (HubSpot, Zendesk), scalability, 3+ years support.</p>
                 </div>
             </div>
         </div>
@@ -460,26 +474,56 @@
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
 
-            // Initialize Stripe
-            try {
-                const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your Stripe test publishable key
-                const elements = stripe.elements();
-                const card = elements.create('card', {
-                    style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#1a1a3d',
-                            '::placeholder': { color: 'transparent' }
-                        }
+            // Initialize Stripe with retry mechanism
+            let stripeRetryCount = 0;
+            const maxRetries = 3;
+            function initializeStripe() {
+                try {
+                    if (typeof Stripe === 'undefined') {
+                        throw new Error('Stripe.js not loaded');
                     }
-                });
-                card.mount('#card-element');
-                console.log('Stripe card element mounted successfully');
-            } catch (error) {
-                console.error('Stripe initialization error:', error.message);
-                document.getElementById('card-error').textContent = 'Failed to load payment form. Please try again or contact support.';
-                document.getElementById('card-error').style.display = 'block';
+                    const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your Stripe test publishable key
+                    const elements = stripe.elements();
+                    const card = elements.create('card', {
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#1a1a3d',
+                                '::placeholder': { color: 'transparent' }
+                            }
+                        }
+                    });
+                    card.mount('#card-element');
+                    console.log('Stripe card element mounted successfully');
+                    card.on('ready', () => {
+                        console.log('Stripe card element is ready and visible');
+                    });
+                    card.on('change', (event) => {
+                        const cardErrorElement = document.getElementById('card-error');
+                        if (event.error) {
+                            cardErrorElement.textContent = event.error.message;
+                            cardErrorElement.style.display = 'block';
+                        } else {
+                            cardErrorElement.textContent = '';
+                            cardErrorElement.style.display = 'none';
+                        }
+                    });
+                    return card;
+                } catch (error) {
+                    console.error('Stripe initialization error:', error.message);
+                    if (stripeRetryCount < maxRetries) {
+                        stripeRetryCount++;
+                        console.log(`Retrying Stripe initialization (${stripeRetryCount}/${maxRetries})...`);
+                        setTimeout(initializeStripe, 1000);
+                    } else {
+                        const cardErrorElement = document.getElementById('card-error');
+                        cardErrorElement.textContent = 'Failed to load payment form. Please try again or contact support.';
+                        cardErrorElement.style.display = 'block';
+                    }
+                }
             }
+
+            const card = initializeStripe();
 
             // Plan selection logic
             const selectedPlanInput = document.getElementById('selected-plan');
@@ -489,8 +533,11 @@
 
             function getPlanDetails(planValue) {
                 const plans = {
+                    'basic-monthly': { amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
+                    'standard-monthly': { amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
+                    'enterprise-monthly': { amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
                     'basic-purchase': { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false, priceText: '$799' },
-                    'standard-purchase': { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$11,999' },
+                    'standard-purchase': { amount: 999900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$9,999' },
                     'enterprise-purchase': { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false, priceText: '$25,000' }
                 };
                 return plans[planValue] || { amount: 0, description: 'Unknown Plan', isSubscription: false, priceText: 'Unknown' };
