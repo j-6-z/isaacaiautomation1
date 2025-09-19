@@ -32,13 +32,6 @@ if not stripe.api_key:
     logger.error("Missing STRIPE_SECRET_KEY environment variable")
     raise ValueError("STRIPE_SECRET_KEY environment variable is not set")
 
-# Map plan names to Stripe Price IDs (replace with actual Price IDs from Stripe Dashboard)
-PLAN_PRICE_IDS = {
-    'basic-monthly': 'price_basic_monthly',  # Replace with actual Price ID (e.g., price_123...)
-    'standard-monthly': 'price_standard_monthly',
-    'enterprise-monthly': 'price_enterprise_monthly'
-}
-
 @app.route('/api/debug', methods=['GET'])
 def debug():
     logger.debug("Debug endpoint accessed")
@@ -55,9 +48,15 @@ def validate_form():
 
         account_type = data.get('account_type')
         form_data = data.get('form_data')
-        if not account_type or not form_data:
-            logger.error("Missing fields - account_type: %s, form_data: %s", account_type, form_data)
+        plan = data.get('plan')
+        if not account_type or not form_data or not plan:
+            logger.error("Missing fields - account_type: %s, form_data: %s, plan: %s", account_type, form_data, plan)
             return jsonify({"error": "Missing required fields"}), 400
+
+        valid_plans = ['basic-purchase', 'standard-purchase', 'enterprise-purchase']
+        if plan not in valid_plans:
+            logger.error("Invalid plan: %s", plan)
+            return jsonify({"error": "Invalid plan"}), 400
 
         if account_type == 'personal':
             if not form_data.get('name') or not form_data.get('email'):
@@ -105,49 +104,32 @@ def process_payment():
 
         # Validate plan and amount
         valid_plans = {
-            'basic-monthly': 4900,
-            'standard-monthly': 14900,
-            'enterprise-monthly': 49900,
             'basic-purchase': 79900,
-            'standard-purchase': 999900,
+            'standard-purchase': 1199900,
             'enterprise-purchase': 2500000
         }
         if plan not in valid_plans or valid_plans[plan] != amount:
             logger.error("Invalid plan or amount - plan: %s, amount: %s", plan, amount)
             return jsonify({"error": "Invalid plan or amount"}), 400
 
+        if is_subscription:
+            logger.error("Subscriptions not supported for one-time purchase plans")
+            return jsonify({"error": "Subscriptions not supported"}), 400
+
         try:
             # Extract email from form data
             email = form_data.get('email') if form_data.get('accountType') == 'personal' else form_data.get('businessEmail')
 
-            if is_subscription:
-                if plan not in PLAN_PRICE_IDS:
-                    logger.error("No Price ID for plan: %s", plan)
-                    return jsonify({"error": f"No Price ID configured for plan {plan}"}), 400
-
-                # Create customer
-                customer = stripe.Customer.create(
-                    email=email,
-                    source=stripe_token
-                )
-                # Create subscription
-                subscription = stripe.Subscription.create(
-                    customer=customer.id,
-                    items=[{'price': PLAN_PRICE_IDS[plan]}],
-                    expand=['latest_invoice.payment_intent']
-                )
-                logger.debug("Subscription created: %s", subscription.id)
-                return jsonify({"status": "success", "subscription_id": subscription.id}), 200
-            else:
-                # Create one-time charge
-                charge = stripe.Charge.create(
-                    amount=amount,
-                    currency='cad',
-                    source=stripe_token,
-                    description=f"{plan} for {form_data.get('name') or form_data.get('companyName')}"
-                )
-                logger.debug("Charge created: %s", charge.id)
-                return jsonify({"status": "success", "charge_id": charge.id}), 200
+            # Create one-time charge
+            charge = stripe.Charge.create(
+                amount=amount,
+                currency='cad',
+                source=stripe_token,
+                description=f"{plan} for {form_data.get('name') or form_data.get('companyName')}",
+                receipt_email=email
+            )
+            logger.debug("Charge created: %s", charge.id)
+            return jsonify({"status": "success", "charge_id": charge.id}), 200
         except stripe.error.AuthenticationError as e:
             logger.error("Stripe authentication error: %s", str(e))
             return jsonify({"error": "Server configuration error: Invalid Stripe API key"}), 401

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order AI Chatbots - JAYISAAC AI</title>
+    <title>Secure Payment - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -121,9 +121,6 @@
             cursor: pointer;
             position: relative;
         }
-        .subscription-option {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
-        }
         .one-time-option {
             background: linear-gradient(135deg, #f0fff7 0%, #e6fafa 100%);
         }
@@ -139,7 +136,6 @@
             box-shadow: 0 4px 12px rgba(59, 77, 230, 0.2);
             background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
-        .subscription-option:hover,
         .one-time-option:hover {
             background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
         }
@@ -226,6 +222,7 @@
             background: #f9f9ff;
             margin: 1rem 0;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            min-height: 40px; /* Ensure visibility */
         }
         .card-element.StripeElement--focus {
             border-color: transparent;
@@ -342,44 +339,27 @@
         </nav>
     </header>
     <div class="order-container">
-        <h1>Order Your Chatbot</h1>
+        <h1>Secure Payment</h1>
         <div class="order-section">
-            <h2>Subscription Plans</h2>
+            <h2>Choose Your Plan</h2>
             <div class="order-options">
-                <div class="option subscription-option selected" data-plan="basic-monthly" data-type="subscription">
-                    <label>Basic Monthly Subscription</label>
-                    <p>$49/month - Custom chatbot, core features, single-platform integration, up to 1,000 conversations, 6 months email support.</p>
-                </div>
-                <div class="option subscription-option" data-plan="standard-monthly" data-type="subscription">
-                    <label>Standard Monthly Subscription</label>
-                    <p>$149/month - Advanced AI, multi-platform support (web, mobile, WhatsApp), up to 5,000 conversations, 1 year priority support.</p>
-                </div>
-                <div class="option subscription-option" data-plan="enterprise-monthly" data-type="subscription">
-                    <label>Enterprise Monthly Subscription</label>
-                    <p>$499/month - Fully custom chatbot, integrations (Salesforce, Shopify), unlimited conversations, dedicated support, analytics.</p>
-                </div>
-            </div>
-        </div>
-        <div class="order-section">
-            <h2>One-Time Purchase Plans</h2>
-            <div class="order-options">
-                <div class="option one-time-option" data-plan="basic-purchase" data-type="one-time">
+                <div class="option one-time-option selected" data-plan="basic-purchase" data-type="one-time">
                     <label>Basic One-Time Purchase</label>
                     <p>$799 - Custom chatbot, lifetime access (self-hosted), 1 year basic support.</p>
                 </div>
                 <div class="option one-time-option" data-plan="standard-purchase" data-type="one-time">
                     <label>Standard One-Time Purchase</label>
-                    <p>$9,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
+                    <p>$11,999 - Advanced AI, multi-platform support, 2 years updates.</p>
                 </div>
                 <div class="option one-time-option" data-plan="enterprise-purchase" data-type="one-time">
                     <label>Enterprise One-Time Purchase</label>
-                    <p>$25,000 - Fully custom solution, integrations (HubSpot, Zendesk), scalability, 3+ years support.</p>
+                    <p>$25,000 - Fully custom solution, complex integrations, scalability, 3+ years support.</p>
                 </div>
             </div>
         </div>
         <form id="order-form">
-            <input type="hidden" id="selected-plan" name="plan" value="basic-monthly">
-            <input type="hidden" id="plan-type" name="plan-type" value="subscription">
+            <input type="hidden" id="selected-plan" name="plan" value="basic-purchase">
+            <input type="hidden" id="plan-type" name="plan-type" value="one-time">
             <div class="form-group">
                 <select id="account-type" name="account-type" required>
                     <option value="" disabled selected>Select Account Type</option>
@@ -410,11 +390,6 @@
                     <label for="website-url">Website URL (Optional)</label>
                     <div class="error-message" id="website-url-error">Please enter a valid URL.</div>
                 </div>
-                <div class="form-group">
-                    <textarea id="notes" name="notes" placeholder=" "></textarea>
-                    <label for="notes">Notes (Optional)</label>
-                    <div class="error-message" id="notes-error"></div>
-                </div>
             </div>
             <div id="business-fields" class="field-group">
                 <div class="form-group">
@@ -437,13 +412,8 @@
                     <label for="business-website-url">Website URL (Optional)</label>
                     <div class="error-message" id="business-website-url-error">Please enter a valid URL.</div>
                 </div>
-                <div class="form-group">
-                    <textarea id="business-notes" name="business-notes" placeholder=" "></textarea>
-                    <label for="business-notes">Notes (Optional)</label>
-                    <div class="error-message" id="business-notes-error"></div>
-                </div>
             </div>
-            <div class="price-display" id="price-display">Selected Plan: CAD $49/month</div>
+            <div class="price-display" id="price-display">You will be charged: CAD $799</div>
             <div class="form-group">
                 <div id="card-element" class="card-element"></div>
                 <div class="error-message" id="card-error"></div>
@@ -490,19 +460,26 @@
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
 
-            // Initialize Stripe with publishable key
-            const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your publishable key
-            const elements = stripe.elements();
-            const card = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#1a1a3d',
-                        '::placeholder': { color: 'transparent' }
+            // Initialize Stripe
+            try {
+                const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s'); // Replace with your Stripe test publishable key
+                const elements = stripe.elements();
+                const card = elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px',
+                            color: '#1a1a3d',
+                            '::placeholder': { color: 'transparent' }
+                        }
                     }
-                }
-            });
-            card.mount('#card-element');
+                });
+                card.mount('#card-element');
+                console.log('Stripe card element mounted successfully');
+            } catch (error) {
+                console.error('Stripe initialization error:', error.message);
+                document.getElementById('card-error').textContent = 'Failed to load payment form. Please try again or contact support.';
+                document.getElementById('card-error').style.display = 'block';
+            }
 
             // Plan selection logic
             const selectedPlanInput = document.getElementById('selected-plan');
@@ -512,11 +489,8 @@
 
             function getPlanDetails(planValue) {
                 const plans = {
-                    'basic-monthly': { amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
-                    'standard-monthly': { amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
-                    'enterprise-monthly': { amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
                     'basic-purchase': { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false, priceText: '$799' },
-                    'standard-purchase': { amount: 999900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$9,999' },
+                    'standard-purchase': { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$11,999' },
                     'enterprise-purchase': { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false, priceText: '$25,000' }
                 };
                 return plans[planValue] || { amount: 0, description: 'Unknown Plan', isSubscription: false, priceText: 'Unknown' };
@@ -524,11 +498,11 @@
 
             function updatePriceDisplay(planValue) {
                 const planDetails = getPlanDetails(planValue);
-                priceDisplay.textContent = `Selected Plan: CAD ${planDetails.priceText}`;
+                priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
             }
 
-            let currentPlan = 'basic-monthly';
-            let currentPlanType = 'subscription';
+            let currentPlan = 'basic-purchase';
+            let currentPlanType = 'one-time';
             updatePriceDisplay(currentPlan);
 
             planOptions.forEach(option => {
@@ -624,9 +598,8 @@
                     const email = document.getElementById('email').value.trim();
                     const verifyEmail = document.getElementById('verify-email').value.trim();
                     const websiteUrl = document.getElementById('website-url').value.trim();
-                    const notes = document.getElementById('notes').value.trim();
 
-                    console.log('Personal form data:', { name, email, verifyEmail, websiteUrl, notes });
+                    console.log('Personal form data:', { name, email, verifyEmail, websiteUrl });
 
                     if (!name) {
                         validateField(document.getElementById('name'));
@@ -648,15 +621,14 @@
                         return false;
                     }
 
-                    return { name, email, verifyEmail, websiteUrl, notes, accountType };
+                    return { name, email, verifyEmail, websiteUrl, accountType };
                 } else if (accountType === 'business') {
                     const companyName = document.getElementById('company-name').value.trim();
                     const businessEmail = document.getElementById('business-email').value.trim();
                     const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
                     const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
-                    const businessNotes = document.getElementById('business-notes').value.trim();
 
-                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes });
+                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl });
 
                     if (!companyName) {
                         validateField(document.getElementById('company-name'));
@@ -678,16 +650,16 @@
                         return false;
                     }
 
-                    return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, businessNotes, accountType };
+                    return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, accountType };
                 }
             }
 
-            const fields = document.querySelectorAll('input, select, textarea');
+            const fields = document.querySelectorAll('input, select');
             fields.forEach(field => {
                 field.addEventListener('blur', () => {
                     if (field.id === 'website-url' || field.id === 'business-website-url') {
                         validateUrl(field);
-                    } else if (field.id !== 'notes' && field.id !== 'business-notes') {
+                    } else {
                         validateField(field);
                     }
                     if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
@@ -767,30 +739,26 @@
 
                     if (!paymentResponse.ok || paymentResult.error) {
                         console.error('Payment error:', paymentResult.error || 'Unknown error');
-                        let errorMessage = paymentResult.error || 'Server error';
-                        if (paymentResult.error?.includes('api_key')) {
-                            errorMessage = 'Payment blocked due to an issue with the server configuration. Please contact support.';
-                        }
-                        alert(`Payment failed: ${errorMessage}`);
+                        alert(`Payment failed: ${paymentResult.error || 'Server error'}`);
                         return;
                     }
 
                     console.log('Payment successful:', paymentResult);
                     alert('Purchase completed successfully! We will contact you soon.');
-                    window.location.href = '/receipt.html'; // Redirect to receipt page
+                    window.location.href = '/receipt.html';
                     orderForm.reset();
                     card.clear();
                     toggleFields();
-                    selectedPlanInput.value = 'basic-monthly';
-                    planTypeInput.value = 'subscription';
-                    currentPlan = 'basic-monthly';
-                    currentPlanType = 'subscription';
+                    selectedPlanInput.value = 'basic-purchase';
+                    planTypeInput.value = 'one-time';
+                    currentPlan = 'basic-purchase';
+                    currentPlanType = 'one-time';
                     planOptions.forEach(opt => opt.classList.remove('selected'));
-                    document.querySelector('.option[data-plan="basic-monthly"]').classList.add('selected');
+                    document.querySelector('.option[data-plan="basic-purchase"]').classList.add('selected');
                     updatePriceDisplay(currentPlan);
                 } catch (error) {
                     console.error('Submission error:', error.message);
-                    alert('Error processing purchase: ' + (error.message.includes('api_key') ? 'Server configuration issue. Please contact support.' : error.message));
+                    alert('Error processing purchase: ' + error.message);
                 }
             });
         });
