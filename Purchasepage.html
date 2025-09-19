@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment - JAYISAAC AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; /* Stripe's system font stack */
         }
         body {
-            background: linear-gradient(135deg, #e6f0fa 0%, #f9f9ff 100%);
-            color: #1a1a3d;
+            background: #f6f9fc;
+            color: #32325d;
             line-height: 1.6;
             padding: 20px;
             min-height: 100vh;
@@ -37,8 +35,8 @@
             top: 0;
             z-index: 1000;
             padding: 1rem 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         nav {
             display: flex;
@@ -61,8 +59,9 @@
         }
         .logo span {
             font-size: 1.5rem;
-            font-weight: 500;
-            color: #1a1a3d;
+            font-weight: 600;
+            color: #32325d;
+            letter-spacing: -0.02em;
         }
         nav ul {
             display: flex;
@@ -71,23 +70,23 @@
             justify-content: center;
         }
         nav a {
-            color: #1a1a3d;
+            color: #6b7c93;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: background 0.2s ease, color 0.2s ease;
+            border-radius: 6px;
+            transition: color 0.2s ease, background 0.2s ease;
         }
         nav a:hover {
-            background: #e6f0fa;
-            color: #3b4de6;
+            background: #f6f9fc;
+            color: #32325d;
         }
         .order-container {
             background: #ffffff;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             max-width: 1000px;
             margin: 6rem auto 2rem;
             text-align: center;
@@ -95,19 +94,21 @@
             z-index: 1;
         }
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.25rem;
             font-weight: 700;
-            color: #1a1a3d;
+            color: #32325d;
             margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
         }
         .order-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         .order-section h2 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #1a1a3d;
-            margin-bottom: 1rem;
+            color: #32325d;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
         }
         .order-options {
             display: grid;
@@ -115,46 +116,51 @@
             gap: 1.5rem;
         }
         .option {
-            background: #f9f9ff;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #e6e6ff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            background: #ffffff;
+            padding: 1.75rem;
+            border-radius: 8px;
+            border: 1px solid #e6ebf1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             position: relative;
+            color: #32325d;
         }
         .subscription-option {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+            background: #ffffff;
         }
         .one-time-option {
-            background: linear-gradient(135deg, #f0fff7 0%, #e6fafa 100%);
+            background: #ffffff;
         }
         .option:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-            border-color: #3b4de6;
-            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: #d0d5dd;
         }
         .option.selected {
-            border: 2px solid #3b4de6;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(59, 77, 230, 0.2);
-            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
+            border: 2px solid #635bff;
+            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.15);
         }
-        .subscription-option:hover,
-        .one-time-option:hover {
-            background: linear-gradient(135deg, #e6ecff 0%, #d9e4ff 100%);
+        .option.selected.subscription-option {
+            background: #f7f9fe;
+            color: #32325d;
+        }
+        .option.selected.one-time-option {
+            background: #f8f9fa;
+            color: #32325d;
         }
         .option label {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            color: #1a1a3d;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             display: block;
+            color: #32325d;
+            letter-spacing: -0.01em;
         }
         .option p {
             font-size: 0.95rem;
-            color: #4a4a6a;
+            font-weight: 400;
+            color: #6b7c93;
+            line-height: 1.6;
         }
         form {
             display: flex;
@@ -168,9 +174,9 @@
             position: relative;
         }
         .form-group label {
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             font-weight: 500;
-            color: #1a1a3d;
+            color: #6b7c93;
             position: absolute;
             top: 0.8rem;
             left: 1rem;
@@ -185,78 +191,78 @@
             top: -0.6rem;
             left: 0.8rem;
             font-size: 0.75rem;
-            color: #3b4de6;
+            color: #635bff;
             background: #ffffff;
             padding: 0 0.2rem;
         }
         input, select {
             width: 100%;
             padding: 1rem;
-            border: 1px solid #d3e0ff;
-            border-radius: 8px;
-            background: #f9f9ff;
+            border: 1px solid #e6ebf1;
+            border-radius: 6px;
+            background: #ffffff;
             font-size: 1rem;
-            color: #1a1a3d;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            font-weight: 400;
+            color: #32325d;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         input:focus, select:focus {
             outline: none;
-            border-color: transparent;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-            box-shadow: 0 0 8px rgba(59, 77, 230, 0.3);
+            border-color: #635bff;
+            box-shadow: 0 0 0 2px rgba(99, 91, 255, 0.1);
         }
         input::placeholder {
             color: transparent;
         }
         select {
             appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%231a1a3d"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%236b7c93"/></svg>');
             background-repeat: no-repeat;
             background-position: right 0.8rem center;
             cursor: pointer;
         }
-        .card-element {
-            padding: 1rem;
-            border: 1px solid #d3e0ff;
-            border-radius: 8px;
-            background: #f9f9ff;
-            margin: 1rem 0;
-            min-height: 44px;
-            min-width: 100%;
-            box-sizing: border-box;
+        .price-display {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #32325d;
+            margin: 1.5rem 0;
+            letter-spacing: -0.01em;
         }
-        .card-element.StripeElement--focus {
-            border-color: transparent;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-            box-shadow: 0 0 8px rgba(59, 77, 230, 0.3);
+        .pay-radio {
+            display: none;
+            margin-top: 1rem;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        button[type="submit"] {
-            width: 100%;
-            padding: 0.9rem;
-            background: #3b4de6;
+        .pay-radio label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
             color: #ffffff;
-            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 2px solid #ffffff;
+            letter-spacing: -0.01em;
+            opacity: 0.7;
+            pointer-events: none;
         }
-        button[type="submit"]:hover {
-            background: #2a3cb7;
+        .pay-radio label:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-        #checkout-button:disabled {
-            background: #3b4de6;
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .pay-radio input[type="radio"] {
+            display: none;
         }
-        .price-display {
-            font-size: 1.3rem;
-            font-weight: 500;
-            color: #1a1a3d;
-            margin: 1.5rem 0;
+        .pay-radio.pay-enabled label {
+            opacity: 1;
+            pointer-events: auto;
         }
         .field-group {
             display: none;
@@ -265,44 +271,75 @@
             display: block;
         }
         .error-message {
-            color: #e63946;
+            color: #e2594c;
             font-size: 0.85rem;
             margin-top: 0.3rem;
             display: none;
         }
         .invalid-input {
-            border-color: #e63946;
-        }
-        .test-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #3b4de6;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            z-index: 1001;
-            font-size: 12px;
-        }
-        .test-button:hover {
-            background: #2a3cb7;
+            border-color: #e2594c;
         }
         footer {
-            text-align: center;
-            padding: 1rem;
-            background: #ffffff;
-            color: #1a1a3d;
-            border-radius: 12px;
+            padding: 2rem;
+            text-align: left;
+            position: relative;
+            z-index: 800;
+            border-top: 1px solid #e5e7eb;
             margin-top: 2rem;
         }
-        footer a {
-            color: #1a1a3d;
-            text-decoration: none;
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
         }
-        footer a:hover {
-            color: #3b4de6;
+        .footer-company {
+            flex: 1;
+        }
+        .footer-company .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .footer-company .footer-logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        .footer-company .footer-logo img:hover {
+            transform: rotate(360deg);
+        }
+        .footer-company .footer-logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .footer-company p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            max-width: 250px;
+        }
+        .footer-terms {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .footer-terms a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+        .footer-terms a:hover {
+            color: #4b5563;
         }
         @media (max-width: 768px) {
             .order-container {
@@ -311,26 +348,26 @@
                 max-width: 95%;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.875rem;
             }
             .order-section h2 {
-                font-size: 1.4rem;
+                font-size: 1.25rem;
             }
             .order-options {
                 grid-template-columns: 1fr;
             }
             .option label {
-                font-size: 1.2rem;
+                font-size: 1.125rem;
             }
             .option p {
-                font-size: 0.9rem;
+                font-size: 0.875rem;
             }
             .form-group label {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
-            input, select, .card-element, button[type="submit"] {
+            input, select {
                 font-size: 0.95rem;
-                padding: 0.7rem;
+                padding: 0.875rem;
             }
             .form-group input:focus + label,
             .form-group select:focus + label,
@@ -340,39 +377,48 @@
                 font-size: 0.7rem;
             }
             .price-display {
-                font-size: 1.1rem;
+                font-size: 1.125rem;
+            }
+            .pay-radio label {
+                font-size: 1rem;
+                padding: 0.625rem 1.25rem;
             }
             nav ul {
                 gap: 1rem;
             }
             nav a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
+                font-size: 0.875rem;
+                padding: 0.4rem 0.75rem;
             }
             .logo span {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
             }
             .logo img {
                 height: 40px;
             }
-            .test-button {
-                top: 10px;
-                right: 10px;
-                padding: 8px 12px;
-                font-size: 11px;
+            footer {
+                padding: 1rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-company, .footer-terms {
+                text-align: center;
+            }
+            .footer-terms {
+                margin-top: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <button class="test-button" onclick="testAPI()">Test One-Time API</button>
-    <button class="test-button" style="right: 150px;" onclick="testSubscriptionAPI()">Test Subscription API</button>
     <header>
         <nav>
             <div class="logo">
                 <img src="https://via.placeholder.com/50" alt="AI Chatbot Logo">
-                <span>JAYISAAC AI</span>
+                <span>JAYISAAC AI AUTOMATION</span>
             </div>
             <ul>
                 <li><a href="/index.html">Home</a></li>
@@ -387,15 +433,15 @@
         <div class="order-section">
             <h2>Subscription Plans</h2>
             <div class="order-options">
-                <div class="option subscription-option" data-plan="basic-monthly" data-type="subscription">
+                <div class="option subscription-option" data-plan="basic-monthly" data-url="https://buy.stripe.com/14A5kwe8H7LV1kAavnc3m02">
                     <label>Basic Monthly Subscription</label>
                     <p>$49/month - Custom chatbot, core features, single-platform integration, up to 1,000 conversations, 6 months email support.</p>
                 </div>
-                <div class="option subscription-option" data-plan="standard-monthly" data-type="subscription">
+                <div class="option subscription-option" data-plan="standard-monthly" data-url="https://buy.stripe.com/eVq00cc0z1nxfbq6f7c3m03">
                     <label>Standard Monthly Subscription</label>
                     <p>$149/month - Advanced AI, multi-platform support (web, mobile, WhatsApp), up to 5,000 conversations, 1 year priority support.</p>
                 </div>
-                <div class="option subscription-option" data-plan="enterprise-monthly" data-type="subscription">
+                <div class="option subscription-option" data-plan="enterprise-monthly" data-url="https://buy.stripe.com/9B6eV62pZfen4wM46Zc3m06">
                     <label>Enterprise Monthly Subscription</label>
                     <p>$499/month - Fully custom chatbot, integrations (Salesforce, Shopify), unlimited conversations, dedicated support, analytics.</p>
                 </div>
@@ -404,15 +450,15 @@
         <div class="order-section">
             <h2>One-Time Purchase Plans</h2>
             <div class="order-options">
-                <div class="option one-time-option selected" data-plan="basic-purchase" data-type="one-time">
+                <div class="option one-time-option selected" data-plan="basic-purchase" data-url="https://buy.stripe.com/8x2eV68On9U39R65b3c3m05">
                     <label>Basic One-Time Purchase</label>
                     <p>$799 - Custom chatbot, lifetime access (self-hosted), 1 year basic support.</p>
                 </div>
-                <div class="option one-time-option" data-plan="standard-purchase" data-type="one-time">
+                <div class="option one-time-option" data-plan="standard-purchase" data-url="https://buy.stripe.com/3cI7sE8On5DN4wM1YRc3m07">
                     <label>Standard One-Time Purchase</label>
-                    <p>$11,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
+                    <p>$9,999 - Advanced AI, multi-platform support (web, mobile, Slack), 2 years updates.</p>
                 </div>
-                <div class="option one-time-option" data-plan="enterprise-purchase" data-type="one-time">
+                <div class="option one-time-option" data-plan="enterprise-purchase" data-url="https://buy.stripe.com/bJedR2fcLgir0gw9rjc3m08">
                     <label>Enterprise One-Time Purchase</label>
                     <p>$25,000 - Fully custom solution, integrations (HubSpot, Zendesk), scalability, 3+ years support.</p>
                 </div>
@@ -454,17 +500,17 @@
             </div>
             <div id="business-fields" class="field-group">
                 <div class="form-group">
-                    <input type="text" id="company-name" name="company-name" placeholder=" ">
+                    <input type="text" id="company-name" name="company-name" placeholder=" " required>
                     <label for="company-name">Company Name</label>
                     <div class="error-message" id="company-name-error">Please enter your company name.</div>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="business-email" name="business-email" placeholder=" ">
+                    <input type="email" id="business-email" name="business-email" placeholder=" " required>
                     <label for="business-email">Business Email</label>
                     <div class="error-message" id="business-email-error">Please enter a valid business email address.</div>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder=" ">
+                    <input type="email" id="business-verify-email" name="business-verify-email" placeholder=" " required>
                     <label for="business-verify-email">Verify Business Email</label>
                     <div class="error-message" id="business-verify-email-error">Business Emails do not match.</div>
                 </div>
@@ -475,14 +521,26 @@
                 </div>
             </div>
             <div class="price-display" id="price-display">You will be charged: CAD $799</div>
-            <div id="payment-section" style="margin-top: 20px; text-align: center;">
-                <button id="checkout-button" type="button" disabled>Pay Securely with Stripe</button>
-                <div class="error-message" id="payment-error">Please fill out all required fields correctly.</div>
+            <div class="pay-radio" id="pay-radio">
+                <label><input type="radio" name="pay" id="pay-now"> Pay Now</label>
             </div>
         </form>
     </div>
     <footer>
-        <p>&copy; 2025 JAYISAAC AI. <a href="/contact.html">Contact Us</a></p>
+        <div class="footer-content">
+            <div class="footer-company">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/50" alt="JAYISAAC AI Logo">
+                    <span>JAYISAAC AI AUTOMATION</span>
+                </div>
+                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at support@jayisaac.ai.</p>
+            </div>
+            <div class="footer-terms">
+                <a href="/TOS_SUCH.html">Terms of Service</a>
+                <a href="/TOS_SUCH.html">Privacy Policy</a>
+                <a href="/TOS_SUCH.html">Cookie Policy</a>
+            </div>
+        </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -491,11 +549,11 @@
                 particlesJS('particles-js', {
                     particles: {
                         number: { value: 60, density: { enable: true, value_area: 800 } },
-                        color: { value: '#3b4de6' },
+                        color: { value: '#635bff' },
                         shape: { type: 'circle' },
                         opacity: { value: 0.3, random: true },
                         size: { value: 2, random: true },
-                        line_linked: { enable: true, distance: 120, color: '#3b4de6', opacity: 0.2, width: 1 },
+                        line_linked: { enable: true, distance: 120, color: '#635bff', opacity: 0.2, width: 1 },
                         move: { enable: true, speed: 1, direction: 'none', random: true }
                     },
                     interactivity: {
@@ -515,51 +573,115 @@
                 orderContainer.style.opacity = 1;
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
-            // Stripe setup
-            const stripe = Stripe('pk_live_51S94dl3jvJSv2v9HnjZKuzoec68rIbBFULBh0ihi1kg5yRPq92JCv4xFT5MFJNwLCfKuBWqcI19xakCggReg9Y2F00vG2bvqk9');
-            // Plan selection
+
+            // Plan selection and form validation
+            const planOptions = document.querySelectorAll('.option');
             const selectedPlanInput = document.getElementById('selected-plan');
             const planTypeInput = document.getElementById('plan-type');
             const priceDisplay = document.getElementById('price-display');
-            const planOptions = document.querySelectorAll('.option');
-            const checkoutButton = document.getElementById('checkout-button');
-            const paymentError = document.getElementById('payment-error');
-            function getPlanDetails(planValue) {
-                const plans = {
-                    'basic-monthly': { priceId: 'price_1S94dt40fBt8mCex_basic_monthly', amount: 4900, description: 'Basic Monthly Subscription', isSubscription: true, priceText: '$49/month' },
-                    'standard-monthly': { priceId: 'price_1S94dt40fBt8mCex_standard_monthly', amount: 14900, description: 'Standard Monthly Subscription', isSubscription: true, priceText: '$149/month' },
-                    'enterprise-monthly': { priceId: 'price_1S94dt40fBt8mCex_enterprise_monthly', amount: 49900, description: 'Enterprise Monthly Subscription', isSubscription: true, priceText: '$499/month' },
-                    'basic-purchase': { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false, priceText: '$799' },
-                    'standard-purchase': { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false, priceText: '$11,999' },
-                    'enterprise-purchase': { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false, priceText: '$25,000' }
-                };
-                return plans[planValue] || { amount: 0, description: 'Unknown Plan', isSubscription: false, priceText: 'Unknown' };
-            }
-            function updatePriceDisplay(planValue) {
-                const planDetails = getPlanDetails(planValue);
-                priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
-            }
-            let currentPlan = 'basic-purchase';
-            let currentPlanType = 'one-time';
-            updatePriceDisplay(currentPlan);
-            planOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    const planValue = option.getAttribute('data-plan');
-                    const planType = option.getAttribute('data-type');
-                    planOptions.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-                    selectedPlanInput.value = planValue;
-                    planTypeInput.value = planType;
-                    currentPlan = planValue;
-                    currentPlanType = planType;
-                    updatePriceDisplay(planValue);
-                    validateForm();
-                });
-            });
-            // Form validation
+            const payRadio = document.getElementById('pay-radio');
+            const payNowRadio = document.getElementById('pay-now');
             const accountTypeSelect = document.getElementById('account-type');
             const personalFields = document.getElementById('personal-fields');
             const businessFields = document.getElementById('business-fields');
+
+            function getPlanDetails(planValue) {
+                const plans = {
+                    'basic-monthly': { amount: 4900, priceText: '$49/month', type: 'subscription' },
+                    'standard-monthly': { amount: 14900, priceText: '$149/month', type: 'subscription' },
+                    'enterprise-monthly': { amount: 49900, priceText: '$499/month', type: 'subscription' },
+                    'basic-purchase': { amount: 79900, priceText: '$799', type: 'one-time' },
+                    'standard-purchase': { amount: 999900, priceText: '$9,999', type: 'one-time' },
+                    'enterprise-purchase': { amount: 2500000, priceText: '$25,000', type: 'one-time' }
+                };
+                return plans[planValue] || { amount: 0, priceText: 'Unknown', type: 'one-time' };
+            }
+
+            function validateField(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.validity.valid && field.value.trim() !== '') {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                        return true;
+                    } else if (field.hasAttribute('required') && field.value.trim() === '') {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function validateEmails(emailField, verifyField, errorId) {
+                const errorElement = document.getElementById(errorId);
+                if (emailField && verifyField && errorElement) {
+                    if (emailField.value.trim() === verifyField.value.trim() && emailField.validity.valid) {
+                        errorElement.style.display = 'none';
+                        verifyField.classList.remove('invalid-input');
+                        return true;
+                    } else {
+                        errorElement.style.display = 'block';
+                        verifyField.classList.add('invalid-input');
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function validateUrl(field) {
+                const errorId = field.id + '-error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    if (field.value.trim() === '' || /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(field.value.trim())) {
+                        errorElement.style.display = 'none';
+                        field.classList.remove('invalid-input');
+                        return true;
+                    } else {
+                        errorElement.style.display = 'block';
+                        field.classList.add('invalid-input');
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function validateForm() {
+                const accountType = accountTypeSelect.value;
+                let isValid = true;
+
+                if (!accountType) {
+                    validateField(accountTypeSelect);
+                    isValid = false;
+                }
+
+                if (accountType === 'personal') {
+                    const name = document.getElementById('name');
+                    const email = document.getElementById('email');
+                    const verifyEmail = document.getElementById('verify-email');
+                    const websiteUrl = document.getElementById('website-url');
+
+                    isValid = validateField(name) && isValid;
+                    isValid = validateField(email) && isValid;
+                    isValid = validateEmails(email, verifyEmail, 'verify-email-error') && isValid;
+                    if (websiteUrl.value.trim() !== '') isValid = validateUrl(websiteUrl) && isValid;
+                } else if (accountType === 'business') {
+                    const companyName = document.getElementById('company-name');
+                    const businessEmail = document.getElementById('business-email');
+                    const businessVerifyEmail = document.getElementById('business-verify-email');
+                    const businessWebsiteUrl = document.getElementById('business-website-url');
+
+                    isValid = validateField(companyName) && isValid;
+                    isValid = validateField(businessEmail) && isValid;
+                    isValid = validateEmails(businessEmail, businessVerifyEmail, 'business-verify-email-error') && isValid;
+                    if (businessWebsiteUrl.value.trim() !== '') isValid = validateUrl(businessWebsiteUrl) && isValid;
+                }
+
+                return isValid;
+            }
+
+            // Toggle fields based on account type
             function toggleFields() {
                 const accountType = accountTypeSelect.value;
                 personalFields.classList.toggle('active', accountType === 'personal');
@@ -579,230 +701,77 @@
                         else input.removeAttribute('required');
                     });
                 }
-                validateField(accountTypeSelect);
-            }
-            toggleFields();
-            accountTypeSelect.addEventListener('change', () => {
-                toggleFields();
                 validateForm();
-            });
-            function validateField(field) {
-                const errorId = field.id + '-error';
-                const errorElement = document.getElementById(errorId);
-                if (errorElement) {
-                    if (field.validity.valid && field.value.trim() !== '') {
-                        errorElement.style.display = 'none';
-                        field.classList.remove('invalid-input');
-                    } else if (field.hasAttribute('required')) {
-                        errorElement.style.display = 'block';
-                        field.classList.add('invalid-input');
-                    }
-                }
             }
-            function validateEmails() {
-                const accountType = accountTypeSelect.value;
-                let emailField, verifyEmailField, errorId;
-                if (accountType === 'personal') {
-                    emailField = document.getElementById('email');
-                    verifyEmailField = document.getElementById('verify-email');
-                    errorId = 'verify-email-error';
-                } else if (accountType === 'business') {
-                    emailField = document.getElementById('business-email');
-                    verifyEmailField = document.getElementById('business-verify-email');
-                    errorId = 'business-verify-email-error';
-                }
-                const errorElement = document.getElementById(errorId);
-                if (errorElement && emailField && verifyEmailField) {
-                    if (emailField.value.trim() === verifyEmailField.value.trim() && emailField.validity.valid) {
-                        errorElement.style.display = 'none';
-                        verifyEmailField.classList.remove('invalid-input');
-                    } else {
-                        errorElement.style.display = 'block';
-                        verifyEmailField.classList.add('invalid-input');
-                    }
-                }
-            }
-            function validateUrl(field) {
-                const errorId = field.id + '-error';
-                const errorElement = document.getElementById(errorId);
-                if (errorElement) {
-                    if (field.value.trim() === '' || /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(field.value.trim())) {
-                        errorElement.style.display = 'none';
-                        field.classList.remove('invalid-input');
-                    } else {
-                        errorElement.style.display = 'block';
-                        field.classList.add('invalid-input');
-                    }
-                }
-            }
-            function validateForm() {
-                const accountType = accountTypeSelect.value;
-                if (!accountType) {
-                    validateField(accountTypeSelect);
-                    checkoutButton.disabled = true;
-                    paymentError.style.display = 'block';
-                    return false;
-                }
-                if (accountType === 'personal') {
-                    const name = document.getElementById('name').value.trim();
-                    const email = document.getElementById('email').value.trim();
-                    const verifyEmail = document.getElementById('verify-email').value.trim();
-                    const websiteUrl = document.getElementById('website-url').value.trim();
-                    if (!name) {
-                        validateField(document.getElementById('name'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                        validateField(document.getElementById('email'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (email !== verifyEmail) {
-                        validateEmails();
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
-                        validateUrl(document.getElementById('website-url'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    checkoutButton.disabled = false;
-                    paymentError.style.display = 'none';
-                    return { name, email, websiteUrl, accountType };
-                } else if (accountType === 'business') {
-                    const companyName = document.getElementById('company-name').value.trim();
-                    const businessEmail = document.getElementById('business-email').value.trim();
-                    const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
-                    const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
-                    if (!companyName) {
-                        validateField(document.getElementById('company-name'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
-                        validateField(document.getElementById('business-email'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (businessEmail !== businessVerifyEmail) {
-                        validateEmails();
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
-                        validateUrl(document.getElementById('business-website-url'));
-                        checkoutButton.disabled = true;
-                        paymentError.style.display = 'block';
-                        return false;
-                    }
-                    checkoutButton.disabled = false;
-                    paymentError.style.display = 'none';
-                    return { companyName, businessEmail, businessWebsiteUrl, accountType };
-                }
-            }
+
+            accountTypeSelect.addEventListener('change', toggleFields);
+            toggleFields();
+
+            // Real-time validation
             const fields = document.querySelectorAll('input, select');
             fields.forEach(field => {
                 field.addEventListener('input', () => {
                     if (field.id === 'website-url' || field.id === 'business-website-url') {
                         validateUrl(field);
+                    } else if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
+                        validateEmails(
+                            document.getElementById(field.id.replace('verify-', '')) || document.getElementById(field.id),
+                            field,
+                            field.id + '-error'
+                        );
                     } else {
                         validateField(field);
                     }
-                    if (field.id === 'verify-email' || field.id === 'business-verify-email' || field.id === 'email' || field.id === 'business-email') {
-                        validateEmails();
-                    }
-                    validateForm();
+                    const isValid = validateForm();
+                    payRadio.classList.toggle('pay-enabled', isValid);
                 });
             });
-            // Payment handling
-            checkoutButton.addEventListener('click', async () => {
-                const formData = validateForm();
-                if (!formData) {
-                    paymentError.textContent = 'Please fill out all required fields correctly.';
-                    paymentError.style.display = 'block';
-                    return;
-                }
-                const planDetails = getPlanDetails(currentPlan);
-                try {
-                    const response = await fetch('/api/create-checkout-session', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            plan: currentPlan,
-                            account_type: formData.accountType,
-                            form_data: formData,
-                            amount: planDetails.amount,
-                            priceId: planDetails.isSubscription ? planDetails.priceId : undefined
-                        })
-                    });
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-                    stripe.redirectToCheckout({ sessionId: data.sessionId });
-                } catch (error) {
-                    paymentError.textContent = 'Payment error: ' + error.message;
-                    paymentError.style.display = 'block';
-                    console.error(error);
-                }
+
+            // Plan selection handling
+            planOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const planValue = option.getAttribute('data-plan');
+                    const planUrl = option.getAttribute('data-url');
+                    const planDetails = getPlanDetails(planValue);
+
+                    // Update hidden inputs
+                    selectedPlanInput.value = planValue;
+                    planTypeInput.value = planDetails.type;
+                    priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
+
+                    // Update visual selection
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    // Show pay radio and set the URL
+                    payRadio.style.display = 'block';
+                    payNowRadio.onclick = () => {
+                        if (payRadio.classList.contains('pay-enabled')) {
+                            window.location.href = planUrl;
+                        }
+                    };
+                });
             });
-            // Test API functions
-            window.testAPI = async function() {
-                const testFormData = {
-                    plan: 'basic-purchase',
-                    account_type: 'personal',
-                    form_data: {
-                        name: 'John Doe',
-                        email: 'test@example.com',
-                        websiteUrl: ''
-                    },
-                    amount: 79900
+
+            // Set initial selection
+            const initialOption = document.querySelector('.option.selected');
+            if (initialOption) {
+                const initialPlan = initialOption.getAttribute('data-plan');
+                const initialUrl = initialOption.getAttribute('data-url');
+                const initialDetails = getPlanDetails(initialPlan);
+                selectedPlanInput.value = initialPlan;
+                planTypeInput.value = initialDetails.type;
+                priceDisplay.textContent = `You will be charged: CAD ${initialDetails.priceText}`;
+                payRadio.style.display = 'block';
+                payNowRadio.onclick = () => {
+                    if (payRadio.classList.contains('pay-enabled')) {
+                        window.location.href = initialUrl;
+                    }
                 };
-                try {
-                    const response = await fetch('/api/create-checkout-session', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(testFormData)
-                    });
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-                    alert('One-Time Purchase API Test Successful!\nSession ID: ' + data.sessionId);
-                } catch (error) {
-                    alert('One-Time Purchase API Test Failed!\nError: ' + error.message);
-                }
-            };
-            window.testSubscriptionAPI = async function() {
-                const testFormData = {
-                    plan: 'basic-monthly',
-                    account_type: 'personal',
-                    form_data: {
-                        name: 'John Doe',
-                        email: 'test@example.com',
-                        websiteUrl: ''
-                    },
-                    priceId: 'price_1S94dt40fBt8mCex_basic_monthly',
-                    amount: 4900
-                };
-                try {
-                    const response = await fetch('/api/create-checkout-session', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(testFormData)
-                    });
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-                    alert('Subscription API Test Successful!\nSession ID: ' + data.sessionId);
-                } catch (error) {
-                    alert('Subscription API Test Failed!\nError: ' + error.message);
-                }
-            };
+            }
+
+            // Initial validation check
+            validateForm();
         });
     </script>
 </body>
