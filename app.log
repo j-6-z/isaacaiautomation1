@@ -124,3 +124,5 @@
 2025-09-18 22:49:57,692 - INFO -  * Restarting with stat
 2025-09-18 22:49:57,900 - WARNING -  * Debugger is active!
 2025-09-18 22:49:57,902 - INFO -  * Debugger PIN: 195-507-698
+2025-09-18 22:57:08,118 - INFO -  * Detected change in 'C:\\Users\\nxpur\\OneDrive\\Desktop\\isaacaiautomation\\app.py', reloading
+2025-09-18 22:57:08,142 - INFO -  * Restarting with stat
