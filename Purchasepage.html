@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment - JAYISAAC AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -265,6 +265,22 @@
         .invalid-input {
             border-color: #e63946;
         }
+        .test-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3b4de6;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 12px;
+        }
+        .test-button:hover {
+            background: #2a3cb7;
+        }
         @media (max-width: 768px) {
             .order-container {
                 padding: 1.5rem;
@@ -316,11 +332,18 @@
             .logo img {
                 height: 40px;
             }
+            .test-button {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    <button class="test-button" onclick="testAPI()">Test API</button>
     <header>
         <nav>
             <div class="logo">
@@ -329,9 +352,9 @@
             </div>
             <ul>
                 <li><a href="/index.html">Home</a></li>
-                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/purchase.html">Pricing</a></li>
                 <li><a href="/contact.html">Contact</a></li>
-                <li><a href="/TOS_SUCH.html">Terms of Service</a></li>
+                <li><a href="/terms.html">Terms</a></li>
             </ul>
         </nav>
     </header>
@@ -435,12 +458,9 @@
             <button type="submit">Purchase Now</button>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Page loaded, initializing particles and Stripe');
-
-            // Initialize particles.js with error handling
+            // Initialize particles.js
             if (window.particlesJS) {
                 particlesJS('particles-js', {
                     particles: {
@@ -459,9 +479,6 @@
                     },
                     retina_detect: true
                 });
-                console.log('Particles.js initialized');
-            } else {
-                console.error('Particles.js failed to load. Please check your network or the CDN URL.');
             }
 
             // Fade-in animation for order container
@@ -474,56 +491,54 @@
                 orderContainer.style.transform = 'translateY(0)';
             }, 100);
 
-            // Initialize Stripe with retry mechanism
-            let stripeRetryCount = 0;
-            const maxRetries = 3;
-            function initializeStripe() {
-                try {
-                    if (typeof Stripe === 'undefined') {
-                        throw new Error('Stripe.js not loaded');
-                    }
-                    const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s');
-                    const elements = stripe.elements();
-                    const card = elements.create('card', {
-                        style: {
-                            base: {
-                                fontSize: '16px',
-                                color: '#1a1a3d',
-                                '::placeholder': { color: 'transparent' }
-                            }
-                        }
-                    });
-                    card.mount('#card-element');
-                    console.log('Stripe card element mounted successfully');
-                    card.on('ready', () => {
-                        console.log('Stripe card element is ready and visible');
-                    });
-                    card.on('change', (event) => {
-                        const cardErrorElement = document.getElementById('card-error');
-                        if (event.error) {
-                            cardErrorElement.textContent = event.error.message;
-                            cardErrorElement.style.display = 'block';
-                        } else {
-                            cardErrorElement.textContent = '';
-                            cardErrorElement.style.display = 'none';
-                        }
-                    });
-                    return card;
-                } catch (error) {
-                    console.error('Stripe initialization error:', error.message);
-                    if (stripeRetryCount < maxRetries) {
-                        stripeRetryCount++;
-                        console.log(`Retrying Stripe initialization (${stripeRetryCount}/${maxRetries})...`);
-                        setTimeout(initializeStripe, 1000);
-                    } else {
-                        const cardErrorElement = document.getElementById('card-error');
-                        cardErrorElement.textContent = 'Failed to load payment form. Please check your network or contact support.';
-                        cardErrorElement.style.display = 'block';
+            // Stripe setup
+            const stripe = Stripe('pk_test_51S94dt40fBt8mCextqlqBtZ9Er2y2CsAu7AT6KqMi8AYTLj8bYyUcYlYf1uoJZ0i8iuiJI8MZaMFJggOMd8znTnO00vh9L1F9s');
+            const elements = stripe.elements();
+            const card = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#1a1a3d',
+                        '::placeholder': { color: 'transparent' }
                     }
                 }
-            }
+            });
+            card.mount('#card-element');
+            card.on('change', (event) => {
+                const cardErrorElement = document.getElementById('card-error');
+                if (event.error) {
+                    cardErrorElement.textContent = event.error.message;
+                    cardErrorElement.style.display = 'block';
+                } else {
+                    cardErrorElement.textContent = '';
+                    cardErrorElement.style.display = 'none';
+                }
+            });
 
-            const card = initializeStripe();
+            // Test API function
+            window.testAPI = async function() {
+                const testFormData = {
+                    plan: 'basic-purchase',
+                    account_type: 'personal',
+                    form_data: {
+                        name: 'John Doe',
+                        email: 'test@example.com',
+                        verifyEmail: 'test@example.com'
+                    }
+                };
+                try {
+                    const response = await fetch('/api/stripe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(testFormData)
+                    });
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error);
+                    alert('API Test Successful!\nClient Secret: ' + data.clientSecret);
+                } catch (error) {
+                    alert('API Test Failed!\nError: ' + error.message);
+                }
+            };
 
             // Plan selection logic
             const selectedPlanInput = document.getElementById('selected-plan');
@@ -556,7 +571,6 @@
                 option.addEventListener('click', () => {
                     const planValue = option.getAttribute('data-plan');
                     const planType = option.getAttribute('data-type');
-                    console.log('Selected plan:', planValue, 'Type:', planType);
                     planOptions.forEach(opt => opt.classList.remove('selected'));
                     option.classList.add('selected');
                     selectedPlanInput.value = planValue;
@@ -567,17 +581,16 @@
                 });
             });
 
+            // Form field toggling and validation
             const accountTypeSelect = document.getElementById('account-type');
             const personalFields = document.getElementById('personal-fields');
             const businessFields = document.getElementById('business-fields');
 
             function toggleFields() {
                 const accountType = accountTypeSelect.value;
-                console.log('Selected account type:', accountType);
                 personalFields.classList.toggle('active', accountType === 'personal');
                 businessFields.classList.toggle('active', accountType === 'business');
 
-                // Toggle required attributes
                 const personalInputs = personalFields.querySelectorAll('input');
                 const businessInputs = businessFields.querySelectorAll('input');
 
@@ -598,7 +611,6 @@
                 validateField(accountTypeSelect);
             }
 
-            // Initialize required attributes on page load
             toggleFields();
             accountTypeSelect.addEventListener('change', toggleFields);
 
@@ -667,28 +679,22 @@
                     const verifyEmail = document.getElementById('verify-email').value.trim();
                     const websiteUrl = document.getElementById('website-url').value.trim();
 
-                    console.log('Personal form data:', { name, email, verifyEmail, websiteUrl });
-
                     if (!name) {
                         validateField(document.getElementById('name'));
                         return false;
                     }
-
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
                         validateField(document.getElementById('email'));
                         return false;
                     }
-
                     if (email !== verifyEmail) {
                         validateEmails();
                         return false;
                     }
-
                     if (websiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(websiteUrl)) {
                         validateUrl(document.getElementById('website-url'));
                         return false;
                     }
-
                     return { name, email, verifyEmail, websiteUrl, accountType };
                 } else if (accountType === 'business') {
                     const companyName = document.getElementById('company-name').value.trim();
@@ -696,28 +702,22 @@
                     const businessVerifyEmail = document.getElementById('business-verify-email').value.trim();
                     const businessWebsiteUrl = document.getElementById('business-website-url').value.trim();
 
-                    console.log('Business form data:', { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl });
-
                     if (!companyName) {
                         validateField(document.getElementById('company-name'));
                         return false;
                     }
-
                     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(businessEmail)) {
                         validateField(document.getElementById('business-email'));
                         return false;
                     }
-
                     if (businessEmail !== businessVerifyEmail) {
                         validateEmails();
                         return false;
                     }
-
                     if (businessWebsiteUrl && !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(businessWebsiteUrl)) {
                         validateUrl(document.getElementById('business-website-url'));
                         return false;
                     }
-
                     return { companyName, businessEmail, businessVerifyEmail, businessWebsiteUrl, accountType };
                 }
             }
@@ -739,11 +739,15 @@
             const orderForm = document.getElementById('order-form');
             orderForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                console.log('Form submitted for plan:', currentPlan, 'Type:', currentPlanType);
                 const formData = validateForm();
                 if (!formData) {
-                    console.error('Form validation failed');
                     alert('Please fill out all required fields correctly.');
+                    return;
+                }
+
+                const planDetails = getPlanDetails(currentPlan);
+                if (planDetails.isSubscription) {
+                    alert('Subscriptions are not yet supported. Please select a one-time purchase.');
                     return;
                 }
 
@@ -752,9 +756,7 @@
                 cardErrorElement.style.display = 'none';
 
                 try {
-                    const apiBaseUrl = 'https://isaacaiautomation1-k20kqgdp3-jay-turners-projects-16621d09.vercel.app/api';
-                    console.log('Sending form validation request to:', `${apiBaseUrl}/validate_form`);
-                    const validateResponse = await fetch(`${apiBaseUrl}/validate_form`, {
+                    const response = await fetch('/api/stripe', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -764,77 +766,41 @@
                         })
                     });
 
-                    if (!validateResponse.ok) {
-                        throw new Error(`HTTP error! Status: ${validateResponse.status}`);
-                    }
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error);
 
-                    const validateResult = await validateResponse.json();
-                    console.log('Validate response:', validateResult);
+                    const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+                        payment_method: {
+                            card: card,
+                            billing_details: {
+                                name: formData.accountType === 'personal' ? formData.name : formData.companyName,
+                                email: formData.accountType === 'personal' ? formData.email : formData.businessEmail
+                            }
+                        }
+                    });
 
-                    if (validateResult.error) {
-                        console.error('Form validation error:', validateResult.error);
-                        alert(`Failed to validate form: ${validateResult.error}`);
-                        return;
-                    }
-
-                    if (validateResult.status !== 'valid') {
-                        console.error('Unexpected validation response:', validateResult);
-                        alert('Form validation failed: Unexpected response');
-                        return;
-                    }
-
-                    const planDetails = getPlanDetails(currentPlan);
-                    const { token, error } = await stripe.createToken(card);
                     if (error) {
-                        console.error('Stripe token error:', error.message);
                         cardErrorElement.textContent = error.message;
                         cardErrorElement.style.display = 'block';
                         return;
                     }
 
-                    console.log('Stripe token created:', token.id);
-                    const paymentResponse = await fetch(`${apiBaseUrl}/process_payment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            plan: currentPlan,
-                            plan_type: currentPlanType,
-                            amount: planDetails.amount,
-                            is_subscription: planDetails.isSubscription,
-                            stripe_token: token.id,
-                            form_data: formData
-                        })
-                    });
-
-                    if (!paymentResponse.ok) {
-                        throw new Error(`HTTP error! Status: ${paymentResponse.status}`);
+                    if (paymentIntent.status === 'succeeded') {
+                        alert('Purchase completed successfully! We will contact you soon.');
+                        orderForm.reset();
+                        card.clear();
+                        toggleFields();
+                        selectedPlanInput.value = 'basic-purchase';
+                        planTypeInput.value = 'one-time';
+                        currentPlan = 'basic-purchase';
+                        currentPlanType = 'one-time';
+                        planOptions.forEach(opt => opt.classList.remove('selected'));
+                        document.querySelector('.option[data-plan="basic-purchase"]').classList.add('selected');
+                        updatePriceDisplay(currentPlan);
                     }
-
-                    const paymentResult = await paymentResponse.json();
-                    console.log('Payment response:', paymentResult);
-
-                    if (paymentResult.error) {
-                        console.error('Payment error:', paymentResult.error);
-                        alert(`Payment failed: ${paymentResult.error}`);
-                        return;
-                    }
-
-                    console.log('Payment successful:', paymentResult);
-                    alert('Purchase completed successfully! We will contact you soon.');
-                    window.location.href = '/receipt.html';
-                    orderForm.reset();
-                    card.clear();
-                    toggleFields();
-                    selectedPlanInput.value = 'basic-purchase';
-                    planTypeInput.value = 'one-time';
-                    currentPlan = 'basic-purchase';
-                    currentPlanType = 'one-time';
-                    planOptions.forEach(opt => opt.classList.remove('selected'));
-                    document.querySelector('.option[data-plan="basic-purchase"]').classList.add('selected');
-                    updatePriceDisplay(currentPlan);
                 } catch (error) {
-                    console.error('Submission error:', error.message);
-                    alert('Error processing purchase: Unable to connect to the server. Please check your network or try again later.');
+                    cardErrorElement.textContent = 'Error processing purchase: ' + error.message;
+                    cardErrorElement.style.display = 'block';
                 }
             });
         });
