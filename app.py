@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify, send_from_directory
 import logging
 import requests
-from flask_cors import CORS
 
 app = Flask(__name__)
-# Allow CORS for local development (Live Server) and production
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5000", "http://127.0.0.1:5500", "https://www.jayisaacai.com"]}})
+
+# Configure logging to debug issues
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -16,10 +15,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Hardcoded PayPal Client ID and Secret (Replace with your actual PayPal credentials)
-PAYPAL_CLIENT_ID = "Aekwyfll3MQb7o-g9o1Z5BrlEB6eXiT3j4Km5FjkWMVHtEXhKLQxAMRuC9Mf9PuUT1WtuL5GC_zdCFgC"  # REPLACE WITH YOUR PAYPAL CLIENT ID
+# Hardcoded PayPal Client ID and Secret (Replace with your actual PayPal sandbox credentials)
+PAYPAL_CLIENT_ID = "Aekwyfll3MQb7o-g9o1Z5BrlEB6eXiT3j4Km5FjkWMVHtEXhKLQxAMRuC9Mf9PuUT1WtuL5GC_zdCFgC"  # Your provided PayPal Client ID
 PAYPAL_CLIENT_SECRET = "EJJsSBmFUFn3usBfaNvKeFPkJXrUgnicCGqgszNVyhpPvjYaIWF-0UBO6aEFhQOkYqWfNgGW49BF-MNI"  # REPLACE WITH YOUR PAYPAL CLIENT SECRET
 
+# Define one-time purchase plans
 ONE_TIME_PLANS = {
     "basic-purchase": {"amount": 799, "description": "Basic One-Time Purchase"},
     "standard-purchase": {"amount": 11999, "description": "Standard One-Time Purchase"},
@@ -27,9 +27,9 @@ ONE_TIME_PLANS = {
 }
 
 def get_paypal_access_token():
+    """Fetch PayPal access token using client ID and secret."""
     logger.debug("Attempting to get PayPal access token")
     url = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
-    # Using hardcoded PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET for authentication
     auth = (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
     if not auth[0] or not auth[1] or auth[1] == "YOUR_PAYPAL_CLIENT_SECRET":
         logger.error("Invalid or missing PAYPAL_CLIENT_ID or PAYPAL_CLIENT_SECRET")
@@ -47,11 +47,13 @@ def get_paypal_access_token():
 
 @app.route('/test', methods=['GET'])
 def test_endpoint():
+    """Test endpoint to verify server is running."""
     logger.debug("Test endpoint accessed")
     return jsonify({"status": "success", "message": "Server is running"}), 200
 
 @app.route('/create_payment', methods=['POST'])
 def create_payment():
+    """Create a PayPal order for a one-time purchase."""
     try:
         data = request.get_json(silent=True)
         logger.debug(f"Received /create_payment request: {data}")
@@ -87,7 +89,6 @@ def create_payment():
 
         if plan in ONE_TIME_PLANS:
             logger.debug(f"Creating v2 Order for plan: {plan}")
-            # Obtain PayPal access token using hardcoded PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET
             token = get_paypal_access_token()
             url = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
             headers = {
@@ -105,8 +106,8 @@ def create_payment():
                     }
                 }],
                 "application_context": {
-                    "return_url": "https://www.jayisaacai.com/success",
-                    "cancel_url": "https://www.jayisaacai.com/cancel"
+                    "return_url": "https://www.jayisaacai.com/",
+                    "cancel_url": "https://www.jayisaacai.com/"
                 }
             }
             try:
@@ -128,6 +129,7 @@ def create_payment():
 
 @app.route('/execute_payment', methods=['POST'])
 def execute_payment():
+    """Capture a PayPal order after approval."""
     try:
         data = request.get_json(silent=True)
         logger.debug(f"Received /execute_payment: {data}")
@@ -141,7 +143,6 @@ def execute_payment():
             logger.error(f"Missing payment_id or payer_id - payment_id: {order_id}, payer_id: {payer_id}")
             return jsonify({"error": "Missing payment_id or payer_id"}), 400
 
-        # Obtain PayPal access token using hardcoded PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET for order capture
         token = get_paypal_access_token()
         url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}/capture"
         headers = {
@@ -164,18 +165,21 @@ def execute_payment():
 
 @app.route('/success')
 def success():
+    """Handle successful payment."""
     logger.debug("Serving /success endpoint")
     return jsonify({"message": "Payment completed successfully"})
 
 @app.route('/cancel')
 def cancel():
+    """Handle cancelled payment."""
     logger.debug("Serving /cancel endpoint")
     return jsonify({"message": "Payment cancelled"})
 
 @app.route('/')
 def serve_purchase():
-    logger.debug("Serving purchase.html")
-    return send_from_directory('.', 'purchase.html')
+    """Serve the frontend Purchasepage.html."""
+    logger.debug("Serving Purchasepage.html")
+    return send_from_directory('.', 'Purchasepage.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -1,0 +1,51 @@
+2025-09-18 21:04:59,144 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-18 21:04:59,144 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-18 21:04:59,150 - INFO -  * Restarting with stat
+2025-09-18 21:04:59,341 - WARNING -  * Debugger is active!
+2025-09-18 21:04:59,342 - INFO -  * Debugger PIN: 195-507-698
+2025-09-18 21:05:44,138 - INFO - 127.0.0.1 - - [18/Sep/2025 21:05:44] "OPTIONS /create_payment HTTP/1.1" 200 -
+2025-09-18 21:08:04,575 - INFO -  * Detected change in 'C:\\Users\\nxpur\\OneDrive\\Desktop\\isaacaiautomation\\app.py', reloading
+2025-09-18 21:08:04,600 - INFO -  * Restarting with stat
+2025-09-18 21:08:04,815 - WARNING -  * Debugger is active!
+2025-09-18 21:08:04,817 - INFO -  * Debugger PIN: 195-507-698
+2025-09-18 21:08:16,269 - INFO - 127.0.0.1 - - [18/Sep/2025 21:08:16] "OPTIONS /create_payment HTTP/1.1" 200 -
+2025-09-18 21:12:19,137 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-18 21:12:19,137 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-18 21:12:19,138 - INFO -  * Restarting with stat
+2025-09-18 21:12:19,328 - WARNING -  * Debugger is active!
+2025-09-18 21:12:19,330 - INFO -  * Debugger PIN: 195-507-698
+2025-09-18 21:12:41,248 - DEBUG - Serving Purchasepage.html
+2025-09-18 21:12:41,288 - INFO - 127.0.0.1 - - [18/Sep/2025 21:12:41] "GET / HTTP/1.1" 200 -
+2025-09-18 21:12:41,305 - INFO - 127.0.0.1 - - [18/Sep/2025 21:12:41] "[33mGET /images/chtabot%20lololol.jpg HTTP/1.1[0m" 404 -
+2025-09-18 21:12:42,511 - INFO - 127.0.0.1 - - [18/Sep/2025 21:12:42] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-18 21:13:38,471 - DEBUG - Received /create_payment request: {'plan': 'enterprise-purchase', 'account_type': 'personal', 'form_data': {'name': 'Jay Turner', 'email': 'nxpure101@gmail.com', 'verifyEmail': 'nxpure101@gmail.com', 'websiteUrl': 'https://wwwlmfao1111.com', 'notes': '', 'accountType': 'personal'}}
+2025-09-18 21:13:38,472 - DEBUG - Creating v2 Order for plan: enterprise-purchase
+2025-09-18 21:13:38,472 - DEBUG - Attempting to get PayPal access token
+2025-09-18 21:13:38,474 - DEBUG - Starting new HTTPS connection (1): api-m.sandbox.paypal.com:443
+2025-09-18 21:13:39,057 - DEBUG - https://api-m.sandbox.paypal.com:443 "POST /v1/oauth2/token HTTP/1.1" 200 None
+2025-09-18 21:13:39,058 - DEBUG - Successfully obtained PayPal access token
+2025-09-18 21:13:39,061 - DEBUG - Starting new HTTPS connection (1): api-m.sandbox.paypal.com:443
+2025-09-18 21:13:40,074 - DEBUG - https://api-m.sandbox.paypal.com:443 "POST /v2/checkout/orders HTTP/1.1" 201 501
+2025-09-18 21:13:40,075 - DEBUG - v2 Order created: 6LW8145195519190E
+2025-09-18 21:13:40,075 - DEBUG - Sending response: {'order_id': '6LW8145195519190E'}
+2025-09-18 21:13:40,076 - INFO - 127.0.0.1 - - [18/Sep/2025 21:13:40] "POST /create_payment HTTP/1.1" 200 -
+2025-09-18 21:13:59,540 - DEBUG - Received /create_payment request: {'plan': 'enterprise-purchase', 'account_type': 'personal', 'form_data': {'name': 'Jay Turner', 'email': 'nxpure101@gmail.com', 'verifyEmail': 'nxpure101@gmail.com', 'websiteUrl': 'https://wwwlmfao1111.com', 'notes': '', 'accountType': 'personal'}}
+2025-09-18 21:13:59,540 - DEBUG - Creating v2 Order for plan: enterprise-purchase
+2025-09-18 21:13:59,540 - DEBUG - Attempting to get PayPal access token
+2025-09-18 21:13:59,541 - DEBUG - Starting new HTTPS connection (1): api-m.sandbox.paypal.com:443
+2025-09-18 21:13:59,986 - DEBUG - https://api-m.sandbox.paypal.com:443 "POST /v1/oauth2/token HTTP/1.1" 200 None
+2025-09-18 21:13:59,987 - DEBUG - Successfully obtained PayPal access token
+2025-09-18 21:13:59,990 - DEBUG - Starting new HTTPS connection (1): api-m.sandbox.paypal.com:443
+2025-09-18 21:14:01,101 - DEBUG - https://api-m.sandbox.paypal.com:443 "POST /v2/checkout/orders HTTP/1.1" 201 501
+2025-09-18 21:14:01,102 - DEBUG - v2 Order created: 865791352W936150E
+2025-09-18 21:14:01,102 - DEBUG - Sending response: {'order_id': '865791352W936150E'}
+2025-09-18 21:14:01,104 - INFO - 127.0.0.1 - - [18/Sep/2025 21:14:01] "POST /create_payment HTTP/1.1" 200 -
+2025-09-18 21:15:14,120 - INFO - 127.0.0.1 - - [18/Sep/2025 21:15:14] "OPTIONS /create_payment HTTP/1.1" 200 -
+2025-09-18 21:19:25,453 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-18 21:19:25,454 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-18 21:19:25,454 - INFO -  * Restarting with stat
+2025-09-18 21:19:25,651 - WARNING -  * Debugger is active!
+2025-09-18 21:19:25,653 - INFO -  * Debugger PIN: 195-507-698

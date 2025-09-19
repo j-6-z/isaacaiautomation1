@@ -692,8 +692,9 @@
                         console.log('Plan details:', planDetails);
 
                         try {
-                            const apiBaseUrl = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://www.jayisaacai.com';
-                            console.log('Sending payment request to server:', { 
+                            // Use explicit URL for local testing
+                            const apiBaseUrl = 'http://localhost:5000';
+                            console.log('Sending payment request to:', `${apiBaseUrl}/create_payment`, 'with data:', { 
                                 plan: currentPlan, 
                                 account_type: formData.accountType, 
                                 form_data: formData 
@@ -708,9 +709,21 @@
                                 })
                             });
 
-                            console.log('Server response status:', response.status, 'OK:', response.ok);
-                            const result = await response.json();
-                            console.log('Server response data:', JSON.stringify(result, null, 2));
+                            console.log('Server response status:', response.status, 'OK:', response.ok, 'Headers:', [...response.headers]);
+                            // Log raw response text for debugging
+                            const responseText = await response.text();
+                            console.log('Raw server response:', responseText);
+
+                            let result;
+                            try {
+                                result = JSON.parse(responseText);
+                            } catch (e) {
+                                console.error('Failed to parse response as JSON:', e.message, 'Response text:', responseText);
+                                alert('Server returned invalid JSON: ' + responseText);
+                                throw new Error('Invalid JSON response from server');
+                            }
+
+                            console.log('Parsed server response:', JSON.stringify(result, null, 2));
 
                             if (!response.ok || result.error) {
                                 console.error('Server error:', result.error, result.details || '');
@@ -733,7 +746,7 @@
                     },
                     onApprove: async function(data, actions) {
                         try {
-                            const apiBaseUrl = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://www.jayisaacai.com';
+                            const apiBaseUrl = 'http://localhost:5000';
                             console.log('Executing one-time payment for orderID:', data.orderID, 'payerID:', data.payerID);
                             const response = await fetch(`${apiBaseUrl}/execute_payment`, {
                                 method: 'POST',
@@ -743,7 +756,16 @@
                                     payer_id: data.payerID
                                 })
                             });
-                            const result = await response.json();
+                            const responseText = await response.text();
+                            console.log('Execute payment raw response:', responseText);
+                            let result;
+                            try {
+                                result = JSON.parse(responseText);
+                            } catch (e) {
+                                console.error('Failed to parse execute_payment response as JSON:', e.message, 'Response text:', responseText);
+                                alert('Server returned invalid JSON: ' + responseText);
+                                throw new Error('Invalid JSON response from server');
+                            }
                             console.log('Execute payment response:', JSON.stringify(result, null, 2));
                             if (result.status === 'success') {
                                 console.log('Payment executed successfully:', result.payment_id);
