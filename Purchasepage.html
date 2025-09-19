@@ -351,6 +351,9 @@
             </div>
             <ul>
                 <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/TOS_SUCH.html">Terms of Service</a></li>
             </ul>
         </nav>
     </header>
@@ -482,11 +485,11 @@
             function getPlanDetails(planValue) {
                 switch (planValue) {
                     case 'basic-purchase':
-                        return { amount: 799, description: 'Basic One-Time Purchase', isSubscription: false };
+                        return { amount: 79900, description: 'Basic One-Time Purchase', isSubscription: false };
                     case 'standard-purchase':
-                        return { amount: 11999, description: 'Standard One-Time Purchase', isSubscription: false };
+                        return { amount: 1199900, description: 'Standard One-Time Purchase', isSubscription: false };
                     case 'enterprise-purchase':
-                        return { amount: 25000, description: 'Enterprise One-Time Purchase', isSubscription: false };
+                        return { amount: 2500000, description: 'Enterprise One-Time Purchase', isSubscription: false };
                     default:
                         return { amount: 0, description: 'Unknown Plan', isSubscription: false };
                 }
@@ -494,7 +497,7 @@
 
             function updatePriceDisplay(planValue) {
                 const planDetails = getPlanDetails(planValue);
-                const formattedAmount = planDetails.amount.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
+                const formattedAmount = (planDetails.amount / 100).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
                 priceDisplay.textContent = `You will be charged: ${formattedAmount}`;
             }
 
@@ -655,7 +658,6 @@
                 }
             }
 
-            // Add event listeners for real-time validation
             const fields = document.querySelectorAll('input, select, textarea');
             fields.forEach(field => {
                 field.addEventListener('blur', () => {
@@ -688,11 +690,7 @@
                             throw new Error('Form validation failed');
                         }
 
-                        const planDetails = getPlanDetails(currentPlan);
-                        console.log('Plan details:', planDetails);
-
                         try {
-                            // Use explicit URL for local testing
                             const apiBaseUrl = 'https://www.jayisaacai.com';
                             console.log('Sending payment request to:', `${apiBaseUrl}/create_payment`, 'with data:', { 
                                 plan: currentPlan, 
@@ -710,7 +708,6 @@
                             });
 
                             console.log('Server response status:', response.status, 'OK:', response.ok, 'Headers:', [...response.headers]);
-                            // Log raw response text for debugging
                             const responseText = await response.text();
                             console.log('Raw server response:', responseText);
 
@@ -718,36 +715,34 @@
                             try {
                                 result = JSON.parse(responseText);
                             } catch (e) {
-                                console.error('Failed to parse response as JSON:', e.message, 'Response text:', responseText);
-                                alert('Server returned invalid JSON: ' + responseText);
+                                console.error('Failed to parse response:', e.message, 'Response:', responseText);
+                                alert('Server error: Invalid response');
                                 throw new Error('Invalid JSON response from server');
                             }
 
-                            console.log('Parsed server response:', JSON.stringify(result, null, 2));
-
                             if (!response.ok || result.error) {
-                                console.error('Server error:', result.error, result.details || '');
-                                alert(`Failed to initiate payment: ${result.error || 'Server error'}${result.details ? ` (${result.details})` : ''}`);
+                                console.error('Server error:', result.error || 'Unknown error', result.details || '');
+                                alert(`Failed to initiate payment: ${result.error || 'Server error'}`);
                                 throw new Error(result.error || 'Server error');
                             }
 
-                            if (result.order_id && typeof result.order_id === 'string' && result.order_id.match(/^[0-9A-Z]{8,}$/)) {
-                                console.log('Returning valid order_id for one-time payment:', result.order_id);
+                            if (result.order_id) {
+                                console.log('Order ID:', result.order_id);
                                 return result.order_id;
                             }
-                            console.error('Invalid or missing order_id in response:', result);
-                            alert('Failed to initiate payment: Invalid or missing Order ID');
-                            throw new Error('Invalid or missing Order ID');
+                            console.error('Missing order_id:', result);
+                            alert('Failed to initiate payment: No order ID');
+                            throw new Error('No order ID');
                         } catch (error) {
-                            console.error('Error in createOrder:', error.message, error.stack);
+                            console.error('createOrder error:', error.message);
                             alert('Error initiating payment: ' + error.message);
                             throw error;
                         }
                     },
                     onApprove: async function(data, actions) {
                         try {
-                            const apiBaseUrl = 'http://localhost:5000';
-                            console.log('Executing one-time payment for orderID:', data.orderID, 'payerID:', data.payerID);
+                            const apiBaseUrl = 'https://www.jayisaacai.com';
+                            console.log('Executing payment for orderID:', data.orderID, 'payerID:', data.payerID);
                             const response = await fetch(`${apiBaseUrl}/execute_payment`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -757,40 +752,40 @@
                                 })
                             });
                             const responseText = await response.text();
-                            console.log('Execute payment raw response:', responseText);
+                            console.log('Execute payment response:', responseText);
                             let result;
                             try {
                                 result = JSON.parse(responseText);
                             } catch (e) {
-                                console.error('Failed to parse execute_payment response as JSON:', e.message, 'Response text:', responseText);
-                                alert('Server returned invalid JSON: ' + responseText);
+                                console.error('Failed to parse execute_payment response:', e.message);
+                                alert('Server error: Invalid response');
                                 throw new Error('Invalid JSON response from server');
                             }
-                            console.log('Execute payment response:', JSON.stringify(result, null, 2));
                             if (result.status === 'success') {
-                                console.log('Payment executed successfully:', result.payment_id);
+                                console.log('Payment successful:', result.payment_id);
                                 alert('Payment completed successfully!');
                                 window.location.href = `${apiBaseUrl}/success`;
                             } else {
-                                console.error('Payment execution failed:', result.error, result.details || '');
-                                alert(`Payment failed: ${result.error || 'Unknown error'}${result.details ? ` (${result.details})` : ''}`);
+                                console.error('Payment failed:', result.error || 'Unknown error');
+                                alert('Payment failed: ' + (result.error || 'Unknown error'));
                             }
                         } catch (error) {
-                            console.error('Error executing payment:', error.message, error.stack);
-                            alert('Payment failed: ' + error.message);
+                            console.error('onApprove error:', error.message);
+                            alert('Payment error: ' + error.message);
+                            throw error;
                         }
                     },
                     onError: function(err) {
-                        console.error('PayPal SDK error:', err.message, err.stack);
-                        alert('An error occurred during payment: ' + err.message);
+                        console.error('PayPal SDK error:', err.message);
+                        alert('PayPal error: ' + err.message);
                     }
                 }).render('#paypal-button-container').catch(err => {
-                    console.error('PayPal button render failed:', err.message, err.stack);
-                    alert('Failed to render PayPal button. Please try again later.');
+                    console.error('PayPal button render failed:', err.message);
+                    alert('Failed to load PayPal button');
                 });
             } else {
                 console.error('PayPal SDK not loaded');
-                alert('PayPal is currently unavailable. Please try again later.');
+                alert('PayPal unavailable, please try again later');
             }
         });
     </script>
