@@ -6,7 +6,7 @@
       "use": "@vercel/python",
       "config": { 
         "maxLambdaSize": "50mb",
-        "includeFiles": ["app.py", "*.html", "images/*"]
+        "includeFiles": ["*.html", "images/*"]
       }
     },
     {
@@ -20,7 +20,7 @@
   ],
   "routes": [
     {
-      "src": "/(create_payment|execute_payment|debug|success|cancel)",
+      "src": "/api/(create_payment|execute_payment|debug|success|cancel)",
       "methods": ["GET", "POST", "OPTIONS"],
       "dest": "api/index.py",
       "headers": {
