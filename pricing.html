@@ -35,11 +35,17 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 120vh;
+        width: 100vw;
+        height: 100vh;
         z-index: 1;
         background: transparent;
         pointer-events: auto;
+        overflow: hidden;
+    }
+    #particles-js canvas {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
     }
     header {
         background: #ffffff;
@@ -652,7 +658,7 @@
     <section class="contact-section" id="contact">
         <h2>Get in Touch</h2>
         <div class="contact-info">
-            <p>Ready to get started? Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a> or call +1 (800) 555-1234.</p>
+            <p>Ready to get started? Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
         </div>
     </section>
     <footer>
@@ -678,17 +684,17 @@
     <script>
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 80, density: { enable: true, value_area: 1000 } },
                 color: { value: '#000000' },
-                shape: { type: 'triangle' },
-                opacity: { value: 0.5, random: true },
+                shape: { type: 'triangle', stroke: { width: 0, color: '#000000' } },
+                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
                 size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: 'none', random: true }
+                line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.3, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'bounce', bounce: true }
             },
             interactivity: {
                 detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
                 modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
             },
             retina_detect: true
@@ -696,13 +702,14 @@
         function resizeCanvas() {
             const canvas = document.querySelector('#particles-js canvas');
             if (canvas) {
+                canvas.style.width = '100vw';
+                canvas.style.height = '100vh';
                 canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight * 1.2;
-                console.log('Canvas resized to:', canvas.width, 'x', canvas.height);
+                canvas.height = window.innerHeight;
             }
         }
         window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        window.addEventListener('load', resizeCanvas);
         console.log('Particles.js initialized');
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
