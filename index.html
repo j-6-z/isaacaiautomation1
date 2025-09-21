@@ -70,6 +70,9 @@
         }
         .logo img {
             height: 36px;
+            width: auto;
+            max-width: 100%;
+            display: block;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
@@ -317,12 +320,15 @@
         }
         .form-group.checkbox-group {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
         .form-group.checkbox-group label {
             font-size: 0.875rem;
             color: #4b5563;
+            margin: 0;
+            flex: 1;
         }
         .form-group.checkbox-group a {
             color: #000000;
@@ -387,6 +393,9 @@
         }
         .footer-company .footer-logo img {
             height: 36px;
+            width: auto;
+            max-width: 100%;
+            display: block;
             transition: transform 0.3s ease;
         }
         .footer-company .footer-logo img:hover {
@@ -425,6 +434,12 @@
             }
             header {
                 padding: 1rem;
+            }
+            .logo img {
+                height: 32px; /* Slightly smaller on mobile for better fit */
+            }
+            .logo span {
+                font-size: 1.1rem;
             }
             .nav-links {
                 display: none;
@@ -489,6 +504,14 @@
             .contact-form {
                 padding: 2rem;
             }
+            .form-group.checkbox-group {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+            .form-group.checkbox-group label {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -499,6 +522,12 @@
             }
             .footer-terms {
                 margin-top: 1rem;
+            }
+            .footer-company .footer-logo img {
+                height: 32px;
+            }
+            .footer-company .footer-logo span {
+                font-size: 1.1rem;
             }
             .content-section {
                 padding: 2rem;
@@ -547,19 +576,19 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <div class="faq-question">What is JAYISAAC AI?</div>
-                <div class="faq-answer">JAYISAAC AI is an innovative platform delivering custom-built AI chatbots that transform how businesses interact with customers. Our advanced AI technology automates customer support, handles inquiries round-the-clock, and drives engagement through personalized, human-like conversations. From small startups to large enterprises, JAYISAAC AI empowers businesses in e-commerce, healthcare, and more to streamline operations, reduce response times, and elevate customer satisfaction with seamless integration into any website.</div>
+                <div class="faq-answer">JAYISAAC AI is a powerful platform delivering tailored AI chatbot solutions for businesses of all sizes. Our advanced AI automates customer support, provides instant responses 24/7, and enhances engagement through personalized interactions. Perfect for e-commerce, healthcare, education, and more, our chatbots integrate effortlessly with your website, streamlining operations and boosting customer satisfaction with data-driven insights.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">How do I get started with JAYISAAC AI?</div>
-                <div class="faq-answer">Starting with JAYISAAC AI is effortless. Visit jayisaacai.com to fill out our contact form or reach out directly at support@jayisaac.ai. Our team will schedule a personalized consultation to dive into your business goals, showcase a tailored demo of our chatbot capabilities, and outline a clear plan to design and deploy your custom solution. Most clients see their chatbot live within days, backed by our dedicated support to ensure a smooth launch.</div>
+                <div class="faq-answer">Launch your AI chatbot journey by visiting jayisaacai.com or emailing support@jayisaac.ai. Our team will arrange a personalized consultation to explore your business goals, showcase a custom demo, and map out a swift deployment plan. With our streamlined process, your tailored chatbot can be live in days, backed by expert support to ensure success.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Are your chatbots customizable?</div>
-                <div class="faq-answer">Yes, our chatbots are meticulously crafted to fit your unique needs. Our skilled developers customize every aspect— from the chatbot’s conversational style and visual design to its functionality—ensuring it aligns perfectly with your brand and website. Whether you need a chatbot to answer FAQs, process orders, or capture leads, we tailor it to drive your specific business objectives, with options to integrate with tools like CRMs, e-commerce platforms, and analytics systems for maximum impact.</div>
+                <div class="faq-question">Can I customize my JAYISAAC AI chatbot?</div>
+                <div class="faq-answer">Absolutely, we craft bespoke AI chatbot code tailored precisely to your existing website. Our expert developers deliver lightning-fast solutions, customizing the chatbot’s tone, functionality, and design to match your brand seamlessly. Whether it’s answering FAQs, processing orders, or capturing leads, we ensure rapid integration with platforms like CRMs, e-commerce systems, or analytics tools to amplify your business goals.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">What benefits can my business expect?</div>
-                <div class="faq-answer">A JAYISAAC AI chatbot delivers measurable benefits, including significant cost savings by automating up to 80% of customer inquiries, freeing your team for higher-value tasks. Our chatbots boost engagement with instant, personalized responses, increasing customer retention and conversion rates. They scale effortlessly with your business, handling thousands of interactions simultaneously, and provide actionable insights through analytics, helping you refine strategies and grow efficiently, all while maintaining a seamless user experience.</div>
+                <div class="faq-question">What benefits can my business gain?</div>
+                <div class="faq-answer">With JAYISAAC AI, your business saves time and money by automating up to 80% of customer inquiries, freeing your team for strategic tasks. Our chatbots deliver instant, personalized responses to boost engagement and conversions, scale effortlessly to handle high traffic, and provide analytics to refine your approach, all while integrating smoothly with your website for a polished user experience.</div>
             </div>
         </div>
     </section>
@@ -596,7 +625,7 @@
                 </div>
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="consent" name="consent" required>
-                    <label for="consent">I consent to my data being processed for contact purposes. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
+                    <label for="consent">I consent to data processing. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
                     <div class="error-message" id="consent-error">You must consent to data processing.</div>
                 </div>
                 <button type="submit">Send Message</button>
