@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17580740260');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17580740260');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAYISAAC AI Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -29,6 +28,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
+            padding-top: 120px; /* Added extra space at the top for better breathing room */
         }
         #particles-js {
             position: fixed;
@@ -46,74 +46,46 @@
             width: 100% !important;
             height: 100% !important;
         }
-        .particle-space {
-            height: 100vh;
-            width: 100%;
-            background: transparent;
-            z-index: 0;
-            position: relative;
-        }
-        .scroll-down-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #000000;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            animation: fadePulse 2s infinite alternate;
-        }
-        @keyframes fadePulse {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
         header {
             background: #ffffff;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
             z-index: 1000;
             padding: 1rem 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            animation: slideIn 0.5s ease-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
         nav {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.5rem;
         }
         .logo img {
-            height: 40px;
+            height: 36px;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
         .logo span {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .nav-links {
             display: flex;
-            gap: 1rem;
+            align-items: center;
+            gap: 1.5rem;
             list-style: none;
         }
         .nav-links a {
@@ -121,17 +93,10 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            background: #f9fafb;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: color 0.3s ease;
         }
         .nav-links a:hover {
             color: #4b5563;
-            background: #e5e7eb;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         .menu-toggle {
             display: none;
@@ -142,54 +107,17 @@
             cursor: pointer;
         }
         .content-section {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 1200px;
+            margin: 0 auto 4rem; /* Added bottom margin for section spacing */
             background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
+            padding: 3rem; /* Increased padding for more internal space */
+            border-radius: 12px; /* Slightly larger radius for softer look */
             position: relative;
             z-index: 2;
-        }
-        .video1 {
-            padding: 4rem 0;
-            text-align: center;
-            z-index: 10;
-            margin-top: 100px;
-        }
-        .video1 .content-section {
-            max-width: 100%;
-            padding: 0;
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 1800px;
-            width: 98vw;
-            margin: 0 auto;
-            z-index: 10;
-            pointer-events: auto;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: auto;
-        }
-        .video-container figure {
-            margin: 0;
-        }
-        .video-container figcaption {
-            font-size: 0.9rem;
-            color: #4b5563;
-            margin-top: 0.5rem;
-            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Enhanced shadow for depth */
         }
         .what-we-do {
-            padding: 4rem 2rem;
+            padding: 6rem 2rem; /* Increased top padding for more space after header */
             text-align: center;
             z-index: 2;
         }
@@ -277,38 +205,176 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         .faq-question {
-            padding: 1rem;
+            padding: 1.25rem;
             background: #ffffff;
             font-size: 1.125rem;
             font-weight: 600;
             text-align: left;
+            cursor: pointer;
         }
         .faq-answer {
-            padding: 1rem;
+            padding: 1.25rem;
             background: #ffffff;
             color: #4b5563;
             text-align: left;
             font-size: 1rem;
+            display: none; /* Initially hidden for accordion effect */
+        }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        .contact-container {
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .contact-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+            max-width: 100%;
+        }
+        .contact-info {
+            text-align: left;
+            padding: 2.5rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .info-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 0.75rem;
+        }
+        .info-item p {
+            font-size: 1rem;
+            color: #4b5563;
+        }
+        .info-item a {
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .info-item a:hover {
+            color: #4b5563;
+        }
+        .contact-form {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #000000;
+            background: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4b5563;
+            box-shadow: 0 0 0 3px rgba(75, 85, 99, 0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-group.checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .form-group.checkbox-group label {
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+        .form-group.checkbox-group a {
+            color: #000000;
+            text-decoration: none;
+        }
+        .form-group.checkbox-group a:hover {
+            color: #4b5563;
+        }
+        .error-message {
+            display: none;
+            color: #4b5563;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .error-message.active {
+            display: block;
+        }
+        .contact-form button {
+            background: #000000;
+            color: #ffffff;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+        .contact-form button:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
         }
         footer {
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: left;
             position: relative;
             z-index: 800;
             border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
         }
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 2rem;
             background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         .footer-company {
             flex: 1;
@@ -320,18 +386,18 @@
             margin-bottom: 1rem;
         }
         .footer-company .footer-logo img {
-            height: 40px;
+            height: 36px;
             transition: transform 0.3s ease;
         }
         .footer-company .footer-logo img:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
         .footer-company .footer-logo span {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .footer-company p {
             font-size: 0.875rem;
@@ -354,47 +420,32 @@
             color: #4b5563;
         }
         @media (max-width: 768px) {
+            body {
+                padding-top: 100px; /* Adjusted for mobile */
+            }
             header {
                 padding: 1rem;
-            }
-            .logo span {
-                font-size: 1.2rem;
-            }
-            .logo img {
-                height: 30px;
             }
             .nav-links {
                 display: none;
                 flex-direction: column;
-                gap: 0.5rem;
-                width: 100%;
-                padding: 1rem 0;
-                align-items: center;
-                justify-content: center;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
             .nav-links.active {
                 display: flex;
             }
-            .nav-links a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-                width: fit-content;
-            }
             .menu-toggle {
                 display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-            }
-            .video1 {
-                margin-top: 120px;
-                padding: 2rem 0;
-            }
-            .video-container {
-                width: 100vw;
             }
             .what-we-do {
-                margin-top: 120px;
+                padding: 4rem 1rem; /* Reduced for mobile but still spacious */
             }
             .what-we-do h2 {
                 font-size: 2rem;
@@ -419,13 +470,29 @@
             }
             .faq-question {
                 font-size: 1rem;
+                padding: 1rem;
             }
             .faq-answer {
                 font-size: 0.9rem;
+                padding: 1rem;
+            }
+            .contact-container {
+                padding: 2rem 1rem;
+            }
+            .contact-container h1 {
+                font-size: 2rem;
+            }
+            .contact-section {
+                grid-template-columns: 1fr;
+            }
+            .contact-info,
+            .contact-form {
+                padding: 2rem;
             }
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+                padding: 2rem;
             }
             .footer-company, .footer-terms {
                 text-align: center;
@@ -434,45 +501,29 @@
                 margin-top: 1rem;
             }
             .content-section {
-                padding: 1rem;
-            }
-        }
-        @media (max-width: 1850px) {
-            .video-container {
-                width: 95vw;
+                padding: 2rem;
+                margin-bottom: 2rem;
             }
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <section class="particle-space">
-        <div class="scroll-down-text" id="scrollDownText">Scroll Down</div>
-    </section>
     <header>
         <nav>
             <div class="logo">
-                <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                 <span>JAYISAAC AI</span>
             </div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
-                <li><a href="/contact.html">Contact Us</a></li>
+                <li><a href="/features.html">Features</a></li>
+                <li><a href="/contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
-    <section class="video1">
-        <div class="content-section">
-            <div class="video-container">
-                <figure>
-                    <iframe width="1800" height="1012" src="https://www.youtube.com/embed/hNR84ZAKjtI?si=HyPhJgqhqOWhblLR" title="JAYISAAC AI Promo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    <figcaption>JAYISAAC AI Promo Video</figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
     <section class="what-we-do">
         <div class="content-section">
             <h2>What We Do at JAYISAAC AI Automation</h2>
@@ -488,7 +539,7 @@
     <section class="why-jayisaac">
         <div class="content-section">
             <h2>Why JAYISAAC AI Chatbots?</h2>
-            <p>At JAYISAAC, we craft <span class="highlight">AI chatbots</span> that are <span class="highlight">competitively priced</span> to fit your budget without compromising quality. Our chatbots are designed to seamlessly <span class="highlight">integrate with your website’s current design</span>, ensuring a cohesive and branded experience that enhances user engagement and drives results.</p>
+            <p>At JAYISAAC, we craft <span class="highlight">AI chatbots</span> that are <span class="highlight">competitively priced</span> to fit your budget without compromising quality. Our chatbots are designed to seamlessly <span class="highlight">integrate with your website's current design</span>, ensuring a cohesive and branded experience that enhances user engagement and drives results.</p>
         </div>
     </section>
     <section class="faq-section">
@@ -506,6 +557,46 @@
                 <div class="faq-question">Are your chatbots customizable?</div>
                 <div class="faq-answer">Yes, our junior developers hand-craft code to tailor chatbots to your website's design and specific needs.</div>
             </div>
+        </div>
+    </section>
+    <section class="contact-container">
+        <h1>Contact Us</h1>
+        <div class="contact-section">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <div class="info-item">
+                    <h4>Email</h4>
+                    <p><a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
+                </div>
+            </div>
+            <form class="contact-form" onsubmit="return validateForm(event);">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="name-error">Please enter your full name.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <div class="error-message" id="email-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+                    <div class="error-message" id="subject-error">Please enter a subject.</div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+                    <div class="error-message" id="message-error">Please enter a message.</div>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent">I consent to my data being processed for contact purposes. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
+                    <div class="error-message" id="consent-error">You must consent to data processing.</div>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
     </section>
     <footer>
@@ -584,6 +675,66 @@
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
+        }
+        // Simple accordion for FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('active');
+            });
+
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                document.getElementById('name-error').classList.add('active');
+                isValid = false;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('email-error').classList.add('active');
+                isValid = false;
+            }
+
+            const subject = document.getElementById('subject').value.trim();
+            if (!subject) {
+                document.getElementById('subject-error').classList.add('active');
+                isValid = false;
+            }
+
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                document.getElementById('message-error').classList.add('active');
+                isValid = false;
+            }
+
+            const consent = document.getElementById('consent').checked;
+            if (!consent) {
+                document.getElementById('consent-error').classList.add('active');
+                isValid = false;
+            }
+
+            if (isValid) {
+                console.log({
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    consent: consent
+                });
+                alert('Form submitted successfully!');
+                document.querySelector('.contact-form').reset();
+            }
+
+            return isValid;
         }
     </script>
 </body>

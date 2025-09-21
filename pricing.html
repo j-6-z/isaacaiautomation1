@@ -2,539 +2,518 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17580740260');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17580740260');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAYISAAC AI Chatbot Pricing</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background: #ffffff;
-        color: #000000;
-        line-height: 1.6;
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        position: relative;
-        padding-bottom: 200px;
-        font-weight: 400;
-    }
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        background: transparent;
-        pointer-events: auto;
-        overflow: hidden;
-    }
-    #particles-js canvas {
-        display: block;
-        width: 100% !important;
-        height: 100% !important;
-    }
-    header {
-        background: #ffffff;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        padding: 1rem 2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        animation: slideIn 0.5s ease-out;
-    }
-    @keyframes slideIn {
-        from { transform: translateY(-100%); }
-        to { transform: translateY(0); }
-    }
-    nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-    .logo img {
-        height: 40px;
-        transition: transform 0.3s ease;
-    }
-    .logo img:hover {
-        transform: rotate(360deg);
-    }
-    .logo span {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #000000;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .nav-links {
-        display: flex;
-        gap: 1rem;
-        list-style: none;
-    }
-    .nav-links a {
-        color: #000000;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 500;
-        padding: 0.5rem 1.2rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        background: #f9fafb;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .nav-links a:hover {
-        color: #4b5563;
-        background: #e5e7eb;
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .menu-toggle {
-        display: none;
-        font-size: 1.5rem;
-        background: none;
-        border: none;
-        color: #000000;
-        cursor: pointer;
-    }
-    .secondary-header {
-        background: transparent;
-        position: fixed;
-        top: 85px;
-        width: 100%;
-        z-index: 900;
-        padding: 0 2rem;
-        box-shadow: none;
-    }
-    .secondary-header .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .secondary-header ul {
-        display: flex;
-        list-style: none;
-        gap: 1rem;
-    }
-    .secondary-header a {
-        text-decoration: none;
-        font-size: 1rem;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: 400;
-        padding: 0.5rem 1.2rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        background: #ffffff;
-        color: #000000;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .secondary-header a:hover {
-        color: #4b5563;
-        background: #f9fafb;
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .secondary-header a.active {
-        background: #000000;
-        color: #ffffff;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-    .secondary-header .cta-button {
-        background: #000000;
-        color: #ffffff;
-        padding: 0.5rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .secondary-header .cta-button:hover {
-        background: #333333;
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    section {
-        padding: 4rem 2rem;
-        text-align: center;
-        z-index: 2;
-        position: relative;
-    }
-    h2 {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 3rem;
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 2rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .hero-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        margin-top: 120px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .hero-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .hero-section p {
-        font-size: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    .pricing-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .pricing-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(6, auto);
-        gap: 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .pricing-card {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid #ffffff;
-        border-radius: 12px;
-        padding: 2rem;
-        text-align: center;
-        color: #ffffff;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        transition: all 0.3s ease;
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    .pricing-card.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .pricing-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.2);
-    }
-    .pricing-card h3 {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
-    .pricing-card .price {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 1rem;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
-    .pricing-card ul {
-        list-style: none;
-        margin-bottom: 1.5rem;
-        font-size: 1rem;
-        color: #cccccc;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: 400;
-    }
-    .pricing-card ul li {
-        margin-bottom: 0.5rem;
-    }
-    .pricing-card a {
-        display: inline-block;
-        background: #ffffff;
-        color: #000000;
-        padding: 0.8rem 1.5rem;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 400;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    .pricing-card a:hover {
-        background: #000000;
-        color: #ffffff;
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    }
-    .features-section {
-        background: #ffffff;
-    }
-    .features-section h2 {
-        color: #000000;
-    }
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-    .feature-card {
-        padding: 2rem;
-        text-align: center;
-    }
-    .feature-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    .benefits-section {
-        background: rgba(0, 0, 0, 0.85);
-        color: #ffffff;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .benefits-section h2 {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .benefits-list {
-        max-width: 1400px;
-        margin: 0 auto;
-        text-align: left;
-    }
-    .benefits-list ul {
-        list-style: none;
-        font-size: 1.2rem;
-    }
-    .benefits-list ul li {
-        margin-bottom: 1rem;
-    }
-    .contact-section {
-        background: #ffffff;
-    }
-    .contact-section h2 {
-        color: #000000;
-    }
-    .contact-info {
-        max-width: 1400px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    .contact-info p {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-    .contact-info a {
-        color: #000000;
-        text-decoration: none;
-        font-weight: 700;
-    }
-    .contact-info a:hover {
-        color: #4b5563;
-    }
-    footer {
-        background: rgba(249, 250, 251, 0.7);
-        padding: 2rem;
-        text-align: left;
-        position: relative;
-        z-index: 800;
-        border-top: 1px solid #e5e7eb;
-        pointer-events: auto;
-    }
-    .footer-content {
-        max-width: 1400px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 2rem;
-    }
-    .footer-company {
-        flex: 1;
-    }
-    .footer-company .footer-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-    }
-    .footer-company .footer-logo img {
-        height: 40px;
-        transition: transform 0.3s ease;
-    }
-    .footer-company .footer-logo img:hover {
-        transform: rotate(360deg);
-    }
-    .footer-company .footer-logo span {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #000000;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .footer-company p {
-        font-size: 0.875rem;
-        color: #4b5563;
-        max-width: 250px;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: 400;
-    }
-    .footer-terms {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .footer-terms a {
-        color: #000000;
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: color 0.3s ease;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: 400;
-    }
-    .footer-terms a:hover {
-        color: #4b5563;
-    }
-    .purchase-button {
-        position: fixed;
-        bottom: 60px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #000000;
-        color: #ffffff;
-        padding: 1rem 3rem;
-        border-radius: 30px;
-        text-decoration: none;
-        font-size: 1.2rem;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    .purchase-button:hover {
-        background: #333333;
-        transform: translateX(-50%) scale(1.05);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-    @media (max-width: 768px) {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 200px;
+            padding-top: 120px;
+            font-weight: 400;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: transparent;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        #particles-js canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
         header {
-            padding: 1rem;
+            background: #ffffff;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo img {
+            height: 36px;
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
         }
         .logo span {
             font-size: 1.2rem;
-        }
-        .logo img {
-            height: 30px;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .nav-links {
-            display: none;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 1rem 0;
-            align-items: center;
-            justify-content: center;
-        }
-        .nav-links.active {
             display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            list-style: none;
         }
         .nav-links a {
-            font-size: 0.9rem;
-            padding: 0.4rem 0.8rem;
-            width: fit-content;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #4b5563;
         }
         .menu-toggle {
-            display: block;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #000000;
+            cursor: pointer;
         }
-        .secondary-header {
-            top: 75px;
-            padding: 0 1rem;
-        }
-        .secondary-header .container {
-            gap: 0.8rem;
-        }
-        .secondary-header ul {
-            gap: 0.8rem;
-        }
-        .secondary-header a {
-            font-size: 0.9rem;
-            padding: 0.4rem 0.8rem;
-        }
-        .secondary-header .cta-button {
-            padding: 0.4rem 1rem;
-            font-size: 0.9rem;
-        }
-        .hero-section, .pricing-section, .features-section, .benefits-section, .contact-section {
-            margin-top: 0;
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 12px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         .hero-section {
-            margin-top: 100px;
+            padding: 6rem 2rem;
+            text-align: center;
+            z-index: 2;
         }
-        .hero-section h2, .pricing-section h2, .features-section h2, .benefits-section h2, .contact-section h2 {
-            font-size: 2rem;
+        .hero-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-section p {
+            font-size: 1.125rem;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .pricing-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+        .pricing-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .pricing-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(12, auto);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .pricing-card, .feature-card {
-            padding: 1.5rem;
+        .pricing-grid .pricing-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+        .pricing-grid .pricing-card:nth-child(2) { grid-column: 1; grid-row: 2; }
+        .pricing-grid .pricing-card:nth-child(3) { grid-column: 1; grid-row: 3; }
+        .pricing-grid .pricing-card:nth-child(4) { grid-column: 2; grid-row: 1; }
+        .pricing-grid .pricing-card:nth-child(5) { grid-column: 2; grid-row: 2; }
+        .pricing-grid .pricing-card:nth-child(6) { grid-column: 2; grid-row: 3; }
+        .pricing-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            color: #000000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
         }
-        .pricing-card h3, .feature-card h3 {
-            font-size: 1.3rem;
+        .pricing-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
         .pricing-card .price {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1rem;
         }
-        .pricing-card ul, .benefits-list ul {
-            font-size: 0.9rem;
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+        .pricing-card ul li {
+            margin-bottom: 0.5rem;
         }
         .pricing-card a {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
+            display: inline-block;
+            background: #000000;
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .pricing-card a:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+        .features-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+        .features-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card p {
+            font-size: 1rem;
+            color: #4b5563;
+        }
+        .benefits-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+        .benefits-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .benefits-list {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .benefits-list ul {
+            list-style: none;
+            font-size: 1.125rem;
+            color: #4b5563;
+        }
+        .benefits-list ul li {
+            margin-bottom: 1rem;
+        }
+        .contact-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+        .contact-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .contact-info {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .contact-info p {
+            font-size: 1.125rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+        .contact-info a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-info a:hover {
+            color: #4b5563;
+        }
+        footer {
+            padding: 3rem 2rem;
+            text-align: left;
+            position: relative;
+            z-index: 800;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
         }
         .footer-content {
-            flex-direction: column;
-            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-        .footer-company, .footer-terms {
-            text-align: center;
+        .footer-company {
+            flex: 1;
+        }
+        .footer-company .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .footer-company .footer-logo img {
+            height: 36px;
+            transition: transform 0.3s ease;
+        }
+        .footer-company .footer-logo img:hover {
+            transform: scale(1.1);
+        }
+        .footer-company .footer-logo span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-company p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            max-width: 250px;
         }
         .footer-terms {
-            margin-top: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
-    }
-</style>
+        .footer-terms a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+        .footer-terms a:hover {
+            color: #4b5563;
+        }
+        .purchase-button {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000;
+            color: #ffffff;
+            padding: 1rem 3rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .purchase-button:hover {
+            background: #4b5563;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
+            header {
+                padding: 1rem;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-section {
+                padding: 4rem 1rem;
+            }
+            .hero-section h2 {
+                font-size: 2rem;
+            }
+            .hero-section p {
+                font-size: 1rem;
+            }
+            .pricing-section {
+                padding: 2rem 1rem;
+            }
+            .pricing-section h2 {
+                font-size: 2rem;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(6, auto);
+            }
+            .pricing-grid .pricing-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+            .pricing-grid .pricing-card:nth-child(2) { grid-column: 1; grid-row: 2; }
+            .pricing-grid .pricing-card:nth-child(3) { grid-column: 1; grid-row: 3; }
+            .pricing-grid .pricing-card:nth-child(4) { grid-column: 1; grid-row: 4; }
+            .pricing-grid .pricing-card:nth-child(5) { grid-column: 1; grid-row: 5; }
+            .pricing-grid .pricing-card:nth-child(6) { grid-column: 1; grid-row: 6; }
+            .pricing-card {
+                padding: 1.5rem;
+            }
+            .pricing-card h3 {
+                font-size: 1.3rem;
+            }
+            .pricing-card .price {
+                font-size: 1.8rem;
+            }
+            .pricing-card ul {
+                font-size: 0.9rem;
+            }
+            .pricing-card a {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .features-section {
+                padding: 2rem 1rem;
+            }
+            .features-section h2 {
+                font-size: 2rem;
+            }
+            .feature-card {
+                padding: 1.5rem;
+            }
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+            .benefits-section {
+                padding: 2rem 1rem;
+            }
+            .benefits-section h2 {
+                font-size: 2rem;
+            }
+            .benefits-list ul {
+                font-size: 1rem;
+            }
+            .contact-section {
+                padding: 2rem 1rem;
+            }
+            .contact-section h2 {
+                font-size: 2rem;
+            }
+            .contact-info p {
+                font-size: 1rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+            .footer-company, .footer-terms {
+                text-align: center;
+            }
+            .footer-terms {
+                margin-top: 1rem;
+            }
+            .content-section {
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="particles-js"></div>
@@ -553,112 +532,122 @@
         </nav>
     </header>
     <section class="hero-section" id="hero">
-        <h2>Welcome to JAYISAAC AI Pricing</h2>
-        <p>Discover the perfect chatbot solution for your business with our flexible pricing plans.</p>
+        <div class="content-section">
+            <h2>Welcome to JAYISAAC AI Pricing</h2>
+            <p>Discover the perfect chatbot solution for your business with our flexible pricing plans.</p>
+        </div>
     </section>
     <section class="pricing-section" id="pricing">
-        <h2>Pricing That Packs a Punch!</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Basic Monthly Subscription</h3>
-                <div class="price">$49/month</div>
-                <ul>
-                    <li>Custom chatbot</li>
-                    <li>Core features</li>
-                    <li>Single-platform integration</li>
-                    <li>Up to 1,000 conversations</li>
-                    <li>6 months email support</li>
-                </ul>
-                <a href="/Purchasepage.html">Get Started 🚀</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Standard Monthly Subscription</h3>
-                <div class="price">$149/month</div>
-                <ul>
-                    <li>Advanced AI</li>
-                    <li>Multi-platform support (web, mobile, WhatsApp)</li>
-                    <li>Up to 5,000 conversations</li>
-                    <li>1 year priority support</li>
-                </ul>
-                <a href="/Purchasepage.html">Level Up 💥</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Enterprise Monthly Subscription</h3>
-                <div class="price">$499/month</div>
-                <ul>
-                    <li>Fully custom chatbot</li>
-                    <li>Integrations (Salesforce, Shopify)</li>
-                    <li>Unlimited conversations</li>
-                    <li>Dedicated support</li>
-                    <li>Analytics</li>
-                </ul>
-                <a href="/Purchasepage.html">Go Premium 📞</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Basic One-Time Purchase</h3>
-                <div class="price">$799</div>
-                <ul>
-                    <li>Custom chatbot</li>
-                    <li>Lifetime access (self-hosted)</li>
-                    <li>1 year basic support</li>
-                </ul>
-                <a href="/Purchasepage.html">Buy Now 🚀</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Standard One-Time Purchase</h3>
-                <div class="price">$9,999</div>
-                <ul>
-                    <li>Advanced AI</li>
-                    <li>Multi-platform support (web, mobile, Slack)</li>
-                    <li>2 years updates</li>
-                </ul>
-                <a href="/Purchasepage.html">Upgrade 💥</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Enterprise One-Time Purchase</h3>
-                <div class="price">$25,000</div>
-                <ul>
-                    <li>Fully custom solution</li>
-                    <li>Integrations (HubSpot, Zendesk)</li>
-                    <li>Scalability</li>
-                    <li>3+ years support</li>
-                </ul>
-                <a href="#contact">Contact Us 📞</a>
+        <div class="content-section">
+            <h2>Pricing That Packs a Punch!</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic Monthly Subscription</h3>
+                    <div class="price">$49/month</div>
+                    <ul>
+                        <li>Custom chatbot</li>
+                        <li>Core features</li>
+                        <li>Single-platform integration</li>
+                        <li>Up to 1,000 conversations</li>
+                        <li>6 months email support</li>
+                    </ul>
+                    <a href="/Purchasepage.html">Get Started 🚀</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Basic One-Time Purchase</h3>
+                    <div class="price">$799</div>
+                    <ul>
+                        <li>Custom chatbot</li>
+                        <li>Lifetime access (self-hosted)</li>
+                        <li>1 year basic support</li>
+                    </ul>
+                    <a href="/Purchasepage.html">Buy Now 🚀</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Standard Monthly Subscription</h3>
+                    <div class="price">$149/month</div>
+                    <ul>
+                        <li>Advanced AI</li>
+                        <li>Multi-platform support (web, mobile, WhatsApp)</li>
+                        <li>Up to 5,000 conversations</li>
+                        <li>1 year priority support</li>
+                    </ul>
+                    <a href="/Purchasepage.html">Level Up 💥</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Standard One-Time Purchase</h3>
+                    <div class="price">$9,999</div>
+                    <ul>
+                        <li>Advanced AI</li>
+                        <li>Multi-platform support (web, mobile, Slack)</li>
+                        <li>2 years updates</li>
+                    </ul>
+                    <a href="/Purchasepage.html">Upgrade 💥</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise Monthly Subscription</h3>
+                    <div class="price">$499/month</div>
+                    <ul>
+                        <li>Fully custom chatbot</li>
+                        <li>Integrations (Salesforce, Shopify)</li>
+                        <li>Unlimited conversations</li>
+                        <li>Dedicated support</li>
+                        <li>Analytics</li>
+                    </ul>
+                    <a href="/Purchasepage.html">Go Premium 📞</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise One-Time Purchase</h3>
+                    <div class="price">$25,000</div>
+                    <ul>
+                        <li>Fully custom solution</li>
+                        <li>Integrations (HubSpot, Zendesk)</li>
+                        <li>Scalability</li>
+                        <li>3+ years support</li>
+                    </ul>
+                    <a href="#contact">Contact Us 📞</a>
+                </div>
             </div>
         </div>
     </section>
     <section class="features-section" id="features">
-        <h2>Key Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>24/7 Support</h3>
-                <p>Always available to assist your customers.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Custom Integration</h3>
-                <p>Seamlessly integrates with your existing systems.</p>
-            </div>
-            <div class="feature-card">
-                <h3>AI-Powered</h3>
-                <p>Leverages advanced AI for smart responses.</p>
+        <div class="content-section">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>24/7 Support</h3>
+                    <p>Always available to assist your customers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Custom Integration</h3>
+                    <p>Seamlessly integrates with your existing systems.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI-Powered</h3>
+                    <p>Leverages advanced AI for smart responses.</p>
+                </div>
             </div>
         </div>
     </section>
     <section class="benefits-section" id="benefits">
-        <h2>Benefits of JAYISAAC AI</h2>
-        <div class="benefits-list">
-            <ul>
-                <li>Reduces support costs by up to 70%</li>
-                <li>Increases sales by 30% with smart engagement</li>
-                <li>Offers 24/7 customer availability</li>
-                <li>Scalable for any business size</li>
-            </ul>
+        <div class="content-section">
+            <h2>Benefits of JAYISAAC AI</h2>
+            <div class="benefits-list">
+                <ul>
+                    <li>Reduces support costs by up to 70%</li>
+                    <li>Increases sales by 30% with smart engagement</li>
+                    <li>Offers 24/7 customer availability</li>
+                    <li>Scalable for any business size</li>
+                </ul>
+            </div>
         </div>
     </section>
     <section class="contact-section" id="contact">
-        <h2>Get in Touch</h2>
-        <div class="contact-info">
-            <p>Ready to get started? Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
+        <div class="content-section">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <p>Ready to get started? Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
+            </div>
         </div>
     </section>
     <footer>
