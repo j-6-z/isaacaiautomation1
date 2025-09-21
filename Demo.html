@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17580740260');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17580740260');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - JAYISAAC AI Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -29,61 +28,64 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
+            padding-top: 120px;
         }
         #particles-js {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             z-index: -1;
             background: transparent;
             pointer-events: none;
+            overflow: hidden;
+        }
+        #particles-js canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
         }
         header {
             background: #ffffff;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
             z-index: 1000;
             padding: 1rem 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            animation: slideIn 0.5s ease-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
         nav {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.5rem;
         }
         .logo img {
-            height: 40px;
+            height: 36px;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
         .logo span {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .nav-links {
             display: flex;
-            gap: 1rem;
+            align-items: center;
+            gap: 1.5rem;
             list-style: none;
         }
         .nav-links a {
@@ -91,17 +93,10 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            background: #f9fafb;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: color 0.3s ease;
         }
         .nav-links a:hover {
-            color: #000000;
-            background: #e5e7eb;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: #4b5563;
         }
         .menu-toggle {
             display: none;
@@ -110,58 +105,6 @@
             border: none;
             color: #000000;
             cursor: pointer;
-        }
-        .secondary-header {
-            background: transparent;
-            position: fixed;
-            top: 85px;
-            width: 100%;
-            z-index: 900;
-            padding: 0 2rem;
-            box-shadow: none;
-        }
-        .secondary-header .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .secondary-header ul {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-        }
-        .secondary-header a {
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-        .secondary-header a:hover {
-            color: #000000;
-            background: #f9fafb;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        .secondary-header .cta-button {
-            background: #000000;
-            color: #ffffff;
-            padding: 0.5rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-        .secondary-header .cta-button:hover {
-            background: #333333;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         .contact-container {
             background: #ffffff;
@@ -345,21 +288,24 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
         footer {
-            background: rgba(249, 250, 251, 0.7);
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: left;
             position: relative;
             z-index: 800;
             border-top: 1px solid #e5e7eb;
-            pointer-events: auto;
+            background: #f9fafb;
         }
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 2rem;
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         .footer-company {
             flex: 1;
@@ -371,29 +317,23 @@
             margin-bottom: 1rem;
         }
         .footer-company .footer-logo img {
-            height: 40px;
+            height: 36px;
             transition: transform 0.3s ease;
         }
         .footer-company .footer-logo img:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
         .footer-company .footer-logo span {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .footer-company p {
             font-size: 0.875rem;
-            color: #333333;
-        }
-        .footer-company p a {
-            color: #000000;
-            text-decoration: none;
-        }
-        .footer-company p a:hover {
-            color: #333333;
+            color: #4b5563;
+            max-width: 250px;
         }
         .footer-terms {
             flex: 1;
@@ -408,26 +348,26 @@
             transition: color 0.3s ease;
         }
         .footer-terms a:hover {
-            color: #333333;
+            color: #4b5563;
         }
         @media (max-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
             header {
                 padding: 1rem;
-            }
-            .logo span {
-                font-size: 1.2rem;
-            }
-            .logo img {
-                height: 30px;
             }
             .nav-links {
                 display: none;
                 flex-direction: column;
-                gap: 0.5rem;
-                width: 100%;
-                padding: 1rem 0;
-                align-items: center;
-                justify-content: center;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
             .nav-links.active {
                 display: flex;
@@ -442,24 +382,6 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
-            }
-            .secondary-header {
-                top: 75px;
-                padding: 0 1rem;
-            }
-            .secondary-header .container {
-                gap: 0.8rem;
-            }
-            .secondary-header ul {
-                gap: 0.8rem;
-            }
-            .secondary-header a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-            .secondary-header .cta-button {
-                padding: 0.4rem 1rem;
-                font-size: 0.9rem;
             }
             .contact-container {
                 padding: 1.5rem;
@@ -497,6 +419,7 @@
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+                padding: 2rem;
             }
             .footer-company, .footer-terms {
                 text-align: center;
@@ -512,14 +435,15 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                 <span>JAYISAAC AI</span>
             </div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
-                <li><a href="/contact.html">Contact Us</a></li>
+                <!-- <li><a href="/features.html">Features</a></li> -->
+                <li><a href="/contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -570,7 +494,7 @@
                     <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
-                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at <a href="admin@jayisaacai.com">admin@jayisaacai.com</a>.</p>
+                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a>.</p>
             </div>
             <div class="footer-terms">
                 <a href="/TOS_SUCH.html">Terms of Service</a>
@@ -583,27 +507,35 @@
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
-        // Initialize particles.js
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 80, density: { enable: true, value_area: 1000 } },
                 color: { value: '#000000' },
-                shape: { type: 'triangle' },
-                opacity: { value: 0.5, random: true },
+                shape: { type: 'triangle', stroke: { width: 0, color: '#000000' } },
+                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
                 size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: 'none', random: true }
+                line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.3, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'bounce', bounce: true }
             },
             interactivity: {
                 detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
                 modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
             },
             retina_detect: true
         });
+        function resizeCanvas() {
+            const canvas = document.querySelector('#particles-js canvas');
+            if (canvas) {
+                canvas.style.width = '100vw';
+                canvas.style.height = '100vh';
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
         console.log('Particles.js initialized');
-
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -613,8 +545,6 @@
                 }
             });
         });
-
-        // Intersection Observer for section animations
         const sections = document.querySelectorAll('section');
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -630,78 +560,58 @@
             section.style.transition = 'all 0.8s ease-out';
             sectionObserver.observe(section);
         });
-
-        // Toggle mobile menu
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-
-        // Form validation
         function validateForm(event) {
             event.preventDefault();
             let isValid = true;
 
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const subject = document.getElementById('subject');
-            const message = document.getElementById('message');
-            const consent = document.getElementById('consent');
-
-            // Reset error states
-            [name, email, subject, message, consent].forEach(field => {
-                const errorId = `${field.id}-error`;
-                const errorElement = document.getElementById(errorId);
-                if (errorElement) {
-                    errorElement.style.display = 'none';
-                    field.classList.remove('invalid-input');
-                }
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('active');
             });
 
-            // Validate name
-            if (!name.value.trim()) {
-                document.getElementById('name-error').style.display = 'block';
-                name.classList.add('invalid-input');
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                document.getElementById('name-error').classList.add('active');
                 isValid = false;
             }
 
-            // Validate email
-            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value.trim())) {
-                document.getElementById('email-error').style.display = 'block';
-                email.classList.add('invalid-input');
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('email-error').classList.add('active');
                 isValid = false;
             }
 
-            // Validate subject
-            if (!subject.value.trim()) {
-                document.getElementById('subject-error').style.display = 'block';
-                subject.classList.add('invalid-input');
+            const subject = document.getElementById('subject').value.trim();
+            if (!subject) {
+                document.getElementById('subject-error').classList.add('active');
                 isValid = false;
             }
 
-            // Validate message
-            if (!message.value.trim()) {
-                document.getElementById('message-error').style.display = 'block';
-                message.classList.add('invalid-input');
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                document.getElementById('message-error').classList.add('active');
                 isValid = false;
             }
 
-            // Validate consent
-            if (!consent.checked) {
-                document.getElementById('consent-error').style.display = 'block';
-                consent.classList.add('invalid-input');
+            const consent = document.getElementById('consent').checked;
+            if (!consent) {
+                document.getElementById('consent-error').classList.add('active');
                 isValid = false;
             }
 
             if (isValid) {
-                // Simulate form submission (replace with actual backend API call)
-                console.log('Form data:', {
-                    name: name.value,
-                    email: email.value,
-                    subject: subject.value,
-                    message: message.value
+                console.log({
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    consent: consent
                 });
-                alert('Form submitted successfully! We will get back to you soon.');
+                alert('Form submitted successfully!');
                 document.querySelector('.contact-form').reset();
             }
 

@@ -1,11 +1,16 @@
 {
-  "name": "jayisaac-ai",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "stripe": "^15.4.0"
-  },
-  "scripts": {
-    "build": "echo 'No build needed'"
-  }
+"name": "jayisaac-ai",
+"version": "1.0.0",
+"private": true,
+"dependencies": {
+"express": "^4.18.2"
+},
+"scripts": {
+"start": "node index.js",
+"build": "echo 'No build needed'"
+},
+"main": "index.js",
+"engines": {
+"node": ">=18"
+}
 }

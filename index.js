@@ -1,4 +1,12 @@
-// // index.js - Optional shared utils
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const express = require('express');
+const app = express();
 
-// module.exports = { stripe };  // Export for use in other files
+app.get('/api', async (req, res) => {
+  try {
+    res.json({ message: 'API is working' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = app;
