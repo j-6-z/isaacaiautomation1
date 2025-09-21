@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - JAYISAAC AI Automation</title>
+    <title>Demon Page - Coming Soon - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -106,186 +106,31 @@
             color: #000000;
             cursor: pointer;
         }
-        .contact-container {
+        .coming-soon-container {
             background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 1200px;
             text-align: center;
-            margin: 8rem auto;
+            margin: 0 auto 4rem;
             position: relative;
-            z-index: 10;
+            z-index: 2;
         }
-        .contact-container h1 {
-            font-size: 3.5rem;
-            font-weight: 600;
-            color: #000000;
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .contact-section {
-            margin-bottom: 3rem;
-        }
-        .contact-section h2 {
+        .coming-soon-container h1 {
             font-size: 2.5rem;
             font-weight: 700;
             color: #000000;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        .info-item {
-            padding: 1.5rem;
-            border-radius: 15px;
-            background: #f9fafb;
-            border: 2px solid #000000;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .info-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        .info-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(0, 0, 0, 0.1), transparent);
-            animation: shine 3s infinite;
-        }
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            20% { transform: translateX(100%); }
-            100% { transform: translateX(100%); }
-        }
-        .info-item h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #000000;
-            margin-bottom: 0.5rem;
-        }
-        .info-item p {
-            font-size: 1.2rem;
-            color: #000000;
-        }
-        .info-item p a {
-            color: #000000;
-            text-decoration: none;
-        }
-        .info-item p a:hover {
-            color: #333333;
-        }
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #000000;
-            margin-bottom: 0.5rem;
-            display: block;
-            text-align: left;
-        }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 15px;
-            background: #ffffff;
-            color: #000000;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            transform: scale(1.02);
-        }
-        .form-group.checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .form-group.checkbox-group input[type="checkbox"] {
-            width: auto;
-            cursor: pointer;
-        }
-        .form-group.checkbox-group label {
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        .form-group.checkbox-group a {
-            color: #000000;
-            text-decoration: none;
-        }
-        .form-group.checkbox-group a:hover {
-            text-decoration: underline;
-        }
-        .error-message {
-            color: #000000;
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-            display: none;
-        }
-        .invalid-input {
-            border: 2px solid #000000;
-        }
-        .contact-form button {
-            background: linear-gradient(90deg, #1a1a1a, #000000);
-            color: #ffffff;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-top: 2rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.4s ease;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .contact-form button:hover {
-            background: linear-gradient(90deg, #000000, #1a1a1a);
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .coming-soon-container p {
+            font-size: 1.125rem;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto;
         }
         footer {
             padding: 3rem 2rem;
@@ -372,49 +217,18 @@
             .nav-links.active {
                 display: flex;
             }
-            .nav-links a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-                width: fit-content;
-            }
             .menu-toggle {
                 display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
             }
-            .contact-container {
-                padding: 1.5rem;
-                margin: 6rem auto;
-                max-width: 90%;
+            .coming-soon-container {
+                padding: 2rem;
+                margin-bottom: 2rem;
             }
-            .contact-container h1 {
-                font-size: 2.5rem;
-            }
-            .contact-section h2 {
+            .coming-soon-container h1 {
                 font-size: 2rem;
             }
-            .contact-info {
-                grid-template-columns: 1fr;
-            }
-            .info-item h3 {
-                font-size: 1.3rem;
-            }
-            .info-item p {
-                font-size: 1.1rem;
-            }
-            .form-group label {
-                font-size: 1.1rem;
-            }
-            .form-group input,
-            .form-group textarea {
-                font-size: 1.1rem;
-                padding: 1rem;
-            }
-            .contact-form button {
-                font-size: 1.2rem;
-                padding: 1rem;
-                max-width: 100%;
+            .coming-soon-container p {
+                font-size: 1rem;
             }
             .footer-content {
                 flex-direction: column;
@@ -442,50 +256,14 @@
             <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
-                <!-- <li><a href="/features.html">Features</a></li> -->
+                <li><a href="/features.html">Features</a></li>
                 <li><a href="/contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
-    <section class="contact-container">
-        <h1>Contact Us</h1>
-        <div class="contact-section">
-            <h2>Get in Touch</h2>
-            <div class="contact-info">
-                <div class="info-item">
-                    <h3>Email</h3>
-                    <p><a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
-                </div>
-            </div>
-            <form class="contact-form" onsubmit="return validateForm(event);">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-                    <div class="error-message" id="name-error">Please enter your full name.</div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    <div class="error-message" id="email-error">Please enter a valid email address.</div>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
-                    <div class="error-message" id="subject-error">Please enter a subject.</div>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
-                    <div class="error-message" id="message-error">Please enter a message.</div>
-                </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="consent" name="consent" required>
-                    <label for="consent">I consent to my data being processed for contact purposes. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
-                    <div class="error-message" id="consent-error">You must consent to data processing.</div>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
+    <section class="coming-soon-container">
+        <h1>Coming Soon</h1>
+        <p>This is going to be the Demon Page. Stay tuned for something epic!</p>
     </section>
     <footer>
         <div class="footer-content">
@@ -504,8 +282,6 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         particlesJS('particles-js', {
             particles: {
@@ -563,59 +339,6 @@
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
-        }
-        function validateForm(event) {
-            event.preventDefault();
-            let isValid = true;
-
-            document.querySelectorAll('.error-message').forEach(error => {
-                error.classList.remove('active');
-            });
-
-            const name = document.getElementById('name').value.trim();
-            if (!name) {
-                document.getElementById('name-error').classList.add('active');
-                isValid = false;
-            }
-
-            const email = document.getElementById('email').value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email || !emailRegex.test(email)) {
-                document.getElementById('email-error').classList.add('active');
-                isValid = false;
-            }
-
-            const subject = document.getElementById('subject').value.trim();
-            if (!subject) {
-                document.getElementById('subject-error').classList.add('active');
-                isValid = false;
-            }
-
-            const message = document.getElementById('message').value.trim();
-            if (!message) {
-                document.getElementById('message-error').classList.add('active');
-                isValid = false;
-            }
-
-            const consent = document.getElementById('consent').checked;
-            if (!consent) {
-                document.getElementById('consent-error').classList.add('active');
-                isValid = false;
-            }
-
-            if (isValid) {
-                console.log({
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message,
-                    consent: consent
-                });
-                alert('Form submitted successfully!');
-                document.querySelector('.contact-form').reset();
-            }
-
-            return isValid;
         }
     </script>
 </body>
