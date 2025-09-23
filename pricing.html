@@ -171,13 +171,11 @@
             text-align: center;
             color: #000000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(50px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 350px;
+            opacity: 1; /* Default to visible */
         }
         .pricing-card.show {
             opacity: 1;
@@ -551,6 +549,7 @@
                 min-height: auto;
                 opacity: 1 !important;
                 transform: none !important;
+                transition: none !important; /* Disable transitions on mobile */
             }
             .pricing-card h3 {
                 font-size: 1.3rem;
@@ -843,7 +842,7 @@
                     <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
-                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
+                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</a></p>
             </div>
             <div class="footer-terms">
                 <a href="/TOS_SUCH.html">Terms of Service</a>
@@ -853,7 +852,6 @@
         </div>
     </footer>
     <a href="/Purchasepage.html" class="purchase-button">Purchase Epic AI Chatbots</a>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
@@ -911,32 +909,28 @@
             section.style.transition = 'all 0.8s ease-out';
             sectionObserver.observe(section);
         });
+        // Ensure pricing cards are visible on mobile
         const pricingCards = document.querySelectorAll('.pricing-card');
-        const pricingObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('show');
-                    }, index * 200);
-                }
-            });
-        }, { threshold: 0.1 });
-        pricingCards.forEach(card => {
-            pricingObserver.observe(card);
-        });
         window.addEventListener('load', () => {
             if (window.innerWidth <= 768) {
                 pricingCards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'none';
                     card.classList.add('show');
                 });
             } else {
-                setTimeout(() => {
-                    pricingCards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.classList.add('show');
-                        }, index * 200);
+                const pricingObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('show');
+                            }, index * 200);
+                        }
                     });
-                }, 500);
+                }, { threshold: 0.1 });
+                pricingCards.forEach(card => {
+                    pricingObserver.observe(card);
+                });
             }
         });
         function toggleMenu() {
