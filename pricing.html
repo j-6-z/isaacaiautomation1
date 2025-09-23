@@ -46,6 +46,7 @@
             display: block;
             width: 100% !important;
             height: 100% !important;
+            z-index: -1;
         }
         header {
             background: #ffffff;
@@ -543,11 +544,13 @@
             }
             .pricing-grid {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto;
+                gap: 1.5rem;
             }
             .pricing-card {
                 padding: 1.5rem;
                 min-height: auto;
+                opacity: 1 !important;
+                transform: none !important;
             }
             .pricing-card h3 {
                 font-size: 1.3rem;
@@ -612,7 +615,8 @@
                 text-align: center;
                 padding: 2rem;
             }
-            .footer-company, .footer-terms {
+            .footer-company,
+            .footer-terms {
                 text-align: center;
             }
             .footer-terms {
@@ -637,7 +641,6 @@
             <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
-                <!-- <li><a href="/features.html">Features</a></li> -->
                 <li><a href="/Demo.html">Demo</a></li>
             </ul>
         </nav>
@@ -850,6 +853,7 @@
         </div>
     </footer>
     <a href="/Purchasepage.html" class="purchase-button">Purchase Epic AI Chatbots</a>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
@@ -920,15 +924,20 @@
         pricingCards.forEach(card => {
             pricingObserver.observe(card);
         });
-        // Force staggered reveal after page load for reliability (fixes mobile/loading issues)
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                pricingCards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('show');
-                    }, index * 200);
+            if (window.innerWidth <= 768) {
+                pricingCards.forEach(card => {
+                    card.classList.add('show');
                 });
-            }, 500);
+            } else {
+                setTimeout(() => {
+                    pricingCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('show');
+                        }, index * 200);
+                    });
+                }, 500);
+            }
         });
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
