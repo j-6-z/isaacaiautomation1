@@ -149,14 +149,14 @@
             z-index: 2;
         }
         .subscription-option:hover {
-            background: #ffffff; /* Explicitly match Basic Monthly hover background */
+            background: #ffffff;
         }
         .option:hover label {
             color: #32325d;
         }
         .option:hover p {
             color: #6b7c93;
-            font-weight: 600; /* Ensure price remains bold on hover */
+            font-weight: 600;
         }
         .option.selected {
             border: 2px solid #000000;
@@ -199,7 +199,7 @@
         }
         .option p {
             font-size: 0.95rem;
-            font-weight: 600; /* Make price text bold in all states */
+            font-weight: 600;
             color: #6b7c93;
             line-height: 1.6;
         }
@@ -514,7 +514,7 @@
         <div class="order-section">
             <h2>One-Time Purchase Plans</h2>
             <div class="order-options">
-                <div class="option one-time-option selected" data-plan="basic-purchase" data-url="https://buy.stripe.com/8x2eV68On9U39R65b3c3m05">
+                <div class="option one-time-option" data-plan="basic-purchase" data-url="https://buy.stripe.com/8x2eV68On9U39R65b3c3m05">
                     <label>Basic One-Time</label>
                     <p>$799</p>
                     <ul>
@@ -566,8 +566,8 @@
             </div>
         </div>
         <form id="order-form">
-            <input type="hidden" id="selected-plan" name="plan" value="basic-purchase">
-            <input type="hidden" id="plan-type" name="plan-type" value="one-time">
+            <input type="hidden" id="selected-plan" name="plan" value="">
+            <input type="hidden" id="plan-type" name="plan-type" value="">
             <div class="form-group">
                 <select id="account-type" name="account-type" required>
                     <option value="" disabled selected>Select account type</option>
@@ -612,7 +612,7 @@
                     <div class="error-message" id="business-website-url-error">Please enter a valid URL.</div>
                 </div>
             </div>
-            <div class="price-display" id="price-display">You will be charged: CAD $799</div>
+            <div class="price-display" id="price-display">Please select a plan</div>
             <div class="pay-radio" id="pay-radio">
                 <label><input type="radio" name="pay" id="pay-now"> Pay Now</label>
                 <div class="delivery-note">Note: Chatbot will be delivered in 1-24 Hours.</div>
@@ -637,6 +637,9 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Clear localStorage to prevent restoring any previous plan selection
+            localStorage.removeItem('orderFormData');
+
             // Initialize particles.js
             if (window.particlesJS) {
                 particlesJS('particles-js', {
@@ -680,6 +683,13 @@
             const personalFields = document.getElementById('personal-fields');
             const businessFields = document.getElementById('business-fields');
 
+            // Ensure no plan is selected on page load
+            planOptions.forEach(opt => opt.classList.remove('selected'));
+            if (selectedPlanInput) selectedPlanInput.value = '';
+            if (planTypeInput) planTypeInput.value = '';
+            if (priceDisplay) priceDisplay.textContent = 'Please select a plan';
+            if (payRadio) payRadio.style.display = 'none';
+
             function getPlanDetails(planValue) {
                 const plans = {
                     'basic-monthly': { amount: 4900, priceText: '$49/month', type: 'subscription' },
@@ -689,7 +699,7 @@
                     'standard-purchase': { amount: 999900, priceText: '$9,999', type: 'one-time' },
                     'enterprise-purchase': { amount: 2499900, priceText: '$24,999', type: 'one-time' }
                 };
-                return plans[planValue] || { amount: 0, priceText: 'Unknown', type: 'one-time' };
+                return plans[planValue] || { amount: 0, priceText: 'Please select a plan', type: '' };
             }
 
             function validateField(field) {
@@ -744,10 +754,15 @@
 
             function validateForm() {
                 const accountType = accountTypeSelect ? accountTypeSelect.value : '';
+                const selectedPlan = selectedPlanInput ? selectedPlanInput.value : '';
                 let isValid = true;
 
                 if (!accountType) {
                     if (accountTypeSelect) validateField(accountTypeSelect);
+                    isValid = false;
+                }
+
+                if (!selectedPlan) {
                     isValid = false;
                 }
 
@@ -773,6 +788,7 @@
                     if (businessWebsiteUrl && businessWebsiteUrl.value.trim() !== '') isValid = validateUrl(businessWebsiteUrl) && isValid;
                 }
 
+                if (payRadio) payRadio.classList.toggle('pay-enabled', isValid);
                 return isValid;
             }
 
@@ -809,44 +825,9 @@
                     businessEmail: document.getElementById('business-email')?.value || '',
                     businessVerifyEmail: document.getElementById('business-verify-email')?.value || '',
                     businessWebsiteUrl: document.getElementById('business-website-url')?.value || '',
-                    selectedPlan: selectedPlanInput ? selectedPlanInput.value : 'basic-purchase'
+                    selectedPlan: selectedPlanInput ? selectedPlanInput.value : ''
                 };
                 localStorage.setItem('orderFormData', JSON.stringify(formData));
-            }
-
-            function restoreFormData() {
-                const savedData = localStorage.getItem('orderFormData');
-                if (savedData) {
-                    const formData = JSON.parse(savedData);
-                    if (accountTypeSelect) accountTypeSelect.value = formData.accountType || '';
-                    toggleFields();
-                    if (document.getElementById('name')) document.getElementById('name').value = formData.name || '';
-                    if (document.getElementById('email')) document.getElementById('email').value = formData.email || '';
-                    if (document.getElementById('verify-email')) document.getElementById('verify-email').value = formData.verifyEmail || '';
-                    if (document.getElementById('website-url')) document.getElementById('website-url').value = formData.websiteUrl || '';
-                    if (document.getElementById('company-name')) document.getElementById('company-name').value = formData.companyName || '';
-                    if (document.getElementById('business-email')) document.getElementById('business-email').value = formData.businessEmail || '';
-                    if (document.getElementById('business-verify-email')) document.getElementById('business-verify-email').value = formData.businessVerifyEmail || '';
-                    if (document.getElementById('business-website-url')) document.getElementById('business-website-url').value = formData.businessWebsiteUrl || '';
-                    if (selectedPlanInput) selectedPlanInput.value = formData.selectedPlan || 'basic-purchase';
-                    
-                    const selectedPlan = formData.selectedPlan || 'basic-purchase';
-                    planOptions.forEach(opt => opt.classList.remove('selected'));
-                    const selectedOption = document.querySelector(`.option[data-plan="${selectedPlan}"]`);
-                    if (selectedOption && priceDisplay && planTypeInput && payRadio && payNowRadio) {
-                        selectedOption.classList.add('selected');
-                        const planDetails = getPlanDetails(selectedPlan);
-                        planTypeInput.value = planDetails.type;
-                        priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
-                        payRadio.style.display = 'block';
-                        payNowRadio.onclick = () => {
-                            if (payRadio.classList.contains('pay-enabled')) {
-                                window.location.href = selectedOption.getAttribute('data-url');
-                            }
-                        };
-                    }
-                    validateForm();
-                }
             }
 
             if (accountTypeSelect) {
@@ -867,8 +848,7 @@
                     } else {
                         validateField(field);
                     }
-                    const isValid = validateForm();
-                    if (payRadio) payRadio.classList.toggle('pay-enabled', isValid);
+                    validateForm();
                     saveFormData();
                 });
             });
@@ -894,11 +874,12 @@
                             }
                         };
                         saveFormData();
+                        validateForm();
                     }
                 });
             });
 
-            restoreFormData();
+            // Initial validation to ensure form is invalid until user interacts
             validateForm();
         });
     </script>

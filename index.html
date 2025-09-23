@@ -28,7 +28,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
-            padding-top: 120px; /* Added extra space at the top for better breathing room */
+            padding-top: 120px;
         }
         #particles-js {
             position: fixed;
@@ -67,13 +67,16 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            min-width: 150px; /* Added to ensure container doesn't collapse */
+            z-index: 1001; /* Ensure logo stays above other elements */
         }
         .logo img {
             height: 36px;
             width: auto;
             max-width: 100%;
             display: block;
-            transition: transform 0.3s ease;
+            visibility: visible; /* Explicitly ensure visibility */
+            opacity: 1; /* Ensure no transparency */
         }
         .logo img:hover {
             transform: scale(1.1);
@@ -111,16 +114,16 @@
         }
         .content-section {
             max-width: 1200px;
-            margin: 0 auto 4rem; /* Added bottom margin for section spacing */
+            margin: 0 auto 4rem;
             background: #ffffff;
-            padding: 3rem; /* Increased padding for more internal space */
-            border-radius: 12px; /* Slightly larger radius for softer look */
+            padding: 3rem;
+            border-radius: 12px;
             position: relative;
             z-index: 2;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Enhanced shadow for depth */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         .what-we-do {
-            padding: 6rem 2rem; /* Increased top padding for more space after header */
+            padding: 6rem 2rem;
             text-align: center;
             z-index: 2;
         }
@@ -228,7 +231,7 @@
             color: #4b5563;
             text-align: left;
             font-size: 1rem;
-            display: none; /* Initially hidden for accordion effect */
+            display: none;
         }
         .faq-item.active .faq-answer {
             display: block;
@@ -390,13 +393,16 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
+            min-width: 150px; /* Added to ensure container doesn't collapse */
+            z-index: 801; /* Ensure logo stays above other elements */
         }
         .footer-company .footer-logo img {
             height: 36px;
             width: auto;
             max-width: 100%;
             display: block;
-            transition: transform 0.3s ease;
+            visibility: visible; /* Explicitly ensure visibility */
+            opacity: 1; /* Ensure no transparency */
         }
         .footer-company .footer-logo img:hover {
             transform: scale(1.1);
@@ -430,13 +436,22 @@
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 100px; /* Adjusted for mobile */
+                padding-top: 100px;
             }
             header {
                 padding: 1rem;
             }
+            .logo {
+                min-width: 120px; /* Ensure container has space for logo */
+                z-index: 1001; /* Reinforce z-index for mobile */
+            }
             .logo img {
-                height: 32px; /* Slightly smaller on mobile for better fit */
+                height: 32px;
+                width: auto;
+                max-width: 100%;
+                display: block !important; /* Force display */
+                visibility: visible !important; /* Force visibility */
+                opacity: 1 !important; /* Force opacity */
             }
             .logo span {
                 font-size: 1.1rem;
@@ -452,6 +467,7 @@
                 background: #ffffff;
                 padding: 1rem;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 1000; /* Ensure menu doesn't overlap logo */
             }
             .nav-links.active {
                 display: flex;
@@ -460,7 +476,7 @@
                 display: block;
             }
             .what-we-do {
-                padding: 4rem 1rem; /* Reduced for mobile but still spacious */
+                padding: 4rem 1rem;
             }
             .what-we-do h2 {
                 font-size: 2rem;
@@ -523,11 +539,17 @@
             .footer-terms {
                 margin-top: 1rem;
             }
+            .footer-company .footer-logo {
+                min-width: 120px; /* Ensure container has space for logo */
+                z-index: 801; /* Reinforce z-index for mobile */
+            }
             .footer-company .footer-logo img {
                 height: 32px;
-            }
-            .footer-company .footer-logo span {
-                font-size: 1.1rem;
+                width: auto;
+                max-width: 100%;
+                display: block !important; /* Force display */
+                visibility: visible !important; /* Force visibility */
+                opacity: 1 !important; /* Force opacity */
             }
             .content-section {
                 padding: 2rem;
@@ -541,7 +563,7 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
+                <img src="images/chtabot_lololol.jpg" alt="JAYISAAC AI Logo">
                 <span>JAYISAAC AI</span>
             </div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -636,7 +658,7 @@
         <div class="footer-content">
             <div class="footer-company">
                 <div class="footer-logo">
-                    <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
+                    <img src="images/chtabot_lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
                 <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</p>
@@ -709,7 +731,6 @@
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-        // Simple accordion for FAQ
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
