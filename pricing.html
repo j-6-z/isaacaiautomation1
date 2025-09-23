@@ -916,9 +916,19 @@
                     }, index * 200);
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.1 });
         pricingCards.forEach(card => {
             pricingObserver.observe(card);
+        });
+        // Force staggered reveal after page load for reliability (fixes mobile/loading issues)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                pricingCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, index * 200);
+                });
+            }, 500);
         });
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
