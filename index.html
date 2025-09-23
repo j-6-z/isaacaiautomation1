@@ -67,16 +67,17 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            min-width: 150px; /* Added to ensure container doesn't collapse */
-            z-index: 1001; /* Ensure logo stays above other elements */
+            min-width: 150px;
+            z-index: 1001;
         }
         .logo img {
             height: 36px;
             width: auto;
             max-width: 100%;
             display: block;
-            visibility: visible; /* Explicitly ensure visibility */
-            opacity: 1; /* Ensure no transparency */
+            visibility: visible;
+            opacity: 1;
+            object-fit: contain; /* Ensure proper scaling */
         }
         .logo img:hover {
             transform: scale(1.1);
@@ -393,16 +394,17 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
-            min-width: 150px; /* Added to ensure container doesn't collapse */
-            z-index: 801; /* Ensure logo stays above other elements */
+            min-width: 150px;
+            z-index: 801;
         }
         .footer-company .footer-logo img {
             height: 36px;
             width: auto;
             max-width: 100%;
             display: block;
-            visibility: visible; /* Explicitly ensure visibility */
-            opacity: 1; /* Ensure no transparency */
+            visibility: visible;
+            opacity: 1;
+            object-fit: contain; /* Ensure proper scaling */
         }
         .footer-company .footer-logo img:hover {
             transform: scale(1.1);
@@ -442,16 +444,22 @@
                 padding: 1rem;
             }
             .logo {
-                min-width: 120px; /* Ensure container has space for logo */
-                z-index: 1001; /* Reinforce z-index for mobile */
+                min-width: 120px;
+                z-index: 1001;
+                display: flex !important; /* Force display */
+                align-items: center;
+                position: relative;
             }
             .logo img {
                 height: 32px;
                 width: auto;
                 max-width: 100%;
-                display: block !important; /* Force display */
-                visibility: visible !important; /* Force visibility */
-                opacity: 1 !important; /* Force opacity */
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                object-fit: contain !important; /* Ensure proper scaling */
+                position: relative;
+                z-index: 1002; /* Ensure logo is above other elements */
             }
             .logo span {
                 font-size: 1.1rem;
@@ -467,13 +475,14 @@
                 background: #ffffff;
                 padding: 1rem;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                z-index: 1000; /* Ensure menu doesn't overlap logo */
+                z-index: 1000;
             }
             .nav-links.active {
                 display: flex;
             }
             .menu-toggle {
                 display: block;
+                z-index: 1003; /* Ensure toggle is accessible */
             }
             .what-we-do {
                 padding: 4rem 1rem;
@@ -540,16 +549,19 @@
                 margin-top: 1rem;
             }
             .footer-company .footer-logo {
-                min-width: 120px; /* Ensure container has space for logo */
-                z-index: 801; /* Reinforce z-index for mobile */
+                min-width: 120px;
+                z-index: 801;
+                display: flex !important; /* Force display */
+                justify-content: center;
             }
             .footer-company .footer-logo img {
                 height: 32px;
                 width: auto;
                 max-width: 100%;
-                display: block !important; /* Force display */
-                visibility: visible !important; /* Force visibility */
-                opacity: 1 !important; /* Force opacity */
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                object-fit: contain !important; /* Ensure proper scaling */
             }
             .content-section {
                 padding: 2rem;
