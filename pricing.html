@@ -10,7 +10,7 @@
         gtag('config', 'AW-17580740260');
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JAYISAAC AI Chatbot Pricing</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -56,7 +56,6 @@
             z-index: 1000;
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
         }
         nav {
             display: flex;
@@ -72,7 +71,6 @@
         }
         .logo img {
             height: 36px;
-            transition: transform 0.3s ease;
         }
         .logo img:hover {
             transform: scale(1.1);
@@ -175,14 +173,11 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 350px;
-            opacity: 1; /* Default to visible */
-        }
-        .pricing-card.show {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
         }
         .pricing-card:hover {
-            transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         .pricing-card h3 {
@@ -215,12 +210,10 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: 600;
-            transition: all 0.3s ease;
             margin-top: auto;
         }
         .pricing-card a:hover {
             background: #4b5563;
-            transform: translateY(-2px);
         }
         .features-section {
             padding: 4rem 2rem;
@@ -247,7 +240,6 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .feature-card:hover {
             transform: translateY(-5px);
@@ -409,12 +401,10 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
             width: 100%;
         }
         .contact-form button:hover {
             background: #4b5563;
-            transform: translateY(-2px);
         }
         footer {
             padding: 3rem 2rem;
@@ -447,10 +437,6 @@
         }
         .footer-company .footer-logo img {
             height: 36px;
-            transition: transform 0.3s ease;
-        }
-        .footer-company .footer-logo img:hover {
-            transform: scale(1.1);
         }
         .footer-company .footer-logo span {
             font-size: 1.2rem;
@@ -491,14 +477,11 @@
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 600;
-            transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
         .purchase-button:hover {
             background: #4b5563;
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
         @media (max-width: 768px) {
             body {
@@ -548,8 +531,9 @@
                 padding: 1.5rem;
                 min-height: auto;
                 opacity: 1 !important;
+                visibility: visible !important;
                 transform: none !important;
-                transition: none !important; /* Disable transitions on mobile */
+                display: flex !important;
             }
             .pricing-card h3 {
                 font-size: 1.3rem;
@@ -842,7 +826,7 @@
                     <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
-                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</a></p>
+                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at <a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
             </div>
             <div class="footer-terms">
                 <a href="/TOS_SUCH.html">Terms of Service</a>
@@ -883,8 +867,18 @@
             }
         }
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('load', resizeCanvas);
-        console.log('Particles.js initialized');
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            console.log('Particles.js initialized');
+            // Ensure pricing cards are visible
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            pricingCards.forEach(card => {
+                card.style.opacity = '1';
+                card.style.visibility = 'visible';
+                card.style.display = 'flex';
+                console.log('Pricing card set to visible:', card);
+            });
+        });
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -893,45 +887,6 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        });
-        const sections = document.querySelectorAll('section');
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.2 });
-        sections.forEach(section => {
-            section.style.opacity = 0;
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'all 0.8s ease-out';
-            sectionObserver.observe(section);
-        });
-        // Ensure pricing cards are visible on mobile
-        const pricingCards = document.querySelectorAll('.pricing-card');
-        window.addEventListener('load', () => {
-            if (window.innerWidth <= 768) {
-                pricingCards.forEach(card => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'none';
-                    card.classList.add('show');
-                });
-            } else {
-                const pricingObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry, index) => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                entry.target.classList.add('show');
-                            }, index * 200);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                pricingCards.forEach(card => {
-                    pricingObserver.observe(card);
-                });
-            }
         });
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
