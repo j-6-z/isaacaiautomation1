@@ -28,7 +28,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
-            padding-top: 120px; /* Added extra space at the top for better breathing room */
+            padding-top: 120px;
         }
         #particles-js {
             position: fixed;
@@ -111,16 +111,16 @@
         }
         .content-section {
             max-width: 1200px;
-            margin: 0 auto 4rem; /* Added bottom margin for section spacing */
+            margin: 0 auto 4rem;
             background: #ffffff;
-            padding: 3rem; /* Increased padding for more internal space */
-            border-radius: 12px; /* Slightly larger radius for softer look */
+            padding: 3rem;
+            border-radius: 12px;
             position: relative;
             z-index: 2;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Enhanced shadow for depth */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         .what-we-do {
-            padding: 6rem 2rem; /* Increased top padding for more space after header */
+            padding: 6rem 2rem;
             text-align: center;
             z-index: 2;
         }
@@ -228,7 +228,7 @@
             color: #4b5563;
             text-align: left;
             font-size: 1rem;
-            display: none; /* Initially hidden for accordion effect */
+            display: none;
         }
         .faq-item.active .faq-answer {
             display: block;
@@ -430,13 +430,13 @@
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 100px; /* Adjusted for mobile */
+                padding-top: 100px;
             }
             header {
                 padding: 1rem;
             }
             .logo img {
-                height: 32px; /* Slightly smaller on mobile for better fit */
+                height: 32px;
             }
             .logo span {
                 font-size: 1.1rem;
@@ -460,7 +460,7 @@
                 display: block;
             }
             .what-we-do {
-                padding: 4rem 1rem; /* Reduced for mobile but still spacious */
+                padding: 4rem 1rem;
             }
             .what-we-do h2 {
                 font-size: 2rem;
@@ -532,6 +532,9 @@
             .content-section {
                 padding: 2rem;
                 margin-bottom: 2rem;
+            }
+            #particles-js {
+                display: none;
             }
         }
     </style>
@@ -652,35 +655,37 @@
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 1000 } },
-                color: { value: '#000000' },
-                shape: { type: 'triangle', stroke: { width: 0, color: '#000000' } },
-                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.3, width: 1 },
-                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'bounce', bounce: true }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-                modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
-        function resizeCanvas() {
-            const canvas = document.querySelector('#particles-js canvas');
-            if (canvas) {
-                canvas.style.width = '100vw';
-                canvas.style.height = '100vh';
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        if (window.innerWidth > 768) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 1000 } },
+                    color: { value: '#000000' },
+                    shape: { type: 'triangle', stroke: { width: 0, color: '#000000' } },
+                    opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: '#000000', opacity: 0.3, width: 1 },
+                    move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'bounce', bounce: true }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                    modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+                },
+                retina_detect: true
+            });
+            function resizeCanvas() {
+                const canvas = document.querySelector('#particles-js canvas');
+                if (canvas) {
+                    canvas.style.width = '100vw';
+                    canvas.style.height = '100vh';
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
             }
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('load', resizeCanvas);
+            console.log('Particles.js initialized');
         }
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('load', resizeCanvas);
-        console.log('Particles.js initialized');
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -709,7 +714,6 @@
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-        // Simple accordion for FAQ
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
@@ -719,42 +723,35 @@
         function validateForm(event) {
             event.preventDefault();
             let isValid = true;
-
             document.querySelectorAll('.error-message').forEach(error => {
                 error.classList.remove('active');
             });
-
             const name = document.getElementById('name').value.trim();
             if (!name) {
                 document.getElementById('name-error').classList.add('active');
                 isValid = false;
             }
-
             const email = document.getElementById('email').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email || !emailRegex.test(email)) {
                 document.getElementById('email-error').classList.add('active');
                 isValid = false;
             }
-
             const subject = document.getElementById('subject').value.trim();
             if (!subject) {
                 document.getElementById('subject-error').classList.add('active');
                 isValid = false;
             }
-
             const message = document.getElementById('message').value.trim();
             if (!message) {
                 document.getElementById('message-error').classList.add('active');
                 isValid = false;
             }
-
             const consent = document.getElementById('consent').checked;
             if (!consent) {
                 document.getElementById('consent-error').classList.add('active');
                 isValid = false;
             }
-
             if (isValid) {
                 console.log({
                     name: name,
@@ -766,7 +763,6 @@
                 alert('Form submitted successfully!');
                 document.querySelector('.contact-form').reset();
             }
-
             return isValid;
         }
     </script>
