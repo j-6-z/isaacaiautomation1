@@ -95,7 +95,7 @@
             padding: 2.5rem;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 6rem auto 2rem;
             text-align: center;
             position: relative;
@@ -120,19 +120,24 @@
         }
         .order-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 1rem;
+            align-items: stretch;
         }
         .option {
             background: #ffffff;
-            padding: 1.75rem;
+            padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid #e6ebf1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             position: relative;
             color: #32325d;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .subscription-option {
             background: #ffffff;
@@ -141,12 +146,10 @@
             background: #ffffff;
         }
         .option:hover {
-            transform: scale(1.1) translateY(-8px);
+            transform: scale(1.05) translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
             border-color: #333333;
             background: #ffffff;
-            padding: 2rem;
-            z-index: 2;
         }
         .subscription-option:hover {
             background: #ffffff;
@@ -209,6 +212,7 @@
             margin-top: 0.75rem;
             font-size: 0.9rem;
             color: #6b7c93;
+            flex-grow: 1;
         }
         .option ul li {
             margin-bottom: 0.5rem;
@@ -391,13 +395,25 @@
                 font-size: 1.25rem;
             }
             .order-options {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, auto);
+                gap: 0.75rem;
+            }
+            .option {
+                padding: 1rem;
+            }
+            .option:hover {
+                transform: scale(1.02) translateY(-3px);
             }
             .option label {
-                font-size: 1.125rem;
+                font-size: 0.95rem;
             }
             .option p {
-                font-size: 0.875rem;
+                font-size: 0.85rem;
+            }
+            .option ul {
+                font-size: 0.75rem;
+                line-height: 1.4;
             }
             input, select {
                 font-size: 0.95rem;
@@ -438,6 +454,24 @@
             }
             .footer-terms {
                 margin-top: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .order-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .option {
+                padding: 0.75rem;
+            }
+            .option label {
+                font-size: 0.85rem;
+            }
+            .option p {
+                font-size: 0.8rem;
+            }
+            .option ul {
+                font-size: 0.7rem;
             }
         }
     </style>
