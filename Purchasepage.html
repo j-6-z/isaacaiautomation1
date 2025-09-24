@@ -100,6 +100,7 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
         h1 {
             font-size: 2.25rem;
@@ -124,6 +125,9 @@
             grid-template-rows: repeat(2, auto);
             gap: 1rem;
             align-items: stretch;
+            justify-content: center;
+            margin: 0 auto;
+            width: 100%;
         }
         .option {
             background: #ffffff;
@@ -138,6 +142,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            width: 100%;
         }
         .subscription-option {
             background: #ffffff;
@@ -386,7 +391,8 @@
             .order-container {
                 padding: 1.5rem;
                 margin: 5rem auto 1rem;
-                max-width: 95%;
+                max-width: 100%;
+                width: calc(100% - 1rem);
             }
             h1 {
                 font-size: 1.875rem;
@@ -395,12 +401,21 @@
                 font-size: 1.25rem;
             }
             .order-options {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, auto);
-                gap: 0.75rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                padding: 0;
+                width: 100%;
             }
             .option {
                 padding: 1rem;
+                max-width: 400px;
+                width: calc(100% - 2rem);
+                margin: 0 auto;
+                box-sizing: border-box;
             }
             .option:hover {
                 transform: scale(1.02) translateY(-3px);
@@ -458,11 +473,21 @@
         }
         @media (max-width: 480px) {
             .order-options {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                padding: 0;
+                width: 100%;
             }
             .option {
                 padding: 0.75rem;
+                max-width: 350px;
+                width: calc(100% - 1rem);
+                margin: 0 auto;
+                box-sizing: border-box;
             }
             .option label {
                 font-size: 0.85rem;
