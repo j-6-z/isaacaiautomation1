@@ -28,7 +28,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
-            padding-top: 100px;
+            padding-top: 160px; /* Increased to accommodate larger logo */
             font-weight: 400;
         }
         #particles-js {
@@ -54,6 +54,8 @@
             z-index: 1000;
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: visible; /* Allow logo to hang off */
         }
         nav {
             display: flex;
@@ -61,31 +63,57 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo img {
-            height: 36px;
-            transition: transform 0.2s ease;
-        }
-        .logo img:hover {
-            transform: scale(1.1);
-        }
-        .logo span {
-            font-size: 1.2rem;
+        .header-text {
+            font-size: 1.4rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 100%; /* Position logo to hang off header */
+            z-index: 1002;
+            background: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50% 50% 0 0; /* Circular top, flat bottom */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -24px; /* Adjust based on V-shape size */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 48px solid transparent;
+            border-right: 48px solid transparent;
+            border-top: 24px solid #ffffff; /* V-shape matches logo background */
+        }
+        .logo img {
+            height: 80px; /* Larger logo size */
+            width: 80px;
+            object-fit: contain;
+            border-radius: 50%; /* Circular image */
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
         }
         .nav-links {
             display: flex;
             align-items: center;
             gap: 1.5rem;
             list-style: none;
+            margin-left: auto; /* Push nav links to the right */
         }
         .nav-links a {
             color: #000000;
@@ -104,6 +132,7 @@
             border: none;
             color: #000000;
             cursor: pointer;
+            margin-left: auto; /* Align with nav-links */
         }
         .content-section {
             max-width: 1200px;
@@ -156,7 +185,6 @@
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto;
             gap: 0.75rem;
             max-width: 1200px;
             margin: 0 auto 3rem;
@@ -175,7 +203,7 @@
             justify-content: space-between;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
-            min-height: 480px; /* Tuned for Basic One-Time */
+            min-height: 400px;
         }
         .pricing-card:hover {
             transform: scale(1.05) translateY(-5px);
@@ -192,12 +220,12 @@
             font-weight: 700;
             color: #000000;
             margin-bottom: 0.75rem;
-            line-height: 1.2; /* Adjusted for stacked /month */
+            line-height: 1.2;
         }
         .pricing-card .price span {
-            font-size: 0.9rem; /* Smaller font for /month */
+            font-size: 0.9rem;
             font-weight: 500;
-            display: block; /* Stack /month below price */
+            display: block;
         }
         .pricing-card ul {
             list-style: none;
@@ -503,18 +531,33 @@
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 80px;
-                padding-bottom: 220px; /* Increased for taller grids */
+                padding-top: 140px; /* Adjusted for mobile */
+                padding-bottom: 150px;
             }
             header {
                 padding: 0.75rem 1rem;
+            }
+            .header-text {
+                font-size: 1rem;
+            }
+            .logo {
+                padding: 0.5rem;
+            }
+            .logo::after {
+                border-left: 36px solid transparent;
+                border-right: 36px solid transparent;
+                border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+            }
+            .logo img {
+                height: 60px; /* Smaller logo for mobile */
+                width: 60px;
             }
             .nav-links {
                 display: none;
                 flex-direction: column;
                 gap: 0.75rem;
                 position: absolute;
-                top: 100%;
+                top: calc(100% + 18px); /* Account for V-shape */
                 left: 0;
                 right: 0;
                 background: #ffffff;
@@ -549,11 +592,11 @@
             .pricing-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.5rem;
-                margin: 0 auto 3.5rem; /* Increased to prevent overlap */
+                margin: 0 auto 2rem;
             }
             .pricing-card {
                 padding: 0.75rem;
-                min-height: 520px; /* Tuned for Basic One-Time */
+                min-height: 400px;
             }
             .pricing-card:hover {
                 transform: scale(1.02) translateY(-3px);
@@ -567,7 +610,7 @@
                 margin-bottom: 0.5rem;
             }
             .pricing-card .price span {
-                font-size: 0.75rem; /* Smaller for /month */
+                font-size: 0.75rem;
                 display: block;
             }
             .pricing-card ul {
@@ -653,7 +696,7 @@
             }
             .content-section {
                 padding: 1.5rem;
-                margin-bottom: 3rem; /* Increased for spacing */
+                margin-bottom: 2rem;
             }
             .purchase-button {
                 bottom: 10px;
@@ -673,11 +716,11 @@
             .pricing-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.4rem;
-                margin: 0 auto 3rem;
+                margin: 0 auto 2rem;
             }
             .pricing-card {
                 padding: 0.6rem;
-                min-height: 480px; /* Tuned for Basic One-Time */
+                min-height: 400px;
             }
             .pricing-card h3 {
                 font-size: 0.9rem;
@@ -686,7 +729,7 @@
                 font-size: 1.2rem;
             }
             .pricing-card .price span {
-                font-size: 0.7rem; /* Smaller for /month */
+                font-size: 0.7rem;
                 display: block;
             }
             .pricing-card ul {
@@ -721,16 +764,16 @@
     <div id="particles-js"></div>
     <header>
         <nav>
-            <div class="logo">
-                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
-                <span>JAYISAAC AI</span>
-            </div>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <span class="header-text">JAYISAAC AI</span>
             <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
                 <li><a href="/Demo.html">Demo</a></li>
             </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="logo">
+                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
+            </div>
         </nav>
     </header>
     <section class="hero-section" id="hero">
@@ -793,61 +836,6 @@
                         <li>Includes all Standard Monthly features</li>
                     </ul>
                     <a href="/Purchasepage.html">Subscribe</a>
-                </div>
-            </div>
-            <h3>One-Time Purchases</h3>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Basic One-Time</h3>
-                    <div class="price">$799</div>
-                    <ul>
-                        <li>20,000 annual conversations</li>
-                        <li>1 AI Agent</li>
-                        <li>Web Widget Channel</li>
-                        <li>NLU Intention Flows</li>
-                        <li>Generative AI Based Upon OpenAI</li>
-                        <li>Proprietary Data Indexing (3 PDF/CSV Sources)</li>
-                        <li>Mail Handover</li>
-                        <li>Operational Reporting</li>
-                        <li>1 year Email Support (48-hour response)</li>
-                        <li>GenAI Reports (€50 p/m supplement)</li>
-                        <li>Lifetime access (self-hosted on your server)</li>
-                        <li>Basic setup assistance included</li>
-                    </ul>
-                    <a href="/Purchasepage.html">Buy Now</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Standard One-Time</h3>
-                    <div class="price">$9,999</div>
-                    <ul>
-                        <li>200,000 annual conversations</li>
-                        <li>Up to 4 AI Agents</li>
-                        <li>3 Channels</li>
-                        <li>Advanced Escalations & Integrations to Out-of-the-Box Platforms</li>
-                        <li>Proprietary Data Indexing (up to 10 Sources)</li>
-                        <li>GenAI Smart Reporting</li>
-                        <li>Pooled CSM</li>
-                        <li>Includes all Basic Monthly features</li>
-                    </ul>
-                    <a href="/Purchasepage.html">Buy Now</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Enterprise One-Time</h3>
-                    <div class="price">$24,999</div>
-                    <ul>
-                        <li>2,000,000 annual conversations</li>
-                        <li>Up to 10 AI Agents</li>
-                        <li>Unlimited Channels</li>
-                        <li>Advanced Escalations & Integrations to Complex Platforms</li>
-                        <li>LLM Agnosticism</li>
-                        <li>Version Control and Change Management</li>
-                        <li>Workflow-Based Automation</li>
-                        <li>Custom Reporting & Chat API</li>
-                        <li>Dedicated CSM</li>
-                        <li>Resolution-Based Pricing [Optional]</li>
-                        <li>Includes all Standard Monthly features</li>
-                    </ul>
-                    <a href="/Purchasepage.html">Buy Now</a>
                 </div>
             </div>
         </div>
@@ -931,7 +919,7 @@
                     <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
-                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</a></p>
+                <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</p>
             </div>
             <div class="footer-terms">
                 <a href="/TOS_SUCH.html">Terms of Service</a>

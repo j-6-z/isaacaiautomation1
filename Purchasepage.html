@@ -10,41 +10,54 @@
         gtag('config', 'AW-17580740260');
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Secure Payment - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
         body {
-            background: #f6f9fc;
-            color: #32325d;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-            position: relative;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.5;
+            scroll-behavior: smooth;
             overflow-x: hidden;
+            position: relative;
+            padding-bottom: 200px;
+            padding-top: 160px; /* Increased to accommodate larger logo */
+            font-weight: 400;
         }
         #particles-js {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
+            background: transparent;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        #particles-js canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
         }
         header {
             background: #ffffff;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
             z-index: 1000;
             padding: 1rem 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: visible; /* Allow logo to hang off */
         }
         nav {
             display: flex;
@@ -52,124 +65,143 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+        }
+        .header-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 100%; /* Position logo to hang off header */
+            z-index: 1002;
+            background: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50% 50% 0 0; /* Circular top, flat bottom */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 0.75rem;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -24px; /* Adjust based on V-shape size */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 48px solid transparent;
+            border-right: 48px solid transparent;
+            border-top: 24px solid #ffffff; /* V-shape matches logo background */
         }
         .logo img {
-            height: 50px;
-            transition: transform 0.2s ease;
+            height: 80px; /* Larger logo size */
+            width: 80px;
+            object-fit: contain;
+            border-radius: 50%; /* Circular image */
+            transition: transform 0.3s ease;
         }
         .logo img:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
-        .logo span {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #32325d;
-            letter-spacing: -0.02em;
-        }
-        nav ul {
+        .nav-links {
             display: flex;
+            align-items: center;
             gap: 1.5rem;
             list-style: none;
-            justify-content: center;
+            margin-left: auto; /* Push nav links to the right */
         }
-        nav a {
-            color: #6b7c93;
+        .nav-links a {
+            color: #000000;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: color 0.2s ease, background 0.2s ease;
+            transition: color 0.3s ease;
         }
-        nav a:hover {
-            background: #f6f9fc;
-            color: #32325d;
+        .nav-links a:hover {
+            color: #4b5563;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #000000;
+            cursor: pointer;
+            margin-left: auto; /* Align with nav-links */
         }
         .order-container {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             max-width: 1200px;
-            margin: 6rem auto 2rem;
-            text-align: center;
+            margin: 0 auto 3rem;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
             position: relative;
-            z-index: 1;
-            width: 100%;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
         }
         h1 {
             font-size: 2.25rem;
             font-weight: 700;
-            color: #32325d;
+            color: #000000;
             margin-bottom: 1.5rem;
-            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .order-section {
-            margin-bottom: 2.5rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            z-index: 2;
         }
         .order-section h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #32325d;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.01em;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .order-options {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, auto);
-            gap: 1rem;
+            gap: 0.75rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
             align-items: stretch;
-            justify-content: center;
-            margin: 0 auto;
-            width: 100%;
         }
         .option {
             background: #ffffff;
-            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
-            border: 1px solid #e6ebf1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            color: #32325d;
-            z-index: 1;
+            padding: 1.25rem;
+            text-align: center;
+            color: #000000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 100%;
-        }
-        .subscription-option {
-            background: #ffffff;
-        }
-        .one-time-option {
-            background: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            min-height: 400px;
+            cursor: pointer;
         }
         .option:hover {
             transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-            border-color: #333333;
-            background: #ffffff;
-        }
-        .subscription-option:hover {
-            background: #ffffff;
-        }
-        .option:hover label {
-            color: #32325d;
-        }
-        .option:hover p {
-            color: #6b7c93;
-            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            z-index: 1;
         }
         .option.selected {
             border: 2px solid #000000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             position: relative;
+            background: #f7f9fe;
         }
         .option.selected::after {
             content: 'Selected';
@@ -186,41 +218,35 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             z-index: 3;
         }
-        .option.selected.subscription-option {
-            background: #f7f9fe;
-            color: #32325d;
-        }
-        .option.selected.one-time-option {
-            background: #f8f9fa;
-            color: #32325d;
-        }
-        .option.selected label, .option.selected p {
-            color: #32325d;
-        }
         .option label {
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.75rem;
             display: block;
-            color: #32325d;
-            letter-spacing: -0.01em;
+            color: #000000;
         }
         .option p {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #6b7c93;
-            line-height: 1.6;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+        .option p span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: block;
         }
         .option ul {
             list-style: none;
-            text-align: left;
-            margin-top: 0.75rem;
+            margin-bottom: 1rem;
             font-size: 0.9rem;
-            color: #6b7c93;
+            color: #4b5563;
             flex-grow: 1;
+            line-height: 1.4;
         }
         .option ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
         form {
             display: flex;
@@ -236,18 +262,18 @@
         input, select {
             width: 100%;
             padding: 1rem;
-            border: 1px solid #e6ebf1;
+            border: 1px solid #e5e7eb;
             border-radius: 6px;
             background: #ffffff;
             font-size: 1rem;
             font-weight: 400;
-            color: #32325d;
+            color: #000000;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         input:focus, select:focus {
             outline: none;
-            border-color: #333333;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-color: #4b5563;
+            box-shadow: 0 0 0 2px rgba(75, 85, 99, 0.1);
         }
         input::placeholder, select:invalid {
             color: #6b7c93;
@@ -255,7 +281,7 @@
         }
         select {
             appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%236b7c93"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%234b5563"/></svg>');
             background-repeat: no-repeat;
             background-position: right 0.8rem center;
             cursor: pointer;
@@ -263,9 +289,10 @@
         .price-display {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #32325d;
+            color: #000000;
             margin: 1.5rem 0;
             letter-spacing: -0.01em;
+            text-align: center;
         }
         .pay-radio {
             display: none;
@@ -282,17 +309,17 @@
             background: #000000;
             color: #ffffff;
             padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            border-radius: 9999px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
             border: 2px solid #ffffff;
-            letter-spacing: -0.01em;
             opacity: 0.7;
             pointer-events: none;
         }
         .pay-radio label:hover {
+            background: #4b5563;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
@@ -305,7 +332,7 @@
         }
         .delivery-note {
             font-size: 0.85rem;
-            color: #6b7c93;
+            color: #4b5563;
             margin-top: 0.5rem;
             text-align: center;
         }
@@ -331,18 +358,19 @@
             position: relative;
             z-index: 800;
             border-top: 1px solid #e5e7eb;
-            margin-top: 2rem;
+            background: #f9fafb;
         }
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 2rem;
+            gap: 1.5rem;
             background: #ffffff;
             padding: 2rem;
             border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
         .footer-company {
             flex: 1;
@@ -354,21 +382,21 @@
             margin-bottom: 1rem;
         }
         .footer-company .footer-logo img {
-            height: 40px;
+            height: 36px;
             transition: transform 0.3s ease;
         }
         .footer-company .footer-logo img:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
         .footer-company .footer-logo span {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #000000;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .footer-company p {
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             color: #4b5563;
             max-width: 250px;
         }
@@ -381,54 +409,97 @@
         .footer-terms a {
             color: #000000;
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             transition: color 0.3s ease;
         }
         .footer-terms a:hover {
             color: #4b5563;
         }
         @media (max-width: 768px) {
-            .order-container {
-                padding: 1.5rem;
-                margin: 5rem auto 1rem;
-                max-width: 100%;
-                width: calc(100% - 1rem);
+            body {
+                padding-top: 140px; /* Adjusted for mobile */
+                padding-bottom: 150px;
             }
-            h1 {
-                font-size: 1.875rem;
+            header {
+                padding: 1rem;
             }
-            .order-section h2 {
-                font-size: 1.25rem;
+            .header-text {
+                font-size: 1rem;
             }
-            .order-options {
-                display: flex;
+            .logo {
+                padding: 0.5rem;
+            }
+            .logo::after {
+                border-left: 36px solid transparent;
+                border-right: 36px solid transparent;
+                border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+            }
+            .logo img {
+                height: 60px; /* Smaller logo for mobile */
+                width: 60px;
+            }
+            .nav-links {
+                display: none;
                 flex-direction: column;
                 gap: 1rem;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto;
-                padding: 0;
-                width: 100%;
+                position: absolute;
+                top: calc(100% + 18px); /* Account for V-shape */
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .order-container {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .order-section {
+                padding: 2rem 1rem;
+            }
+            .order-section h2 {
+                font-size: 1.75rem;
+            }
+            .order-options {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                margin: 0 auto 2rem;
             }
             .option {
-                padding: 1rem;
-                max-width: 400px;
-                width: calc(100% - 2rem);
-                margin: 0 auto;
-                box-sizing: border-box;
+                padding: 0.75rem;
+                min-height: 400px;
             }
             .option:hover {
                 transform: scale(1.02) translateY(-3px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             }
             .option label {
                 font-size: 0.95rem;
             }
             .option p {
-                font-size: 0.85rem;
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+            }
+            .option p span {
+                font-size: 0.75rem;
+                display: block;
             }
             .option ul {
-                font-size: 0.75rem;
-                line-height: 1.4;
+                font-size: 0.7rem;
+                line-height: 1.25;
+                margin-bottom: 0.5rem;
+            }
+            .option ul li {
+                margin-bottom: 0.3rem;
             }
             input, select {
                 font-size: 0.95rem;
@@ -444,25 +515,10 @@
             .delivery-note {
                 font-size: 0.8rem;
             }
-            nav ul {
-                gap: 1rem;
-            }
-            nav a {
-                font-size: 0.875rem;
-                padding: 0.4rem 0.75rem;
-            }
-            .logo span {
-                font-size: 1.25rem;
-            }
-            .logo img {
-                height: 40px;
-            }
-            footer {
-                padding: 1rem;
-            }
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+                padding: 1.5rem;
             }
             .footer-company, .footer-terms {
                 text-align: center;
@@ -473,30 +529,31 @@
         }
         @media (max-width: 480px) {
             .order-options {
-                display: flex;
-                flex-direction: column;
-                gap: 0.75rem;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto;
-                padding: 0;
-                width: 100%;
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
+                margin: 0 auto 2rem;
             }
             .option {
-                padding: 0.75rem;
-                max-width: 350px;
-                width: calc(100% - 1rem);
-                margin: 0 auto;
-                box-sizing: border-box;
+                padding: 0.6rem;
+                min-height: 400px;
             }
             .option label {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
             .option p {
-                font-size: 0.8rem;
+                font-size: 1.2rem;
+            }
+            .option p span {
+                font-size: 0.7rem;
+                display: block;
             }
             .option ul {
-                font-size: 0.7rem;
+                font-size: 0.68rem;
+                line-height: 1.2;
+                margin-bottom: 0.4rem;
+            }
+            .option ul li {
+                margin-bottom: 0.25rem;
             }
         }
     </style>
@@ -505,23 +562,26 @@
     <div id="particles-js"></div>
     <header>
         <nav>
-            <div class="logo">
-                <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
-                <span>JAYISAAC AI AUTOMATION</span>
-            </div>
-            <ul>
+            <span class="header-text">JAYISAAC AI</span>
+            <ul class="nav-links">
                 <li><a href="/index.html">Home</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/Demo.html">Demo</a></li>
             </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="logo">
+                <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
+            </div>
         </nav>
     </header>
     <div class="order-container">
         <h1>Secure Payment</h1>
         <div class="order-section">
-            <h2>Subscription Plans</h2>
+            <h2>Monthly Subscriptions</h2>
             <div class="order-options">
-                <div class="option subscription-option" data-plan="basic-monthly" data-url="https://buy.stripe.com/14A5kwe8H7LV1kAavnc3m02">
+                <div class="option" data-plan="basic-monthly" data-url="https://buy.stripe.com/14A5kwe8H7LV1kAavnc3m02">
                     <label>Basic Monthly</label>
-                    <p>$49/month</p>
+                    <p>$49<span>/month</span></p>
                     <ul>
                         <li>20,000 annual conversations</li>
                         <li>1 AI Agent</li>
@@ -531,15 +591,13 @@
                         <li>Proprietary Data Indexing (3 PDF/CSV Sources)</li>
                         <li>Mail Handover</li>
                         <li>Operational Reporting</li>
-                        <li>1 year Email Support (48-hour response)</li>
+                        <li>Email Support</li>
                         <li>GenAI Reports (€50 p/m supplement)</li>
-                        <li>Lifetime access (self-hosted on your server)</li>
-                        <li>Basic setup assistance included</li>
                     </ul>
                 </div>
-                <div class="option subscription-option" data-plan="standard-monthly" data-url="https://buy.stripe.com/eVq00cc0z1nxfbq6f7c3m03">
+                <div class="option" data-plan="standard-monthly" data-url="https://buy.stripe.com/eVq00cc0z1nxfbq6f7c3m03">
                     <label>Standard Monthly</label>
-                    <p>$149/month</p>
+                    <p>$149<span>/month</span></p>
                     <ul>
                         <li>200,000 annual conversations</li>
                         <li>Up to 4 AI Agents</li>
@@ -551,63 +609,9 @@
                         <li>Includes all Basic Monthly features</li>
                     </ul>
                 </div>
-                <div class="option subscription-option" data-plan="enterprise-monthly" data-url="https://buy.stripe.com/9B6eV62pZfen4wM46Zc3m06">
+                <div class="option" data-plan="enterprise-monthly" data-url="https://buy.stripe.com/9B6eV62pZfen4wM46Zc3m06">
                     <label>Enterprise Monthly</label>
-                    <p>$499/month</p>
-                    <ul>
-                        <li>2,000,000 annual conversations</li>
-                        <li>Up to 10 AI Agents</li>
-                        <li>Unlimited Channels</li>
-                        <li>Advanced Escalations & Integrations to Complex Platforms</li>
-                        <li>LLM Agnosticism</li>
-                        <li>Version Control and Change Management</li>
-                        <li>Workflow-Based Automation</li>
-                        <li>Custom Reporting & Chat API</li>
-                        <li>Dedicated CSM</li>
-                        <li>Resolution-Based Pricing [Optional]</li>
-                        <li>Includes all Standard Monthly features</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="order-section">
-            <h2>One-Time Purchase Plans</h2>
-            <div class="order-options">
-                <div class="option one-time-option" data-plan="basic-purchase" data-url="https://buy.stripe.com/8x2eV68On9U39R65b3c3m05">
-                    <label>Basic One-Time</label>
-                    <p>$799</p>
-                    <ul>
-                        <li>20,000 annual conversations</li>
-                        <li>1 AI Agent</li>
-                        <li>Web Widget Channel</li>
-                        <li>NLU Intention Flows</li>
-                        <li>Generative AI Based Upon OpenAI</li>
-                        <li>Proprietary Data Indexing (3 PDF/CSV Sources)</li>
-                        <li>Mail Handover</li>
-                        <li>Operational Reporting</li>
-                        <li>1 year Email Support (48-hour response)</li>
-                        <li>GenAI Reports (€50 p/m supplement)</li>
-                        <li>Lifetime access (self-hosted on your server)</li>
-                        <li>Basic setup assistance included</li>
-                    </ul>
-                </div>
-                <div class="option one-time-option" data-plan="standard-purchase" data-url="https://buy.stripe.com/3cI7sE8On5DN4wM1YRc3m07">
-                    <label>Standard One-Time</label>
-                    <p>$9,999</p>
-                    <ul>
-                        <li>200,000 annual conversations</li>
-                        <li>Up to 4 AI Agents</li>
-                        <li>3 Channels</li>
-                        <li>Advanced Escalations & Integrations to Out-of-the-Box Platforms</li>
-                        <li>Proprietary Data Indexing (up to 10 Sources)</li>
-                        <li>GenAI Smart Reporting</li>
-                        <li>Pooled CSM</li>
-                        <li>Includes all Basic Monthly features</li>
-                    </ul>
-                </div>
-                <div class="option one-time-option" data-plan="enterprise-purchase" data-url="https://buy.stripe.com/bJedR2fcLgir0gw9rjc3m08">
-                    <label>Enterprise One-Time</label>
-                    <p>$24,999</p>
+                    <p>$499<span>/month</span></p>
                     <ul>
                         <li>2,000,000 annual conversations</li>
                         <li>Up to 10 AI Agents</li>
@@ -626,7 +630,7 @@
         </div>
         <form id="order-form">
             <input type="hidden" id="selected-plan" name="plan" value="">
-            <input type="hidden" id="plan-type" name="plan-type" value="">
+            <input type="hidden" id="plan-type" name="plan-type" value="subscription">
             <div class="form-group">
                 <select id="account-type" name="account-type" required>
                     <option value="" disabled selected>Select account type</option>
@@ -682,7 +686,7 @@
         <div class="footer-content">
             <div class="footer-company">
                 <div class="footer-logo">
-                    <img src="images/chtabot lololol.jpg" alt="AI Chatbot Logo">
+                    <img src="images/chtabot lololol.jpg" alt="JAYISAAC AI Logo">
                     <span>JAYISAAC AI AUTOMATION</span>
                 </div>
                 <p>Revolutionizing automation with AI chatbots tailored to your needs. Contact us at admin@jayisaacai.com</p>
@@ -700,36 +704,45 @@
             localStorage.removeItem('orderFormData');
 
             // Initialize particles.js
-            if (window.particlesJS) {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: 60, density: { enable: true, value_area: 800 } },
-                        color: { value: '#635bff' },
-                        shape: { type: 'circle' },
-                        opacity: { value: 0.3, random: true },
-                        size: { value: 2, random: true },
-                        line_linked: { enable: true, distance: 120, color: '#635bff', opacity: 0.2, width: 1 },
-                        move: { enable: true, speed: 1, direction: 'none', random: true }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
-                        modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
-                    },
-                    retina_detect: true
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 60, density: { enable: true, value_area: 800 } },
+                    color: { value: '#000000' },
+                    shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+                    opacity: { value: 0.4, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: true, distance: 120, color: '#000000', opacity: 0.2, width: 1 },
+                    move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, out_mode: 'bounce', bounce: true }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                    modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
+                },
+                retina_detect: true
+            });
+
+            // Resize canvas
+            function resizeCanvas() {
+                const canvas = document.querySelector('#particles-js canvas');
+                if (canvas) {
+                    canvas.style.width = '100vw';
+                    canvas.style.height = '100vh';
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+            }
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('load', () => {
+                resizeCanvas();
+                console.log('Particles.js initialized');
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.style.opacity = '1';
+                    option.style.visibility = 'visible';
+                    option.style.display = 'flex';
                 });
-            }
-            // Fade-in animation
-            const orderContainer = document.querySelector('.order-container');
-            if (orderContainer) {
-                orderContainer.style.opacity = 0;
-                orderContainer.style.transform = 'translateY(20px)';
-                orderContainer.style.transition = 'all 0.6s ease-out';
-                setTimeout(() => {
-                    orderContainer.style.opacity = 1;
-                    orderContainer.style.transform = 'translateY(0)';
-                }, 100);
-            }
+            });
 
             // Plan selection and form validation
             const planOptions = document.querySelectorAll('.option');
@@ -745,20 +758,17 @@
             // Ensure no plan is selected on page load
             planOptions.forEach(opt => opt.classList.remove('selected'));
             if (selectedPlanInput) selectedPlanInput.value = '';
-            if (planTypeInput) planTypeInput.value = '';
+            if (planTypeInput) planTypeInput.value = 'subscription';
             if (priceDisplay) priceDisplay.textContent = 'Please select a plan';
             if (payRadio) payRadio.style.display = 'none';
 
             function getPlanDetails(planValue) {
                 const plans = {
-                    'basic-monthly': { amount: 4900, priceText: '$49/month', type: 'subscription' },
-                    'standard-monthly': { amount: 14900, priceText: '$149/month', type: 'subscription' },
-                    'enterprise-monthly': { amount: 49900, priceText: '$499/month', type: 'subscription' },
-                    'basic-purchase': { amount: 79900, priceText: '$799', type: 'one-time' },
-                    'standard-purchase': { amount: 999900, priceText: '$9,999', type: 'one-time' },
-                    'enterprise-purchase': { amount: 2499900, priceText: '$24,999', type: 'one-time' }
+                    'basic-monthly': { amount: 4900, priceText: '$49/month', type: 'subscription', url: 'https://buy.stripe.com/14A5kwe8H7LV1kAavnc3m02' },
+                    'standard-monthly': { amount: 14900, priceText: '$149/month', type: 'subscription', url: 'https://buy.stripe.com/eVq00cc0z1nxfbq6f7c3m03' },
+                    'enterprise-monthly': { amount: 49900, priceText: '$499/month', type: 'subscription', url: 'https://buy.stripe.com/9B6eV62pZfen4wM46Zc3m06' }
                 };
-                return plans[planValue] || { amount: 0, priceText: 'Please select a plan', type: '' };
+                return plans[planValue] || { amount: 0, priceText: 'Please select a plan', type: '', url: '' };
             }
 
             function validateField(field) {
@@ -889,6 +899,30 @@
                 localStorage.setItem('orderFormData', JSON.stringify(formData));
             }
 
+            function selectPlan(event, planValue) {
+                event.preventDefault();
+                const option = document.querySelector(`.option[data-plan="${planValue}"]`);
+                const planDetails = getPlanDetails(planValue);
+
+                if (selectedPlanInput && planTypeInput && priceDisplay && payRadio && payNowRadio) {
+                    selectedPlanInput.value = planValue;
+                    planTypeInput.value = planDetails.type;
+                    priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
+
+                    planOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    payRadio.style.display = 'block';
+                    payNowRadio.onclick = () => {
+                        if (payRadio.classList.contains('pay-enabled')) {
+                            window.location.href = planDetails.url;
+                        }
+                    };
+                    saveFormData();
+                    validateForm();
+                }
+            }
+
             if (accountTypeSelect) {
                 accountTypeSelect.addEventListener('change', () => {
                     toggleFields();
@@ -913,33 +947,24 @@
             });
 
             planOptions.forEach(option => {
-                option.addEventListener('click', () => {
+                option.addEventListener('click', (event) => {
                     const planValue = option.getAttribute('data-plan');
-                    const planUrl = option.getAttribute('data-url');
-                    const planDetails = getPlanDetails(planValue);
-
-                    if (selectedPlanInput && planTypeInput && priceDisplay && payRadio && payNowRadio) {
-                        selectedPlanInput.value = planValue;
-                        planTypeInput.value = planDetails.type;
-                        priceDisplay.textContent = `You will be charged: CAD ${planDetails.priceText}`;
-
-                        planOptions.forEach(opt => opt.classList.remove('selected'));
-                        option.classList.add('selected');
-
-                        payRadio.style.display = 'block';
-                        payNowRadio.onclick = () => {
-                            if (payRadio.classList.contains('pay-enabled')) {
-                                window.location.href = planUrl;
-                            }
-                        };
-                        saveFormData();
-                        validateForm();
-                    }
+                    selectPlan(event, planValue);
                 });
             });
 
             // Initial validation to ensure form is invalid until user interacts
             validateForm();
+
+            // Menu toggle for mobile
+            function toggleMenu() {
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.classList.toggle('active');
+            }
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', toggleMenu);
+            }
         });
     </script>
 </body>
