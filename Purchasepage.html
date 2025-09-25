@@ -29,7 +29,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
-            padding-top: 160px; /* Increased to accommodate larger logo */
+            padding-top: 160px;
             font-weight: 400;
         }
         #particles-js {
@@ -57,7 +57,7 @@
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            overflow: visible; /* Allow logo to hang off */
+            overflow: visible;
         }
         nav {
             display: flex;
@@ -78,11 +78,11 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            top: 100%; /* Position logo to hang off header */
+            top: 100%;
             z-index: 1002;
             background: #ffffff;
             padding: 0.75rem;
-            border-radius: 50% 50% 0 0; /* Circular top, flat bottom */
+            border-radius: 50% 50% 0 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -91,20 +91,20 @@
         .logo::after {
             content: '';
             position: absolute;
-            bottom: -24px; /* Adjust based on V-shape size */
+            bottom: -24px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 48px solid transparent;
             border-right: 48px solid transparent;
-            border-top: 24px solid #ffffff; /* V-shape matches logo background */
+            border-top: 24px solid #ffffff;
         }
         .logo img {
-            height: 80px; /* Larger logo size */
+            height: 80px;
             width: 80px;
             object-fit: contain;
-            border-radius: 50%; /* Circular image */
+            border-radius: 50%;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
@@ -115,7 +115,7 @@
             align-items: center;
             gap: 1.5rem;
             list-style: none;
-            margin-left: auto; /* Push nav links to the right */
+            margin-left: auto;
         }
         .nav-links a {
             color: #000000;
@@ -134,7 +134,7 @@
             border: none;
             color: #000000;
             cursor: pointer;
-            margin-left: auto; /* Align with nav-links */
+            margin-left: auto;
         }
         .order-container {
             max-width: 1200px;
@@ -417,7 +417,7 @@
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 140px; /* Adjusted for mobile */
+                padding-top: 140px;
                 padding-bottom: 150px;
             }
             header {
@@ -432,10 +432,10 @@
             .logo::after {
                 border-left: 36px solid transparent;
                 border-right: 36px solid transparent;
-                border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+                border-top: 18px solid #ffffff;
             }
             .logo img {
-                height: 60px; /* Smaller logo for mobile */
+                height: 60px;
                 width: 60px;
             }
             .nav-links {
@@ -443,7 +443,7 @@
                 flex-direction: column;
                 gap: 1rem;
                 position: absolute;
-                top: calc(100% + 18px); /* Account for V-shape */
+                top: calc(100% + 18px);
                 left: 0;
                 right: 0;
                 background: #ffffff;
@@ -470,7 +470,7 @@
                 font-size: 1.75rem;
             }
             .order-options {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 0.5rem;
                 margin: 0 auto 2rem;
             }
@@ -529,7 +529,7 @@
         }
         @media (max-width: 480px) {
             .order-options {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 0.4rem;
                 margin: 0 auto 2rem;
             }
