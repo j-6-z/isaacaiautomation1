@@ -547,6 +547,7 @@
                 border-left: 36px solid transparent;
                 border-right: 36px solid transparent;
                 border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+                bottom: -18px;
             }
             .logo img {
                 height: 60px; /* Smaller logo for mobile */
@@ -557,7 +558,7 @@
                 flex-direction: column;
                 gap: 0.75rem;
                 position: absolute;
-                top: calc(100% + 18px); /* Account for V-shape */
+                top: calc(100% + 80px); /* Increased offset to clear hanging logo fully */
                 left: 0;
                 right: 0;
                 background: #ffffff;

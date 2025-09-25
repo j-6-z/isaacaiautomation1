@@ -10,7 +10,7 @@
         gtag('config', 'AW-17580740260');
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Policies - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -27,8 +27,8 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 200px;
-            padding-top: 160px; /* Increased to accommodate larger logo */
+            padding-bottom: 100px;
+            padding-top: 120px; /* Reduced for better mobile fit */
         }
         #particles-js {
             position: fixed;
@@ -55,7 +55,6 @@
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            overflow: visible; /* Allow logo to hang off */
         }
         nav {
             display: flex;
@@ -76,11 +75,11 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            top: 100%; /* Position logo to hang off header */
+            top: 100%;
             z-index: 1002;
             background: #ffffff;
             padding: 0.75rem;
-            border-radius: 50% 50% 0 0; /* Circular top, flat bottom */
+            border-radius: 50% 50% 0 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -89,20 +88,20 @@
         .logo::after {
             content: '';
             position: absolute;
-            bottom: -24px; /* Adjust based on V-shape size */
+            bottom: -24px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 48px solid transparent;
             border-right: 48px solid transparent;
-            border-top: 24px solid #ffffff; /* V-shape matches logo background */
+            border-top: 24px solid #ffffff;
         }
         .logo img {
-            height: 80px; /* Larger logo size */
+            height: 80px;
             width: 80px;
             object-fit: contain;
-            border-radius: 50%; /* Circular image */
+            border-radius: 50%;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
@@ -113,7 +112,7 @@
             align-items: center;
             gap: 1.5rem;
             list-style: none;
-            margin-left: auto; /* Push nav links to the right */
+            margin-left: auto;
         }
         .nav-links a {
             color: #000000;
@@ -132,7 +131,7 @@
             border: none;
             color: #000000;
             cursor: pointer;
-            margin-left: auto; /* Align with nav-links */
+            margin-left: auto;
         }
         .policies-container {
             background: #ffffff;
@@ -145,6 +144,7 @@
             margin: 0 auto 4rem;
             position: relative;
             z-index: 2;
+            opacity: 1; /* Ensure initial visibility */
         }
         .policies-container h1 {
             font-size: 2.5rem;
@@ -278,7 +278,8 @@
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 140px; /* Adjusted for mobile */
+                padding-top: 100px; /* Reduced to ensure content is visible */
+                padding-bottom: 80px;
             }
             header {
                 padding: 1rem;
@@ -292,10 +293,11 @@
             .logo::after {
                 border-left: 36px solid transparent;
                 border-right: 36px solid transparent;
-                border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+                border-top: 18px solid #ffffff;
+                bottom: -18px;
             }
             .logo img {
-                height: 60px; /* Smaller logo for mobile */
+                height: 60px;
                 width: 60px;
             }
             .nav-links {
@@ -303,12 +305,13 @@
                 flex-direction: column;
                 gap: 1rem;
                 position: absolute;
-                top: calc(100% + 18px); /* Account for V-shape */
+                top: calc(100% + 60px); /* Adjusted to clear logo */
                 left: 0;
                 right: 0;
                 background: #ffffff;
                 padding: 1rem;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
             }
             .nav-links.active {
                 display: flex;
@@ -318,7 +321,7 @@
             }
             .policies-container {
                 padding: 2rem;
-                margin-bottom: 2rem;
+                margin: 1rem;
             }
             .policies-container h1 {
                 font-size: 2rem;
@@ -342,6 +345,9 @@
             }
             .footer-terms {
                 margin-top: 1rem;
+            }
+            #particles-js {
+                height: 100%; /* Ensure particles don't overflow */
             }
         }
     </style>
@@ -457,7 +463,7 @@
     <script>
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 1000 } },
+                number: { value: 50, density: { enable: true, value_area: 1000 } }, // Reduced particles for mobile performance
                 color: { value: '#000000' },
                 shape: { type: 'triangle', stroke: { width: 0, color: '#000000' } },
                 opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
@@ -467,7 +473,7 @@
             },
             interactivity: {
                 detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }, // Disabled interactivity for mobile
                 modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
             },
             retina_detect: true
@@ -482,7 +488,15 @@
             }
         }
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            // Ensure policies container is visible on load
+            const policiesContainer = document.querySelector('.policies-container');
+            if (policiesContainer) {
+                policiesContainer.style.opacity = '1';
+                policiesContainer.style.transform = 'translateY(0)';
+            }
+        });
         console.log('Particles.js initialized');
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -493,25 +507,26 @@
                 }
             });
         });
-        const sections = document.querySelectorAll('section');
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.2 });
-        sections.forEach(section => {
-            section.style.opacity = 0;
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'all 0.8s ease-out';
-            sectionObserver.observe(section);
-        });
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
+        // Simplified IntersectionObserver for mobile
+        const sections = document.querySelectorAll('section');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 }); // Lower threshold for mobile
+        sections.forEach(section => {
+            section.style.opacity = '1'; // Ensure visibility by default
+            section.style.transform = 'translateY(0)';
+            section.style.transition = 'all 0.8s ease-out';
+            sectionObserver.observe(section);
+        });
     </script>
 </body>
 </html>
