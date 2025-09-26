@@ -19,7 +19,9 @@ twq('config','qik5c');
 <!-- End Twitter conversion tracking base code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAYISAAC AI Automation</title>
+    <meta name="description" content="Explore JAYISAAC AI's resources on custom AI chatbots, including blogs, guides, and case studies to boost your business automation.">
+    <meta name="keywords" content="AI chatbots, business automation, custom chatbots, AI for e-commerce, JAYISAAC AI">
+    <title>Resources | JAYISAAC AI Automation</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -31,12 +33,12 @@ twq('config','qik5c');
         body {
             background: #ffffff;
             color: #000000;
-            line-height: 1.6;
+            line-height: 1.8;
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
             padding-bottom: 200px;
-            padding-top: 160px; /* Increased to accommodate larger logo */
+            padding-top: 160px;
         }
         #particles-js {
             position: fixed;
@@ -63,7 +65,7 @@ twq('config','qik5c');
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            overflow: visible; /* Allow logo to hang off */
+            overflow: visible;
         }
         nav {
             display: flex;
@@ -84,11 +86,11 @@ twq('config','qik5c');
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            top: 100%; /* Position logo to hang off header */
+            top: 100%;
             z-index: 1002;
             background: #ffffff;
             padding: 0.75rem;
-            border-radius: 50% 50% 0 0; /* Circular top, flat bottom */
+            border-radius: 50% 50% 0 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -97,20 +99,20 @@ twq('config','qik5c');
         .logo::after {
             content: '';
             position: absolute;
-            bottom: -24px; /* Adjust based on V-shape size */
+            bottom: -24px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 48px solid transparent;
             border-right: 48px solid transparent;
-            border-top: 24px solid #ffffff; /* V-shape matches logo background */
+            border-top: 24px solid #ffffff;
         }
         .logo img {
-            height: 80px; /* Larger logo size */
+            height: 80px;
             width: 80px;
             object-fit: contain;
-            border-radius: 50%; /* Circular image */
+            border-radius: 50%;
             transition: transform 0.3s ease;
         }
         .logo img:hover {
@@ -121,7 +123,7 @@ twq('config','qik5c');
             align-items: center;
             gap: 1.5rem;
             list-style: none;
-            margin-left: auto; /* Push nav links to the right */
+            margin-left: auto;
         }
         .nav-links a {
             color: #000000;
@@ -140,184 +142,130 @@ twq('config','qik5c');
             border: none;
             color: #000000;
             cursor: pointer;
-            margin-left: auto; /* Align with nav-links */
-        }
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            background: #ffffff;
-            padding: 3rem;
-            border-radius: 12px;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-        .what-we-do {
-            padding: 6rem 2rem;
-            text-align: center;
-            z-index: 2;
-        }
-        .what-we-do h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .what-we-do p {
-            font-size: 1.125rem;
-            color: #4b5563;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-        .what-we-do .highlight {
-            color: #000000;
-            font-weight: 600;
-        }
-        .our-team {
-            padding: 4rem 2rem;
-            text-align: center;
-            z-index: 2;
-        }
-        .our-team h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .our-team p {
-            font-size: 1.125rem;
-            color: #4b5563;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-        .our-team .highlight {
-            color: #000000;
-            font-weight: 600;
-        }
-        .why-jayisaac {
-            padding: 4rem 2rem;
-            text-align: center;
-            z-index: 2;
-        }
-        .why-jayisaac h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .why-jayisaac p {
-            font-size: 1.125rem;
-            color: #4b5563;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-        .why-jayisaac .highlight {
-            color: #000000;
-            font-weight: 600;
-        }
-        .faq-section {
-            padding: 4rem 2rem;
-            text-align: center;
-            z-index: 2;
-        }
-        .faq-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .faq-item {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            max-width: 800px;
             margin-left: auto;
-            margin-right: auto;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .faq-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        .faq-question {
-            padding: 1.25rem;
-            background: #ffffff;
-            font-size: 1.125rem;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-        }
-        .faq-answer {
-            padding: 1.25rem;
-            background: #ffffff;
-            color: #4b5563;
-            text-align: left;
-            font-size: 1rem;
-            display: none;
-        }
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-        .contact-container {
-            padding: 4rem 2rem;
-            text-align: center;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .contact-container h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .contact-section {
+        .resources-hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-            max-width: 100%;
+            gap: 4rem;
+            align-items: center;
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2;
         }
-        .contact-info {
+        .hero-left {
             text-align: left;
-            padding: 2.5rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .info-item h3 {
+        .hero-right {
+            text-align: left;
+        }
+        .resources-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .resources-hero p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+        .resources-grid {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            z-index: 2;
+        }
+        .resource-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .resource-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .resource-card-content {
+            padding: 2.5rem;
+        }
+        .resource-card h3 {
             font-size: 1.5rem;
             font-weight: 600;
             color: #000000;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
-        .info-item p {
-            font-size: 1rem;
+        .resource-card p {
+            font-size: 1.125rem;
             color: #4b5563;
+            margin-bottom: 1.5rem;
         }
-        .info-item a {
+        .resource-card .read-more {
             color: #000000;
             text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
             transition: color 0.3s ease;
         }
-        .info-item a:hover {
+        .resource-card .read-more:hover {
             color: #4b5563;
         }
-        .contact-form {
-            background: #ffffff;
-            padding: 2.5rem;
+        .resource-card .expanded-content {
+            display: none;
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        .resource-card.active .expanded-content {
+            display: block;
+        }
+        .lead-capture-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 3rem;
+            background: #f9fafb;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            z-index: 2;
+        }
+        .lead-text {
+            text-align: left;
+        }
+        .lead-form-container {
+            text-align: left;
+        }
+        .lead-capture-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+        }
+        .lead-capture-section p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+        .lead-capture-form {
+            max-width: none;
         }
         .form-group {
             margin-bottom: 1.5rem;
@@ -330,8 +278,7 @@ twq('config','qik5c');
             color: #000000;
             margin-bottom: 0.5rem;
         }
-        .form-group input,
-        .form-group textarea {
+        .form-group input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #e5e7eb;
@@ -341,27 +288,20 @@ twq('config','qik5c');
             background: #ffffff;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #4b5563;
             box-shadow: 0 0 0 3px rgba(75, 85, 99, 0.1);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
         }
         .form-group.checkbox-group {
             display: flex;
             align-items: flex-start;
             gap: 0.5rem;
-            flex-wrap: wrap;
         }
         .form-group.checkbox-group label {
             font-size: 0.875rem;
             color: #4b5563;
             margin: 0;
-            flex: 1;
         }
         .form-group.checkbox-group a {
             color: #000000;
@@ -379,7 +319,7 @@ twq('config','qik5c');
         .error-message.active {
             display: block;
         }
-        .contact-form button {
+        .lead-capture-form button {
             background: #000000;
             color: #ffffff;
             padding: 0.75rem 2rem;
@@ -391,7 +331,7 @@ twq('config','qik5c');
             transition: background 0.3s ease, transform 0.2s ease;
             width: 100%;
         }
-        .contact-form button:hover {
+        .lead-capture-form button:hover {
             background: #4b5563;
             transform: translateY(-2px);
         }
@@ -463,7 +403,7 @@ twq('config','qik5c');
         }
         @media (max-width: 768px) {
             body {
-                padding-top: 140px; /* Adjusted for mobile */
+                padding-top: 140px;
             }
             header {
                 padding: 1rem;
@@ -477,11 +417,11 @@ twq('config','qik5c');
             .logo::after {
                 border-left: 36px solid transparent;
                 border-right: 36px solid transparent;
-                border-top: 18px solid #ffffff; /* Smaller V-shape for mobile */
+                border-top: 18px solid #ffffff;
                 bottom: -18px;
             }
             .logo img {
-                height: 60px; /* Smaller logo for mobile */
+                height: 60px;
                 width: 60px;
             }
             .nav-links {
@@ -489,7 +429,7 @@ twq('config','qik5c');
                 flex-direction: column;
                 gap: 1rem;
                 position: absolute;
-                top: calc(100% + 80px); /* Increased offset to clear hanging logo fully */
+                top: calc(100% + 80px);
                 left: 0;
                 right: 0;
                 background: #ffffff;
@@ -502,58 +442,45 @@ twq('config','qik5c');
             .menu-toggle {
                 display: block;
             }
-            .what-we-do {
-                padding: 4rem 1rem;
-            }
-            .what-we-do h2 {
-                font-size: 2rem;
-            }
-            .what-we-do p {
-                font-size: 1rem;
-            }
-            .our-team h2 {
-                font-size: 2rem;
-            }
-            .our-team p {
-                font-size: 1rem;
-            }
-            .why-jayisaac h2 {
-                font-size: 2rem;
-            }
-            .why-jayisaac p {
-                font-size: 1rem;
-            }
-            .faq-section h2 {
-                font-size: 2rem;
-            }
-            .faq-question {
-                font-size: 1rem;
-                padding: 1rem;
-            }
-            .faq-answer {
-                font-size: 0.9rem;
-                padding: 1rem;
-            }
-            .contact-container {
-                padding: 2rem 1rem;
-            }
-            .contact-container h1 {
-                font-size: 2rem;
-            }
-            .contact-section {
+            .resources-hero {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 4rem 1rem;
+                text-align: center;
             }
-            .contact-info,
-            .contact-form {
+            .hero-left, .hero-right {
+                text-align: center;
+            }
+            .resources-hero h1 {
+                font-size: 2rem;
+            }
+            .resources-hero p {
+                font-size: 1.125rem;
+            }
+            .resources-grid {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .resource-card img {
+                height: 200px;
+            }
+            .resource-card-content {
                 padding: 2rem;
             }
-            .form-group.checkbox-group {
-                align-items: flex-start;
-                flex-wrap: wrap;
+            .lead-capture-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
             }
-            .form-group.checkbox-group label {
-                font-size: 0.8rem;
-                line-height: 1.4;
+            .lead-text, .lead-form-container {
+                text-align: center;
+            }
+            .lead-capture-section h2 {
+                font-size: 1.75rem;
+            }
+            .lead-capture-section p {
+                font-size: 1.125rem;
             }
             .footer-content {
                 flex-direction: column;
@@ -572,10 +499,6 @@ twq('config','qik5c');
             .footer-company .footer-logo span {
                 font-size: 1.1rem;
             }
-            .content-section {
-                padding: 2rem;
-                margin-bottom: 2rem;
-            }
             #particles-js {
                 display: none;
             }
@@ -591,7 +514,7 @@ twq('config','qik5c');
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/pricing.html">Pricing</a></li>
                 <li><a href="/Demo.html">Demo</a></li>
-                <li><a href="/Resources.html">Resources</a></li>
+                <li><a href="/resources.html">Resources</a></li>
             </ul>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <div class="logo">
@@ -599,76 +522,73 @@ twq('config','qik5c');
             </div>
         </nav>
     </header>
-    <section class="our-team">
-        <div class="content-section">
-            <h2>Our Dedicated Team</h2>
-            <p>We are a dynamic team of <span class="highlight">junior developers</span> committed to excellence, working diligently to craft custom AI chatbots that seamlessly align with your website's unique design and branding. Our collaborative approach ensures meticulous attention to detail, delivering tailored solutions that elevate user engagement and drive business success. With a passion for innovation and a focus on quality, we partner closely with you to create <span class="highlight">personalized automation</span> that reflects your vision and enhances your digital presence.</p>
+    <section class="resources-hero">
+        <div class="hero-left">
+            <h1>AI Chatbot Resources</h1>
+            <p>Discover expert insights, guides, and tips on how JAYISAAC AI's custom chatbots can transform your business. From beginner guides to advanced integration strategies, our resources are designed to help you automate efficiently and drive growth.</p>
+        </div>
+        <div class="hero-right">
+            <p>Explore articles tailored for small businesses, e-commerce owners, and tech enthusiasts. Stay updated with the latest in AI automation and learn how to implement chatbots that match your brand seamlessly.</p>
         </div>
     </section>
-    <section class="why-jayisaac">
-        <div class="content-section">
-            <h2>Why JAYISAAC AI Chatbots?</h2>
-            <p>At JAYISAAC, we craft <span class="highlight">AI chatbots</span> that are <span class="highlight">competitively priced</span> to fit your budget without compromising quality. Our chatbots are designed to seamlessly <span class="highlight">integrate with your website's current design</span>, ensuring a cohesive and branded experience that enhances user engagement and drives results.</p>
-        </div>
-    </section>
-    <section class="faq-section">
-        <div class="content-section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">What is JAYISAAC AI?</div>
-                <div class="faq-answer">JAYISAAC AI is a powerful platform delivering tailored AI chatbot solutions for businesses of all sizes. Our advanced AI automates customer support, provides instant responses 24/7, and enhances engagement through personalized interactions. Perfect for e-commerce, healthcare, education, and more, our chatbots integrate effortlessly with your website, streamlining operations and boosting customer satisfaction with data-driven insights.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">How do I get started with JAYISAAC AI?</div>
-                <div class="faq-answer">Launch your AI chatbot journey by visiting jayisaacai.com or emailing support@jayisaac.ai. Our team will arrange a personalized consultation to explore your business goals, showcase a custom demo, and map out a swift deployment plan. With our streamlined process, your tailored chatbot can be live in days, backed by expert support to ensure success.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Can I customize my JAYISAAC AI chatbot?</div>
-                <div class="faq-answer">Absolutely, we craft bespoke AI chatbot code tailored precisely to your existing website. Our expert developers deliver lightning-fast solutions, customizing the chatbot’s tone, functionality, and design to match your brand seamlessly. Whether it’s answering FAQs, processing orders, or capturing leads, we ensure rapid integration with platforms like CRMs, e-commerce systems, or analytics tools to amplify your business goals.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">What benefits can my business gain?</div>
-                <div class="faq-answer">With JAYISAAC AI, your business saves time and money by automating up to 80% of customer inquiries, freeing your team for strategic tasks. Our chatbots deliver instant, personalized responses to boost engagement and conversions, scale effortlessly to handle high traffic, and provide analytics to refine your approach, all while integrating smoothly with your website for a polished user experience.</div>
+    <section class="resources-grid">
+        <div class="resource-card">
+            <img src="public/images/logo again lol 2.jpg" alt="AI chatbot for business">
+            <div class="resource-card-content">
+                <h3>Why Your Business Needs an AI Chatbot in 2025</h3>
+                <p>Learn how AI chatbots can save time, reduce costs, and boost customer engagement with real-world examples. Discover key features like 24/7 support, personalized responses, and seamless integration that can increase your conversion rates by up to 30%.</p>
+                <span class="read-more" onclick="toggleContent(this)">Read More</span>
+                <div class="expanded-content">
+                    <p>AI chatbots are no longer a luxury but a necessity for businesses aiming to stay competitive in 2025. By automating up to 80% of customer inquiries, chatbots free up your team to focus on high-value tasks like strategy and innovation. For example, a retail client using JAYISAAC AI's chatbots saw a 40% reduction in support tickets within the first month. Beyond cost savings, chatbots provide instant responses, improving customer satisfaction by 25% on average, according to industry studies. They integrate seamlessly with platforms like Shopify, WordPress, and CRMs, ensuring a cohesive brand experience. Moreover, advanced analytics allow you to track user interactions, refine responses, and optimize conversions. Whether you're a small business or a large enterprise, our tailored solutions adapt to your needs, handling everything from FAQs to complex order processing. Start leveraging AI to scale your operations and stay ahead of the curve.</p>
+                </div>
             </div>
         </div>
-    </section>
-    <section class="contact-container">
-        <h1>Contact Us</h1>
-        <div class="contact-section">
-            <div class="contact-info">
-                <h3>Get in Touch</h3>
-                <div class="info-item">
-                    <h4>Email</h4>
-                    <p><a href="mailto:admin@jayisaacai.com">admin@jayisaacai.com</a></p>
+        <div class="resource-card">
+            <img src="public/images/logo again lol 2.jpg" alt="E-commerce chatbot integration">
+            <div class="resource-card-content">
+                <h3>How to Integrate AI Chatbots with E-commerce</h3>
+                <p>Step-by-step guide to seamlessly adding a chatbot to your Shopify or WooCommerce store. Cover API setups, custom scripting, and testing for optimal performance.</p>
+                <span class="read-more" onclick="toggleContent(this)">Read More</span>
+                <div class="expanded-content">
+                    <p>Integrating an AI chatbot into your e-commerce platform can transform your customer experience and boost sales. Start by selecting a chatbot provider like JAYISAAC AI, which offers plug-and-play solutions for Shopify and WooCommerce. Step 1: Use our API to connect the chatbot to your store’s backend, enabling real-time access to product data and order statuses. Step 2: Customize the chatbot’s tone and responses to match your brand voice—whether friendly or professional. Step 3: Implement scripts for common scenarios like cart recovery, where the chatbot nudges users who abandon their carts, potentially recovering 15-20% of lost sales. Step 4: Test thoroughly across devices to ensure mobile compatibility, as 70% of e-commerce traffic is mobile-driven. Finally, leverage analytics to monitor performance metrics like response time and conversion rates. Our clients have seen up to 30% higher engagement after integration, with one retailer reporting a 25% increase in completed purchases. Get started today to streamline operations and delight customers.</p>
                 </div>
             </div>
-            <form class="contact-form" onsubmit="return validateForm(event);">
+        </div>
+        <div class="resource-card">
+            <img src="public/images/logo again lol 2.jpg" alt="Chatbot ROI">
+            <div class="resource-card-content">
+                <h3>AI Chatbots vs. Live Agents: Cost-Benefit Analysis</h3>
+                <p>Compare the ROI of AI chatbots versus human support teams for your business. Analyze metrics like response time, scalability, and long-term savings.</p>
+                <span class="read-more" onclick="toggleContent(this)">Read More</span>
+                <div class="expanded-content">
+                    <p>Choosing between AI chatbots and live agents involves weighing costs, efficiency, and customer satisfaction. Live agents offer a personal touch but come with high costs—salaries, training, and limited hours can strain budgets, especially for small businesses. AI chatbots, like those from JAYISAAC AI, handle 80% of routine inquiries at a fraction of the cost, with some clients cutting support expenses by 50%. For instance, a healthcare provider we worked with reduced average response time from 5 minutes to under 10 seconds using our chatbots. Unlike agents, chatbots scale effortlessly during traffic spikes, ensuring no customer is left waiting. While agents excel in complex cases, chatbots complement them by handling repetitive tasks, freeing agents for high-value interactions. Analytics provide insights into customer behavior, enabling continuous improvement. Studies show businesses using AI chatbots see a 20-30% boost in customer satisfaction due to instant responses. Transition to AI today for a scalable, cost-effective solution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="lead-capture-section">
+        <div class="lead-text">
+            <h2>Download Our Free AI Chatbot Guide</h2>
+            <p>Get our comprehensive guide on how to leverage AI chatbots for business growth. Learn tips, strategies, and best practices for implementation, including customization options, performance tracking, and scaling your automation efforts effectively.</p>
+        </div>
+        <div class="lead-form-container">
+            <form class="lead-capture-form" onsubmit="return validateLeadForm(event);">
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-                    <div class="error-message" id="name-error">Please enter your full name.</div>
+                    <label for="lead-name">Full Name</label>
+                    <input type="text" id="lead-name" name="name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="lead-name-error">Please enter your full name.</div>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    <div class="error-message" id="email-error">Please enter a valid email address.</div>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
-                    <div class="error-message" id="subject-error">Please enter a subject.</div>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
-                    <div class="error-message" id="message-error">Please enter a message.</div>
+                    <label for="lead-email">Email</label>
+                    <input type="email" id="lead-email" name="email" placeholder="Enter your email" required>
+                    <div class="error-message" id="lead-email-error">Please enter a valid email address.</div>
                 </div>
                 <div class="form-group checkbox-group">
-                    <input type="checkbox" id="consent" name="consent" required>
-                    <label for="consent">I consent to data processing. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
-                    <div class="error-message" id="consent-error">You must consent to data processing.</div>
+                    <input type="checkbox" id="lead-consent" name="consent" required>
+                    <label for="lead-consent">I consent to data processing. See our <a href="/TOS_SUCH.html">Privacy Policy</a>.</label>
+                    <div class="error-message" id="lead-consent-error">You must consent to data processing.</div>
                 </div>
-                <button type="submit">Send Message</button>
+                <button type="submit">Download Now</button>
             </form>
         </div>
     </section>
@@ -689,8 +609,6 @@ twq('config','qik5c');
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         if (window.innerWidth > 768) {
             particlesJS('particles-js', {
@@ -751,54 +669,43 @@ twq('config','qik5c');
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
-        });
-        function validateForm(event) {
+        function toggleContent(element) {
+            const card = element.closest('.resource-card');
+            card.classList.toggle('active');
+            const expandedContent = card.querySelector('.expanded-content');
+            const readMoreText = element.textContent;
+            element.textContent = readMoreText === 'Read More' ? 'Read Less' : 'Read More';
+        }
+        function validateLeadForm(event) {
             event.preventDefault();
             let isValid = true;
             document.querySelectorAll('.error-message').forEach(error => {
                 error.classList.remove('active');
             });
-            const name = document.getElementById('name').value.trim();
+            const name = document.getElementById('lead-name').value.trim();
             if (!name) {
-                document.getElementById('name-error').classList.add('active');
+                document.getElementById('lead-name-error').classList.add('active');
                 isValid = false;
             }
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('lead-email').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email || !emailRegex.test(email)) {
-                document.getElementById('email-error').classList.add('active');
+                document.getElementById('lead-email-error').classList.add('active');
                 isValid = false;
             }
-            const subject = document.getElementById('subject').value.trim();
-            if (!subject) {
-                document.getElementById('subject-error').classList.add('active');
-                isValid = false;
-            }
-            const message = document.getElementById('message').value.trim();
-            if (!message) {
-                document.getElementById('message-error').classList.add('active');
-                isValid = false;
-            }
-            const consent = document.getElementById('consent').checked;
+            const consent = document.getElementById('lead-consent').checked;
             if (!consent) {
-                document.getElementById('consent-error').classList.add('active');
+                document.getElementById('lead-consent-error').classList.add('active');
                 isValid = false;
             }
             if (isValid) {
                 console.log({
                     name: name,
                     email: email,
-                    subject: subject,
-                    message: message,
                     consent: consent
                 });
-                alert('Form submitted successfully!');
-                document.querySelector('.contact-form').reset();
+                alert('Guide download requested! Check your email.');
+                document.querySelector('.lead-capture-form').reset();
             }
             return isValid;
         }
