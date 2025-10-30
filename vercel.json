@@ -2,8 +2,34 @@
   "version": 2,
   "builds": [
     {
-      "src": "**/*",
+      "src": "public/images/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/images/(.*)",
+      "dest": "/public/images/$1"
+    },
+    {
+      "src": "/(.*)\\.html",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "headers": [
@@ -30,7 +56,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.css",
+      "source": "/css/(.*)\\.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -39,7 +65,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.js",
+      "source": "/js/(.*)\\.js",
       "headers": [
         {
           "key": "Cache-Control",
