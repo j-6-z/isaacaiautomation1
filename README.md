@@ -34,3 +34,5 @@ Frontend → HTML, CSS, JS (vanilla)
 Backend  → Node.js + Express (Vercel serverless)
 AI       → OpenAI DALL·E 3
 Hosting  → Vercel
+
+
