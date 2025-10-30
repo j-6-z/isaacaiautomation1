@@ -1,32 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "public/images/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "css/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "js/**",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
-    {
-      "src": "/images/(.*)",
-      "dest": "/public/images/$1"
-    },
-    {
-      "src": "/(.*)\\.html",
-      "dest": "/$1.html"
-    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
@@ -56,16 +30,7 @@
       ]
     },
     {
-      "source": "/css/(.*)\\.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/js/(.*)\\.js",
+      "source": "/(css|js)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
