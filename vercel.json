@@ -8,11 +8,11 @@
   ],
   "headers": [
     {
-      "source": "/images/(.*)",
+      "source": "/images/(.*)\\.jpg$",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "image/webp"
+          "value": "image/jpeg"
         },
         {
           "key": "Cache-Control",
