@@ -93,7 +93,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pricing - JAYISAAC AI</title>
+    <title>AI Chatbot Pricing - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -532,6 +532,58 @@
             margin: 0 auto;
         }
         
+        /* Currency Toggle Styles */
+        .currency-toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .currency-toggle {
+            display: flex;
+            background: var(--bg-gray);
+            border-radius: 50px;
+            padding: 4px;
+            gap: 4px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        
+        .currency-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .currency-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .currency-btn:hover:not(.active) {
+            color: var(--text-dark);
+        }
+        
+        .currency-flag {
+            font-size: 1.1rem;
+        }
+        
+        .exchange-rate-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
         .pricing-section {
             padding: 4rem 2rem;
             position: relative;
@@ -628,6 +680,16 @@
             color: var(--text-gray);
         }
         
+        .pricing-card .price-usd,
+        .pricing-card .price-cad {
+            display: none;
+        }
+        
+        .pricing-card .price-usd.active,
+        .pricing-card .price-cad.active {
+            display: block;
+        }
+        
         .pricing-card ul {
             list-style: none;
             margin: 2rem 0;
@@ -650,6 +712,17 @@
             color: var(--primary);
             font-weight: 700;
             font-size: 1.1rem;
+        }
+        
+        /* Overage price styling */
+        .overage-usd,
+        .overage-cad {
+            display: none;
+        }
+        
+        .overage-usd.active,
+        .overage-cad.active {
+            display: inline;
         }
         
         .pricing-card a {
@@ -929,6 +1002,10 @@
             .hero-section p {
                 font-size: 1.05rem;
             }
+            .currency-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
             .pricing-section {
                 padding: 3rem 1rem;
             }
@@ -1036,28 +1113,28 @@
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="/ai-chatbot/index.html">
+                        <a href="/ai-chatbot/">
                             <div class="dropdown-icon">💬</div>
                             <div class="dropdown-content">
                                 <h4>AI Chatbots</h4>
                                 <p>24/7 intelligent support</p>
                             </div>
                         </a>
-                        <a href="/ai-voiceagents/index.html">
+                        <a href="/ai-voiceagents/">
                             <div class="dropdown-icon">🎙️</div>
                             <div class="dropdown-content">
                                 <h4>Voice Agents</h4>
                                 <p>Natural voice AI</p>
                             </div>
                         </a>
-                        <a href="/ai-maintenanceop/index.html">
+                        <a href="/ai-maintenanceop/">
                             <div class="dropdown-icon">⚙️</div>
                             <div class="dropdown-content">
                                 <h4>Maintenance AI</h4>
                                 <p>Predictive optimization</p>
                             </div>
                         </a>
-                        <a href="/ai-recruitassistant/index.html">
+                        <a href="/ai-recruitassistant/">
                             <div class="dropdown-icon">👥</div>
                             <div class="dropdown-content">
                                 <h4>Recruiting AI</h4>
@@ -1072,7 +1149,7 @@
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="/ai-chatbot/index.html">
+                        <a href="/ai-chatbot/">
                             <div class="dropdown-icon">💬</div>
                             <div class="dropdown-content">
                                 <h4>AI Chatbots</h4>
@@ -1084,13 +1161,6 @@
                             <div class="dropdown-content">
                                 <h4>Pricing</h4>
                                 <p>Plans & purchase</p>
-                            </div>
-                        </a>
-                        <a href="/ai-chatbot/demo.html">
-                            <div class="dropdown-icon">🎯</div>
-                            <div class="dropdown-content">
-                                <h4>Demo</h4>
-                                <p>Try it live</p>
                             </div>
                         </a>
                     </div>
@@ -1107,7 +1177,7 @@
                             <span class="account-name">Account</span>
                             <span class="user-email">email@example.com</span>
                         </div>
-                        <a href="/myorders.html">
+                        <a href="/my-orders.html">
                             <span class="menu-icon">📦</span>
                             My Orders
                         </a>
@@ -1142,10 +1212,25 @@
         <div class="pricing-container">
             <h2>Monthly Subscriptions</h2>
             <h3>Scale as you grow</h3>
+            
+            <!-- Currency Toggle -->
+            <div class="currency-toggle-container">
+                <div class="currency-toggle">
+                    <button class="currency-btn active" data-currency="usd" onclick="switchCurrency('usd')">
+                        <span class="currency-flag">🇺🇸</span> USD
+                    </button>
+                    <button class="currency-btn" data-currency="cad" onclick="switchCurrency('cad')">
+                        <span class="currency-flag">🇨🇦</span> CAD
+                    </button>
+                </div>
+            </div>
+            <p class="exchange-rate-note">Exchange rate: 1 USD = 1.38 CAD (approximate)</p>
+            
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Basic</h3>
-                    <div class="price">$49<span>/month</span></div>
+                    <div class="price price-usd active">$49<span>/month</span></div>
+                    <div class="price price-cad">$68<span>/month</span></div>
                     <ul>
                         <li>20,000 annual conversations</li>
                         <li>1 AI Agent</li>
@@ -1156,14 +1241,15 @@
                         <li>Mail Handover</li>
                         <li>Operational Reporting</li>
                         <li>Email Support</li>
-                        <li>GenAI Reports (+$0.50/m)</li>
+                        <li>GenAI Reports (<span class="overage-usd active">+$0.50/m</span><span class="overage-cad">+$0.69/m</span>)</li>
                     </ul>
                     <a href="/ai-chatbot/purchasepage.html">Get Started</a>
                 </div>
                 
                 <div class="pricing-card featured">
                     <h3>Standard</h3>
-                    <div class="price">$149<span>/month</span></div>
+                    <div class="price price-usd active">$149<span>/month</span></div>
+                    <div class="price price-cad">$206<span>/month</span></div>
                     <ul>
                         <li>200,000 annual conversations</li>
                         <li>Up to 4 AI Agents</li>
@@ -1180,7 +1266,8 @@
                 
                 <div class="pricing-card">
                     <h3>Enterprise</h3>
-                    <div class="price">$499<span>/month</span></div>
+                    <div class="price price-usd active">$499<span>/month</span></div>
+                    <div class="price price-cad">$689<span>/month</span></div>
                     <ul>
                         <li>2M annual conversations</li>
                         <li>Up to 10 AI Agents</li>
@@ -1242,18 +1329,18 @@
             <div class="footer-links">
                 <h4>Solutions</h4>
                 <ul>
-                    <li><a href="ai-chatbot/index.html">AI Chatbots</a></li>
-                    <li><a href="ai-voiceagents/index.html">Voice Agents</a></li>
-                    <li><a href="/ai-maintenanceop/index.html">Maintenance</a></li>
-                    <li><a href="/ai-recruitassistant/index.html">Recruiting</a></li>
+                    <li><a href="/ai-chatbot/">AI Chatbots</a></li>
+                    <li><a href="/ai-voiceagents/">Voice Agents</a></li>
+                    <li><a href="/ai-maintenanceop/">Maintenance</a></li>
+                    <li><a href="/ai-recruitassistant/">Recruiting</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Company</h4>
                 <ul>
-                    <li><a href="policies.html">Privacy Policy</a></li>
-                    <li><a href="policies.html">Terms of Service</a></li>
-                    <li><a href="index.html">Contact</a></li>
+                    <li><a href="/Policies.html">Privacy Policy</a></li>
+                    <li><a href="/Policies.html">Terms of Service</a></li>
+                    <li><a href="/#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -1262,7 +1349,7 @@
         </div>
     </footer>
 
-    <a href="/Purchasepage.html" class="purchase-button">Start Free Trial →</a>
+    <a href="/ai-chatbot/purchasepage.html" class="purchase-button">Start Free Trial →</a>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
@@ -1349,6 +1436,42 @@
             });
             var accountDropdown = document.querySelector('.account-dropdown');
             if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
+        });
+
+        // Currency Toggle Function
+        function switchCurrency(currency) {
+            // Update toggle buttons
+            document.querySelectorAll('.currency-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.currency-btn[data-currency="' + currency + '"]').classList.add('active');
+            
+            // Update prices
+            document.querySelectorAll('.price-usd').forEach(function(el) {
+                el.classList.toggle('active', currency === 'usd');
+            });
+            document.querySelectorAll('.price-cad').forEach(function(el) {
+                el.classList.toggle('active', currency === 'cad');
+            });
+            
+            // Update overage rates
+            document.querySelectorAll('.overage-usd').forEach(function(el) {
+                el.classList.toggle('active', currency === 'usd');
+            });
+            document.querySelectorAll('.overage-cad').forEach(function(el) {
+                el.classList.toggle('active', currency === 'cad');
+            });
+            
+            // Store preference
+            localStorage.setItem('preferred-currency', currency);
+        }
+        
+        // Check for saved currency preference on load
+        document.addEventListener('DOMContentLoaded', function() {
+            var savedCurrency = localStorage.getItem('preferred-currency');
+            if (savedCurrency) {
+                switchCurrency(savedCurrency);
+            }
         });
 
         // Smooth scroll
