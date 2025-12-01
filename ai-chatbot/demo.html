@@ -48,7 +48,6 @@
                     alert("Sign in failed: " + error.message);
                 }
             },
-            
             signOut: async function() {
                 try {
                     await signOut(auth);
@@ -57,7 +56,6 @@
                     console.error("Sign out error:", error.message);
                 }
             },
-            
             getCurrentUser: function() {
                 return auth.currentUser;
             }
@@ -73,7 +71,6 @@
                     accountDropdown.style.display = 'block';
                     const userPhoto = accountDropdown.querySelector('.account-photo');
                     const userEmailDisplay = accountDropdown.querySelector('.user-email');
-                    
                     accountDropdown.querySelectorAll('.account-name').forEach(el => {
                         el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
                     });
@@ -96,12 +93,12 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Policies - JAYISAAC AI</title>
+    <title>Demo - AI Chatbots - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
-        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; }
+        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; display: flex; flex-direction: column; }
         #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
         header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
@@ -150,21 +147,19 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .policies-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
-        .policies-container h1 { font-size: 3.25rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center; letter-spacing: -1px; }
-        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .intro-text { font-size: 1.2rem; color: var(--text-gray); text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-        .policy-section { margin-bottom: 4rem; }
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 2rem; position: relative; z-index: 2; }
+        .coming-soon-container { text-align: center; max-width: 800px; margin: 0 auto; }
+        .coming-soon-icon { font-size: 6rem; margin-bottom: 2rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .policy-section h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 2rem; color: var(--text-dark); }
-        .policy-content { display: flex; flex-direction: column; gap: 1.5rem; }
-        .policy-item { background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; }
-        .policy-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-color: var(--primary); }
-        .policy-item h3 { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; }
-        .policy-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.8; }
-        .policy-item a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        .policy-item a:hover { text-decoration: underline; }
-        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; }
+        .coming-soon-container h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .coming-soon-container p { font-size: 1.25rem; color: var(--text-gray); margin-bottom: 3rem; line-height: 1.8; }
+        .btn-primary { background: #000000; color: white; padding: 1.25rem 3rem; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); display: inline-block; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
+        .future-content { width: 100%; max-width: 1400px; margin: 4rem auto 0; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 24px; text-align: center; background: var(--bg-light); }
+        .future-content p { color: var(--text-light); font-size: 1rem; font-style: italic; }
+        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: auto; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
         .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 1.05rem; }
@@ -196,10 +191,11 @@
             .account-toggle { width: 100%; justify-content: center; }
             .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
             .account-dropdown.active .account-menu { display: block; }
-            .policies-container { padding: 3rem 1.5rem; }
-            .policies-container h1 { font-size: 2.25rem; }
-            .policy-section h2 { font-size: 1.75rem; }
-            .policy-item { padding: 1.5rem; }
+            .main-content { padding: 4rem 1.5rem; }
+            .coming-soon-icon { font-size: 4rem; }
+            .coming-soon-container h1 { font-size: 2.5rem; }
+            .coming-soon-container p { font-size: 1.1rem; }
+            .future-content { padding: 3rem 1.5rem; margin-top: 3rem; }
             .footer-logo { flex-direction: column; text-align: center; }
         }
     </style>
@@ -211,8 +207,8 @@
         <nav>
             <a href="/" class="header-text">JAYISAAC AI</a>
             <ul class="nav-links">
-                <li class="dropdown">
-                    <div class="dropdown-toggle" onclick="toggleDropdown()">
+                <li class="dropdown services-dropdown">
+                    <div class="dropdown-toggle" onclick="toggleDropdown('services')">
                         Services
                         <span class="dropdown-arrow">▼</span>
                     </div>
@@ -247,7 +243,35 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="/Policies.html">Policies</a></li>
+                <li class="dropdown chatbot-dropdown">
+                    <div class="dropdown-toggle" onclick="toggleDropdown('chatbot')">
+                        AI Chatbots
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="/ai-chatbot/">
+                            <div class="dropdown-icon">💬</div>
+                            <div class="dropdown-content">
+                                <h4>AI Chatbots</h4>
+                                <p>Overview & features</p>
+                            </div>
+                        </a>
+                        <a href="/ai-chatbot/pricing.html">
+                            <div class="dropdown-icon">💰</div>
+                            <div class="dropdown-content">
+                                <h4>Pricing</h4>
+                                <p>Plans & purchase</p>
+                            </div>
+                        </a>
+                        <a href="/ai-chatbot/demo.html">
+                            <div class="dropdown-icon">🎯</div>
+                            <div class="dropdown-content">
+                                <h4>Demo</h4>
+                                <p>Try it live</p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
                 <li><a href="#" class="login-btn">Login</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
@@ -286,87 +310,19 @@
         </nav>
     </header>
 
-    <section class="policies-container">
-        <h1>Our <span class="gradient-text">Policies</span></h1>
-        <p class="intro-text">Transparency and trust are at the core of everything we do. Review our policies to understand how we protect your data and operate our services.</p>
+    <main class="main-content">
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">💬</div>
+            <div class="section-tag">Coming Soon</div>
+            <h1>Something <span class="gradient-text">Amazing</span> Is Brewing</h1>
+            <p>We're working on interactive demos to showcase the power of our AI Chatbot solutions. Stay tuned for live previews, conversation samples, and more.</p>
+            <a href="/#contact" class="btn-primary">Get Notified When We Launch</a>
+        </div>
         
-        <div class="policy-section">
-            <div class="section-tag">Legal</div>
-            <h2>Terms of Service</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Introduction</h3>
-                    <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Services</h3>
-                    <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Payment Terms</h3>
-                    <p>JAYISAAC AI Automation collects only your name and email for account and communication purposes. All payment information is securely collected and processed by our third-party payment processor, Stripe. We do not collect or store payment details. You are responsible for providing accurate billing information to Stripe. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Intellectual Property</h3>
-                    <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Limitation of Liability</h3>
-                    <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
-                </div>
-            </div>
+        <div class="future-content">
+            <p>✨ Future demo content will appear here ✨</p>
         </div>
-
-        <div class="policy-section">
-            <div class="section-tag">Privacy</div>
-            <h2>Privacy Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Information Collection</h3>
-                    <p>We collect only your name and email when you use our services or contact us. Payment information, such as credit card details, is collected and processed securely by our third-party payment processor, Stripe, and is not stored by JAYISAAC AI Automation. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Information</h3>
-                    <p>Your name and email are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled securely by Stripe to ensure safe transactions. For details on how Stripe uses your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Data Sharing</h3>
-                    <p>We do not sell your personal data. We may share your name and email with trusted third-party service providers to facilitate our services, such as customer support or delivery of services, subject to confidentiality agreements. Payment information is managed solely by Stripe and is not shared with us. For details on how Stripe shares your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Data Security</h3>
-                    <p>We implement reasonable security measures to protect your name and email. Payment information is secured by Stripe's systems, and we do not have access to it. For details on Stripe's security measures, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. However, no system is completely secure, and you use our services at your own risk.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Your Rights</h3>
-                    <p>You have the right to access, correct, or delete your personal data held by us, such as your name and email. Contact us through our website to exercise these rights. For payment-related data, please contact Stripe directly through their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="policy-section">
-            <div class="section-tag">Cookies</div>
-            <h2>Cookie Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. What Are Cookies</h3>
-                    <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Types of Cookies</h3>
-                    <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Managing Cookies</h3>
-                    <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Third-Party Cookies</h3>
-                    <p>Some cookies are set by third-party services (e.g., analytics tools). These are governed by their respective privacy policies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <footer>
         <div class="footer-content">
@@ -380,18 +336,18 @@
             <div class="footer-links">
                 <h4>Solutions</h4>
                 <ul>
-                    <li><a href="ai-chatbot/index.html">AI Chatbots</a></li>
-                    <li><a href="ai-voiceagents/index.html">Voice Agents</a></li>
-                    <li><a href="/ai-maintenanceop/index.html">Maintenance</a></li>
-                    <li><a href="/ai-recruitassistant/index.html">Recruiting</a></li>
+                    <li><a href="/ai-chatbot/">AI Chatbots</a></li>
+                    <li><a href="/ai-voiceagents/">Voice Agents</a></li>
+                    <li><a href="/ai-maintenanceop/">Maintenance</a></li>
+                    <li><a href="/ai-recruitassistant/">Recruiting</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Company</h4>
                 <ul>
-                    <li><a href="policies.html">Privacy Policy</a></li>
-                    <li><a href="policies.html">Terms of Service</a></li>
-                    <li><a href="index.html">Contact</a></li>
+                    <li><a href="/Policies.html">Privacy Policy</a></li>
+                    <li><a href="/Policies.html">Terms of Service</a></li>
+                    <li><a href="/#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -401,6 +357,8 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         if (window.innerWidth > 768) {
             particlesJS('particles-js', {
@@ -422,18 +380,27 @@
             navLinks.classList.toggle('active');
         }
 
-        function toggleDropdown() {
-            var dropdown = document.querySelector('.dropdown');
-            dropdown.classList.toggle('active');
+        function toggleDropdown(type) {
+            var servicesDropdown = document.querySelector('.services-dropdown');
+            var chatbotDropdown = document.querySelector('.chatbot-dropdown');
             var accountDropdown = document.querySelector('.account-dropdown');
+            
+            if (type === 'services') {
+                servicesDropdown.classList.toggle('active');
+                if (chatbotDropdown) chatbotDropdown.classList.remove('active');
+            } else if (type === 'chatbot') {
+                if (chatbotDropdown) chatbotDropdown.classList.toggle('active');
+                if (servicesDropdown) servicesDropdown.classList.remove('active');
+            }
+            
             if (accountDropdown) accountDropdown.classList.remove('active');
         }
 
         function toggleAccountDropdown() {
             var accountDropdown = document.querySelector('.account-dropdown');
             accountDropdown.classList.toggle('active');
-            var servicesDropdown = document.querySelector('.dropdown');
-            if (servicesDropdown) servicesDropdown.classList.remove('active');
+            var dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(function(dropdown) { dropdown.classList.remove('active'); });
         }
 
         function handleLogout() {
@@ -445,10 +412,12 @@
         }
 
         document.addEventListener('click', function(event) {
-            var dropdown = document.querySelector('.dropdown');
-            if (dropdown && !dropdown.contains(event.target)) { dropdown.classList.remove('active'); }
+            var dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(function(dropdown) {
+                if (!dropdown.contains(event.target)) dropdown.classList.remove('active');
+            });
             var accountDropdown = document.querySelector('.account-dropdown');
-            if (accountDropdown && !accountDropdown.contains(event.target)) { accountDropdown.classList.remove('active'); }
+            if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
         });
 
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {

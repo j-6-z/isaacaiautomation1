@@ -48,7 +48,6 @@
                     alert("Sign in failed: " + error.message);
                 }
             },
-            
             signOut: async function() {
                 try {
                     await signOut(auth);
@@ -57,7 +56,6 @@
                     console.error("Sign out error:", error.message);
                 }
             },
-            
             getCurrentUser: function() {
                 return auth.currentUser;
             }
@@ -66,6 +64,8 @@
         onAuthStateChanged(auth, (user) => {
             const loginBtn = document.querySelector('.login-btn');
             const accountDropdown = document.querySelector('.account-dropdown');
+            const contactName = document.getElementById('contactName');
+            const contactEmail = document.getElementById('contactEmail');
             
             if (user) {
                 if (loginBtn) loginBtn.style.display = 'none';
@@ -73,13 +73,15 @@
                     accountDropdown.style.display = 'block';
                     const userPhoto = accountDropdown.querySelector('.account-photo');
                     const userEmailDisplay = accountDropdown.querySelector('.user-email');
-                    
                     accountDropdown.querySelectorAll('.account-name').forEach(el => {
                         el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
                     });
                     if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';
                     if (userEmailDisplay) userEmailDisplay.textContent = user.email;
                 }
+                // Pre-fill contact form with user info
+                if (contactName && user.displayName) contactName.value = user.displayName;
+                if (contactEmail && user.email) contactEmail.value = user.email;
             } else {
                 if (loginBtn) {
                     loginBtn.style.display = 'inline-flex';
@@ -91,17 +93,19 @@
                     };
                 }
                 if (accountDropdown) accountDropdown.style.display = 'none';
+                if (contactName) contactName.value = '';
+                if (contactEmail) contactEmail.value = '';
             }
         });
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Policies - JAYISAAC AI</title>
+    <title>Support - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
-        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; }
+        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --warning: #f59e0b; --error: #ef4444; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
+        body { background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; }
         #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
         header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
@@ -150,24 +154,79 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .policies-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
-        .policies-container h1 { font-size: 3.25rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center; letter-spacing: -1px; }
+
+        /* Hero Section */
+        .support-hero { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.03)); padding: 4rem 2rem; text-align: center; position: relative; z-index: 2; }
+        .support-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+        .support-hero p { font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto; }
         .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .intro-text { font-size: 1.2rem; color: var(--text-gray); text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-        .policy-section { margin-bottom: 4rem; }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .policy-section h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 2rem; color: var(--text-dark); }
-        .policy-content { display: flex; flex-direction: column; gap: 1.5rem; }
-        .policy-item { background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; }
-        .policy-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-color: var(--primary); }
-        .policy-item h3 { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; }
-        .policy-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.8; }
-        .policy-item a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        .policy-item a:hover { text-decoration: underline; }
-        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; }
+
+        /* Quick Help Cards */
+        .quick-help { max-width: 1200px; margin: -2rem auto 0; padding: 0 2rem; position: relative; z-index: 3; }
+        .quick-help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .quick-help-card { background: white; padding: 2rem; border-radius: 16px; text-align: center; border: 1px solid var(--border); transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; }
+        .quick-help-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
+        .quick-help-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .quick-help-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .quick-help-card p { font-size: 0.9rem; color: var(--text-gray); }
+
+        /* Main Content */
+        .support-content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
+        .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+        /* FAQ Section */
+        .faq-section { background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); }
+        .faq-section h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+        .faq-list { display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover { border-color: var(--primary); }
+        .faq-item.active { border-color: var(--primary); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.1); }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; background: var(--bg-light); transition: all 0.3s ease; }
+        .faq-item.active .faq-question { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); }
+        .faq-question:hover { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); }
+        .faq-toggle { font-size: 1.25rem; color: var(--primary); transition: transform 0.3s ease; }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); }
+        .faq-answer { padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.active .faq-answer { padding: 1.25rem; max-height: 500px; }
+        .faq-answer p { color: var(--text-gray); line-height: 1.8; font-size: 0.95rem; }
+
+        /* Contact Form */
+        .contact-section { background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); }
+        .contact-section h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        .contact-section > p { color: var(--text-gray); margin-bottom: 2rem; }
+        .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+        .form-group input, .form-group select, .form-group textarea { padding: 1rem; border: 1px solid var(--border); border-radius: 10px; font-size: 0.95rem; transition: all 0.3s ease; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1); }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .submit-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.1rem 2rem; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        /* Success Message */
+        .success-message { display: none; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid var(--success); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .success-message.show { display: block; animation: fadeIn 0.5s ease; }
+        .success-message h3 { color: var(--success); font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .success-message p { color: var(--text-gray); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Contact Info */
+        .contact-info { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .contact-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+        .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-method { display: flex; align-items: center; gap: 1rem; }
+        .contact-method-icon { width: 40px; height: 40px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .contact-method-text { display: flex; flex-direction: column; }
+        .contact-method-label { font-size: 0.8rem; color: var(--text-gray); }
+        .contact-method-value { font-weight: 600; color: var(--text-dark); }
+
+        /* Footer */
+        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: 4rem; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
-        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 1.05rem; }
+        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; }
+        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; }
         .footer-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; text-decoration: none; }
         .footer-logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; }
         .footer-logo:hover img { transform: scale(1.1); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
@@ -175,10 +234,14 @@
         .footer-links h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
         .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 1rem; }
-        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
+        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .support-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -196,10 +259,12 @@
             .account-toggle { width: 100%; justify-content: center; }
             .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
             .account-dropdown.active .account-menu { display: block; }
-            .policies-container { padding: 3rem 1.5rem; }
-            .policies-container h1 { font-size: 2.25rem; }
-            .policy-section h2 { font-size: 1.75rem; }
-            .policy-item { padding: 1.5rem; }
+            .support-hero { padding: 3rem 1.5rem; }
+            .support-hero h1 { font-size: 2.25rem; }
+            .quick-help { padding: 0 1.5rem; }
+            .support-content { padding: 3rem 1.5rem; }
+            .faq-section, .contact-section { padding: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
             .footer-logo { flex-direction: column; text-align: center; }
         }
     </style>
@@ -286,87 +351,161 @@
         </nav>
     </header>
 
-    <section class="policies-container">
-        <h1>Our <span class="gradient-text">Policies</span></h1>
-        <p class="intro-text">Transparency and trust are at the core of everything we do. Review our policies to understand how we protect your data and operate our services.</p>
-        
-        <div class="policy-section">
-            <div class="section-tag">Legal</div>
-            <h2>Terms of Service</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Introduction</h3>
-                    <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Services</h3>
-                    <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Payment Terms</h3>
-                    <p>JAYISAAC AI Automation collects only your name and email for account and communication purposes. All payment information is securely collected and processed by our third-party payment processor, Stripe. We do not collect or store payment details. You are responsible for providing accurate billing information to Stripe. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Intellectual Property</h3>
-                    <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Limitation of Liability</h3>
-                    <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="policy-section">
-            <div class="section-tag">Privacy</div>
-            <h2>Privacy Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Information Collection</h3>
-                    <p>We collect only your name and email when you use our services or contact us. Payment information, such as credit card details, is collected and processed securely by our third-party payment processor, Stripe, and is not stored by JAYISAAC AI Automation. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Information</h3>
-                    <p>Your name and email are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled securely by Stripe to ensure safe transactions. For details on how Stripe uses your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Data Sharing</h3>
-                    <p>We do not sell your personal data. We may share your name and email with trusted third-party service providers to facilitate our services, such as customer support or delivery of services, subject to confidentiality agreements. Payment information is managed solely by Stripe and is not shared with us. For details on how Stripe shares your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Data Security</h3>
-                    <p>We implement reasonable security measures to protect your name and email. Payment information is secured by Stripe's systems, and we do not have access to it. For details on Stripe's security measures, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. However, no system is completely secure, and you use our services at your own risk.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Your Rights</h3>
-                    <p>You have the right to access, correct, or delete your personal data held by us, such as your name and email. Contact us through our website to exercise these rights. For payment-related data, please contact Stripe directly through their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="policy-section">
-            <div class="section-tag">Cookies</div>
-            <h2>Cookie Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. What Are Cookies</h3>
-                    <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Types of Cookies</h3>
-                    <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Managing Cookies</h3>
-                    <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Third-Party Cookies</h3>
-                    <p>Some cookies are set by third-party services (e.g., analytics tools). These are governed by their respective privacy policies.</p>
-                </div>
-            </div>
-        </div>
+    <section class="support-hero">
+        <h1>How can we <span class="gradient-text">help</span> you?</h1>
+        <p>Get answers to your questions, troubleshoot issues, or reach out to our support team.</p>
     </section>
+
+    <div class="quick-help">
+        <div class="quick-help-grid">
+            <a href="#faq" class="quick-help-card">
+                <div class="quick-help-icon">❓</div>
+                <h3>FAQs</h3>
+                <p>Find quick answers to common questions</p>
+            </a>
+            <a href="#contact" class="quick-help-card">
+                <div class="quick-help-icon">✉️</div>
+                <h3>Contact Us</h3>
+                <p>Send us a message directly</p>
+            </a>
+            <a href="/Policies.html" class="quick-help-card">
+                <div class="quick-help-icon">📄</div>
+                <h3>Documentation</h3>
+                <p>Read our policies and guides</p>
+            </a>
+            <a href="/my-orders.html" class="quick-help-card">
+                <div class="quick-help-icon">📦</div>
+                <h3>Order Issues</h3>
+                <p>Track or manage your orders</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="support-content">
+        <div class="support-grid">
+            <!-- FAQ Section -->
+            <section class="faq-section" id="faq">
+                <h2>❓ Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How do I get started with JAYISAAC AI?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Getting started is easy! Simply choose a plan that fits your needs, sign up with your Google account, and our team will guide you through the onboarding process. We'll help you set up your AI chatbot, voice agent, or other solution within 24-48 hours.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Can I change my subscription plan?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. To change your plan, contact our support team or manage it through your account dashboard.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What payment methods do you accept?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise plans. All payments are processed securely through our payment provider.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Is there a free trial available?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer a 14-day free trial for all our plans. You can test our AI solutions with full features before committing. No credit card required to start your trial.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How do I cancel my subscription?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can cancel your subscription at any time through your account dashboard or by contacting our support team. Your service will remain active until the end of your current billing period.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Do you offer refunds?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer a 30-day money-back guarantee for new customers. If you're not satisfied with our service within the first 30 days, contact us for a full refund. Please review our refund policy for complete details.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Form -->
+            <section class="contact-section" id="contact">
+                <h2>✉️ Contact Support</h2>
+                <p>Can't find what you're looking for? Send us a message and we'll get back to you within 24 hours.</p>
+                
+                <div class="success-message" id="successMessage">
+                    <h3>✅ Message Sent!</h3>
+                    <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                </div>
+
+                <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactSubject">Subject</label>
+                        <select id="contactSubject" name="subject" required>
+                            <option value="">Select a topic...</option>
+                            <option value="billing">Billing & Payments</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="account">Account Issues</option>
+                            <option value="sales">Sales Inquiry</option>
+                            <option value="feedback">Feedback & Suggestions</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" placeholder="Describe your issue or question in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+                </form>
+
+                <div class="contact-info">
+                    <h3>Other ways to reach us</h3>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-method-icon">📧</div>
+                            <div class="contact-method-text">
+                                <span class="contact-method-label">Email</span>
+                                <span class="contact-method-value">support@jayisaac.ai</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">⏰</div>
+                            <div class="contact-method-text">
+                                <span class="contact-method-label">Response Time</span>
+                                <span class="contact-method-value">Within 24 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -444,6 +583,35 @@
             }
         }
 
+        function toggleFaq(element) {
+            var faqItem = element.parentElement;
+            var allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(function(item) {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            faqItem.classList.toggle('active');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            var submitBtn = document.getElementById('submitBtn');
+            var form = document.getElementById('contactForm');
+            var successMessage = document.getElementById('successMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Simulate form submission (replace with actual backend integration)
+            setTimeout(function() {
+                form.style.display = 'none';
+                successMessage.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }, 1500);
+        }
+
         document.addEventListener('click', function(event) {
             var dropdown = document.querySelector('.dropdown');
             if (dropdown && !dropdown.contains(event.target)) { dropdown.classList.remove('active'); }
@@ -451,6 +619,7 @@
             if (accountDropdown && !accountDropdown.contains(event.target)) { accountDropdown.classList.remove('active'); }
         });
 
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 var href = this.getAttribute('href');
@@ -459,8 +628,6 @@
                     var target = document.querySelector(href);
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
                     }
                 }
             });

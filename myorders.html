@@ -48,16 +48,15 @@
                     alert("Sign in failed: " + error.message);
                 }
             },
-            
             signOut: async function() {
                 try {
                     await signOut(auth);
                     console.log("Signed out");
+                    window.location.href = '/';
                 } catch (error) {
                     console.error("Sign out error:", error.message);
                 }
             },
-            
             getCurrentUser: function() {
                 return auth.currentUser;
             }
@@ -66,6 +65,9 @@
         onAuthStateChanged(auth, (user) => {
             const loginBtn = document.querySelector('.login-btn');
             const accountDropdown = document.querySelector('.account-dropdown');
+            const ordersContent = document.querySelector('.orders-content');
+            const loginPrompt = document.querySelector('.login-prompt');
+            const userGreeting = document.querySelector('.user-greeting');
             
             if (user) {
                 if (loginBtn) loginBtn.style.display = 'none';
@@ -73,12 +75,16 @@
                     accountDropdown.style.display = 'block';
                     const userPhoto = accountDropdown.querySelector('.account-photo');
                     const userEmailDisplay = accountDropdown.querySelector('.user-email');
-                    
                     accountDropdown.querySelectorAll('.account-name').forEach(el => {
                         el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
                     });
                     if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';
                     if (userEmailDisplay) userEmailDisplay.textContent = user.email;
+                }
+                if (ordersContent) ordersContent.style.display = 'block';
+                if (loginPrompt) loginPrompt.style.display = 'none';
+                if (userGreeting) {
+                    userGreeting.textContent = user.displayName ? 'Welcome back, ' + user.displayName.split(' ')[0] + '!' : 'Welcome back!';
                 }
             } else {
                 if (loginBtn) {
@@ -91,17 +97,19 @@
                     };
                 }
                 if (accountDropdown) accountDropdown.style.display = 'none';
+                if (ordersContent) ordersContent.style.display = 'none';
+                if (loginPrompt) loginPrompt.style.display = 'flex';
             }
         });
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Policies - JAYISAAC AI</title>
+    <title>My Orders - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
-        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; }
+        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --warning: #f59e0b; --error: #ef4444; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
+        body { background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; }
         #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
         header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
@@ -150,24 +158,68 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .policies-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
-        .policies-container h1 { font-size: 3.25rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center; letter-spacing: -1px; }
-        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .intro-text { font-size: 1.2rem; color: var(--text-gray); text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-        .policy-section { margin-bottom: 4rem; }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .policy-section h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 2rem; color: var(--text-dark); }
-        .policy-content { display: flex; flex-direction: column; gap: 1.5rem; }
-        .policy-item { background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; }
-        .policy-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-color: var(--primary); }
-        .policy-item h3 { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; }
-        .policy-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.8; }
-        .policy-item a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        .policy-item a:hover { text-decoration: underline; }
-        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; }
+
+        /* Page Content */
+        .page-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
+        .page-header { margin-bottom: 3rem; }
+        .page-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; }
+        .user-greeting { font-size: 1.1rem; color: var(--text-gray); }
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.9rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { color: var(--text-gray); }
+
+        /* Login Prompt */
+        .login-prompt { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; background: white; border-radius: 24px; padding: 4rem 2rem; text-align: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        .login-prompt-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+        .login-prompt h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; }
+        .login-prompt p { color: var(--text-gray); margin-bottom: 2rem; max-width: 400px; }
+        .login-prompt-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); }
+        .login-prompt-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4); }
+
+        /* Orders Content */
+        .orders-content { display: none; }
+        .orders-tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+        .orders-tab { background: none; border: none; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; color: var(--text-gray); cursor: pointer; border-radius: 8px; transition: all 0.3s ease; }
+        .orders-tab:hover { background: var(--bg-gray); color: var(--text-dark); }
+        .orders-tab.active { background: var(--primary); color: white; }
+
+        /* Orders List */
+        .orders-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .order-card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border); transition: all 0.3s ease; }
+        .order-card:hover { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-color: var(--primary); }
+        .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+        .order-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .order-id { font-size: 0.85rem; color: var(--text-gray); }
+        .order-status { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; }
+        .order-status.active { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .order-status.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .order-status.completed { background: rgba(107, 114, 128, 0.1); color: var(--text-gray); }
+        .order-status.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+        .order-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+        .order-detail { display: flex; flex-direction: column; gap: 0.25rem; }
+        .order-detail-label { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        .order-detail-value { font-size: 0.95rem; font-weight: 600; }
+        .order-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .order-action-btn { padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .order-action-btn.primary { background: var(--primary); color: white; border: none; }
+        .order-action-btn.primary:hover { background: var(--primary-dark); }
+        .order-action-btn.secondary { background: white; color: var(--text-dark); border: 1px solid var(--border); }
+        .order-action-btn.secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; }
+        .empty-state-icon { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5; }
+        .empty-state h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .empty-state p { color: var(--text-gray); margin-bottom: 2rem; }
+        .empty-state-btn { display: inline-block; background: #000; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
+        .empty-state-btn:hover { background: #1a1a1a; transform: translateY(-2px); }
+
+        /* Footer */
+        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: 4rem; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
-        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 1.05rem; }
+        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; }
+        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; }
         .footer-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; text-decoration: none; }
         .footer-logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; }
         .footer-logo:hover img { transform: scale(1.1); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
@@ -175,10 +227,13 @@
         .footer-links h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
         .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 1rem; }
-        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
+        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .footer-content { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -196,10 +251,12 @@
             .account-toggle { width: 100%; justify-content: center; }
             .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
             .account-dropdown.active .account-menu { display: block; }
-            .policies-container { padding: 3rem 1.5rem; }
-            .policies-container h1 { font-size: 2.25rem; }
-            .policy-section h2 { font-size: 1.75rem; }
-            .policy-item { padding: 1.5rem; }
+            .page-container { padding: 3rem 1.5rem; }
+            .page-header h1 { font-size: 2rem; }
+            .orders-tabs { flex-wrap: wrap; }
+            .order-header { flex-direction: column; }
+            .order-actions { flex-direction: column; }
+            .order-action-btn { width: 100%; text-align: center; }
             .footer-logo { flex-direction: column; text-align: center; }
         }
     </style>
@@ -217,28 +274,28 @@
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="/ai-chatbot/">
+                        <a href="ai-chatbot/index.html">
                             <div class="dropdown-icon">💬</div>
                             <div class="dropdown-content">
                                 <h4>AI Chatbots</h4>
                                 <p>24/7 intelligent support</p>
                             </div>
                         </a>
-                        <a href="/ai-voiceagents/">
+                        <a href="ai-voiceagents/index.html">
                             <div class="dropdown-icon">🎙️</div>
                             <div class="dropdown-content">
                                 <h4>Voice Agents</h4>
                                 <p>Natural voice AI</p>
                             </div>
                         </a>
-                        <a href="/ai-maintenanceop/">
+                        <a href="ai-maintenanceop/index.html">
                             <div class="dropdown-icon">⚙️</div>
                             <div class="dropdown-content">
                                 <h4>Maintenance AI</h4>
                                 <p>Predictive optimization</p>
                             </div>
                         </a>
-                        <a href="/ai-recruitassistant/">
+                        <a href="ai-recruitassistant/index.html">
                             <div class="dropdown-icon">👥</div>
                             <div class="dropdown-content">
                                 <h4>Recruiting AI</h4>
@@ -247,7 +304,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="/Policies.html">Policies</a></li>
+                <li><a href="policies.html">Policies</a></li>
                 <li><a href="#" class="login-btn">Login</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
@@ -260,11 +317,11 @@
                             <span class="account-name">Account</span>
                             <span class="user-email">email@example.com</span>
                         </div>
-                        <a href="/my-orders.html">
+                        <a href="myorders.html">
                             <span class="menu-icon">📦</span>
                             My Orders
                         </a>
-                        <a href="/support.html">
+                        <a href="support.html">
                             <span class="menu-icon">💬</span>
                             Support
                         </a>
@@ -286,87 +343,47 @@
         </nav>
     </header>
 
-    <section class="policies-container">
-        <h1>Our <span class="gradient-text">Policies</span></h1>
-        <p class="intro-text">Transparency and trust are at the core of everything we do. Review our policies to understand how we protect your data and operate our services.</p>
-        
-        <div class="policy-section">
-            <div class="section-tag">Legal</div>
-            <h2>Terms of Service</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Introduction</h3>
-                    <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Services</h3>
-                    <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Payment Terms</h3>
-                    <p>JAYISAAC AI Automation collects only your name and email for account and communication purposes. All payment information is securely collected and processed by our third-party payment processor, Stripe. We do not collect or store payment details. You are responsible for providing accurate billing information to Stripe. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Intellectual Property</h3>
-                    <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Limitation of Liability</h3>
-                    <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
-                </div>
+    <div class="page-container">
+        <div class="page-header">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>›</span>
+                <span>My Orders</span>
             </div>
+            <h1>📦 My Orders</h1>
+            <p class="user-greeting">Welcome back!</p>
         </div>
 
-        <div class="policy-section">
-            <div class="section-tag">Privacy</div>
-            <h2>Privacy Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Information Collection</h3>
-                    <p>We collect only your name and email when you use our services or contact us. Payment information, such as credit card details, is collected and processed securely by our third-party payment processor, Stripe, and is not stored by JAYISAAC AI Automation. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Information</h3>
-                    <p>Your name and email are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled securely by Stripe to ensure safe transactions. For details on how Stripe uses your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Data Sharing</h3>
-                    <p>We do not sell your personal data. We may share your name and email with trusted third-party service providers to facilitate our services, such as customer support or delivery of services, subject to confidentiality agreements. Payment information is managed solely by Stripe and is not shared with us. For details on how Stripe shares your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Data Security</h3>
-                    <p>We implement reasonable security measures to protect your name and email. Payment information is secured by Stripe's systems, and we do not have access to it. For details on Stripe's security measures, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. However, no system is completely secure, and you use our services at your own risk.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Your Rights</h3>
-                    <p>You have the right to access, correct, or delete your personal data held by us, such as your name and email. Contact us through our website to exercise these rights. For payment-related data, please contact Stripe directly through their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-            </div>
+        <!-- Login Prompt (shown when not logged in) -->
+        <div class="login-prompt">
+            <div class="login-prompt-icon">🔐</div>
+            <h2>Sign in to view your orders</h2>
+            <p>Access your order history, track deliveries, and manage your subscriptions all in one place.</p>
+            <button class="login-prompt-btn" onclick="window.firebaseAuth.signInWithGoogle()">
+                Sign in with Google
+            </button>
         </div>
 
-        <div class="policy-section">
-            <div class="section-tag">Cookies</div>
-            <h2>Cookie Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. What Are Cookies</h3>
-                    <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Types of Cookies</h3>
-                    <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Managing Cookies</h3>
-                    <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Third-Party Cookies</h3>
-                    <p>Some cookies are set by third-party services (e.g., analytics tools). These are governed by their respective privacy policies.</p>
+        <!-- Orders Content (shown when logged in) -->
+        <div class="orders-content">
+            <div class="orders-tabs">
+                <button class="orders-tab active" onclick="filterOrders('all')">All Orders</button>
+                <button class="orders-tab" onclick="filterOrders('active')">Active</button>
+                <button class="orders-tab" onclick="filterOrders('completed')">Completed</button>
+                <button class="orders-tab" onclick="filterOrders('cancelled')">Cancelled</button>
+            </div>
+
+            <div class="orders-list" id="ordersList">
+                <!-- Empty state shown by default - will be replaced with actual orders when integrated with backend -->
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <h3>No orders yet</h3>
+                    <p>When you purchase a subscription or service, your orders will appear here.</p>
+                    <a href="/ai-chatbot/pricing.html" class="empty-state-btn">Browse Products</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -444,26 +461,21 @@
             }
         }
 
+        function filterOrders(filter) {
+            var tabs = document.querySelectorAll('.orders-tab');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            // In a real implementation, this would filter orders from the database
+            console.log('Filtering orders by:', filter);
+        }
+
         document.addEventListener('click', function(event) {
             var dropdown = document.querySelector('.dropdown');
             if (dropdown && !dropdown.contains(event.target)) { dropdown.classList.remove('active'); }
             var accountDropdown = document.querySelector('.account-dropdown');
             if (accountDropdown && !accountDropdown.contains(event.target)) { accountDropdown.classList.remove('active'); }
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
-                    }
-                }
-            });
         });
     </script>
 </body>

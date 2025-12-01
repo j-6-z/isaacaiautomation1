@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17580740260');
+    </script>
+    <!-- Twitter conversion tracking base code -->
+    <script>
+        !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+        },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+        a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+        twq('config','qik5c');
+    </script>
+    <!-- Firebase Configuration with Google Auth -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
+            authDomain: "jayisaac-ai.firebaseapp.com",
+            projectId: "jayisaac-ai",
+            storageBucket: "jayisaac-ai.firebasestorage.app",
+            messagingSenderId: "967801239356",
+            appId: "1:967801239356:web:0df3f35af72ce6e79b9039",
+            measurementId: "G-V91DS21PGE"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        
+        window.firebaseAuth = {
+            signInWithGoogle: async function() {
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    console.log("Signed in:", result.user.displayName);
+                    return result.user;
+                } catch (error) {
+                    console.error("Sign in error:", error.message);
+                    alert("Sign in failed: " + error.message);
+                }
+            },
+            signOut: async function() {
+                try {
+                    await signOut(auth);
+                    console.log("Signed out");
+                } catch (error) {
+                    console.error("Sign out error:", error.message);
+                }
+            },
+            getCurrentUser: function() {
+                return auth.currentUser;
+            }
+        };
+        
+        onAuthStateChanged(auth, (user) => {
+            const loginBtn = document.querySelector('.login-btn');
+            const accountDropdown = document.querySelector('.account-dropdown');
+            const loggedInCheckout = document.getElementById('logged-in-checkout');
+            const guestCheckout = document.getElementById('guest-checkout');
+            const loginPromptCheckout = document.getElementById('login-prompt-checkout');
+            
+            if (user) {
+                // Update nav
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (accountDropdown) {
+                    accountDropdown.style.display = 'block';
+                    const userPhoto = accountDropdown.querySelector('.account-photo');
+                    const userEmailDisplay = accountDropdown.querySelector('.user-email');
+                    accountDropdown.querySelectorAll('.account-name').forEach(el => {
+                        el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
+                    });
+                    if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';
+                    if (userEmailDisplay) userEmailDisplay.textContent = user.email;
+                }
+                
+                // Show logged-in checkout, hide others
+                if (loggedInCheckout) loggedInCheckout.style.display = 'block';
+                if (guestCheckout) guestCheckout.style.display = 'none';
+                if (loginPromptCheckout) loginPromptCheckout.style.display = 'none';
+                
+                // Pre-fill user info
+                const userInfoDisplay = document.getElementById('user-info-display');
+                if (userInfoDisplay) {
+                    userInfoDisplay.innerHTML = `
+                        <div class="user-info-card">
+                            <img src="${user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff'}" alt="Profile" class="user-avatar">
+                            <div class="user-details">
+                                <span class="user-name">${user.displayName || 'User'}</span>
+                                <span class="user-email-display">${user.email}</span>
+                            </div>
+                            <span class="verified-badge">✓ Verified</span>
+                        </div>
+                    `;
+                }
+                
+                // Store user data for checkout
+                window.checkoutUserData = {
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid
+                };
+                
+                // Trigger validation
+                if (typeof validateLoggedInForm === 'function') {
+                    validateLoggedInForm();
+                }
+            } else {
+                // Update nav
+                if (loginBtn) {
+                    loginBtn.style.display = 'inline-flex';
+                    loginBtn.textContent = 'Login';
+                    loginBtn.href = '#';
+                    loginBtn.onclick = (e) => {
+                        e.preventDefault();
+                        window.firebaseAuth.signInWithGoogle();
+                    };
+                }
+                if (accountDropdown) accountDropdown.style.display = 'none';
+                
+                // Show login prompt, hide checkout forms
+                if (loggedInCheckout) loggedInCheckout.style.display = 'none';
+                if (guestCheckout) guestCheckout.style.display = 'none';
+                if (loginPromptCheckout) loginPromptCheckout.style.display = 'block';
+                
+                window.checkoutUserData = null;
+            }
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Chatbots - Secure Payment - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
+        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; padding-bottom: 100px; }
+        #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
+        header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .header-text { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; text-decoration: none; }
+        .header-text:hover { opacity: 0.8; }
+        .logo-container { position: absolute; left: 50%; transform: translateX(-50%); top: 100%; z-index: 1002; background: #ffffff; padding: 1rem 1.25rem 0 1.25rem; border-radius: 50% 50% 0 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; align-items: center; gap: 0; clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%); padding-bottom: 2.5rem; }
+        .logo-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #ffffff; border-radius: 50% 50% 0 0; z-index: -1; }
+        .logo-container img { height: 70px; width: 70px; border-radius: 50%; transition: transform 0.3s ease; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); position: relative; z-index: 1; }
+        .logo-container img:hover { transform: scale(1.1); }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; position: relative; }
+        .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--primary); }
+        .dropdown { position: relative; }
+        .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-gray); font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
+        .dropdown-toggle:hover { color: var(--primary); }
+        .dropdown-arrow { font-size: 0.7rem; transition: transform 0.3s ease; }
+        .dropdown.active .dropdown-arrow { transform: rotate(180deg); }
+        .dropdown-menu { position: absolute; top: calc(100% + 1rem); left: 50%; transform: translateX(-50%); background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 280px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; }
+        .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; }
+        .dropdown-menu a { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid var(--border); }
+        .dropdown-menu a:last-child { border-bottom: none; }
+        .dropdown-menu a:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
+        .dropdown-icon { font-size: 1.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 10px; }
+        .dropdown-content h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; }
+        .dropdown-content p { font-size: 0.8rem; color: var(--text-gray); line-height: 1.4; }
+        .login-btn { background: transparent; color: var(--primary); padding: 0.75rem 1.75rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-flex; align-items: center; }
+        .login-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); }
+        .account-dropdown { position: relative; display: none; }
+        .account-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 12px; border: 2px solid var(--primary); transition: all 0.3s ease; }
+        .account-toggle:hover { background: rgba(249, 115, 22, 0.1); }
+        .account-photo { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+        .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); }
+        .account-arrow { font-size: 0.7rem; color: var(--text-gray); transition: transform 0.3s ease; }
+        .account-dropdown.active .account-arrow { transform: rotate(180deg); }
+        .account-menu { position: absolute; top: calc(100% + 1rem); right: 0; background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 260px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; overflow: hidden; }
+        .account-dropdown.active .account-menu { opacity: 1; visibility: visible; }
+        .account-header { padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-bottom: 1px solid var(--border); }
+        .account-header .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; display: block; }
+        .user-email { font-size: 0.8rem; color: var(--text-gray); }
+        .account-menu a, .account-menu button { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border: none; background: none; width: 100%; font-size: 0.95rem; cursor: pointer; border-bottom: 1px solid var(--border); font-family: inherit; }
+        .account-menu a:last-child, .account-menu button:last-child { border-bottom: none; }
+        .account-menu a:hover, .account-menu button:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
+        .account-menu .menu-icon { font-size: 1.25rem; width: 32px; text-align: center; }
+        .logout-btn { color: #ef4444 !important; }
+        .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+        .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
+
+        /* Country Selector */
+        .country-selector { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; position: relative; z-index: 2; }
+        .country-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 2px solid var(--border); border-radius: 12px; background: white; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; }
+        .country-btn:hover { border-color: var(--primary); }
+        .country-btn.active { border-color: var(--primary); background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); color: var(--primary); }
+        .country-btn .flag { font-size: 1.5rem; }
+
+        /* Hero Section */
+        .hero-section { padding: 4rem 2rem 2rem; text-align: center; position: relative; z-index: 2; background: linear-gradient(180deg, rgba(249, 115, 22, 0.03) 0%, rgba(255, 255, 255, 0) 100%); }
+        .hero-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .hero-section h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -1px; }
+        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-section p { font-size: 1.15rem; color: var(--text-gray); max-width: 600px; margin: 0 auto 2rem; }
+
+        /* Pricing Section */
+        .pricing-section { padding: 2rem; position: relative; z-index: 2; }
+        .pricing-container { max-width: 1400px; margin: 0 auto; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .pricing-card { background: white; border: 2px solid var(--border); border-radius: 20px; padding: 2rem; text-align: center; display: flex; flex-direction: column; transition: all 0.4s ease; position: relative; min-height: 580px; cursor: pointer; }
+        .pricing-card:hover { transform: scale(1.03) translateY(-5px); box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2); border-color: var(--primary); }
+        .pricing-card.selected { border-color: var(--primary); box-shadow: 0 10px 40px rgba(249, 115, 22, 0.25); background: linear-gradient(180deg, rgba(249, 115, 22, 0.03) 0%, white 100%); }
+        .pricing-card.selected::before { content: '✓ SELECTED'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 0.4rem 1.5rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; }
+        .pricing-card.featured { border-color: var(--primary); box-shadow: 0 10px 40px rgba(249, 115, 22, 0.15); }
+        .pricing-card.featured::after { content: 'POPULAR'; position: absolute; top: -12px; right: 20px; background: #000; color: white; padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; }
+        .pricing-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .pricing-card .price { font-size: 3rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1; }
+        .pricing-card .price span { font-size: 1.1rem; font-weight: 500; color: var(--text-gray); }
+        .pricing-card .currency-note { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .pricing-card ul { list-style: none; margin: 1.5rem 0; flex-grow: 1; text-align: left; }
+        .pricing-card ul li { margin-bottom: 0.75rem; padding-left: 1.75rem; position: relative; color: var(--text-gray); font-size: 0.9rem; line-height: 1.4; }
+        .pricing-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; font-size: 1rem; }
+        .select-plan-btn { display: inline-block; background: #000000; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1rem; font-weight: 700; margin-top: auto; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); border: none; cursor: pointer; width: 100%; }
+        .select-plan-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
+        .pricing-card.selected .select-plan-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+
+        /* Checkout Section */
+        .checkout-section { padding: 2rem; position: relative; z-index: 2; }
+        .checkout-container { max-width: 600px; margin: 0 auto; background: white; padding: 3rem; border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
+        .checkout-container h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center; }
+        .checkout-container .selected-plan-display { text-align: center; padding: 1rem; background: var(--bg-light); border-radius: 12px; margin-bottom: 2rem; font-weight: 600; color: var(--primary); }
+
+        /* User Info Card (Logged In) */
+        .user-info-card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.1)); border: 2px solid var(--success); border-radius: 16px; margin-bottom: 1.5rem; }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--success); }
+        .user-details { display: flex; flex-direction: column; flex-grow: 1; }
+        .user-name { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); }
+        .user-email-display { font-size: 0.9rem; color: var(--text-gray); }
+        .verified-badge { background: var(--success); color: white; padding: 0.35rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
+
+        /* Login Prompt */
+        .login-prompt-checkout { text-align: center; padding: 3rem 2rem; }
+        .login-prompt-checkout .login-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .login-prompt-checkout h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .login-prompt-checkout p { color: var(--text-gray); margin-bottom: 1.5rem; }
+        .google-login-btn { display: inline-flex; align-items: center; gap: 0.75rem; background: white; color: var(--text-dark); padding: 1rem 2rem; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .google-login-btn:hover { border-color: var(--primary); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .google-login-btn img { width: 24px; height: 24px; }
+        .guest-link { display: block; margin-top: 1rem; color: var(--text-gray); font-size: 0.9rem; cursor: pointer; text-decoration: underline; }
+        .guest-link:hover { color: var(--primary); }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .form-group input, .form-group select { width: 100%; padding: 1rem; border: 1px solid var(--border); border-radius: 12px; font-size: 1rem; color: var(--text-dark); background: white; transition: all 0.3s ease; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1); }
+        .form-group input::placeholder { color: var(--text-light); }
+        .form-group select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z" fill="%236b7280"/></svg>'); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+        .form-group.optional label::after { content: ' (Optional)'; font-weight: 400; color: var(--text-light); }
+
+        .checkout-btn { width: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.25rem 2rem; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); margin-top: 1rem; }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4); }
+        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .delivery-note { text-align: center; font-size: 0.9rem; color: var(--text-gray); margin-top: 1rem; }
+        .delivery-disclaimer { text-align: left; font-size: 0.8rem; color: var(--text-light); margin-top: 0.75rem; padding: 1rem; background: var(--bg-light); border-radius: 10px; line-height: 1.6; }
+        .disclaimer-checkbox { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+        .disclaimer-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+        .disclaimer-checkbox label { cursor: pointer; }
+        .security-badges { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+        .security-badge { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-gray); }
+        .security-badge span { font-size: 1.25rem; }
+
+        /* Footer */
+        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
+        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 1.05rem; }
+        .footer-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; text-decoration: none; }
+        .footer-logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; }
+        .footer-logo:hover img { transform: scale(1.1); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
+        .footer-logo h3 { font-size: 1.75rem; font-weight: 900; color: white; margin: 0; }
+        .footer-links h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 1rem; }
+        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
+
+        @media (max-width: 1024px) {
+            .footer-content { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 140px; }
+            .header-text { font-size: 1rem; }
+            .logo-container { padding: 0.75rem 1rem 0 1rem; padding-bottom: 2rem; }
+            .logo-container img { height: 55px; width: 55px; }
+            .menu-toggle { display: flex; }
+            .nav-links { display: none; position: fixed; top: calc(100% + 80px); left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; }
+            .nav-links.active { display: flex; }
+            .dropdown { width: 100%; }
+            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
+            .dropdown.active .dropdown-menu { display: block; }
+            .dropdown-toggle { justify-content: space-between; width: 100%; padding: 0.5rem 0; }
+            .login-btn { width: 100%; text-align: center; justify-content: center; }
+            .account-dropdown { width: 100%; }
+            .account-toggle { width: 100%; justify-content: center; }
+            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
+            .account-dropdown.active .account-menu { display: block; }
+            .hero-section { padding: 3rem 1.5rem 1.5rem; }
+            .hero-icon { font-size: 3rem; }
+            .hero-section h1 { font-size: 2.25rem; }
+            .hero-section p { font-size: 1rem; }
+            .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 1rem; }
+            .pricing-card { padding: 1.25rem; min-width: 0; border-radius: 16px; min-height: 520px; }
+            .pricing-card:hover { transform: scale(1.02) translateY(-3px); }
+            .pricing-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+            .pricing-card .price { font-size: 2rem; }
+            .pricing-card .price span { font-size: 0.85rem; display: block; }
+            .pricing-card .currency-note { font-size: 0.75rem; margin-bottom: 1rem; }
+            .pricing-card ul { margin: 1rem 0; }
+            .pricing-card ul li { font-size: 0.75rem; margin-bottom: 0.5rem; padding-left: 1.5rem; }
+            .pricing-card ul li::before { font-size: 0.9rem; }
+            .select-plan-btn { padding: 0.75rem 1rem; font-size: 0.85rem; }
+            .checkout-container { padding: 2rem 1.5rem; margin: 0 1rem; }
+            .checkout-container h2 { font-size: 1.5rem; }
+            .country-selector { flex-wrap: wrap; }
+            .country-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+            .user-info-card { flex-direction: column; text-align: center; }
+            .security-badges { gap: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .pricing-card { padding: 1rem; min-height: 500px; }
+            .pricing-card h3 { font-size: 1rem; }
+            .pricing-card .price { font-size: 1.75rem; }
+            .pricing-card ul li { font-size: 0.7rem; }
+            .select-plan-btn { padding: 0.65rem 0.75rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <header>
+        <nav>
+            <a href="/" class="header-text">JAYISAAC AI</a>
+            <ul class="nav-links">
+                <li class="dropdown services-dropdown">
+                    <div class="dropdown-toggle" onclick="toggleDropdown('services')">
+                        Services
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="/ai-chatbot/">
+                            <div class="dropdown-icon">💬</div>
+                            <div class="dropdown-content">
+                                <h4>AI Chatbots</h4>
+                                <p>24/7 intelligent support</p>
+                            </div>
+                        </a>
+                        <a href="/ai-voiceagents/">
+                            <div class="dropdown-icon">🎙️</div>
+                            <div class="dropdown-content">
+                                <h4>Voice Agents</h4>
+                                <p>Natural voice AI</p>
+                            </div>
+                        </a>
+                        <a href="/ai-maintenanceop/">
+                            <div class="dropdown-icon">⚙️</div>
+                            <div class="dropdown-content">
+                                <h4>Maintenance AI</h4>
+                                <p>Predictive optimization</p>
+                            </div>
+                        </a>
+                        <a href="/ai-recruitassistant/">
+                            <div class="dropdown-icon">👥</div>
+                            <div class="dropdown-content">
+                                <h4>Recruiting AI</h4>
+                                <p>Automated hiring</p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown chatbot-dropdown">
+                    <div class="dropdown-toggle" onclick="toggleDropdown('chatbot')">
+                        AI Chatbots
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="/ai-chatbot/">
+                            <div class="dropdown-icon">💬</div>
+                            <div class="dropdown-content">
+                                <h4>AI Chatbots</h4>
+                                <p>Overview & features</p>
+                            </div>
+                        </a>
+                        <a href="/ai-chatbot/pricing.html">
+                            <div class="dropdown-icon">💰</div>
+                            <div class="dropdown-content">
+                                <h4>Pricing</h4>
+                                <p>Plans & purchase</p>
+                            </div>
+                        </a>
+                        <a href="/ai-chatbot/demo.html">
+                            <div class="dropdown-icon">🎯</div>
+                            <div class="dropdown-content">
+                                <h4>Demo</h4>
+                                <p>Try it live</p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="#" class="login-btn">Login</a></li>
+                <li class="account-dropdown">
+                    <div class="account-toggle" onclick="toggleAccountDropdown()">
+                        <img src="" alt="Profile" class="account-photo">
+                        <span class="account-name">Account</span>
+                        <span class="account-arrow">▼</span>
+                    </div>
+                    <div class="account-menu">
+                        <div class="account-header">
+                            <span class="account-name">Account</span>
+                            <span class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e2b232f27220e2b362f233e222b602d2123">[email&#160;protected]</a></span>
+                        </div>
+                        <a href="/my-orders.html">
+                            <span class="menu-icon">📦</span>
+                            My Orders
+                        </a>
+                        <a href="/support.html">
+                            <span class="menu-icon">💬</span>
+                            Support
+                        </a>
+                        <button class="logout-btn" onclick="handleLogout()">
+                            <span class="menu-icon">🚪</span>
+                            Logout
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo-container">
+                <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-icon">💬</div>
+        <h1>AI Chatbot <span class="gradient-text">Pricing</span></h1>
+        <p>Select your plan and start transforming your customer experience today.</p>
+        
+        <div class="country-selector">
+            <button class="country-btn" id="btn-us" onclick="setCountry('US')">
+                <span class="flag">🇺🇸</span>
+                <span>United States (USD)</span>
+            </button>
+            <button class="country-btn" id="btn-ca" onclick="setCountry('CA')">
+                <span class="flag">🇨🇦</span>
+                <span>Canada (CAD)</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <div class="pricing-grid">
+                <div class="pricing-card" data-plan="basic" onclick="selectPlan('basic')">
+                    <h3>Basic</h3>
+                    <div class="price" id="price-basic">$49<span>/month</span></div>
+                    <div class="currency-note" id="currency-basic">USD pricing</div>
+                    <ul>
+                        <li>20,000 annual conversations</li>
+                        <li>1 AI Agent</li>
+                        <li>Web Widget Channel</li>
+                        <li>NLU Intention Flows</li>
+                        <li>Generative AI (OpenAI)</li>
+                        <li>Data Indexing (3 PDF/CSV)</li>
+                        <li>Mail Handover</li>
+                        <li>Operational Reporting</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <button class="select-plan-btn">Select Basic</button>
+                </div>
+                
+                <div class="pricing-card featured" data-plan="standard" onclick="selectPlan('standard')">
+                    <h3>Standard</h3>
+                    <div class="price" id="price-standard">$149<span>/month</span></div>
+                    <div class="currency-note" id="currency-standard">USD pricing</div>
+                    <ul>
+                        <li>200,000 annual conversations</li>
+                        <li>Up to 4 AI Agents</li>
+                        <li>3 Channels</li>
+                        <li>Advanced Escalations</li>
+                        <li>Platform Integrations</li>
+                        <li>Data Indexing (10 Sources)</li>
+                        <li>GenAI Smart Reporting</li>
+                        <li>Pooled CSM</li>
+                        <li>All Basic features</li>
+                    </ul>
+                    <button class="select-plan-btn">Select Standard</button>
+                </div>
+                
+                <div class="pricing-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
+                    <h3>Enterprise</h3>
+                    <div class="price" id="price-enterprise">$499<span>/month</span></div>
+                    <div class="currency-note" id="currency-enterprise">USD pricing</div>
+                    <ul>
+                        <li>2M annual conversations</li>
+                        <li>Up to 10 AI Agents</li>
+                        <li>Unlimited Channels</li>
+                        <li>Complex Integrations</li>
+                        <li>LLM Agnosticism</li>
+                        <li>Version Control</li>
+                        <li>Workflow Automation</li>
+                        <li>Custom Reporting & API</li>
+                        <li>Dedicated CSM</li>
+                    </ul>
+                    <button class="select-plan-btn">Select Enterprise</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="checkout-section">
+        <div class="checkout-container">
+            <h2>Checkout</h2>
+            <div class="selected-plan-display" id="selected-plan-display">Please select a plan above</div>
+            
+            <!-- Login Prompt (shown when not logged in) -->
+            <div id="login-prompt-checkout" class="login-prompt-checkout">
+                <div class="login-icon">🔐</div>
+                <h3>Sign in to continue</h3>
+                <p>Sign in with Google for faster checkout - no forms to fill out!</p>
+                <button class="google-login-btn" onclick="window.firebaseAuth.signInWithGoogle()">
+                    <img src="https://www.google.com/favicon.ico" alt="Google">
+                    Sign in with Google
+                </button>
+                <span class="guest-link" onclick="showGuestCheckout()">Continue as guest</span>
+            </div>
+            
+            <!-- Logged In Checkout (simplified) -->
+            <div id="logged-in-checkout" style="display: none;">
+                <div id="user-info-display"></div>
+                
+                <form id="logged-in-form">
+                    <div class="form-group">
+                        <label for="logged-account-type">Account Type</label>
+                        <select id="logged-account-type" name="account-type" required onchange="toggleLoggedInFields()">
+                            <option value="personal" selected>Personal</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    
+                    <div id="logged-business-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="logged-company-name">Company Name</label>
+                            <input type="text" id="logged-company-name" name="company-name" placeholder="Enter company name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group optional">
+                        <label for="logged-website-url">Website URL</label>
+                        <input type="url" id="logged-website-url" name="website-url" placeholder="https://yourwebsite.com">
+                    </div>
+                    
+                    <button type="submit" class="checkout-btn" id="logged-checkout-btn" disabled>
+                        Complete Purchase
+                    </button>
+                </form>
+                
+                <p class="delivery-note">🚀 Your AI chatbot will be delivered within 1-24 hours</p>
+                <div class="delivery-disclaimer">
+                    <div class="disclaimer-checkbox">
+                        <input type="checkbox" id="logged-disclaimer-checkbox" onchange="validateLoggedInForm()">
+                        <label for="logged-disclaimer-checkbox">📧 <strong>I understand</strong> that depending on the product and pricing tier, delivery may take 1-72 hours. Upon purchase, I will be contacted via email to discuss delivery and implementation details.</label>
+                    </div>
+                </div>
+                
+                <div class="security-badges">
+                    <div class="security-badge"><span>🔒</span><span>SSL Secured</span></div>
+                    <div class="security-badge"><span>💳</span><span>Stripe Payments</span></div>
+                    <div class="security-badge"><span>✓</span><span>Cancel Anytime</span></div>
+                </div>
+            </div>
+            
+            <!-- Guest Checkout (full form) -->
+            <div id="guest-checkout" style="display: none;">
+                <form id="guest-form">
+                    <div class="form-group">
+                        <label for="guest-account-type">Account Type</label>
+                        <select id="guest-account-type" name="account-type" required onchange="toggleGuestFields()">
+                            <option value="" disabled selected>Select account type</option>
+                            <option value="personal">Personal</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    
+                    <div id="guest-personal-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="guest-name">Full Name</label>
+                            <input type="text" id="guest-name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guest-email">Email Address</label>
+                            <input type="email" id="guest-email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guest-verify-email">Confirm Email</label>
+                            <input type="email" id="guest-verify-email" name="verify-email" placeholder="Confirm your email" required>
+                        </div>
+                    </div>
+                    
+                    <div id="guest-business-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="guest-company-name">Company Name</label>
+                            <input type="text" id="guest-company-name" name="company-name" placeholder="Enter company name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guest-business-email">Business Email</label>
+                            <input type="email" id="guest-business-email" name="business-email" placeholder="Enter business email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guest-business-verify-email">Confirm Business Email</label>
+                            <input type="email" id="guest-business-verify-email" name="business-verify-email" placeholder="Confirm business email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group optional">
+                        <label for="guest-website-url">Website URL</label>
+                        <input type="url" id="guest-website-url" name="website-url" placeholder="https://yourwebsite.com">
+                    </div>
+                    
+                    <button type="submit" class="checkout-btn" id="guest-checkout-btn" disabled>
+                        Complete Purchase
+                    </button>
+                </form>
+                
+                <p class="delivery-note">🚀 Your AI chatbot will be delivered within 1-24 hours</p>
+                <div class="delivery-disclaimer">
+                    <div class="disclaimer-checkbox">
+                        <input type="checkbox" id="guest-disclaimer-checkbox" onchange="validateGuestForm()">
+                        <label for="guest-disclaimer-checkbox">📧 <strong>I understand</strong> that depending on the product and pricing tier, delivery may take 1-72 hours. Upon purchase, I will be contacted via email to discuss delivery and implementation details.</label>
+                    </div>
+                </div>
+                
+                <div class="security-badges">
+                    <div class="security-badge"><span>🔒</span><span>SSL Secured</span></div>
+                    <div class="security-badge"><span>💳</span><span>Stripe Payments</span></div>
+                    <div class="security-badge"><span>✓</span><span>Cancel Anytime</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-company">
+                <a href="/" class="footer-logo">
+                    <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
+                    <h3>JAYISAAC AI</h3>
+                </a>
+                <p>Intelligent automation solutions that help businesses streamline operations, enhance customer experiences, and accelerate sustainable growth.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="/ai-chatbot/">AI Chatbots</a></li>
+                    <li><a href="/ai-voiceagents/">Voice Agents</a></li>
+                    <li><a href="/ai-maintenanceop/">Maintenance</a></li>
+                    <li><a href="/ai-recruitassistant/">Recruiting</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/Policies.html">Privacy Policy</a></li>
+                    <li><a href="/Policies.html">Terms of Service</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
+    <script>
+        // ==========================================
+        // PRICING CONFIGURATION
+        // ==========================================
+        
+        // Base prices in USD (change these to update all prices)
+        var basePricesUSD = {
+            basic: 49,
+            standard: 149,
+            enterprise: 499
+        };
+        
+        // USD to CAD exchange rate (adjust as needed)
+        var USD_TO_CAD_RATE = 1.44;
+        
+        // Calculate CAD prices from USD
+        function convertToCAD(usdPrice) {
+            return Math.round(usdPrice * USD_TO_CAD_RATE);
+        }
+        
+        // Generate CAD prices
+        var basePricesCAD = {
+            basic: convertToCAD(basePricesUSD.basic),         // $49 USD → $71 CAD
+            standard: convertToCAD(basePricesUSD.standard),   // $149 USD → $215 CAD
+            enterprise: convertToCAD(basePricesUSD.enterprise) // $499 USD → $719 CAD
+        };
+        
+        // Plan details
+        var planNames = { basic: 'Basic', standard: 'Standard', enterprise: 'Enterprise' };
+        var planConversations = { basic: '20K conversations', standard: '200K conversations', enterprise: '2M conversations' };
+        
+        // Stripe Payment Links - BOTH USD AND CAD NOW ACTIVE
+        var stripeLinks = {
+            US: {
+                basic: 'https://buy.stripe.com/dRm28qeFb4C5euEeD85AQ09',
+                standard: 'https://buy.stripe.com/eVq5kC9kR6KdeuE52y5AQ0a',
+                enterprise: 'https://buy.stripe.com/4gM14m40xecF1HS0Mi5AQ0b'
+            },
+            CA: {
+                basic: 'https://buy.stripe.com/eVqcMY8Oneaj5AQeLDc3m09',
+                standard: 'https://buy.stripe.com/14A14g6Gf5DN2oE6f7c3m0a',
+                enterprise: 'https://buy.stripe.com/aFa14g0hR3vFaVadHzc3m0b'
+            }
+        };
+        
+        var currentCountry = 'US';
+        var selectedPlan = null;
+        
+        // ==========================================
+        // PRICE DISPLAY FUNCTIONS
+        // ==========================================
+        
+        function updatePriceDisplays() {
+            var prices = currentCountry === 'CA' ? basePricesCAD : basePricesUSD;
+            var currencySymbol = '$';
+            var currencyCode = currentCountry === 'CA' ? 'CAD' : 'USD';
+            
+            // Update each pricing card
+            document.getElementById('price-basic').innerHTML = currencySymbol + prices.basic + '<span>/month</span>';
+            document.getElementById('price-standard').innerHTML = currencySymbol + prices.standard + '<span>/month</span>';
+            document.getElementById('price-enterprise').innerHTML = currencySymbol + prices.enterprise + '<span>/month</span>';
+            
+            // Update currency notes
+            var currencyText = currencyCode + ' pricing';
+            document.getElementById('currency-basic').textContent = currencyText;
+            document.getElementById('currency-standard').textContent = currencyText;
+            document.getElementById('currency-enterprise').textContent = currencyText;
+        }
+        
+        // Geo-detection
+        async function detectCountry() {
+            try {
+                var response = await fetch('https://ipapi.co/json/');
+                var data = await response.json();
+                setCountry(data.country_code === 'CA' ? 'CA' : 'US');
+            } catch (error) {
+                setCountry('US');
+            }
+        }
+        
+        function setCountry(country) {
+            currentCountry = country;
+            document.getElementById('btn-us').classList.toggle('active', country === 'US');
+            document.getElementById('btn-ca').classList.toggle('active', country === 'CA');
+            
+            // Update all price displays
+            updatePriceDisplays();
+            
+            // Update checkout display if plan is selected
+            if (selectedPlan) updatePlanDisplay();
+        }
+        
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            var cards = document.querySelectorAll('.pricing-card');
+            cards.forEach(function(card) { card.classList.remove('selected'); });
+            document.querySelector('[data-plan="' + plan + '"]').classList.add('selected');
+            updatePlanDisplay();
+            validateLoggedInForm();
+            validateGuestForm();
+        }
+        
+        function updatePlanDisplay() {
+            var display = document.getElementById('selected-plan-display');
+            var prices = currentCountry === 'CA' ? basePricesCAD : basePricesUSD;
+            var currency = currentCountry === 'CA' ? 'CAD' : 'USD';
+            
+            if (selectedPlan) {
+                display.textContent = planNames[selectedPlan] + ' Plan - $' + prices[selectedPlan] + '/month (' + planConversations[selectedPlan] + ') ' + currency;
+                display.style.color = '#f97316';
+            } else {
+                display.textContent = 'Please select a plan above';
+                display.style.color = '#6b7280';
+            }
+        }
+        
+        // Show guest checkout
+        function showGuestCheckout() {
+            document.getElementById('login-prompt-checkout').style.display = 'none';
+            document.getElementById('guest-checkout').style.display = 'block';
+        }
+        
+        // Logged-in form validation
+        function validateLoggedInForm() {
+            var isValid = selectedPlan && window.checkoutUserData;
+            var accountType = document.getElementById('logged-account-type').value;
+            if (accountType === 'business') {
+                var companyName = document.getElementById('logged-company-name').value.trim();
+                if (!companyName) isValid = false;
+            }
+            // Check disclaimer checkbox
+            var disclaimerCheckbox = document.getElementById('logged-disclaimer-checkbox');
+            if (disclaimerCheckbox && !disclaimerCheckbox.checked) isValid = false;
+            document.getElementById('logged-checkout-btn').disabled = !isValid;
+            return isValid;
+        }
+        
+        function toggleLoggedInFields() {
+            var accountType = document.getElementById('logged-account-type').value;
+            document.getElementById('logged-business-fields').style.display = accountType === 'business' ? 'block' : 'none';
+            validateLoggedInForm();
+        }
+        
+        // Guest form validation
+        function validateGuestForm() {
+            var accountType = document.getElementById('guest-account-type').value;
+            var isValid = selectedPlan && accountType;
+            if (accountType === 'personal') {
+                var name = document.getElementById('guest-name').value.trim();
+                var email = document.getElementById('guest-email').value.trim();
+                var verifyEmail = document.getElementById('guest-verify-email').value.trim();
+                if (!name || !email || !isValidEmail(email) || email !== verifyEmail) isValid = false;
+            } else if (accountType === 'business') {
+                var companyName = document.getElementById('guest-company-name').value.trim();
+                var businessEmail = document.getElementById('guest-business-email').value.trim();
+                var businessVerifyEmail = document.getElementById('guest-business-verify-email').value.trim();
+                if (!companyName || !businessEmail || !isValidEmail(businessEmail) || businessEmail !== businessVerifyEmail) isValid = false;
+            }
+            // Check disclaimer checkbox
+            var disclaimerCheckbox = document.getElementById('guest-disclaimer-checkbox');
+            if (disclaimerCheckbox && !disclaimerCheckbox.checked) isValid = false;
+            document.getElementById('guest-checkout-btn').disabled = !isValid;
+            return isValid;
+        }
+        
+        function toggleGuestFields() {
+            var accountType = document.getElementById('guest-account-type').value;
+            document.getElementById('guest-personal-fields').style.display = accountType === 'personal' ? 'block' : 'none';
+            document.getElementById('guest-business-fields').style.display = accountType === 'business' ? 'block' : 'none';
+            validateGuestForm();
+        }
+        
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        // Checkout handlers
+        function handleLoggedInCheckout(e) {
+            e.preventDefault();
+            if (!validateLoggedInForm()) return;
+            var link = stripeLinks[currentCountry][selectedPlan];
+            var email = window.checkoutUserData.email;
+            if (email) {
+                link += (link.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
+            }
+            window.location.href = link;
+        }
+        
+        function handleGuestCheckout(e) {
+            e.preventDefault();
+            if (!validateGuestForm()) return;
+            var link = stripeLinks[currentCountry][selectedPlan];
+            var accountType = document.getElementById('guest-account-type').value;
+            var email = accountType === 'personal' 
+                ? document.getElementById('guest-email').value 
+                : document.getElementById('guest-business-email').value;
+            if (email) {
+                link += (link.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
+            }
+            window.location.href = link;
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            detectCountry();
+            
+            // Logged-in form
+            document.getElementById('logged-in-form').addEventListener('submit', handleLoggedInCheckout);
+            document.getElementById('logged-company-name').addEventListener('input', validateLoggedInForm);
+            
+            // Guest form
+            document.getElementById('guest-form').addEventListener('submit', handleGuestCheckout);
+            var guestInputs = document.querySelectorAll('#guest-checkout input, #guest-checkout select');
+            guestInputs.forEach(function(input) {
+                input.addEventListener('input', validateGuestForm);
+            });
+            
+            // Particles
+            if (window.innerWidth > 768) {
+                particlesJS('particles-js', {
+                    particles: { number: { value: 60, density: { enable: true, value_area: 1000 } }, color: { value: '#f97316' }, shape: { type: 'circle' }, opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: '#f97316', opacity: 0.2, width: 1 }, move: { enable: true, speed: 1.5, direction: 'none', random: true, straight: false, out_mode: 'bounce' } },
+                    interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' }, resize: true }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } } } },
+                    retina_detect: true
+                });
+            }
+        });
+        
+        // Header scroll
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('header');
+            if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
+        });
+        
+        function toggleMenu() {
+            document.querySelector('.menu-toggle').classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+        
+        function toggleDropdown(type) {
+            var servicesDropdown = document.querySelector('.services-dropdown');
+            var chatbotDropdown = document.querySelector('.chatbot-dropdown');
+            var accountDropdown = document.querySelector('.account-dropdown');
+            
+            if (type === 'services') {
+                servicesDropdown.classList.toggle('active');
+                if (chatbotDropdown) chatbotDropdown.classList.remove('active');
+            } else if (type === 'chatbot') {
+                if (chatbotDropdown) chatbotDropdown.classList.toggle('active');
+                if (servicesDropdown) servicesDropdown.classList.remove('active');
+            }
+            
+            if (accountDropdown) accountDropdown.classList.remove('active');
+        }
+        
+        function toggleAccountDropdown() {
+            var accountDropdown = document.querySelector('.account-dropdown');
+            accountDropdown.classList.toggle('active');
+            var dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(function(dropdown) { dropdown.classList.remove('active'); });
+        }
+        
+        function handleLogout() {
+            if (window.firebaseAuth) {
+                window.firebaseAuth.signOut();
+                var accountDropdown = document.querySelector('.account-dropdown');
+                if (accountDropdown) accountDropdown.classList.remove('active');
+            }
+        }
+        
+        document.addEventListener('click', function(event) {
+            var dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(function(dropdown) {
+                if (!dropdown.contains(event.target)) dropdown.classList.remove('active');
+            });
+            var accountDropdown = document.querySelector('.account-dropdown');
+            if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
