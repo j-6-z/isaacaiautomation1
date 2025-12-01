@@ -243,9 +243,11 @@
             .footer-content { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-            body { padding-top: 80px; }
+            body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
-            .logo-container { display: none; }
+            .logo-container { padding: 0.75rem 1rem 0 1rem; padding-bottom: 2rem; }
+            .logo-container img { height: 55px; width: 55px; }
+            .logo-container.hidden { display: none; }
             .menu-toggle { display: flex; }
             .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
             .nav-links.active { display: flex; }
@@ -560,8 +562,10 @@
         function toggleMenu() {
             var menuToggle = document.querySelector('.menu-toggle');
             var navLinks = document.querySelector('.nav-links');
+            var logoContainer = document.querySelector('.logo-container');
             menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+            if (logoContainer) logoContainer.classList.toggle('hidden');
         }
 
         function toggleDropdown() {

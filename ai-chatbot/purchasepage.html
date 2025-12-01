@@ -117,7 +117,7 @@
                 // Update nav
                 if (loginBtn) {
                     loginBtn.style.display = 'inline-flex';
-                    loginBtn.textContent = 'Login';
+                    loginBtn.textContent = 'Login/Signup';
                     loginBtn.href = '#';
                     loginBtn.onclick = (e) => {
                         e.preventDefault();
@@ -298,13 +298,17 @@
             .header-text { font-size: 1rem; }
             .logo-container { padding: 0.75rem 1rem 0 1rem; padding-bottom: 2rem; }
             .logo-container img { height: 55px; width: 55px; }
+            .logo-container.hidden { display: none; }
             .menu-toggle { display: flex; }
-            .nav-links { display: none; position: fixed; top: calc(100% + 80px); left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; }
+            .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
             .nav-links.active { display: flex; }
             .dropdown { width: 100%; }
             .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
             .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-toggle { justify-content: space-between; width: 100%; padding: 0.5rem 0; }
+            .dropdown-toggle { justify-content: center; width: 100%; padding: 0.5rem 0; }
+            .dropdown-menu a { justify-content: center; text-align: center; }
+            .dropdown-menu a .dropdown-icon { display: none; }
+            .dropdown-menu a .dropdown-content p { display: none; }
             .login-btn { width: 100%; text-align: center; justify-content: center; }
             .account-dropdown { width: 100%; }
             .account-toggle { width: 100%; justify-content: center; }
@@ -413,17 +417,17 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#" class="login-btn">Login</a></li>
+                <li><a href="#" class="login-btn">Login/Signup</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
-                        <img src="" alt="Profile" class="account-photo">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f97316&color=fff" alt="Profile" class="account-photo">
                         <span class="account-name">Account</span>
                         <span class="account-arrow">▼</span>
                     </div>
                     <div class="account-menu">
                         <div class="account-header">
                             <span class="account-name">Account</span>
-                            <span class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e2b232f27220e2b362f233e222b602d2123">[email&#160;protected]</a></span>
+                            <span class="user-email">email@example.com</span>
                         </div>
                         <a href="/my-orders.html">
                             <span class="menu-icon">📦</span>
@@ -691,7 +695,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
@@ -928,8 +932,12 @@
         });
         
         function toggleMenu() {
-            document.querySelector('.menu-toggle').classList.toggle('active');
-            document.querySelector('.nav-links').classList.toggle('active');
+            var menuToggle = document.querySelector('.menu-toggle');
+            var navLinks = document.querySelector('.nav-links');
+            var logoContainer = document.querySelector('.logo-container');
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            if (logoContainer) logoContainer.classList.toggle('hidden');
         }
         
         function toggleDropdown(type) {
