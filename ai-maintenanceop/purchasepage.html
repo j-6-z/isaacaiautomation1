@@ -65,7 +65,6 @@
             const loginBtn = document.querySelector('.login-btn');
             const accountDropdown = document.querySelector('.account-dropdown');
             const loggedInCheckout = document.getElementById('logged-in-checkout');
-            const guestCheckout = document.getElementById('guest-checkout');
             const loginPromptCheckout = document.getElementById('login-prompt-checkout');
             
             if (user) {
@@ -82,7 +81,6 @@
                 }
                 
                 if (loggedInCheckout) loggedInCheckout.style.display = 'block';
-                if (guestCheckout) guestCheckout.style.display = 'none';
                 if (loginPromptCheckout) loginPromptCheckout.style.display = 'none';
                 
                 const userInfoDisplay = document.getElementById('user-info-display');
@@ -112,16 +110,10 @@
                 if (loginBtn) {
                     loginBtn.style.display = 'inline-flex';
                     loginBtn.textContent = 'Login/Signup';
-                    loginBtn.href = '#';
-                    loginBtn.onclick = (e) => {
-                        e.preventDefault();
-                        window.firebaseAuth.signInWithGoogle();
-                    };
                 }
                 if (accountDropdown) accountDropdown.style.display = 'none';
                 
                 if (loggedInCheckout) loggedInCheckout.style.display = 'none';
-                if (guestCheckout) guestCheckout.style.display = 'none';
                 if (loginPromptCheckout) loginPromptCheckout.style.display = 'block';
                 
                 window.checkoutUserData = null;
@@ -250,15 +242,18 @@
             height: 70px;
             width: 70px;
             border-radius: 50%;
-            transition: transform 0.3s ease;
-            border: 2px solid var(--primary);
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4), 0 0 20px rgba(249, 115, 22, 0.2);
             position: relative;
             z-index: 1;
+            object-fit: cover;
         }
         
         .logo-container img:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5), 0 0 30px rgba(249, 115, 22, 0.3);
+            border-color: var(--secondary);
         }
         
         .nav-links {
@@ -909,19 +904,6 @@
         .google-login-btn img {
             width: 24px;
             height: 24px;
-        }
-        
-        .guest-link {
-            display: block;
-            margin-top: 1rem;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        .guest-link:hover {
-            color: var(--primary);
         }
 
         /* Form Styles */
@@ -1580,7 +1562,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#" class="login-btn">Login/Signup</a></li>
+                <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
                         <img src="https://ui-avatars.com/api/?name=User&background=f97316&color=fff" alt="Profile" class="account-photo">
@@ -1709,7 +1691,6 @@
                     <img src="https://www.google.com/favicon.ico" alt="Google">
                     Sign in with Google
                 </button>
-                <span class="guest-link" onclick="showGuestCheckout()">Continue as guest</span>
             </div>
             
             <!-- Logged In Checkout (simplified) -->
@@ -1747,73 +1728,6 @@
                     <div class="disclaimer-checkbox">
                         <input type="checkbox" id="logged-disclaimer-checkbox" onchange="validateLoggedInForm()">
                         <label for="logged-disclaimer-checkbox">📧 <strong>I understand</strong> that depending on the product and pricing tier, delivery may take 1-72 hours. Upon purchase, I will be contacted via email to discuss delivery and implementation details.</label>
-                    </div>
-                </div>
-                
-                <div class="security-badges">
-                    <div class="security-badge"><span>🔒</span><span>SSL Secured</span></div>
-                    <div class="security-badge"><span>💳</span><span>Stripe Payments</span></div>
-                    <div class="security-badge"><span>✓</span><span>Cancel Anytime</span></div>
-                </div>
-            </div>
-            
-            <!-- Guest Checkout (full form) -->
-            <div id="guest-checkout" style="display: none;">
-                <form id="guest-form">
-                    <div class="form-group">
-                        <label for="guest-account-type">Account Type</label>
-                        <select id="guest-account-type" name="account-type" required onchange="toggleGuestFields()">
-                            <option value="" disabled selected>Select account type</option>
-                            <option value="personal">Personal</option>
-                            <option value="business">Business</option>
-                        </select>
-                    </div>
-                    
-                    <div id="guest-personal-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="guest-name">Full Name</label>
-                            <input type="text" id="guest-name" name="name" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="guest-email">Email Address</label>
-                            <input type="email" id="guest-email" name="email" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="guest-verify-email">Confirm Email</label>
-                            <input type="email" id="guest-verify-email" name="verify-email" placeholder="Confirm your email" required>
-                        </div>
-                    </div>
-                    
-                    <div id="guest-business-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="guest-company-name">Company Name</label>
-                            <input type="text" id="guest-company-name" name="company-name" placeholder="Enter company name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="guest-business-email">Business Email</label>
-                            <input type="email" id="guest-business-email" name="business-email" placeholder="Enter business email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="guest-business-verify-email">Confirm Business Email</label>
-                            <input type="email" id="guest-business-verify-email" name="business-verify-email" placeholder="Confirm business email" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group optional">
-                        <label for="guest-website-url">Website URL</label>
-                        <input type="url" id="guest-website-url" name="website-url" placeholder="https://yourwebsite.com">
-                    </div>
-                    
-                    <button type="submit" class="checkout-btn" id="guest-checkout-btn" disabled>
-                        Complete Purchase
-                    </button>
-                </form>
-                
-                <p class="delivery-note">⚙️ AI maintenance configured within 24-48 hours</p>
-                <div class="delivery-disclaimer">
-                    <div class="disclaimer-checkbox">
-                        <input type="checkbox" id="guest-disclaimer-checkbox" onchange="validateGuestForm()">
-                        <label for="guest-disclaimer-checkbox">📧 <strong>I understand</strong> that depending on the product and pricing tier, delivery may take 1-72 hours. Upon purchase, I will be contacted via email to discuss delivery and implementation details.</label>
                     </div>
                 </div>
                 
@@ -1947,7 +1861,6 @@
             document.querySelector('[data-plan="' + plan + '"]').classList.add('selected');
             updatePlanDisplay();
             validateLoggedInForm();
-            validateGuestForm();
             
             // Scroll checkout into view
             document.querySelector('.checkout-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1965,11 +1878,6 @@
                 display.textContent = 'Please select a plan above';
                 display.style.color = '#6b7280';
             }
-        }
-        
-        function showGuestCheckout() {
-            document.getElementById('login-prompt-checkout').style.display = 'none';
-            document.getElementById('guest-checkout').style.display = 'block';
         }
         
         function validateLoggedInForm() {
@@ -1991,33 +1899,6 @@
             validateLoggedInForm();
         }
         
-        function validateGuestForm() {
-            var accountType = document.getElementById('guest-account-type').value;
-            var isValid = selectedPlan && accountType;
-            if (accountType === 'personal') {
-                var name = document.getElementById('guest-name').value.trim();
-                var email = document.getElementById('guest-email').value.trim();
-                var verifyEmail = document.getElementById('guest-verify-email').value.trim();
-                if (!name || !email || !isValidEmail(email) || email !== verifyEmail) isValid = false;
-            } else if (accountType === 'business') {
-                var companyName = document.getElementById('guest-company-name').value.trim();
-                var businessEmail = document.getElementById('guest-business-email').value.trim();
-                var businessVerifyEmail = document.getElementById('guest-business-verify-email').value.trim();
-                if (!companyName || !businessEmail || !isValidEmail(businessEmail) || businessEmail !== businessVerifyEmail) isValid = false;
-            }
-            var disclaimerCheckbox = document.getElementById('guest-disclaimer-checkbox');
-            if (disclaimerCheckbox && !disclaimerCheckbox.checked) isValid = false;
-            document.getElementById('guest-checkout-btn').disabled = !isValid;
-            return isValid;
-        }
-        
-        function toggleGuestFields() {
-            var accountType = document.getElementById('guest-account-type').value;
-            document.getElementById('guest-personal-fields').style.display = accountType === 'personal' ? 'block' : 'none';
-            document.getElementById('guest-business-fields').style.display = accountType === 'business' ? 'block' : 'none';
-            validateGuestForm();
-        }
-        
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
@@ -2033,32 +1914,12 @@
             window.location.href = link;
         }
         
-        function handleGuestCheckout(e) {
-            e.preventDefault();
-            if (!validateGuestForm()) return;
-            var link = stripeLinks[currentCountry][selectedPlan];
-            var accountType = document.getElementById('guest-account-type').value;
-            var email = accountType === 'personal' 
-                ? document.getElementById('guest-email').value 
-                : document.getElementById('guest-business-email').value;
-            if (email) {
-                link += (link.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
-            }
-            window.location.href = link;
-        }
-        
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
             detectCountry();
             
             document.getElementById('logged-in-form').addEventListener('submit', handleLoggedInCheckout);
             document.getElementById('logged-company-name').addEventListener('input', validateLoggedInForm);
-            
-            document.getElementById('guest-form').addEventListener('submit', handleGuestCheckout);
-            var guestInputs = document.querySelectorAll('#guest-checkout input, #guest-checkout select');
-            guestInputs.forEach(function(input) {
-                input.addEventListener('input', validateGuestForm);
-            });
             
             if (window.innerWidth > 768) {
                 particlesJS('particles-js', {
