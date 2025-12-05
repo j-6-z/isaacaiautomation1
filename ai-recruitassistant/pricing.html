@@ -169,7 +169,7 @@
         .pricing-card { background: white; border: 2px solid var(--border); border-radius: 20px; padding: 2rem; text-align: center; display: flex; flex-direction: column; transition: all 0.4s ease; position: relative; min-height: 520px; }
         .pricing-card:hover { transform: scale(1.03) translateY(-5px); box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2); border-color: var(--primary); }
         .pricing-card.featured { border-color: var(--primary); box-shadow: 0 10px 40px rgba(249, 115, 22, 0.15); }
-        .pricing-card.featured::after { content: 'POPULAR'; position: absolute; top: -12px; right: 20px; background: #000; color: white; padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; }
+        .pricing-card.featured::after { content: 'POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 0.5rem 1.25rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; z-index: 10; }
         .pricing-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
         .pricing-card .price { font-size: 3rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.25rem; line-height: 1; }
         .pricing-card .price span { font-size: 1.1rem; font-weight: 500; color: var(--text-gray); }
@@ -179,8 +179,8 @@
         .pricing-card ul { list-style: none; margin: 1rem 0; flex-grow: 1; text-align: left; }
         .pricing-card ul li { margin-bottom: 0.55rem; padding-left: 1.75rem; position: relative; color: var(--text-gray); font-size: 0.82rem; line-height: 1.4; }
         .pricing-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; font-size: 0.95rem; }
-        .pricing-card a { display: inline-block; background: #000000; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1rem; font-weight: 700; margin-top: auto; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
-        .pricing-card a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
+        .pricing-card .subscribe-btn { display: block; background: #000000; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1rem; font-weight: 700; margin-top: auto; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); text-align: center; }
+        .pricing-card .subscribe-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
         
         /* Overage price styling */
         .overage-usd, .overage-cad { display: none; }
@@ -241,11 +241,33 @@
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
         .purchase-button { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-size: 1rem; font-weight: 700; box-shadow: 0 8px 30px rgba(249, 115, 22, 0.4); z-index: 1000; transition: all 0.3s ease; }
         .purchase-button:hover { transform: translateX(-50%) translateY(-3px); box-shadow: 0 12px 40px rgba(249, 115, 22, 0.5); }
+        
+        /* ===== MOBILE RESPONSIVE FIXES ===== */
         @media (max-width: 1024px) {
             .footer-content { grid-template-columns: 1fr; gap: 2rem; }
             .benefits-grid { grid-template-columns: 1fr; }
             .contact-grid { grid-template-columns: 1fr; }
         }
+        
+        /* Tablet - horizontal scroll with larger cards */
+        @media (max-width: 900px) {
+            .pricing-grid {
+                display: flex;
+                gap: 1rem;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding: 1rem 0.5rem 2rem;
+                margin: 0 -1rem;
+            }
+            .pricing-card {
+                flex: 0 0 280px;
+                scroll-snap-align: center;
+                min-height: auto;
+            }
+        }
+        
+        /* Mobile - stacked cards for best readability */
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -273,27 +295,109 @@
             .hero-section h1 { font-size: 2.25rem; }
             .hero-section p { font-size: 1rem; }
             .currency-btn { padding: 0.6rem 1rem; font-size: 0.85rem; }
-            .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .pricing-card { padding: 1.25rem; min-width: 0; border-radius: 16px; min-height: 480px; }
-            .pricing-card:hover { transform: scale(1.02) translateY(-3px); }
-            .pricing-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-            .pricing-card .price { font-size: 2rem; }
-            .pricing-card .price span { font-size: 0.85rem; display: block; }
-            .pricing-card .parses-included { font-size: 0.75rem; padding: 0.5rem; margin: 0.75rem 0; }
-            .pricing-card ul { margin: 0.75rem 0; }
-            .pricing-card ul li { font-size: 0.68rem; margin-bottom: 0.35rem; padding-left: 1.25rem; }
-            .pricing-card ul li::before { font-size: 0.8rem; }
-            .pricing-card a { padding: 0.75rem 1rem; font-size: 0.85rem; }
+            
+            /* FIXED: Mobile Pricing Cards - Stacked Layout */
+            .pricing-section { padding: 1.5rem 1rem; }
+            .pricing-section h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+            
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                overflow: visible;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .pricing-card {
+                flex: none;
+                width: 100%;
+                padding: 1.75rem 1.5rem;
+                min-height: auto;
+                border-radius: 20px;
+                margin-top: 0.5rem;
+            }
+            
+            /* Featured card (Pro) gets extra top margin for badge */
+            .pricing-card.featured {
+                margin-top: 1rem;
+            }
+            
+            .pricing-card.featured::after {
+                top: -14px;
+                font-size: 0.7rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .pricing-card h3 {
+                font-size: 1.4rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .pricing-card .price {
+                font-size: 2.75rem;
+            }
+            
+            .pricing-card .price span {
+                font-size: 1rem;
+                display: inline;
+            }
+            
+            .pricing-card .parses-included {
+                font-size: 0.9rem;
+                padding: 0.75rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .pricing-card ul {
+                margin: 1rem 0;
+            }
+            
+            .pricing-card ul li {
+                font-size: 0.9rem;
+                margin-bottom: 0.6rem;
+                padding-left: 1.5rem;
+                line-height: 1.5;
+            }
+            
+            .pricing-card ul li::before {
+                font-size: 1rem;
+            }
+            
+            .pricing-card .subscribe-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 12px;
+                margin-top: 1rem;
+            }
+            
             .features-section, .benefits-section, .contact-section { padding: 3rem 1.5rem; }
             .purchase-button { bottom: 15px; padding: 0.875rem 2rem; font-size: 0.9rem; }
             .footer-logo { flex-direction: column; text-align: center; }
         }
-        @media (max-width: 480px) {
-            .pricing-card { padding: 1rem; min-height: 460px; }
-            .pricing-card h3 { font-size: 1rem; }
-            .pricing-card .price { font-size: 1.75rem; }
-            .pricing-card ul li { font-size: 0.62rem; }
-            .pricing-card a { padding: 0.65rem 0.75rem; font-size: 0.8rem; }
+        
+        /* Small phones - ensure everything still fits */
+        @media (max-width: 380px) {
+            .pricing-card {
+                padding: 1.5rem 1.25rem;
+            }
+            
+            .pricing-card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .pricing-card .price {
+                font-size: 2.25rem;
+            }
+            
+            .pricing-card ul li {
+                font-size: 0.85rem;
+            }
+            
+            .pricing-card .subscribe-btn {
+                padding: 0.875rem 1.25rem;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -438,7 +542,7 @@
                         <li>Overage: <span class="overage-usd active">$0.025/parse</span><span class="overage-cad">$0.035/parse</span></li>
                         <li>Perfect for startups hiring 5-10 roles/month</li>
                     </ul>
-                    <a href="/ai-recruitassistant/purchasepage.html">Subscribe</a>
+                    <a href="/ai-recruitassistant/purchasepage.html" class="subscribe-btn">Subscribe</a>
                 </div>
                 <div class="pricing-card featured">
                     <h3>Pro</h3>
@@ -455,7 +559,7 @@
                         <li>Overage: <span class="overage-usd active">$0.02/parse</span><span class="overage-cad">$0.03/parse</span></li>
                         <li>Ideal for mid-sized firms & agencies</li>
                     </ul>
-                    <a href="/ai-recruitassistant/purchasepage.html">Subscribe</a>
+                    <a href="/ai-recruitassistant/purchasepage.html" class="subscribe-btn">Subscribe</a>
                 </div>
                 <div class="pricing-card">
                     <h3>Business</h3>
@@ -472,7 +576,7 @@
                         <li>Overage: <span class="overage-usd active">$0.015/parse</span><span class="overage-cad">$0.02/parse</span></li>
                         <li>Built for enterprises with 50+ hires/month</li>
                     </ul>
-                    <a href="/ai-recruitassistant/purchasepage.html">Subscribe</a>
+                    <a href="/ai-recruitassistant/purchasepage.html" class="subscribe-btn">Subscribe</a>
                 </div>
             </div>
         </div>
@@ -598,8 +702,6 @@
         </div>
     </footer>
 
-    <!-- <a href="/ai-recruitassistant/purchasepage.html" class="purchase-button">👥 Get AI Recruiting</a> -->
-
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
@@ -668,13 +770,11 @@
         
         // Currency Toggle Function
         function switchCurrency(currency) {
-            // Update toggle buttons
             document.querySelectorAll('.currency-btn').forEach(function(btn) {
                 btn.classList.remove('active');
             });
             document.querySelector('.currency-btn[data-currency="' + currency + '"]').classList.add('active');
             
-            // Update prices
             document.querySelectorAll('.price-usd').forEach(function(el) {
                 el.classList.toggle('active', currency === 'usd');
             });
@@ -682,7 +782,6 @@
                 el.classList.toggle('active', currency === 'cad');
             });
             
-            // Update overage rates
             document.querySelectorAll('.overage-usd').forEach(function(el) {
                 el.classList.toggle('active', currency === 'usd');
             });
@@ -690,11 +789,9 @@
                 el.classList.toggle('active', currency === 'cad');
             });
             
-            // Store preference
             localStorage.setItem('preferred-currency', currency);
         }
         
-        // Check for saved currency preference on load
         document.addEventListener('DOMContentLoaded', function() {
             var savedCurrency = localStorage.getItem('preferred-currency');
             if (savedCurrency) {

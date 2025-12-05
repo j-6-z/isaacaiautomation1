@@ -652,11 +652,13 @@
             transform: translateX(-50%);
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 0.4rem 1.5rem;
+            padding: 0.5rem 1.25rem;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.5px;
+            white-space: nowrap;
+            z-index: 10;
         }
         
         .pricing-card h3 {
@@ -725,8 +727,8 @@
             display: inline;
         }
         
-        .pricing-card a {
-            display: inline-block;
+        .pricing-card .subscribe-btn {
+            display: block;
             background: #000000;
             color: white;
             padding: 1rem 2.5rem;
@@ -737,20 +739,21 @@
             margin-top: auto;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
         
-        .pricing-card a:hover {
+        .pricing-card .subscribe-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             background: #1a1a1a;
         }
         
-        .pricing-card.featured a {
+        .pricing-card.featured .subscribe-btn {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
         }
         
-        .pricing-card.featured a:hover {
+        .pricing-card.featured .subscribe-btn:hover {
             box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
         }
         
@@ -910,12 +913,32 @@
             box-shadow: 0 12px 35px rgba(249, 115, 22, 0.5);
         }
         
+        /* ===== MOBILE RESPONSIVE FIXES ===== */
         @media (max-width: 1024px) {
             .footer-content {
                 grid-template-columns: 1fr;
             }
         }
         
+        /* Tablet - horizontal scroll with larger cards */
+        @media (max-width: 900px) {
+            .pricing-grid {
+                display: flex;
+                gap: 1rem;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding: 1rem 0.5rem 2rem;
+                margin: 0 -1rem;
+            }
+            .pricing-card {
+                flex: 0 0 300px;
+                scroll-snap-align: center;
+                min-height: auto;
+            }
+        }
+        
+        /* Mobile - stacked cards for best readability */
         @media (max-width: 768px) {
             body {
                 padding-top: 140px;
@@ -1021,58 +1044,84 @@
                 padding: 0.6rem 1rem;
                 font-size: 0.85rem;
             }
+            
+            /* FIXED: Mobile Pricing Cards - Stacked Layout */
             .pricing-section {
-                padding: 3rem 1rem;
+                padding: 2rem 1rem;
             }
             .pricing-section h2 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             .pricing-section h3 {
-                font-size: 1.25rem;
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
             }
+            
             .pricing-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.75rem;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                overflow: visible;
+                padding: 0;
+                margin: 0;
             }
+            
             .pricing-card {
-                padding: 1.25rem;
-                min-width: 0;
-                border-radius: 12px;
-                min-height: 500px;
+                flex: none;
+                width: 100%;
+                padding: 1.75rem 1.5rem;
+                min-height: auto;
+                border-radius: 20px;
+                margin-top: 0.5rem;
             }
-            .pricing-card:hover {
-                transform: scale(1.02) translateY(-3px);
+            
+            /* Featured card (Standard) gets extra top margin for badge */
+            .pricing-card.featured {
+                margin-top: 1rem;
             }
+            
+            .pricing-card.featured::before {
+                top: -14px;
+                font-size: 0.7rem;
+                padding: 0.4rem 1rem;
+            }
+            
             .pricing-card h3 {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
                 margin-bottom: 0.75rem;
             }
+            
             .pricing-card .price {
-                font-size: 2rem;
-                margin-bottom: 0.5rem;
+                font-size: 2.75rem;
             }
+            
             .pricing-card .price span {
-                font-size: 0.9rem;
-                display: block;
+                font-size: 1rem;
+                display: inline;
             }
+            
             .pricing-card ul {
                 margin: 1.25rem 0;
-                font-size: 0.8rem;
             }
+            
             .pricing-card ul li {
-                margin-bottom: 0.6rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.7rem;
                 padding-left: 1.5rem;
+                line-height: 1.5;
             }
+            
             .pricing-card ul li::before {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
-            .pricing-card a {
-                padding: 0.75rem 1.25rem;
-                font-size: 0.85rem;
+            
+            .pricing-card .subscribe-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 12px;
+                margin-top: 1rem;
             }
+            
             .features-section {
                 padding: 3rem 1.5rem;
             }
@@ -1091,26 +1140,27 @@
             }
         }
         
-        @media (max-width: 480px) {
+        /* Small phones - ensure everything still fits */
+        @media (max-width: 380px) {
             .pricing-card {
-                padding: 1rem;
-                min-height: 480px;
+                padding: 1.5rem 1.25rem;
             }
+            
             .pricing-card h3 {
-                font-size: 1.05rem;
+                font-size: 1.25rem;
             }
+            
             .pricing-card .price {
-                font-size: 1.8rem;
+                font-size: 2.25rem;
             }
-            .pricing-card .price span {
-                font-size: 0.8rem;
+            
+            .pricing-card ul li {
+                font-size: 0.85rem;
             }
-            .pricing-card ul {
-                font-size: 0.75rem;
-            }
-            .pricing-card a {
-                padding: 0.65rem 1rem;
-                font-size: 0.8rem;
+            
+            .pricing-card .subscribe-btn {
+                padding: 0.875rem 1.25rem;
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -1258,7 +1308,7 @@
                         <li>Email Support</li>
                         <li>GenAI Reports (<span class="overage-usd active">+$0.50/m</span><span class="overage-cad">+$0.69/m</span>)</li>
                     </ul>
-                    <a href="/ai-chatbot/purchasepage.html">Get Started</a>
+                    <a href="/ai-chatbot/purchasepage.html" class="subscribe-btn">Get Started</a>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -1276,7 +1326,7 @@
                         <li>Pooled CSM</li>
                         <li>All Basic features</li>
                     </ul>
-                    <a href="/ai-chatbot/purchasepage.html">Get Started</a>
+                    <a href="/ai-chatbot/purchasepage.html" class="subscribe-btn">Get Started</a>
                 </div>
                 
                 <div class="pricing-card">
@@ -1296,7 +1346,7 @@
                         <li>Resolution Pricing (Optional)</li>
                         <li>All Standard features</li>
                     </ul>
-                    <a href="/ai-chatbot/purchasepage.html">Get Started</a>
+                    <a href="/ai-chatbot/purchasepage.html" class="subscribe-btn">Get Started</a>
                 </div>
             </div>
         </div>
@@ -1363,8 +1413,6 @@
             <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- <a href="/ai-chatbot/purchasepage.html" class="purchase-button">Start Free Trial →</a> -->
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
@@ -1457,13 +1505,11 @@
 
         // Currency Toggle Function
         function switchCurrency(currency) {
-            // Update toggle buttons
             document.querySelectorAll('.currency-btn').forEach(function(btn) {
                 btn.classList.remove('active');
             });
             document.querySelector('.currency-btn[data-currency="' + currency + '"]').classList.add('active');
             
-            // Update prices
             document.querySelectorAll('.price-usd').forEach(function(el) {
                 el.classList.toggle('active', currency === 'usd');
             });
@@ -1471,7 +1517,6 @@
                 el.classList.toggle('active', currency === 'cad');
             });
             
-            // Update overage rates
             document.querySelectorAll('.overage-usd').forEach(function(el) {
                 el.classList.toggle('active', currency === 'usd');
             });
@@ -1479,11 +1524,9 @@
                 el.classList.toggle('active', currency === 'cad');
             });
             
-            // Store preference
             localStorage.setItem('preferred-currency', currency);
         }
         
-        // Check for saved currency preference on load
         document.addEventListener('DOMContentLoaded', function() {
             var savedCurrency = localStorage.getItem('preferred-currency');
             if (savedCurrency) {
