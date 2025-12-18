@@ -81,11 +81,8 @@
                 if (loginBtn) {
                     loginBtn.style.display = 'inline-flex';
                     loginBtn.textContent = 'Login/Signup';
-                    loginBtn.href = '#';
-                    loginBtn.onclick = (e) => {
-                        e.preventDefault();
-                        window.firebaseAuth.signInWithGoogle();
-                    };
+                    loginBtn.href = '/login.html';
+                    loginBtn.onclick = null;
                 }
                 if (accountDropdown) accountDropdown.style.display = 'none';
             }
@@ -276,7 +273,7 @@
                         </a>
                     </div>
                 </li>
-                <li><a href="#" class="login-btn">Login/Signup</a></li>
+                <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
                         <img src="https://ui-avatars.com/api/?name=User&background=f97316&color=fff" alt="Profile" class="account-photo">
