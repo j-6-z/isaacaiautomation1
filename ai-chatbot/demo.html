@@ -90,7 +90,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo - AI Chatbots - JAYISAAC AI</title>
+    <title>Interactive Demo - AI Chatbots - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -144,18 +144,69 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 2rem; position: relative; z-index: 2; }
-        .coming-soon-container { text-align: center; max-width: 800px; margin: 0 auto; }
-        .coming-soon-icon { font-size: 6rem; margin-bottom: 2rem; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .coming-soon-container h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* Main Demo Styles */
+        .demo-hero { text-align: center; padding: 4rem 2rem 3rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+        .demo-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -1px; }
         .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .coming-soon-container p { font-size: 1.25rem; color: var(--text-gray); margin-bottom: 3rem; line-height: 1.8; }
+        .demo-hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
+
+        /* Demo Controls */
+        .demo-controls { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .scenario-btn { padding: 1rem 2rem; border-radius: 12px; border: 2px solid var(--border); background: white; color: var(--text-dark); font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .scenario-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .scenario-btn.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-color: var(--primary); }
+
+        /* Chat Container */
+        .chat-demo-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 400px; gap: 2rem; }
+        
+        .chat-window { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); overflow: hidden; display: flex; flex-direction: column; height: 600px; }
+        
+        .chat-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+        .chat-avatar { width: 45px; height: 45px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .chat-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .chat-status { font-size: 0.85rem; opacity: 0.9; display: flex; align-items: center; gap: 0.5rem; }
+        .status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .chat-messages { flex: 1; padding: 2rem; overflow-y: auto; background: var(--bg-light); }
+        .message { margin-bottom: 1.5rem; display: flex; gap: 1rem; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.user { flex-direction: row-reverse; }
+        .message-avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; flex-shrink: 0; }
+        .message.user .message-avatar { background: var(--text-gray); }
+        .message-content { max-width: 70%; }
+        .message-bubble { background: white; padding: 1rem 1.25rem; border-radius: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        .message.user .message-bubble { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .message-time { font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem; }
+        .typing-indicator { display: none; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; background: white; border-radius: 16px; width: fit-content; }
+        .typing-indicator.active { display: flex; }
+        .typing-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-light); animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } }
+
+        .chat-input-container { padding: 1.5rem; background: white; border-top: 1px solid var(--border); }
+        .chat-input-wrapper { display: flex; gap: 1rem; }
+        .chat-input { flex: 1; padding: 1rem 1.5rem; border: 2px solid var(--border); border-radius: 12px; font-size: 0.95rem; transition: all 0.3s ease; }
+        .chat-input:focus { outline: none; border-color: var(--primary); }
+        .send-btn { padding: 1rem 2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .send-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3); }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Features Panel */
+        .features-panel { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); padding: 2rem; }
+        .features-panel h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .feature-item { padding: 1.25rem; background: var(--bg-light); border-radius: 12px; margin-bottom: 1rem; border-left: 4px solid var(--primary); }
+        .feature-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .feature-item p { font-size: 0.9rem; color: var(--text-gray); line-height: 1.6; }
+
+        .cta-section { text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-radius: 20px; margin: 0 2rem 4rem; max-width: 1400px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .cta-section h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
         .btn-primary { background: #000000; color: white; padding: 1.25rem 3rem; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); display: inline-block; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
-        .future-content { width: 100%; max-width: 1400px; margin: 4rem auto 0; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 24px; text-align: center; background: var(--bg-light); }
-        .future-content p { color: var(--text-light); font-size: 1rem; font-style: italic; }
+
         footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: auto; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
@@ -170,7 +221,19 @@
         .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .chat-demo-container { 
+                grid-template-columns: 1fr; 
+                gap: 2rem;
+                padding: 0 1rem 3rem;
+            }
+            .features-panel {
+                order: -1; /* Show features above chat on tablet */
+            }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -180,24 +243,163 @@
             .menu-toggle { display: flex; }
             .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
             .nav-links.active { display: flex; }
-            .dropdown { width: 100%; }
-            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
-            .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-toggle { justify-content: center; width: 100%; padding: 0.5rem 0; }
-            .dropdown-menu a { justify-content: center; text-align: center; }
-            .dropdown-menu a .dropdown-icon { display: none; }
-            .dropdown-menu a .dropdown-content p { display: none; }
-            .login-btn { width: 100%; text-align: center; justify-content: center; }
-            .account-dropdown { width: 100%; }
-            .account-toggle { width: 100%; justify-content: center; }
-            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
-            .account-dropdown.active .account-menu { display: block; }
-            .main-content { padding: 4rem 1.5rem; }
-            .coming-soon-icon { font-size: 4rem; }
-            .coming-soon-container h1 { font-size: 2.5rem; }
-            .coming-soon-container p { font-size: 1.1rem; }
-            .future-content { padding: 3rem 1.5rem; margin-top: 3rem; }
-            .footer-logo { flex-direction: column; text-align: center; }
+            
+            /* Mobile Hero Section */
+            .demo-hero { 
+                padding: 2rem 1rem 2rem; 
+            }
+            .demo-hero h1 { 
+                font-size: 1.75rem; 
+                line-height: 1.2;
+                margin-bottom: 0.75rem;
+            }
+            .demo-hero p { 
+                font-size: 0.95rem; 
+                margin-bottom: 1.5rem;
+            }
+            
+            /* Mobile Scenario Buttons */
+            .demo-controls {
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+            .scenario-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+                width: calc(50% - 0.375rem);
+            }
+            
+            /* Mobile Chat Container */
+            .chat-demo-container {
+                padding: 0 1rem 2rem;
+                gap: 1.5rem;
+            }
+            
+            /* Mobile Chat Window */
+            .chat-window { 
+                height: 550px;
+                border-radius: 16px;
+            }
+            
+            .chat-header {
+                padding: 1rem;
+            }
+            
+            .chat-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 1.25rem;
+            }
+            
+            .chat-info h3 {
+                font-size: 0.95rem;
+            }
+            
+            .chat-status {
+                font-size: 0.75rem;
+            }
+            
+            .chat-messages {
+                padding: 1rem;
+            }
+            
+            .message {
+                margin-bottom: 1rem;
+                gap: 0.5rem;
+            }
+            
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+            
+            .message-content {
+                max-width: 75%;
+            }
+            
+            .message-bubble {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 12px;
+            }
+            
+            .message-time {
+                font-size: 0.7rem;
+            }
+            
+            .typing-indicator {
+                padding: 0.75rem 1rem;
+            }
+            
+            .chat-input-container {
+                padding: 1rem;
+            }
+            
+            .chat-input-wrapper {
+                gap: 0.5rem;
+            }
+            
+            .chat-input {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .send-btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Mobile Features Panel */
+            .features-panel {
+                padding: 1.5rem;
+            }
+            
+            .features-panel h3 {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .feature-item {
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .feature-item h4 {
+                font-size: 0.9rem;
+            }
+            
+            .feature-item p {
+                font-size: 0.85rem;
+            }
+            
+            /* Mobile CTA Section */
+            .cta-section { 
+                padding: 2rem 1rem;
+                margin: 0 1rem 2rem;
+                border-radius: 16px;
+            }
+            .cta-section h2 { 
+                font-size: 1.5rem; 
+                line-height: 1.3;
+                margin-bottom: 0.75rem;
+            }
+            .cta-section p { 
+                font-size: 0.95rem; 
+                margin-bottom: 1.5rem;
+            }
+            .btn-primary {
+                padding: 1rem 2rem;
+                font-size: 0.95rem;
+                width: 100%;
+            }
+            
+            /* Mobile Footer */
+            .footer-logo {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -311,18 +513,82 @@
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="coming-soon-container">
-            <div class="coming-soon-icon">💬</div>
-            <div class="section-tag">Coming Soon</div>
-            <h1>Something <span class="gradient-text">Amazing</span> Is Brewing</h1>
-            <p>We're working on interactive demos to showcase the power of our AI Chatbot solutions. Stay tuned for live previews, conversation samples, and more.</p>
-            <a href="/#contact" class="btn-primary">Get Notified When We Launch</a>
+    <main>
+        <section class="demo-hero">
+            <h1>Experience <span class="gradient-text">AI Chatbot</span> in Action</h1>
+            <p>Try different scenarios to see how our AI chatbot handles real customer interactions</p>
+        </section>
+
+        <div class="demo-controls">
+            <button class="scenario-btn active" onclick="loadScenario('support')">Customer Support</button>
+            <button class="scenario-btn" onclick="loadScenario('sales')">Sales Inquiry</button>
+            <button class="scenario-btn" onclick="loadScenario('booking')">Appointment Booking</button>
+            <button class="scenario-btn" onclick="loadScenario('product')">Product Questions</button>
         </div>
-        
-        <div class="future-content">
-            <p>✨ Future demo content will appear here ✨</p>
+
+        <div class="chat-demo-container">
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-avatar">🤖</div>
+                    <div class="chat-info">
+                        <h3>JAYISAAC Support Bot</h3>
+                        <div class="chat-status">
+                            <span class="status-dot"></span>
+                            Online
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message">
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                Hello! 👋 I'm your AI assistant. How can I help you today?
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                        <button class="send-btn" onclick="sendMessage()" id="sendBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-panel">
+                <h3>Key Features</h3>
+                <div class="feature-item">
+                    <h4>🧠 Natural Language Understanding</h4>
+                    <p>Understands context and intent like a human agent</p>
+                </div>
+                <div class="feature-item">
+                    <h4>⚡ Instant Responses</h4>
+                    <p>Provides immediate answers 24/7 without wait times</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎯 Multi-Intent Recognition</h4>
+                    <p>Handles multiple questions in a single message</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔄 Seamless Handoff</h4>
+                    <p>Transfers to human agents when needed</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📊 Learning & Improvement</h4>
+                    <p>Gets smarter with every conversation</p>
+                </div>
+            </div>
         </div>
+
+        <section class="cta-section">
+            <h2>Ready to Transform Your Customer Experience?</h2>
+            <p>Deploy your AI chatbot in minutes and start seeing results immediately</p>
+            <a href="/ai-chatbot/pricing.html" class="btn-primary">View Pricing & Get Started</a>
+        </section>
     </main>
 
     <footer>
@@ -353,13 +619,11 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
+            <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         if (window.innerWidth > 768) {
             particlesJS('particles-js', {
@@ -423,20 +687,170 @@
             if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
-                    }
+        // Demo Chat Functionality
+        const scenarios = {
+            support: [
+                { user: "Hi, I'm having trouble logging into my account", bot: "I'm sorry to hear you're having login issues. Let me help you with that. Have you tried resetting your password using the 'Forgot Password' link?" },
+                { user: "Yes, but I'm not receiving the reset email", bot: "I understand. Let me check a few things:\n\n1. Please verify the email address on your account\n2. Check your spam/junk folder\n3. Ensure your inbox isn't full\n\nWould you like me to resend the reset email to a different address?" },
+                { user: "I found it in spam! Thanks!", bot: "Excellent! I'm glad we found it. For future reference, you may want to add our domain to your safe senders list. Is there anything else I can help you with today?" }
+            ],
+            sales: [
+                { user: "What pricing plans do you offer?", bot: "Great question! We offer three pricing tiers:\n\n✨ **Starter** - $99/month\n• Up to 1,000 conversations\n• Basic analytics\n• Email support\n\n🚀 **Professional** - $299/month\n• Up to 5,000 conversations\n• Advanced analytics\n• Priority support\n• Custom branding\n\n💎 **Enterprise** - Custom pricing\n• Unlimited conversations\n• Dedicated account manager\n• Custom integrations\n• SLA guarantee\n\nWhich plan interests you most?" },
+                { user: "The Professional plan looks good. Can I try it first?", bot: "Absolutely! We offer a 14-day free trial of our Professional plan with no credit card required. This gives you full access to:\n\n• All Professional features\n• Up to 5,000 test conversations\n• Priority support\n• Full customization options\n\nWould you like me to set that up for you?" },
+                { user: "Yes please!", bot: "Perfect! I'll need a few details to get you started:\n\n1. Your business name\n2. Your email address\n3. What industry you're in\n\nThis will help us customize the chatbot for your specific needs. Should I connect you with our sales team to complete the setup?" }
+            ],
+            booking: [
+                { user: "I'd like to schedule a consultation", bot: "I'd be happy to help you schedule a consultation! We have the following time slots available this week:\n\n📅 **Wednesday, Jan 3**\n• 10:00 AM EST\n• 2:00 PM EST\n• 4:00 PM EST\n\n📅 **Thursday, Jan 4**\n• 9:00 AM EST\n• 1:00 PM EST\n• 3:00 PM EST\n\nWhich time works best for you?" },
+                { user: "Thursday at 1 PM works for me", bot: "Perfect! I've reserved Thursday, January 4th at 1:00 PM EST for your consultation.\n\nI'll need a few details:\n\n✉️ Your email address (for calendar invite)\n📱 Your phone number (optional)\n💬 Brief description of what you'd like to discuss\n\nThis will be a 30-minute video call via Zoom." },
+                { user: "My email is john@example.com and I want to discuss implementing AI chatbots for customer support", bot: "Excellent! Your consultation is confirmed:\n\n📅 Thursday, January 4th, 2025\n⏰ 1:00 PM EST\n📧 Confirmation sent to john@example.com\n💡 Topic: AI Chatbot Implementation for Customer Support\n\nYou'll receive a calendar invite with the Zoom link shortly. Our AI solutions expert will be prepared to discuss your customer support needs. Is there anything else you'd like me to note for the meeting?" }
+            ],
+            product: [
+                { user: "What makes your chatbot different from others?", bot: "Great question! Here's what sets JAYISAAC AI apart:\n\n🧠 **Advanced NLP**: Understands context and intent like a human\n⚡ **Lightning Fast**: Sub-second response times\n🌐 **Multilingual**: Supports 50+ languages\n🔌 **Easy Integration**: Works with your existing tools\n📊 **Smart Analytics**: Detailed conversation insights\n💪 **Self-Learning**: Improves automatically over time\n\nWould you like to know more about any specific feature?" },
+                { user: "Tell me more about the integration process", bot: "Our integration is designed to be incredibly simple:\n\n**Quick Setup (5 minutes)**\n1. Copy our embed code\n2. Paste it into your website\n3. Customize colors & branding\n4. Go live!\n\n**Advanced Integrations**\n• Slack, Teams, Discord\n• Salesforce, HubSpot, Zendesk\n• Custom API connections\n• Zapier for 3,000+ apps\n\nOur team provides white-glove setup assistance for Enterprise customers. Would you like to see a demo of the integration process?" },
+                { user: "Yes, I'd love to see a demo", bot: "Perfect! I can arrange that for you. We offer two demo options:\n\n🎥 **Recorded Demo** (Available now)\n• Watch a 10-minute walkthrough\n• See real integration examples\n• Download instantly\n\n👨‍💼 **Live Demo** (Scheduled)\n• Personalized 30-minute session\n• Q&A with our solutions expert\n• Custom use case discussion\n\nWhich would you prefer, or would you like both?" }
+            ]
+        };
+
+        let currentScenario = 'support';
+        let messageIndex = 0;
+        let isTyping = false;
+
+        function loadScenario(scenario) {
+            currentScenario = scenario;
+            messageIndex = 0;
+            
+            // Update button states
+            document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Reset chat
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            Hello! 👋 I'm your AI assistant. How can I help you today?
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+            `;
+            
+            // Add first message from scenario after a delay
+            setTimeout(() => {
+                if (scenarios[currentScenario][0]) {
+                    addMessage(scenarios[currentScenario][0].user, 'user');
                 }
-            });
-        });
+            }, 500);
+        }
+
+        function addMessage(text, type) {
+            const chatMessages = document.getElementById('chatMessages');
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const messageHTML = `
+                <div class="message ${type}">
+                    <div class="message-avatar">${type === 'user' ? 'You' : 'AI'}</div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            ${text.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="message-time">${time}</div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // If user message, trigger bot response
+            if (type === 'user') {
+                setTimeout(() => showTypingIndicator(), 800);
+            }
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingHTML = `
+                <div class="message typing-message">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="typing-indicator active">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.insertAdjacentHTML('beforeend', typingHTML);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            isTyping = true;
+            
+            // Remove typing indicator and show response
+            setTimeout(() => {
+                const typingMessage = document.querySelector('.typing-message');
+                if (typingMessage) {
+                    typingMessage.remove();
+                }
+                const response = scenarios[currentScenario][messageIndex].bot;
+                addMessage(response, 'bot');
+                messageIndex++;
+                isTyping = false;
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message && !isTyping) {
+                // Check if we have a predefined response
+                if (messageIndex < scenarios[currentScenario].length) {
+                    // Use scenario message
+                    addMessage(scenarios[currentScenario][messageIndex].user, 'user');
+                } else {
+                    // Use custom message
+                    addMessage(message, 'user');
+                    setTimeout(() => showTypingIndicator(), 800);
+                    setTimeout(() => {
+                        const typingMessage = document.querySelector('.typing-message');
+                        if (typingMessage) {
+                            typingMessage.remove();
+                        }
+                        addMessage("I understand your question! In a live deployment, I would provide a detailed response based on your specific needs. Would you like to schedule a demo to see how I can be customized for your business?", 'bot');
+                        isTyping = false;
+                    }, 2000);
+                }
+                
+                input.value = '';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Auto-play first scenario
+        setTimeout(() => {
+            if (scenarios[currentScenario][0]) {
+                setTimeout(() => showTypingIndicator(), 800);
+                setTimeout(() => {
+                    const typingMessage = document.querySelector('.typing-message');
+                    if (typingMessage) {
+                        typingMessage.remove();
+                    }
+                    addMessage(scenarios[currentScenario][0].bot, 'bot');
+                    messageIndex++;
+                    isTyping = false;
+                }, 2300);
+            }
+        }, 1000);
     </script>
 </body>
 </html>

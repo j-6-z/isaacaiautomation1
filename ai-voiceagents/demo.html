@@ -90,11 +90,11 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo - AI Voice Agents - JAYISAAC AI</title>
+    <title>Interactive Demo - AI Voice Agents - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
+        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
         body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; display: flex; flex-direction: column; }
         #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
@@ -144,18 +144,88 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 2rem; position: relative; z-index: 2; }
-        .coming-soon-container { text-align: center; max-width: 800px; margin: 0 auto; }
-        .coming-soon-icon { font-size: 6rem; margin-bottom: 2rem; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .coming-soon-container h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* Demo Styles */
+        .demo-hero { text-align: center; padding: 3rem 2rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+        .demo-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -1px; }
         .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .coming-soon-container p { font-size: 1.25rem; color: var(--text-gray); margin-bottom: 3rem; line-height: 1.8; }
+        .demo-hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
+
+        /* Phone Interface */
+        .demo-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; }
+        
+        .phone-interface { background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 30px; padding: 3rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden; }
+        .phone-interface::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.1), transparent); pointer-events: none; }
+        
+        .phone-screen { position: relative; background: #000; border-radius: 20px; padding: 2.5rem; min-height: 600px; display: flex; flex-direction: column; }
+        
+        .call-header { text-align: center; margin-bottom: 3rem; }
+        .caller-avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4); animation: pulse-ring 2s infinite; }
+        @keyframes pulse-ring { 0%, 100% { box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4), 0 0 0 0 rgba(249, 115, 22, 0.4); } 50% { box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4), 0 0 0 20px rgba(249, 115, 22, 0); } }
+        .caller-name { color: white; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .call-status { color: rgba(255, 255, 255, 0.6); font-size: 1rem; }
+        .call-status.active { color: var(--success); animation: blink 2s infinite; }
+        @keyframes blink { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.5; } }
+        
+        .waveform-container { flex: 1; display: flex; align-items: center; justify-content: center; margin: 2rem 0; }
+        .waveform { display: flex; align-items: center; gap: 4px; height: 100px; }
+        .wave-bar { width: 4px; background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 10px; animation: wave 1.2s ease-in-out infinite; }
+        .wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 40px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 70px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 80px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 45px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 65px; animation-delay: 0.6s; }
+        .wave-bar:nth-child(8) { height: 35px; animation-delay: 0.7s; }
+        .wave-bar:nth-child(9) { height: 60px; animation-delay: 0.8s; }
+        .wave-bar:nth-child(10) { height: 30px; animation-delay: 0.9s; }
+        @keyframes wave { 0%, 100% { transform: scaleY(0.5); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+        
+        .call-controls { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+        .control-btn { width: 65px; height: 65px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; transition: all 0.3s ease; position: relative; }
+        .control-btn:hover { transform: translateY(-3px); }
+        .control-btn.call-btn { background: var(--success); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+        .control-btn.call-btn:hover { box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5); }
+        .control-btn.end-btn { background: var(--danger); box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4); }
+        .control-btn.end-btn:hover { box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5); }
+        .click-indicator { position: absolute; top: -45px; left: 50%; transform: translateX(-50%); background: white; color: var(--primary); padding: 0.5rem 1.25rem; border-radius: 25px; font-size: 0.85rem; font-weight: 700; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); animation: bounce 2s infinite; white-space: nowrap; }
+        .click-indicator::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid white; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-10px); } 60% { transform: translateX(-50%) translateY(-5px); } }
+
+        /* Transcript Panel */
+        .transcript-panel { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; max-height: 700px; }
+        .transcript-panel h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .transcript-content { flex: 1; overflow-y: auto; padding-right: 1rem; }
+        .transcript-message { margin-bottom: 1.5rem; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-speaker { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .message-speaker.ai { color: var(--primary); }
+        .message-speaker.customer { color: var(--text-dark); }
+        .speaker-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+        .speaker-icon.ai { background: rgba(249, 115, 22, 0.1); }
+        .speaker-icon.customer { background: var(--bg-gray); }
+        .message-text { background: var(--bg-light); padding: 1rem 1.25rem; border-radius: 12px; line-height: 1.6; }
+        .message-text.ai { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-left: 3px solid var(--primary); }
+        .message-time { font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem; }
+
+        /* Analytics */
+        .analytics-section { grid-column: 1 / -1; margin-top: 2rem; }
+        .analytics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .analytics-card { background: white; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .analytics-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+        .analytics-icon.primary { background: rgba(249, 115, 22, 0.1); }
+        .analytics-icon.success { background: rgba(16, 185, 129, 0.1); }
+        .analytics-value { font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .analytics-label { color: var(--text-gray); font-size: 0.9rem; }
+
+        /* CTA Section */
+        .cta-section { grid-column: 1 / -1; text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-radius: 20px; margin-top: 2rem; }
+        .cta-section h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
         .btn-primary { background: #000000; color: white; padding: 1.25rem 3rem; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); display: inline-block; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
-        .future-content { width: 100%; max-width: 1400px; margin: 4rem auto 0; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 24px; text-align: center; background: var(--bg-light); }
-        .future-content p { color: var(--text-light); font-size: 1rem; font-style: italic; }
+
         footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: auto; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
@@ -170,7 +240,13 @@
         .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .demo-container { grid-template-columns: 1fr; }
+            .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -180,24 +256,24 @@
             .menu-toggle { display: flex; }
             .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
             .nav-links.active { display: flex; }
-            .dropdown { width: 100%; }
-            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
-            .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-menu a { justify-content: center; text-align: center; padding: 1rem; }
-            .dropdown-menu a .dropdown-icon { display: none; }
-            .dropdown-menu a .dropdown-content h4 { font-size: 1rem; }
-            .dropdown-menu a .dropdown-content p { display: none; }
-            .dropdown-toggle { justify-content: center; width: 100%; padding: 0.5rem 0; }
-            .login-btn { width: 100%; text-align: center; justify-content: center; }
-            .account-dropdown { width: 100%; }
-            .account-toggle { width: 100%; justify-content: center; }
-            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
-            .account-dropdown.active .account-menu { display: block; }
-            .main-content { padding: 4rem 1.5rem; }
-            .coming-soon-icon { font-size: 4rem; }
-            .coming-soon-container h1 { font-size: 2.5rem; }
-            .coming-soon-container p { font-size: 1.1rem; }
-            .future-content { padding: 3rem 1.5rem; margin-top: 3rem; }
+            
+            .demo-hero { padding: 2rem 1rem; }
+            .demo-hero h1 { font-size: 1.75rem; }
+            .demo-hero p { font-size: 1rem; }
+            
+            .demo-container { padding: 0 1rem 2rem; }
+            .phone-interface { padding: 2rem 1rem; }
+            .phone-screen { padding: 1.5rem; min-height: 500px; }
+            .caller-avatar { width: 90px; height: 90px; font-size: 2rem; }
+            .caller-name { font-size: 1.25rem; }
+            .waveform { height: 60px; }
+            .analytics-grid { grid-template-columns: 1fr; }
+            
+            .cta-section { padding: 2rem 1rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 1rem; }
+            .btn-primary { width: 100%; padding: 1rem 2rem; }
+            
             .footer-logo { flex-direction: column; text-align: center; }
         }
     </style>
@@ -277,7 +353,7 @@
                 <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
-                        <img src="" alt="Profile" class="account-photo">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f97316&color=fff" alt="Profile" class="account-photo">
                         <span class="account-name">Account</span>
                         <span class="account-arrow">▼</span>
                     </div>
@@ -312,17 +388,92 @@
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="coming-soon-container">
-            <div class="coming-soon-icon">🎙️</div>
-            <div class="section-tag">Coming Soon</div>
-            <h1>Something <span class="gradient-text">Amazing</span> Is Brewing</h1>
-            <p>We're working on interactive demos to showcase the power of our AI Voice Agent solutions. Stay tuned for live previews, voice samples, and more.</p>
-            <a href="/#contact" class="btn-primary">Get Notified When We Launch</a>
-        </div>
-        
-        <div class="future-content">
-            <p>✨ Future demo content will appear here ✨</p>
+    <main>
+        <section class="demo-hero">
+            <h1>AI-Powered <span class="gradient-text">Voice Agents</span></h1>
+            <p>Experience natural conversations with intelligent voice AI</p>
+        </section>
+
+        <div class="demo-container">
+            <!-- Phone Interface -->
+            <div class="phone-interface">
+                <div class="phone-screen">
+                    <div class="call-header">
+                        <div class="caller-avatar">🤖</div>
+                        <div class="caller-name">JAYISAAC AI Agent</div>
+                        <div class="call-status" id="callStatus">Press call to start</div>
+                    </div>
+
+                    <div class="waveform-container" id="waveformContainer" style="display: none;">
+                        <div class="waveform">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+
+                    <div class="call-controls">
+                        <button class="control-btn call-btn" id="callBtn" onclick="startCall()">
+                            <span class="click-indicator">✨ Click Me!</span>
+                            📞
+                        </button>
+                        <button class="control-btn end-btn" id="endBtn" onclick="endCall()" style="display: none;">
+                            📴
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transcript Panel -->
+            <div class="transcript-panel">
+                <h2>Live Transcript</h2>
+                <div class="transcript-content" id="transcriptContent">
+                    <div style="text-align: center; color: var(--text-light); padding: 3rem 1rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎙️</div>
+                        <p>Start a call to see the live conversation transcript appear here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="analytics-section">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-icon success">⚡</div>
+                        <div class="analytics-value" id="responseTime">0.8s</div>
+                        <div class="analytics-label">Avg Response Time</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon primary">🎯</div>
+                        <div class="analytics-value">97%</div>
+                        <div class="analytics-label">Intent Recognition</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon success">😊</div>
+                        <div class="analytics-value">4.9/5</div>
+                        <div class="analytics-label">Customer Satisfaction</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon primary">💬</div>
+                        <div class="analytics-value" id="callsHandled">1,247</div>
+                        <div class="analytics-label">Calls Handled Today</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>Ready to Deploy AI Voice Agents?</h2>
+                <p>Handle thousands of calls simultaneously with human-like conversations</p>
+                <a href="/ai-voiceagents/pricing.html" class="btn-primary">View Pricing & Get Started</a>
+            </div>
         </div>
     </main>
 
@@ -354,13 +505,11 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
+            <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         if (window.innerWidth > 768) {
             particlesJS('particles-js', {
@@ -424,20 +573,83 @@
             if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
-                    }
+        // Demo Conversation
+        const conversation = [
+            { speaker: 'customer', text: 'Hi, I need to check my order status.', time: '00:01' },
+            { speaker: 'ai', text: 'Hello! I\'d be happy to help you check your order status. Could you please provide me with your order number or the email address you used for the purchase?', time: '00:03' },
+            { speaker: 'customer', text: 'Sure, my email is john@example.com', time: '00:08' },
+            { speaker: 'ai', text: 'Thank you! Let me pull up your account... I found your most recent order #ORD-45823. It was placed on December 28th and is currently out for delivery. You should receive it today by 8 PM.', time: '00:10' },
+            { speaker: 'customer', text: 'Perfect! Can I change the delivery address?', time: '00:18' },
+            { speaker: 'ai', text: 'Since your package is already out for delivery, I\'m unable to change the delivery address at this time. However, I can arrange for a redirect to a nearby pickup location, or we can schedule a redelivery to a different address for tomorrow. Which would you prefer?', time: '00:20' },
+            { speaker: 'customer', text: 'The pickup location sounds good!', time: '00:28' },
+            { speaker: 'ai', text: 'Excellent choice! I\'ve located 3 pickup points near your area. The closest one is FedEx at 123 Main Street, about 0.5 miles away. They\'re open until 9 PM today. I\'ll redirect your package there now. You\'ll receive a confirmation email with the pickup details and a tracking code.', time: '00:30' }
+        ];
+
+        let currentMessage = 0;
+        let isCallActive = false;
+        let messageInterval;
+
+        function addMessage(speaker, text, time) {
+            const transcriptContent = document.getElementById('transcriptContent');
+            const messageHTML = `
+                <div class="transcript-message">
+                    <div class="message-speaker ${speaker}">
+                        <div class="speaker-icon ${speaker}">${speaker === 'ai' ? '🤖' : '👤'}</div>
+                        ${speaker === 'ai' ? 'AI Agent' : 'Customer'}
+                    </div>
+                    <div class="message-text ${speaker}">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            transcriptContent.insertAdjacentHTML('beforeend', messageHTML);
+            transcriptContent.scrollTop = transcriptContent.scrollHeight;
+        }
+
+        function startCall() {
+            isCallActive = true;
+            document.getElementById('callBtn').style.display = 'none';
+            document.getElementById('endBtn').style.display = 'flex';
+            document.getElementById('waveformContainer').style.display = 'flex';
+            document.getElementById('callStatus').textContent = 'Call in progress...';
+            document.getElementById('callStatus').classList.add('active');
+            document.getElementById('transcriptContent').innerHTML = '';
+            
+            currentMessage = 0;
+            
+            // Start playing conversation
+            messageInterval = setInterval(() => {
+                if (currentMessage < conversation.length && isCallActive) {
+                    const msg = conversation[currentMessage];
+                    addMessage(msg.speaker, msg.text, msg.time);
+                    currentMessage++;
+                } else if (currentMessage >= conversation.length) {
+                    endCall();
                 }
-            });
-        });
+            }, 3000);
+
+            // Animate calls handled
+            let callCount = 1247;
+            setInterval(() => {
+                if (isCallActive) {
+                    callCount++;
+                    document.getElementById('callsHandled').textContent = callCount.toLocaleString();
+                }
+            }, 5000);
+        }
+
+        function endCall() {
+            isCallActive = false;
+            clearInterval(messageInterval);
+            document.getElementById('callBtn').style.display = 'flex';
+            document.getElementById('endBtn').style.display = 'none';
+            document.getElementById('waveformContainer').style.display = 'none';
+            document.getElementById('callStatus').textContent = 'Call ended';
+            document.getElementById('callStatus').classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('callStatus').textContent = 'Press call to start';
+            }, 2000);
+        }
     </script>
 </body>
 </html>

@@ -196,8 +196,8 @@
             padding: 0 1rem;
         }
         
-        /* Google Sign In Button */
-        .google-btn {
+        /* Auth Buttons */
+        .auth-btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,33 +213,34 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: inherit;
+            margin-bottom: 1rem;
         }
         
-        .google-btn:hover {
+        .auth-btn:hover {
             border-color: var(--primary);
             box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
             transform: translateY(-2px);
         }
         
-        .google-btn:active {
+        .auth-btn:active {
             transform: translateY(0);
         }
         
-        .google-btn svg {
+        .auth-btn svg {
             width: 20px;
             height: 20px;
         }
         
-        .google-btn.loading {
+        .auth-btn.loading {
             pointer-events: none;
             opacity: 0.7;
         }
         
-        .google-btn.loading .google-icon {
+        .auth-btn.loading .auth-icon {
             display: none;
         }
         
-        .google-btn .spinner {
+        .auth-btn .spinner {
             display: none;
             width: 20px;
             height: 20px;
@@ -249,7 +250,7 @@
             animation: spin 0.8s linear infinite;
         }
         
-        .google-btn.loading .spinner {
+        .auth-btn.loading .spinner {
             display: block;
         }
         
@@ -257,62 +258,17 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Email Form (Optional Future Use) */
-        .email-form {
-            display: none;
-        }
-        
-        .form-group {
-            margin-bottom: 1.25rem;
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 1rem;
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
-        }
-        
-        .form-group input::placeholder {
-            color: var(--text-light);
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        /* GitHub Button Specific */
+        .github-btn {
+            background: #24292e;
             color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            border-color: #24292e;
         }
         
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+        .github-btn:hover {
+            background: #1b1f23;
+            border-color: #1b1f23;
+            box-shadow: 0 4px 12px rgba(36, 41, 46, 0.3);
         }
         
         /* Error/Success Messages */
@@ -469,15 +425,23 @@
             
             <div id="message" class="message"></div>
             
-            <button class="google-btn" id="google-signin-btn" onclick="signInWithGoogle()">
+            <button class="auth-btn" id="google-signin-btn" onclick="signInWithGoogle()">
                 <div class="spinner"></div>
-                <svg class="google-icon" viewBox="0 0 24 24">
+                <svg class="auth-icon" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
                 <span id="google-btn-text">Continue with Google</span>
+            </button>
+
+            <button class="auth-btn github-btn" id="github-signin-btn" onclick="signInWithGithub()">
+                <div class="spinner"></div>
+                <svg class="auth-icon" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span id="github-btn-text">Continue with GitHub</span>
             </button>
             
             <p class="auth-note">New to JAYISAAC AI? Your account will be created automatically.</p>
@@ -499,7 +463,7 @@
     </main>
     
     <footer class="login-footer">
-        <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
+        <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
         <div>
             <a href="/Policies.html">Privacy</a>
             <a href="/Policies.html">Terms</a>
@@ -511,7 +475,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
@@ -526,7 +490,8 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+        const googleProvider = new GoogleAuthProvider();
+        const githubProvider = new GithubAuthProvider();
         
         // Make functions available globally
         window.signInWithGoogle = async function() {
@@ -537,16 +502,35 @@
             btnText.textContent = 'Redirecting...';
             
             try {
-                // Store the return URL before redirecting
                 const returnUrl = sessionStorage.getItem('returnUrl') || '/';
                 sessionStorage.setItem('returnUrl', returnUrl);
                 
-                await signInWithRedirect(auth, provider);
+                await signInWithRedirect(auth, googleProvider);
             } catch (error) {
-                console.error("Sign in error:", error);
+                console.error("Google sign in error:", error);
                 showMessage('error', 'Sign in failed: ' + error.message);
                 btn.classList.remove('loading');
                 btnText.textContent = 'Continue with Google';
+            }
+        };
+
+        window.signInWithGithub = async function() {
+            const btn = document.getElementById('github-signin-btn');
+            const btnText = document.getElementById('github-btn-text');
+            
+            btn.classList.add('loading');
+            btnText.textContent = 'Redirecting...';
+            
+            try {
+                const returnUrl = sessionStorage.getItem('returnUrl') || '/';
+                sessionStorage.setItem('returnUrl', returnUrl);
+                
+                await signInWithRedirect(auth, githubProvider);
+            } catch (error) {
+                console.error("GitHub sign in error:", error);
+                showMessage('error', 'GitHub sign in failed: ' + error.message);
+                btn.classList.remove('loading');
+                btnText.textContent = 'Continue with GitHub';
             }
         };
         
@@ -554,7 +538,6 @@
         getRedirectResult(auth)
             .then((result) => {
                 if (result && result.user) {
-                    // Check if this is a new user
                     const isNewUser = result.additionalUserInfo?.isNewUser;
                     const welcomeMsg = isNewUser 
                         ? 'Account created! Welcome, ' + result.user.displayName + '!'
@@ -562,7 +545,6 @@
                     
                     showMessage('success', welcomeMsg + ' Redirecting...');
                     
-                    // Redirect to stored URL or homepage
                     setTimeout(() => {
                         const returnUrl = sessionStorage.getItem('returnUrl') || '/';
                         sessionStorage.removeItem('returnUrl');

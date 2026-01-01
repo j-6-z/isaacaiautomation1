@@ -90,11 +90,11 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo - AI Recruiting Assistant - JAYISAAC AI</title>
+    <title>Interactive Demo - AI Recruiting Assistant - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
+        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
         body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; display: flex; flex-direction: column; }
         #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
@@ -144,18 +144,83 @@
         .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
         .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 2rem; position: relative; z-index: 2; }
-        .coming-soon-container { text-align: center; max-width: 800px; margin: 0 auto; }
-        .coming-soon-icon { font-size: 6rem; margin-bottom: 2rem; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .coming-soon-container h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* Demo Styles */
+        .demo-hero { text-align: center; padding: 3rem 2rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+        .demo-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -1px; }
         .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .coming-soon-container p { font-size: 1.25rem; color: var(--text-gray); margin-bottom: 3rem; line-height: 1.8; }
+        .demo-hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
+
+        /* Upload Section */
+        .upload-section { max-width: 1400px; margin: 0 auto 3rem; padding: 0 2rem; position: relative; z-index: 2; }
+        .upload-card { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); text-align: center; border: 2px dashed var(--border); transition: all 0.3s ease; }
+        .upload-card:hover { border-color: var(--primary); }
+        .upload-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+        .upload-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .upload-card p { color: var(--text-gray); margin-bottom: 2rem; }
+        .upload-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 2.5rem; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .upload-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); }
+        .click-indicator { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: white; color: var(--primary); padding: 0.5rem 1.25rem; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); animation: bounce 2s infinite; white-space: nowrap; }
+        .click-indicator::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid white; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-10px); } 60% { transform: translateX(-50%) translateY(-5px); } }
+
+        /* Dashboard */
+        .dashboard-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; position: relative; z-index: 2; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .stat-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+        .stat-icon.primary { background: rgba(249, 115, 22, 0.1); }
+        .stat-icon.success { background: rgba(16, 185, 129, 0.1); }
+        .stat-icon.warning { background: rgba(245, 158, 11, 0.1); }
+        .stat-value { font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .stat-label { color: var(--text-gray); font-size: 0.9rem; }
+
+        /* Candidate Pipeline */
+        .pipeline-section { margin-bottom: 3rem; }
+        .pipeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .pipeline-header h2 { font-size: 1.75rem; font-weight: 800; }
+        
+        .pipeline-stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .pipeline-stage { background: white; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .stage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+        .stage-title { font-weight: 700; font-size: 1rem; }
+        .stage-count { background: var(--bg-gray); color: var(--text-gray); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        
+        .candidate-list { display: flex; flex-direction: column; gap: 1rem; }
+        .candidate-card { background: var(--bg-light); border-radius: 12px; padding: 1rem; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent; }
+        .candidate-card:hover { transform: translateX(4px); border-left-color: var(--primary); background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+        .candidate-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem; }
+        .candidate-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .candidate-role { font-size: 0.8rem; color: var(--text-gray); }
+        .match-score { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .candidate-skills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+        .skill-tag { background: rgba(249, 115, 22, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+        /* Resume Analysis Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2rem; border-radius: 20px 20px 0 0; }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255, 255, 255, 0.2); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.3); }
+        .modal-body { padding: 2rem; }
+        .analysis-section { margin-bottom: 2rem; }
+        .analysis-section h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .analysis-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .analysis-item { background: var(--bg-light); padding: 1rem; border-radius: 12px; }
+        .analysis-label { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 0.5rem; }
+        .analysis-value { font-weight: 700; font-size: 1.1rem; }
+        .skills-list { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .skill-badge { background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); color: var(--primary); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; }
+
+        /* CTA Section */
+        .cta-section { text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-radius: 20px; margin: 0 2rem 4rem; max-width: 1400px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .cta-section h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
         .btn-primary { background: #000000; color: white; padding: 1.25rem 3rem; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); display: inline-block; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); background: #1a1a1a; }
-        .future-content { width: 100%; max-width: 1400px; margin: 4rem auto 0; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 24px; text-align: center; background: var(--bg-light); }
-        .future-content p { color: var(--text-light); font-size: 1rem; font-style: italic; }
+
         footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: auto; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
@@ -170,7 +235,14 @@
         .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pipeline-stages { grid-template-columns: repeat(2, 1fr); }
+            .analysis-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .header-text { font-size: 1rem; }
@@ -180,24 +252,22 @@
             .menu-toggle { display: flex; }
             .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
             .nav-links.active { display: flex; }
-            .dropdown { width: 100%; }
-            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
-            .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-menu a { justify-content: center; text-align: center; padding: 1rem; }
-            .dropdown-menu a .dropdown-icon { display: none; }
-            .dropdown-menu a .dropdown-content h4 { font-size: 1rem; }
-            .dropdown-menu a .dropdown-content p { display: none; }
-            .dropdown-toggle { justify-content: center; width: 100%; padding: 0.5rem 0; }
-            .login-btn { width: 100%; text-align: center; justify-content: center; }
-            .account-dropdown { width: 100%; }
-            .account-toggle { width: 100%; justify-content: center; }
-            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
-            .account-dropdown.active .account-menu { display: block; }
-            .main-content { padding: 4rem 1.5rem; }
-            .coming-soon-icon { font-size: 4rem; }
-            .coming-soon-container h1 { font-size: 2.5rem; }
-            .coming-soon-container p { font-size: 1.1rem; }
-            .future-content { padding: 3rem 1.5rem; margin-top: 3rem; }
+            
+            .demo-hero { padding: 2rem 1rem; }
+            .demo-hero h1 { font-size: 1.75rem; }
+            .demo-hero p { font-size: 1rem; }
+            
+            .upload-section { padding: 0 1rem; }
+            .upload-card { padding: 2rem 1rem; }
+            .dashboard-container { padding: 0 1rem 2rem; }
+            .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .pipeline-stages { grid-template-columns: 1fr; }
+            
+            .cta-section { padding: 2rem 1rem; margin: 0 1rem 2rem; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 1rem; }
+            .btn-primary { width: 100%; padding: 1rem 2rem; }
+            
             .footer-logo { flex-direction: column; text-align: center; }
         }
     </style>
@@ -215,28 +285,28 @@
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="/ai-chatbot/index.html">
+                        <a href="/ai-chatbot/">
                             <div class="dropdown-icon">💬</div>
                             <div class="dropdown-content">
                                 <h4>AI Chatbots</h4>
                                 <p>24/7 intelligent support</p>
                             </div>
                         </a>
-                        <a href="/ai-voiceagents/index.html">
+                        <a href="/ai-voiceagents/">
                             <div class="dropdown-icon">🎙️</div>
                             <div class="dropdown-content">
                                 <h4>Voice Agents</h4>
                                 <p>Natural voice AI</p>
                             </div>
                         </a>
-                        <a href="/ai-maintenanceop/index.html">
+                        <a href="/ai-maintenanceop/">
                             <div class="dropdown-icon">⚙️</div>
                             <div class="dropdown-content">
                                 <h4>Maintenance AI</h4>
                                 <p>Predictive optimization</p>
                             </div>
                         </a>
-                        <a href="/ai-recruitassistant/index.html">
+                        <a href="/ai-recruitassistant/">
                             <div class="dropdown-icon">👥</div>
                             <div class="dropdown-content">
                                 <h4>Recruiting AI</h4>
@@ -251,7 +321,7 @@
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="/ai-recruitassistant/index.html">
+                        <a href="/ai-recruitassistant/">
                             <div class="dropdown-icon">👥</div>
                             <div class="dropdown-content">
                                 <h4>Recruiting AI</h4>
@@ -277,7 +347,7 @@
                 <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
                 <li class="account-dropdown">
                     <div class="account-toggle" onclick="toggleAccountDropdown()">
-                        <img src="" alt="Profile" class="account-photo">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f97316&color=fff" alt="Profile" class="account-photo">
                         <span class="account-name">Account</span>
                         <span class="account-arrow">▼</span>
                     </div>
@@ -286,7 +356,7 @@
                             <span class="account-name">Account</span>
                             <span class="user-email">email@example.com</span>
                         </div>
-                        <a href="/myorders.html">
+                        <a href="/my-orders.html">
                             <span class="menu-icon">📦</span>
                             My Orders
                         </a>
@@ -312,18 +382,167 @@
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="coming-soon-container">
-            <div class="coming-soon-icon">👥</div>
-            <div class="section-tag">Coming Soon</div>
-            <h1>Something <span class="gradient-text">Amazing</span> Is Brewing</h1>
-            <p>We're working on interactive demos to showcase the power of our AI Recruiting solutions. Stay tuned for live previews, candidate screening samples, and more.</p>
-            <a href="/#contact" class="btn-primary">Get Notified When We Launch</a>
+    <main>
+        <section class="demo-hero">
+            <h1>AI-Powered <span class="gradient-text">Resume Screening</span></h1>
+            <p>Automatically scan, analyze, and rank candidates in seconds</p>
+        </section>
+
+        <div class="upload-section">
+            <div class="upload-card">
+                <div class="upload-icon">📄</div>
+                <h3>Upload Resume to Scan</h3>
+                <p>Our AI will analyze the resume and provide instant insights</p>
+                <button class="upload-btn" onclick="simulateUpload()">
+                    <span class="click-indicator">✨ Click Me!</span>
+                    Try Sample Resume
+                </button>
+            </div>
         </div>
-        
-        <div class="future-content">
-            <p>✨ Future demo content will appear here ✨</p>
+
+        <div class="dashboard-container" id="dashboard" style="display: none;">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon primary">📊</div>
+                    <div class="stat-value">127</div>
+                    <div class="stat-label">Total Candidates</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon success">✅</div>
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Top Matches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon warning">⏱️</div>
+                    <div class="stat-value">2.3s</div>
+                    <div class="stat-label">Avg Scan Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon primary">💼</div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Open Positions</div>
+                </div>
+            </div>
+
+            <!-- Pipeline -->
+            <div class="pipeline-section">
+                <div class="pipeline-header">
+                    <h2>Candidate Pipeline</h2>
+                </div>
+
+                <div class="pipeline-stages">
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-title">New Applications</div>
+                            <div class="stage-count">42</div>
+                        </div>
+                        <div class="candidate-list" id="newApplications">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-title">Screening</div>
+                            <div class="stage-count">28</div>
+                        </div>
+                        <div class="candidate-list" id="screening">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-title">Interviewing</div>
+                            <div class="stage-count">15</div>
+                        </div>
+                        <div class="candidate-list" id="interviewing">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <div class="stage-title">Offer</div>
+                            <div class="stage-count">8</div>
+                        </div>
+                        <div class="candidate-list" id="offer">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Resume Analysis Modal -->
+        <div class="modal" id="resumeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Resume Analysis Results</h2>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="analysis-section">
+                        <h3>Candidate Overview</h3>
+                        <div class="analysis-grid">
+                            <div class="analysis-item">
+                                <div class="analysis-label">Overall Match Score</div>
+                                <div class="analysis-value" style="color: var(--success);">94%</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">Experience Level</div>
+                                <div class="analysis-value">Senior</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">Years of Experience</div>
+                                <div class="analysis-value">8+ years</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">Education</div>
+                                <div class="analysis-value">Master's Degree</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3>Key Skills Detected</h3>
+                        <div class="skills-list">
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">React</span>
+                            <span class="skill-badge">Node.js</span>
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">AWS</span>
+                            <span class="skill-badge">Docker</span>
+                            <span class="skill-badge">MongoDB</span>
+                            <span class="skill-badge">Git</span>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3>AI Insights</h3>
+                        <div class="analysis-item" style="margin-bottom: 1rem;">
+                            <div class="analysis-label">✅ Strong Match For</div>
+                            <div class="analysis-value" style="font-size: 0.95rem; font-weight: 600;">Senior Full Stack Developer</div>
+                        </div>
+                        <div class="analysis-item" style="margin-bottom: 1rem;">
+                            <div class="analysis-label">💡 Recommendation</div>
+                            <div class="analysis-value" style="font-size: 0.95rem; font-weight: 600;">Move to interview stage - Top 5% candidate</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">🎯 Next Steps</div>
+                            <div class="analysis-value" style="font-size: 0.95rem; font-weight: 600;">Schedule technical interview within 48 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="cta-section">
+            <h2>Ready to Transform Your Hiring?</h2>
+            <p>Screen hundreds of resumes in seconds and find the perfect candidates faster</p>
+            <a href="/ai-recruitassistant/pricing.html" class="btn-primary">View Pricing & Get Started</a>
+        </section>
     </main>
 
     <footer>
@@ -354,13 +573,11 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 JAYISAAC AI. All rights reserved.</p>
+            <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
     <script>
         if (window.innerWidth > 768) {
             particlesJS('particles-js', {
@@ -424,19 +641,78 @@
             if (accountDropdown && !accountDropdown.contains(event.target)) accountDropdown.classList.remove('active');
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
-                    }
+        // Demo Data
+        const candidates = {
+            newApplications: [
+                { name: 'Sarah Chen', role: 'Full Stack Developer', score: 94, skills: ['React', 'Node.js', 'AWS'] },
+                { name: 'Michael Torres', role: 'Frontend Engineer', score: 88, skills: ['Vue.js', 'TypeScript'] },
+                { name: 'Emma Wilson', role: 'Backend Developer', score: 91, skills: ['Python', 'Django'] }
+            ],
+            screening: [
+                { name: 'James Lee', role: 'DevOps Engineer', score: 86, skills: ['Docker', 'Kubernetes'] },
+                { name: 'Lisa Anderson', role: 'Data Engineer', score: 89, skills: ['SQL', 'Apache Spark'] }
+            ],
+            interviewing: [
+                { name: 'David Brown', role: 'Senior Developer', score: 92, skills: ['Java', 'Spring Boot'] },
+                { name: 'Rachel Kim', role: 'Mobile Developer', score: 87, skills: ['React Native', 'Swift'] }
+            ],
+            offer: [
+                { name: 'Alex Martinez', role: 'Tech Lead', score: 95, skills: ['Architecture', 'AWS'] },
+                { name: 'Sophie Taylor', role: 'Senior Engineer', score: 93, skills: ['Go', 'Microservices'] }
+            ]
+        };
+
+        function renderCandidates() {
+            Object.keys(candidates).forEach(stage => {
+                const container = document.getElementById(stage);
+                if (container) {
+                    container.innerHTML = candidates[stage].map(candidate => `
+                        <div class="candidate-card" onclick="showResumeAnalysis()">
+                            <div class="candidate-header">
+                                <div class="candidate-info">
+                                    <h4>${candidate.name}</h4>
+                                    <div class="candidate-role">${candidate.role}</div>
+                                </div>
+                                <div class="match-score">${candidate.score}%</div>
+                            </div>
+                            <div class="candidate-skills">
+                                ${candidate.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            </div>
+                        </div>
+                    `).join('');
                 }
             });
+        }
+
+        function simulateUpload() {
+            const uploadCard = document.querySelector('.upload-card');
+            uploadCard.innerHTML = '<div class="upload-icon">⏳</div><h3>Analyzing Resume...</h3><p>AI is scanning and extracting insights</p>';
+            
+            setTimeout(() => {
+                uploadCard.innerHTML = '<div class="upload-icon">✅</div><h3>Analysis Complete!</h3><p>Resume successfully analyzed</p>';
+                
+                setTimeout(() => {
+                    document.getElementById('dashboard').style.display = 'block';
+                    renderCandidates();
+                    showResumeAnalysis();
+                    uploadCard.parentElement.style.display = 'none';
+                }, 1000);
+            }, 2000);
+        }
+
+        function showResumeAnalysis() {
+            document.getElementById('resumeModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('resumeModal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('resumeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
     </script>
 </body>
