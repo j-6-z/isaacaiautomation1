@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'AW-17580740260');</script>
+    <script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','qik5c');</script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        const firebaseConfig = {apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",authDomain: "jayisaac-ai.firebaseapp.com",projectId: "jayisaac-ai",storageBucket: "jayisaac-ai.firebasestorage.app",messagingSenderId: "967801239356",appId: "1:967801239356:web:0df3f35af72ce6e79b9039",measurementId: "G-V91DS21PGE"};
+        const app = initializeApp(firebaseConfig);const analytics = getAnalytics(app);const auth = getAuth(app);const provider = new GoogleAuthProvider();
+        window.firebaseAuth = {signInWithGoogle: async function() {try {const result = await signInWithPopup(auth, provider);return result.user;} catch (error) {alert("Sign in failed: " + error.message);}},signOut: async function() {try {await signOut(auth);} catch (error) {console.error("Sign out error:", error.message);}},getCurrentUser: function() {return auth.currentUser;}};
+        onAuthStateChanged(auth, (user) => {const loginBtn = document.querySelector('.login-btn');const accountDropdown = document.querySelector('.account-dropdown');if (user) {if (loginBtn) loginBtn.style.display = 'none';if (accountDropdown) {accountDropdown.style.display = 'block';const userPhoto = accountDropdown.querySelector('.account-photo');const userEmailDisplay = accountDropdown.querySelector('.user-email');accountDropdown.querySelectorAll('.account-name').forEach(el => {el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';});if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';if (userEmailDisplay) userEmailDisplay.textContent = user.email;}} else {if (loginBtn) {loginBtn.style.display = 'inline-flex';loginBtn.textContent = 'Login/Signup';loginBtn.href = '/login.html';}if (accountDropdown) accountDropdown.style.display = 'none';}});
+    </script>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="JAYISAAC AI Receptionist - Never miss a call, never lose a lead. 24/7 AI-powered call answering, appointment scheduling, and lead qualification.">
+    <title>AI Receptionist - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#f97316;--primary-dark:#ea580c;--primary-light:#fb923c;--accent-glow:rgba(249,115,22,0.4);--success:#10b981;--bg-white:#fff;--bg-light:#fafafa;--bg-gray:#f3f4f6;--bg-dark:#0a0a0a;--text-dark:#111827;--text-gray:#6b7280;--text-light:#9ca3af;--border:#e5e7eb;--border-light:#f3f4f6;--transition-fast:0.15s ease;--transition-base:0.3s cubic-bezier(0.4,0,0.2,1);--transition-spring:0.5s cubic-bezier(0.34,1.56,0.64,1)}
+        html,body{overflow-x:hidden;width:100%;max-width:100%}
+        html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-white);color:var(--text-dark);line-height:1.6;padding-top:160px;-webkit-font-smoothing:antialiased;position:relative}
+        ::selection{background:var(--primary);color:#fff}::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg-light)}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:5px}
+        #particles-js{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.7;overflow:hidden}
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.06);transition:var(--transition-base)}
+        header.scrolled{background:rgba(255,255,255,.98);box-shadow:0 1px 3px rgba(0,0,0,.05),0 10px 40px rgba(0,0,0,.03)}
+        nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;position:relative}
+        .header-text{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+        .logo-container{position:absolute;left:50%;transform:translateX(-50%);top:100%;z-index:1002;background:linear-gradient(180deg,#fff 0%,#fafafa 100%);padding:1rem 1.25rem 0;border-radius:0 0 50% 50%;box-shadow:0 8px 32px rgba(0,0,0,.08);clip-path:polygon(0% 0%,100% 0%,100% 70%,50% 100%,0% 70%);padding-bottom:2.5rem}
+        .logo-container img{height:72px;width:72px;border-radius:50%;transition:var(--transition-spring);border:3px solid var(--primary);box-shadow:0 4px 20px var(--accent-glow);object-fit:cover}
+        .logo-container img:hover{transform:scale(1.12) rotate(5deg)}
+        .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text-gray);text-decoration:none;font-size:.95rem;font-weight:500;transition:var(--transition-fast);position:relative;padding:.5rem 0}
+        .nav-links>li>a:not(.login-btn)::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--primary);transition:var(--transition-base)}
+        .nav-links>li>a:not(.login-btn):hover::after{width:100%}
+        .nav-links a:hover{color:var(--primary)}
+        .dropdown{position:relative}.dropdown-toggle{display:flex;align-items:center;gap:.5rem;cursor:pointer;color:var(--text-gray);font-size:.95rem;font-weight:500;transition:var(--transition-fast);padding:.5rem 0}
+        .dropdown-toggle:hover{color:var(--primary)}.dropdown-arrow{font-size:.65rem;transition:var(--transition-base);opacity:.7}
+        .dropdown.active .dropdown-arrow{transform:rotate(180deg)}
+        .dropdown-menu{position:absolute;top:calc(100% + 1rem);left:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:300px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1005;overflow:hidden}
+        .services-dropdown .dropdown-menu{left:0}.receptionist-dropdown .dropdown-menu{left:auto;right:0}
+        .dropdown.active .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .dropdown-menu a{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border-bottom:1px solid var(--border-light)}
+        .dropdown-menu a:last-child{border-bottom:none}.dropdown-menu a:hover{background:linear-gradient(90deg,rgba(249,115,22,.04),transparent);padding-left:2rem}
+        .dropdown-menu a:hover .dropdown-icon{transform:scale(1.05)}
+        .dropdown-icon{font-size:1.5rem;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(251,146,60,.08));border-radius:12px;transition:var(--transition-base)}
+        .dropdown-content h4{font-size:.95rem;font-weight:600;margin-bottom:.25rem}.dropdown-content p{font-size:.8rem;color:var(--text-gray)}
+        .login-btn{background:transparent;color:var(--primary)!important;padding:.75rem 1.75rem;border-radius:12px;text-decoration:none;font-weight:600;border:2px solid var(--primary);display:inline-flex;transition:var(--transition-base);position:relative;overflow:hidden}
+        .login-btn::after{content:'→';margin-left:.5rem;transition:var(--transition-base);opacity:0;transform:translateX(-10px)}
+        .login-btn:hover::after{opacity:1;transform:translateX(0)}
+        .login-btn:hover{color:#fff!important;background:var(--primary);transform:translateY(-2px);box-shadow:0 8px 25px var(--accent-glow);padding-right:2.25rem}
+        .account-dropdown{position:relative;display:none}.account-toggle{display:flex;align-items:center;gap:.75rem;cursor:pointer;padding:.5rem 1rem;border-radius:12px;border:2px solid var(--primary);transition:var(--transition-base)}
+        .account-toggle:hover{background:rgba(249,115,22,.08)}.account-photo{width:32px;height:32px;border-radius:50%;object-fit:cover}.account-name{font-size:.95rem;font-weight:600}
+        .account-arrow{font-size:.65rem;color:var(--text-gray);transition:var(--transition-base)}.account-dropdown.active .account-arrow{transform:rotate(180deg)}
+        .account-menu{position:absolute;top:calc(100% + 1rem);right:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:280px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1001;overflow:hidden}
+        .account-dropdown.active .account-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .account-header{padding:1.5rem;background:linear-gradient(135deg,rgba(249,115,22,.03),rgba(251,146,60,.03));border-bottom:1px solid var(--border-light)}
+        .account-header .account-name{font-size:1rem;font-weight:600;display:block;margin-bottom:.25rem}.user-email{font-size:.85rem;color:var(--text-gray)}
+        .account-menu a,.account-menu button{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border:none;background:none;width:100%;font-size:.95rem;cursor:pointer;border-bottom:1px solid var(--border-light);font-family:inherit}
+        .account-menu a:hover,.account-menu button:hover{background:var(--bg-light);color:var(--primary);padding-left:2rem}
+        .menu-icon{font-size:1.25rem;width:32px;text-align:center}.logout-btn{color:#ef4444!important}.logout-btn:hover{background:rgba(239,68,68,.08)!important;color:#dc2626!important}
+        .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}
+        .menu-toggle span{width:24px;height:2px;background:var(--text-dark);transition:var(--transition-base);border-radius:2px}
+        .menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+        /* Hero */
+        .hero{min-height:85vh;display:flex;align-items:center;padding:8rem 2rem 6rem;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:-20%;left:0;right:0;height:120%;background:radial-gradient(ellipse at center top,rgba(249,115,22,.08) 0%,transparent 60%);pointer-events:none}
+        .hero-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+        .hero-content{animation:fadeSlideUp .8s ease}
+        @keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(251,146,60,.1));border-radius:100px;color:var(--primary);font-size:.85rem;font-weight:600;margin-bottom:1.5rem;animation:pulse 2s ease-in-out infinite}
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.2)}50%{box-shadow:0 0 0 10px rgba(249,115,22,0)}}
+        .hero-content h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:1.1;margin-bottom:2rem;letter-spacing:-.03em}
+        .gradient-text{background:linear-gradient(135deg,var(--primary),var(--primary-dark),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradientShift 5s ease-in-out infinite}
+        @keyframes gradientShift{0%,100%{background-position:0% center}50%{background-position:100% center}}
+        .hero-content p{font-size:clamp(1.1rem,2vw,1.25rem);color:var(--text-gray);margin-bottom:3rem;line-height:1.8;max-width:540px}
+        .hero-buttons{display:flex;gap:1.25rem;flex-wrap:wrap}
+        .btn-primary{background:var(--bg-dark);color:#fff;padding:1.25rem 2.75rem;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;transition:var(--transition-base);box-shadow:0 8px 25px rgba(0,0,0,.2);border:none;cursor:pointer;position:relative;overflow:hidden}
+        .btn-primary::after{content:'→';margin-left:.75rem;transition:var(--transition-base)}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,.25);background:#1a1a1a}
+        .btn-primary:hover::after{transform:translateX(4px)}
+        .btn-secondary{background:#fff;color:var(--text-dark);padding:1.25rem 2.75rem;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;transition:var(--transition-base);border:2px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-3px);box-shadow:0 15px 40px rgba(249,115,22,.1)}
+        .hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+        .voice-icon{font-size:clamp(10rem,20vw,16rem);text-align:center;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 20px 40px rgba(249,115,22,.2))}
+        @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-20px) rotate(2deg)}}
+
+        /* Stats */
+        .stats-section{padding:6rem 2rem;background:var(--bg-dark);position:relative;z-index:2;overflow:hidden}
+        .stats-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(249,115,22,.15) 0%,transparent 50%);pointer-events:none}
+        .stats-container{max-width:1400px;margin:0 auto;text-align:center;position:relative}
+        .stats-container h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;color:#fff;margin-bottom:1rem;letter-spacing:-.02em}
+        .stats-container>p{font-size:1.15rem;color:rgba(255,255,255,.7);margin-bottom:4rem}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+        .stat-item{text-align:center;padding:2rem;background:rgba(255,255,255,.03);border-radius:20px;border:1px solid rgba(255,255,255,.08);transition:var(--transition-base)}
+        .stat-item:hover{background:rgba(255,255,255,.06);transform:translateY(-5px);border-color:rgba(249,115,22,.3)}
+        .stat-number{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;color:#fff;margin-bottom:.5rem;line-height:1;background:linear-gradient(135deg,#fff,rgba(255,255,255,.8));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .stat-label{font-size:1rem;color:rgba(255,255,255,.7)}
+
+        /* Features */
+        .features{padding:8rem 2rem;background:#fff;position:relative;z-index:2}
+        .features-container{max-width:1400px;margin:0 auto}
+        .section-header{text-align:center;margin-bottom:5rem}
+        .section-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.5rem;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(251,146,60,.08));border-radius:100px;color:var(--primary);font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem}
+        .section-header h2{font-size:clamp(2rem,4vw,3.25rem);font-weight:800;margin-bottom:1.5rem;letter-spacing:-.02em}
+        .section-header p{font-size:1.15rem;color:var(--text-gray);max-width:700px;margin:0 auto;line-height:1.7}
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .feature-card{background:#fff;padding:2.5rem;border-radius:24px;border:1px solid var(--border-light);transition:var(--transition-base);position:relative;overflow:hidden}
+        .feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transition:transform .4s ease}
+        .feature-card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(0,0,0,.08);border-color:rgba(249,115,22,.2)}
+        .feature-card:hover::before{transform:scaleX(1)}
+        .feature-icon{font-size:3rem;margin-bottom:1.5rem;display:block}
+        .feature-card h3{font-size:1.5rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.01em}
+        .feature-card p{color:var(--text-gray);line-height:1.8;font-size:1rem}
+
+        /* Use Cases */
+        .use-cases{padding:8rem 2rem;background:var(--bg-light);position:relative;z-index:2}
+        .use-cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1400px;margin:3rem auto 0}
+        .use-case-card{background:#fff;padding:2.5rem;border-radius:20px;border:1px solid var(--border-light);transition:var(--transition-base)}
+        .use-case-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,.06);border-color:rgba(249,115,22,.2)}
+        .use-case-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--bg-dark),#1a1a1a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem;margin-bottom:1.75rem;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+        .use-case-card h3{font-size:1.35rem;font-weight:700;margin-bottom:1rem}
+        .use-case-card p{color:var(--text-gray);line-height:1.8}
+
+        /* CTA */
+        .cta-section{padding:8rem 2rem;background:#fff;position:relative;z-index:2;overflow:hidden}
+        .cta-container{max-width:900px;margin:0 auto;text-align:center;background:var(--bg-dark);padding:5rem 3rem;border-radius:32px;position:relative;overflow:hidden}
+        .cta-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(249,115,22,.15) 0%,transparent 50%);animation:rotate 30s linear infinite;pointer-events:none;will-change:transform}
+        @keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .cta-container::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--primary-light),var(--primary))}
+        .cta-container h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;margin-bottom:1.5rem;color:#fff;position:relative}
+        .cta-container p{font-size:1.15rem;color:rgba(255,255,255,.7);margin-bottom:2.5rem;position:relative}
+        .cta-container .hero-buttons{justify-content:center;position:relative}
+        .cta-container .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));box-shadow:0 8px 30px var(--accent-glow)}
+        .cta-container .btn-primary:hover{box-shadow:0 15px 45px var(--accent-glow)}
+        .cta-container .btn-secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
+        .cta-container .btn-secondary:hover{background:rgba(255,255,255,.08);border-color:#fff}
+
+        /* Footer */
+        footer{padding:6rem 2rem 2rem;background:var(--bg-dark);color:#fff;position:relative;z-index:2}
+        footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.3),transparent)}
+        .footer-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+        .footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;text-decoration:none}
+        .footer-logo img{width:52px;height:52px;border-radius:50%;border:2px solid var(--primary);box-shadow:0 4px 15px var(--accent-glow);transition:var(--transition-base)}
+        .footer-logo:hover img{transform:scale(1.1)}
+        .footer-logo h3{font-size:1.5rem;font-weight:800;color:#fff;margin:0}
+        .footer-company p{color:rgba(255,255,255,.6);line-height:1.8;font-size:1rem;max-width:400px}
+        .footer-links h4{font-size:.9rem;font-weight:700;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.1em}
+        .footer-links ul{list-style:none}.footer-links li{margin-bottom:1rem}
+        .footer-links a{color:rgba(255,255,255,.6);text-decoration:none;transition:var(--transition-fast);font-size:1rem}
+        .footer-links a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.9rem}
+
+        /* Responsive */
+        @media(max-width:1024px){.hero-container{grid-template-columns:1fr;gap:3rem;text-align:center}.hero-visual{order:-1}.hero-content{text-align:center}.hero-content p{margin-left:auto;margin-right:auto}.hero-buttons{justify-content:center}.features-grid,.use-cases-grid{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:repeat(2,1fr)}.footer-content{grid-template-columns:1fr;gap:3rem;text-align:center}.footer-company{text-align:center}.footer-company p{margin:0 auto}}
+        @media(max-width:768px){*{max-width:100%!important}html,body{overflow-x:hidden!important;width:100%!important}body{padding-top:140px}.hero::before,.cta-container::before,.stats-section::before{display:none!important}.voice-icon{animation:none!important}nav{padding:1rem 1rem}.header-text{font-size:1.1rem}.logo-container{padding:.75rem 1rem 0;padding-bottom:2rem}.logo-container img{height:50px;width:50px}.logo-container.hidden{display:none}.menu-toggle{display:flex}.nav-links{display:none;position:fixed;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:1.5rem;border-bottom:1px solid var(--border);gap:1.25rem;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.1);max-height:70vh;overflow-y:auto;overflow-x:hidden}.nav-links.active{display:flex}.dropdown{width:100%}.dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-light);margin-top:1rem;display:none;min-width:100%;border-radius:12px}.dropdown.active .dropdown-menu{display:block}.dropdown-menu a{justify-content:center;text-align:center;padding:1rem;border-radius:8px}.dropdown-menu a .dropdown-icon{display:none}.dropdown-menu a .dropdown-content p{display:none}.dropdown-toggle{justify-content:center;width:100%;padding:.75rem}.login-btn{width:100%;justify-content:center}.account-dropdown{width:100%}.account-toggle{width:100%;justify-content:center}.account-menu{position:static;transform:none;box-shadow:none;margin-top:1rem;display:none;min-width:100%;background:var(--bg-light);border-radius:12px}.account-dropdown.active .account-menu{display:block}.hero{padding:2.5rem 1rem 2rem;min-height:auto;overflow:hidden}.hero-container{gap:1.5rem}.hero-content h1{font-size:1.6rem;word-wrap:break-word}.hero-content p{font-size:.95rem}.hero-badge{font-size:.7rem;padding:.35rem .7rem}.voice-icon{font-size:4rem}.features,.use-cases,.stats-section,.cta-section{padding:2.5rem 1rem;overflow:hidden}.features-grid,.use-cases-grid,.stats-grid{grid-template-columns:1fr;gap:1rem}.feature-card,.use-case-card{padding:1.25rem}.stat-item{padding:1.25rem 1rem}.stat-number{font-size:1.75rem}.section-header{margin-bottom:1.5rem}.section-header h2{font-size:1.4rem}.section-header p{font-size:.9rem}.hero-buttons{flex-direction:column;width:100%;gap:.75rem}.btn-primary,.btn-secondary{width:100%;text-align:center;justify-content:center;display:flex;padding:.9rem 1.25rem;font-size:.9rem}.cta-container{padding:1.75rem 1rem;border-radius:14px;margin:0}.cta-container h2{font-size:1.25rem}.cta-container p{font-size:.9rem;margin-bottom:1.25rem}.footer-content{gap:1.5rem}.footer-logo{flex-direction:column;justify-content:center}.footer-logo h3{font-size:1.15rem}.footer-links{text-align:center}.footer-links h4{margin-bottom:.75rem;font-size:.8rem}.footer-company{text-align:center}.footer-company p{text-align:center;margin:0 auto;font-size:.85rem}footer{padding:3rem 1rem 1.5rem}#particles-js{display:none}}
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <header>
+        <nav>
+            <a href="/" class="header-text">JAYISAAC AI</a>
+            <ul class="nav-links">
+                <li class="dropdown services-dropdown"><div class="dropdown-toggle" onclick="toggleDropdown('services')">Solutions<span class="dropdown-arrow">▼</span></div><div class="dropdown-menu"><a href="/ai-chatbot/"><div class="dropdown-icon">💬</div><div class="dropdown-content"><h4>AI Chatbots</h4><p>24/7 intelligent support</p></div></a><a href="/ai-receptionist/"><div class="dropdown-icon">📞</div><div class="dropdown-content"><h4>AI Receptionist</h4><p>Never miss a call</p></div></a></div></li>
+                <li class="dropdown receptionist-dropdown"><div class="dropdown-toggle" onclick="toggleDropdown('receptionist')">AI Receptionist<span class="dropdown-arrow">▼</span></div><div class="dropdown-menu"><a href="/ai-receptionist/"><div class="dropdown-icon">📞</div><div class="dropdown-content"><h4>Overview</h4><p>Features & benefits</p></div></a><a href="/ai-receptionist/pricing.html"><div class="dropdown-icon">💰</div><div class="dropdown-content"><h4>Pricing</h4><p>Plans & purchase</p></div></a><a href="/ai-receptionist/demo.html"><div class="dropdown-icon">🎯</div><div class="dropdown-content"><h4>Demo</h4><p>Try it live</p></div></a></div></li>
+                <li><a href="/policies.html">Policies</a></li>
+                <li><a href="/login.html" class="login-btn">Get Started</a></li>
+                <li class="account-dropdown"><div class="account-toggle" onclick="toggleAccountDropdown()"><img src="" alt="Profile" class="account-photo"><span class="account-name">Account</span><span class="account-arrow">▼</span></div><div class="account-menu"><div class="account-header"><span class="account-name">Account</span><span class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="72171f131b1e32170a131f021e175c111d1f">[email&#160;protected]</a></span></div><a href="/myorders.html"><span class="menu-icon">📦</span>My Orders</a><a href="/support.html"><span class="menu-icon">💬</span>Support</a><button class="logout-btn" onclick="handleLogout()"><span class="menu-icon">🚪</span>Sign Out</button></div></li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+            <div class="logo-container"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"></div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">📞 AI-Powered Phone System</div>
+                <h1>Never Miss a Call. <span class="gradient-text">Never Lose a Lead.</span></h1>
+                <p>Your AI Receptionist answers every call 24/7, books appointments, takes messages, qualifies leads, and transfers urgent calls—just like a human receptionist, but never takes a break.</p>
+                <div class="hero-buttons">
+                    <a href="/ai-receptionist/pricing.html" class="btn-primary">View Pricing</a>
+                    <a href="#features" class="btn-secondary">How It Works</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="voice-icon">📞</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <h2>AI Receptionist That Actually Works</h2>
+            <p>Real results from businesses using our AI Receptionist</p>
+            <div class="stats-grid">
+                <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Calls Answered</div></div>
+                <div class="stat-item"><div class="stat-number">3X</div><div class="stat-label">More Appointments</div></div>
+                <div class="stat-item"><div class="stat-number">60%</div><div class="stat-label">Cost Reduction</div></div>
+                <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Availability</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <div class="section-tag">✨ Features</div>
+                <h2>Why Businesses Choose Our AI Receptionist</h2>
+                <p>Everything you need to handle calls at scale, close more deals, and never miss an opportunity.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card"><span class="feature-icon">🗣️</span><h3>Human-Like Conversations</h3><p>Natural speech patterns, emotional intelligence, and context awareness that feels genuinely human. Customers can't tell they're talking to AI.</p></div>
+                <div class="feature-card"><span class="feature-icon">⚡</span><h3>Instant Lead Qualification</h3><p>Ask the right questions, gather critical information, and route qualified leads to your sales team automatically—all in real-time.</p></div>
+                <div class="feature-card"><span class="feature-icon">📅</span><h3>Appointment Scheduling</h3><p>Syncs with your calendar, finds available times, confirms bookings, and sends reminders—handling the entire scheduling process seamlessly.</p></div>
+                <div class="feature-card"><span class="feature-icon">📝</span><h3>Message Taking</h3><p>Takes detailed messages, captures caller information, and delivers them instantly via email, SMS, or your preferred platform.</p></div>
+                <div class="feature-card"><span class="feature-icon">🔀</span><h3>Smart Call Transfers</h3><p>Identifies urgent calls and transfers them to the right person immediately. Non-urgent calls are handled or scheduled for callback.</p></div>
+                <div class="feature-card"><span class="feature-icon">🔗</span><h3>CRM Integration</h3><p>Automatically logs calls, updates records, and syncs with Salesforce, HubSpot, Zoho, and all major CRM platforms.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="use-cases">
+        <div class="features-container">
+            <div class="section-header">
+                <div class="section-tag">🎯 Use Cases</div>
+                <h2>Perfect For Every Industry</h2>
+                <p>Our AI Receptionist adapts to your specific business needs and industry requirements.</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case-card"><div class="use-case-icon">🏥</div><h3>Healthcare</h3><p>Appointment scheduling, prescription refills, patient intake, and 24/7 nurse hotlines with HIPAA compliance.</p></div>
+                <div class="use-case-card"><div class="use-case-icon">🏠</div><h3>Real Estate</h3><p>Property inquiries, showing schedules, lead qualification, and follow-ups that convert prospects to buyers.</p></div>
+                <div class="use-case-card"><div class="use-case-icon">⚖️</div><h3>Law Firms</h3><p>Client intake, consultation scheduling, case status updates, and after-hours emergency call handling.</p></div>
+                <div class="use-case-card"><div class="use-case-icon">🚗</div><h3>Auto Services</h3><p>Service appointments, quote requests, parts inquiries, and maintenance reminders on autopilot.</p></div>
+                <div class="use-case-card"><div class="use-case-icon">🏢</div><h3>Small Business</h3><p>Never miss a customer call again. Handle inquiries, bookings, and messages professionally 24/7.</p></div>
+                <div class="use-case-card"><div class="use-case-icon">🏨</div><h3>Hospitality</h3><p>Reservations, room inquiries, concierge services, and guest requests handled around the clock.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="cta-container">
+            <h2>Ready to <span class="gradient-text">Transform</span> Your Phone System?</h2>
+            <p>See how AI Receptionist can handle your calls, qualify leads, and book appointments automatically.</p>
+            <div class="hero-buttons">
+                <a href="/ai-receptionist/pricing.html" class="btn-primary">View Pricing</a>
+                <a href="/#contact" class="btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-company"><a href="/" class="footer-logo"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"><h3>JAYISAAC AI</h3></a><p>Intelligent automation solutions that help businesses streamline operations and enhance customer experiences.</p></div>
+            <div class="footer-links"><h4>Solutions</h4><ul><li><a href="/ai-chatbot/">AI Chatbots</a></li><li><a href="/ai-receptionist/">AI Receptionist</a></li></ul></div>
+            <div class="footer-links"><h4>Company</h4><ul><li><a href="/policies.html">Privacy Policy</a></li><li><a href="/policies.html">Terms of Service</a></li><li><a href="/#contact">Contact</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 JAYISAAC AI. All rights reserved.</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        if(window.innerWidth>768){particlesJS('particles-js',{particles:{number:{value:50,density:{enable:true,value_area:1200}},color:{value:'#f97316'},shape:{type:'circle'},opacity:{value:0.25,random:true},size:{value:2.5,random:true},line_linked:{enable:true,distance:180,color:'#f97316',opacity:0.15,width:1},move:{enable:true,speed:1,direction:'none',random:true,out_mode:'bounce'}},interactivity:{detect_on:'canvas',events:{onhover:{enable:true,mode:'grab'},resize:true},modes:{grab:{distance:150,line_linked:{opacity:0.4}}}},retina_detect:true})}
+        window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',window.scrollY>50));
+        function toggleMenu(){document.querySelector('.menu-toggle').classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active');document.querySelector('.logo-container')?.classList.toggle('hidden')}
+        function toggleDropdown(t){const sd=document.querySelector('.services-dropdown'),rd=document.querySelector('.receptionist-dropdown'),ad=document.querySelector('.account-dropdown');if(t==='services'){sd.classList.toggle('active');rd?.classList.remove('active')}else if(t==='receptionist'){rd.classList.toggle('active');sd?.classList.remove('active')}ad?.classList.remove('active')}
+        function toggleAccountDropdown(){document.querySelector('.account-dropdown').classList.toggle('active');document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active'))}
+        function handleLogout(){if(window.firebaseAuth)window.firebaseAuth.signOut();document.querySelector('.account-dropdown')?.classList.remove('active')}
+        document.addEventListener('click',e=>{document.querySelectorAll('.dropdown').forEach(d=>{if(!d.contains(e.target))d.classList.remove('active')});const ad=document.querySelector('.account-dropdown');if(ad&&!ad.contains(e.target))ad.classList.remove('active')});
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const href=this.getAttribute('href');if(href!=='#'){e.preventDefault();const target=document.querySelector(href);if(target){target.scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.nav-links')?.classList.remove('active')}}})});
+        // Scroll animations
+        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)'}})},{threshold:0.1});
+        document.querySelectorAll('.feature-card,.use-case-card,.stat-item').forEach((el,i)=>{el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity 0.6s ease '+(i%3*0.1)+'s, transform 0.6s ease '+(i%3*0.1)+'s';observer.observe(el)});
+    </script>
+</body>
+</html>

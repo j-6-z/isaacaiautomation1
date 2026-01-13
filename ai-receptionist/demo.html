@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'AW-17580740260');</script>
+    <script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','qik5c');</script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        const firebaseConfig = {apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",authDomain: "jayisaac-ai.firebaseapp.com",projectId: "jayisaac-ai",storageBucket: "jayisaac-ai.firebasestorage.app",messagingSenderId: "967801239356",appId: "1:967801239356:web:0df3f35af72ce6e79b9039",measurementId: "G-V91DS21PGE"};
+        const app = initializeApp(firebaseConfig);const analytics = getAnalytics(app);const auth = getAuth(app);const provider = new GoogleAuthProvider();
+        window.firebaseAuth = {signInWithGoogle: async function() {try {const result = await signInWithPopup(auth, provider);return result.user;} catch (error) {alert("Sign in failed: " + error.message);}},signOut: async function() {try { await signOut(auth); } catch (error) { console.error(error); }}};
+        onAuthStateChanged(auth, (user) => {const loginBtn = document.querySelector('.login-btn');const accountDropdown = document.querySelector('.account-dropdown');if (user) {if (loginBtn) loginBtn.style.display = 'none';if (accountDropdown) {accountDropdown.style.display = 'block';accountDropdown.querySelectorAll('.account-name').forEach(el => {el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';});const userPhoto = accountDropdown.querySelector('.account-photo');if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';const userEmailDisplay = accountDropdown.querySelector('.user-email');if (userEmailDisplay) userEmailDisplay.textContent = user.email;}} else {if (loginBtn) { loginBtn.style.display = 'inline-flex'; loginBtn.textContent = 'Login/Signup'; loginBtn.href = '/login.html'; }if (accountDropdown) accountDropdown.style.display = 'none';}});
+    </script>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Try our AI Receptionist demo - See how it answers calls, books appointments, and handles inquiries 24/7.">
+    <title>AI Receptionist Demo - JAYISAAC AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#f97316;--primary-dark:#ea580c;--primary-light:#fb923c;--accent-glow:rgba(249,115,22,0.4);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--bg-white:#fff;--bg-light:#fafafa;--bg-gray:#f3f4f6;--bg-dark:#0a0a0a;--text-dark:#111827;--text-gray:#6b7280;--text-light:#9ca3af;--border:#e5e7eb;--border-light:#f3f4f6;--transition-fast:0.15s ease;--transition-base:0.3s cubic-bezier(0.4,0,0.2,1);--transition-spring:0.5s cubic-bezier(0.34,1.56,0.64,1)}
+        html,body{overflow-x:hidden;width:100%;max-width:100%}
+        html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-white);color:var(--text-dark);line-height:1.6;padding-top:160px;-webkit-font-smoothing:antialiased;position:relative}
+        ::selection{background:var(--primary);color:#fff}::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg-light)}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:5px}
+        #particles-js{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.7}
+
+        /* Header */
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.06);transition:var(--transition-base)}
+        header.scrolled{background:rgba(255,255,255,.98);box-shadow:0 1px 3px rgba(0,0,0,.05),0 10px 40px rgba(0,0,0,.03)}
+        nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;position:relative}
+        .header-text{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+        .logo-container{position:absolute;left:50%;transform:translateX(-50%);top:100%;z-index:1002;background:linear-gradient(180deg,#fff 0%,#fafafa 100%);padding:1rem 1.25rem 0;border-radius:0 0 50% 50%;box-shadow:0 8px 32px rgba(0,0,0,.08);clip-path:polygon(0% 0%,100% 0%,100% 70%,50% 100%,0% 70%);padding-bottom:2.5rem}
+        .logo-container img{height:72px;width:72px;border-radius:50%;transition:var(--transition-spring);border:3px solid var(--primary);box-shadow:0 4px 20px var(--accent-glow);object-fit:cover}
+        .logo-container img:hover{transform:scale(1.12) rotate(5deg)}
+        .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text-gray);text-decoration:none;font-size:.95rem;font-weight:500;transition:var(--transition-fast)}
+        .nav-links a:hover{color:var(--primary)}
+        .dropdown{position:relative}.dropdown-toggle{display:flex;align-items:center;gap:.5rem;cursor:pointer;color:var(--text-gray);font-size:.95rem;font-weight:500;transition:var(--transition-fast)}
+        .dropdown-toggle:hover{color:var(--primary)}.dropdown-arrow{font-size:.65rem;transition:var(--transition-base);opacity:.7}
+        .dropdown.active .dropdown-arrow{transform:rotate(180deg)}
+        .dropdown-menu{position:absolute;top:calc(100% + 1rem);left:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:300px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1005;overflow:hidden}
+        .services-dropdown .dropdown-menu{left:0}.receptionist-dropdown .dropdown-menu{left:auto;right:0}
+        .dropdown.active .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .dropdown-menu a{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border-bottom:1px solid var(--border-light)}
+        .dropdown-menu a:last-child{border-bottom:none}.dropdown-menu a:hover{background:linear-gradient(90deg,rgba(249,115,22,.04),transparent);padding-left:2rem}
+        .dropdown-icon{font-size:1.5rem;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(251,146,60,.08));border-radius:12px;transition:var(--transition-base)}
+        .dropdown-menu a:hover .dropdown-icon{transform:scale(1.05)}
+        .dropdown-content h4{font-size:.95rem;font-weight:600;margin-bottom:.25rem}.dropdown-content p{font-size:.8rem;color:var(--text-gray)}
+        .login-btn{background:transparent;color:var(--primary)!important;padding:.75rem 1.75rem;border-radius:12px;text-decoration:none;font-weight:600;border:2px solid var(--primary);display:inline-flex;transition:var(--transition-base)}
+        .login-btn:hover{color:#fff!important;background:var(--primary);transform:translateY(-2px);box-shadow:0 8px 25px var(--accent-glow)}
+        .account-dropdown{position:relative;display:none}.account-toggle{display:flex;align-items:center;gap:.75rem;cursor:pointer;padding:.5rem 1rem;border-radius:12px;border:2px solid var(--primary);transition:var(--transition-base)}
+        .account-toggle:hover{background:rgba(249,115,22,.08)}.account-photo{width:32px;height:32px;border-radius:50%;object-fit:cover}.account-name{font-size:.95rem;font-weight:600}
+        .account-arrow{font-size:.65rem;color:var(--text-gray);transition:var(--transition-base)}.account-dropdown.active .account-arrow{transform:rotate(180deg)}
+        .account-menu{position:absolute;top:calc(100% + 1rem);right:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:280px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1001;overflow:hidden}
+        .account-dropdown.active .account-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .account-header{padding:1.5rem;background:linear-gradient(135deg,rgba(249,115,22,.03),rgba(251,146,60,.03));border-bottom:1px solid var(--border-light)}
+        .account-header .account-name{font-size:1rem;font-weight:600;display:block;margin-bottom:.25rem}.user-email{font-size:.85rem;color:var(--text-gray)}
+        .account-menu a,.account-menu button{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border:none;background:none;width:100%;font-size:.95rem;cursor:pointer;border-bottom:1px solid var(--border-light);font-family:inherit}
+        .account-menu a:hover,.account-menu button:hover{background:var(--bg-light);color:var(--primary);padding-left:2rem}
+        .menu-icon{font-size:1.25rem;width:32px;text-align:center}.logout-btn{color:#ef4444!important}.logout-btn:hover{background:rgba(239,68,68,.08)!important;color:#dc2626!important}
+        .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}
+        .menu-toggle span{width:24px;height:2px;background:var(--text-dark);transition:var(--transition-base);border-radius:2px}
+        .menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+        /* Hero */
+        .demo-hero{text-align:center;padding:5rem 2rem 3rem;max-width:1000px;margin:0 auto;position:relative;z-index:2;overflow:hidden}
+        .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(251,146,60,.1));color:var(--primary);padding:.6rem 1.5rem;border-radius:100px;font-size:.9rem;font-weight:600;margin-bottom:1.5rem}
+        .demo-hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;margin-bottom:1.5rem;letter-spacing:-.03em;line-height:1.1}
+        .gradient-text{background:linear-gradient(135deg,var(--primary),var(--primary-dark),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto}
+        .demo-hero p{font-size:clamp(1rem,2vw,1.35rem);color:var(--text-gray);margin-bottom:2rem;max-width:750px;margin-left:auto;margin-right:auto;line-height:1.7}
+        .hero-stats{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:2rem}
+        .hero-stat{text-align:center;padding:1rem;background:rgba(255,255,255,.8);backdrop-filter:blur(10px);border-radius:16px;border:1px solid var(--border-light);transition:var(--transition-base)}
+        .hero-stat:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.08)}
+        .hero-stat-value{font-size:1.75rem;font-weight:800;color:var(--primary);margin-bottom:.25rem}
+        .hero-stat-label{font-size:.85rem;color:var(--text-gray)}
+
+        /* Tabs */
+        .tab-navigation{display:flex;justify-content:center;gap:.5rem;margin-bottom:3rem;flex-wrap:wrap;padding:0 1rem;position:relative;z-index:2}
+        .tab-btn{padding:1rem 2rem;border-radius:100px;border:2px solid var(--border);background:#fff;color:var(--text-dark);font-weight:600;cursor:pointer;transition:var(--transition-base);font-size:.95rem;font-family:inherit}
+        .tab-btn:hover{border-color:var(--primary);color:var(--primary)}
+        .tab-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-color:var(--primary);box-shadow:0 8px 25px var(--accent-glow)}
+        .tab-content{display:none}.tab-content.active{display:block}
+
+        /* Demo Container */
+        .demo-container{max-width:1400px;margin:0 auto;padding:0 2rem 4rem;display:grid;grid-template-columns:1fr 420px;gap:2.5rem;position:relative;z-index:2}
+
+        /* Phone Interface */
+        .phone-interface{background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:44px;padding:1.5rem;box-shadow:0 40px 100px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden}
+        .phone-interface::before{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:100px;height:28px;background:#000;border-radius:20px}
+        .phone-interface::after{content:'';position:absolute;top:26px;left:50%;transform:translateX(-50%);width:10px;height:10px;background:linear-gradient(135deg,#333,#1a1a1a);border-radius:50%}
+        .phone-screen{background:linear-gradient(180deg,#0a0a0a,#1a1a1a);border-radius:34px;padding:3rem 2rem;min-height:620px;display:flex;flex-direction:column;margin-top:20px;position:relative;overflow:hidden}
+
+        .call-header{text-align:center;margin-bottom:2rem;position:relative;z-index:1}
+        .caller-avatar{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;box-shadow:0 15px 40px var(--accent-glow)}
+        .caller-name{color:#fff;font-size:1.5rem;font-weight:700;margin-bottom:.25rem}
+        .caller-subtitle{color:var(--primary);font-size:.95rem;font-weight:600;margin-bottom:.5rem}
+        .call-status{color:rgba(255,255,255,.5);font-size:.95rem;transition:var(--transition-base)}
+        .call-status.active{color:var(--success)}
+        .call-status.ringing{color:var(--warning);animation:blink 1s infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+        .call-timer{color:var(--success);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;margin-top:.5rem;display:none}
+        .call-timer.active{display:block}
+
+        .waveform-container{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 0}
+        .waveform{display:flex;align-items:center;justify-content:center;gap:6px;height:120px}
+        .wave-bar{width:6px;background:linear-gradient(180deg,var(--primary),var(--primary-light));border-radius:10px;transition:height .1s ease}
+        .wave-bar.animating{animation:wave .8s ease-in-out infinite}
+        .wave-bar:nth-child(1){height:25px;animation-delay:0s}.wave-bar:nth-child(2){height:45px;animation-delay:.1s}.wave-bar:nth-child(3){height:75px;animation-delay:.15s}.wave-bar:nth-child(4){height:55px;animation-delay:.2s}.wave-bar:nth-child(5){height:90px;animation-delay:.25s}.wave-bar:nth-child(6){height:60px;animation-delay:.3s}.wave-bar:nth-child(7){height:80px;animation-delay:.35s}.wave-bar:nth-child(8){height:45px;animation-delay:.4s}.wave-bar:nth-child(9){height:70px;animation-delay:.45s}.wave-bar:nth-child(10){height:35px;animation-delay:.5s}.wave-bar:nth-child(11){height:55px;animation-delay:.55s}.wave-bar:nth-child(12){height:40px;animation-delay:.6s}
+        @keyframes wave{0%,100%{transform:scaleY(.4);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+        .call-controls{display:flex;justify-content:center;gap:2rem;padding:1.5rem 0}
+        .control-btn{width:70px;height:70px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.75rem;transition:var(--transition-base);position:relative}
+        .control-btn:hover{transform:scale(1.1)}
+        .control-btn.call-btn{background:linear-gradient(135deg,var(--success),#059669);box-shadow:0 10px 30px rgba(16,185,129,.4)}
+        .control-btn.end-btn{background:linear-gradient(135deg,var(--danger),#dc2626);box-shadow:0 10px 30px rgba(239,68,68,.4);display:none}
+        .control-btn.mute-btn{background:rgba(255,255,255,.1);color:#fff;display:none}
+        .control-btn.mute-btn.muted{background:var(--danger)}
+        .click-indicator{position:absolute;top:-55px;left:50%;transform:translateX(-50%);background:#fff;color:var(--primary);padding:.7rem 1.5rem;border-radius:100px;font-size:.9rem;font-weight:700;box-shadow:0 10px 30px rgba(249,115,22,.25);white-space:nowrap}
+        .click-indicator::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid #fff}
+
+        /* Right Panel */
+        .right-panel{display:flex;flex-direction:column;gap:1.5rem}
+        .scenario-panel{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.08);padding:2rem;border:1px solid var(--border-light)}
+        .scenario-panel h3{font-size:1.25rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+        .scenario-list{display:flex;flex-direction:column;gap:.75rem}
+        .scenario-item{padding:1.15rem;background:var(--bg-light);border-radius:14px;border:2px solid transparent;cursor:pointer;transition:var(--transition-base)}
+        .scenario-item:hover{border-color:var(--primary);transform:translateX(5px)}
+        .scenario-item.active{border-color:var(--primary);background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(251,146,60,.04))}
+        .scenario-item h4{font-size:.95rem;font-weight:700;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
+        .scenario-item p{font-size:.8rem;color:var(--text-gray)}
+
+        .transcript-panel{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.08);padding:2rem;flex:1;display:flex;flex-direction:column;max-height:400px;border:1px solid var(--border-light)}
+        .transcript-panel h3{font-size:1.25rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+        .transcript-content{flex:1;overflow-y:auto;padding-right:.5rem}
+        .transcript-empty{text-align:center;color:var(--text-light);padding:2rem 1rem}
+        .transcript-empty .icon{font-size:2.5rem;margin-bottom:.75rem;opacity:.5}
+        .transcript-message{margin-bottom:1rem}
+        .message-speaker{font-weight:700;font-size:.8rem;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+        .message-speaker.ai{color:var(--primary)}.message-speaker.customer{color:var(--text-dark)}
+        .speaker-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem}
+        .speaker-icon.ai{background:rgba(249,115,22,.1)}.speaker-icon.customer{background:var(--bg-gray)}
+        .message-text{background:var(--bg-light);padding:.85rem 1rem;border-radius:12px;font-size:.9rem;line-height:1.6}
+        .message-text.ai{background:linear-gradient(135deg,rgba(249,115,22,.06),rgba(251,146,60,.03));border-left:3px solid var(--primary)}
+
+        /* Stats Grid */
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;grid-column:1/-1;margin-top:1rem}
+        .stat-card{background:#fff;border-radius:20px;padding:1.75rem;box-shadow:0 10px 40px rgba(0,0,0,.06);text-align:center;border:1px solid var(--border-light);transition:var(--transition-base)}
+        .stat-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
+        .stat-icon{font-size:2rem;margin-bottom:.75rem}
+        .stat-value{font-size:1.75rem;font-weight:800;margin-bottom:.25rem}
+        .stat-value.success{color:var(--success)}.stat-value.primary{color:var(--primary)}
+        .stat-label{font-size:.85rem;color:var(--text-gray)}
+
+        /* Process Section */
+        .process-section{max-width:1200px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:2;overflow:hidden}
+        .process-header{text-align:center;margin-bottom:4rem}
+        .process-header h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;margin-bottom:1rem}
+        .process-header p{font-size:1.15rem;color:var(--text-gray);max-width:700px;margin:0 auto;line-height:1.7}
+
+        .journey-timeline{position:relative;padding:2rem 0}
+        .journey-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--primary),var(--primary-light));transform:translateX(-50%);border-radius:2px}
+        .journey-step{display:flex;align-items:flex-start;margin-bottom:4rem;position:relative}
+        .journey-step:nth-child(even){flex-direction:row-reverse}
+        .journey-step:last-child{margin-bottom:0}
+        .step-number{position:absolute;left:50%;transform:translateX(-50%);width:70px;height:70px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:900;color:#fff;box-shadow:0 10px 30px var(--accent-glow);z-index:2}
+        .step-content{width:calc(50% - 60px);background:#fff;border-radius:24px;padding:2.5rem;box-shadow:0 15px 50px rgba(0,0,0,.06);border:1px solid var(--border-light);transition:var(--transition-base)}
+        .step-content:hover{transform:translateY(-5px);box-shadow:0 25px 60px rgba(0,0,0,.1)}
+        .journey-step:nth-child(odd) .step-content{margin-right:auto}
+        .journey-step:nth-child(even) .step-content{margin-left:auto}
+        .step-icon{font-size:2.5rem;margin-bottom:1rem}
+        .step-content h3{font-size:1.5rem;font-weight:800;margin-bottom:1rem}
+        .step-content>p{color:var(--text-gray);line-height:1.8;margin-bottom:1.5rem}
+        .step-details{background:var(--bg-light);border-radius:14px;padding:1.25rem}
+        .step-details h4{font-size:.85rem;font-weight:700;color:var(--primary);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.08em}
+        .step-details ul{list-style:none}
+        .step-details li{padding:.5rem 0;padding-left:1.5rem;position:relative;color:var(--text-gray);font-size:.95rem}
+        .step-details li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700}
+        .step-timeline{display:flex;align-items:center;gap:.5rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-light)}
+        .step-timeline span{font-size:.85rem;color:var(--text-light)}
+        .step-timeline strong{color:var(--primary);font-weight:700}
+
+        /* Implementation Section */
+        .implementation-section{max-width:1200px;margin:0 auto;padding:0 2rem 4rem;position:relative;z-index:2;overflow:hidden}
+        .use-cases-section{margin-bottom:4rem}
+        .use-cases-section h3{font-size:2rem;font-weight:800;text-align:center;margin-bottom:2rem}
+        .use-cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+        .use-case-card{background:#fff;border-radius:24px;padding:2rem;box-shadow:0 15px 50px rgba(0,0,0,.06);border:1px solid var(--border-light);transition:var(--transition-base);position:relative;overflow:hidden}
+        .use-case-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,.1)}
+        .use-case-icon{font-size:3rem;margin-bottom:1rem}
+        .use-case-card h4{font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
+        .use-case-card p{color:var(--text-gray);font-size:.95rem;line-height:1.6;margin-bottom:1rem}
+        .use-case-features{list-style:none}
+        .use-case-features li{padding:.35rem 0;padding-left:1.25rem;position:relative;color:var(--text-gray);font-size:.85rem}
+        .use-case-features li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700;font-size:.8rem}
+
+        .phone-setup-showcase{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:28px;padding:3rem;margin-bottom:3rem;text-align:center;position:relative;overflow:hidden}
+        .phone-setup-showcase h3{color:#fff;font-size:1.5rem;font-weight:700;margin-bottom:1rem;position:relative}
+        .phone-number-display{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:20px;padding:2rem 3rem;display:inline-block;margin-bottom:1.5rem;position:relative;border:1px solid rgba(255,255,255,.1)}
+        .phone-number{font-size:2.5rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:2px}
+        .phone-label{color:rgba(255,255,255,.6);font-size:.9rem;margin-top:.5rem}
+        .setup-features{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;position:relative}
+        .setup-feature{color:rgba(255,255,255,.8);font-size:.95rem;display:flex;align-items:center;gap:.5rem}
+        .setup-feature .check{color:var(--success);font-weight:700}
+
+        .integration-section{margin-top:3rem}
+        .integration-section>h3{font-size:2rem;font-weight:800;text-align:center;margin-bottom:2rem}
+        .integration-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+        .integration-card{background:#fff;border-radius:24px;padding:2rem;box-shadow:0 15px 50px rgba(0,0,0,.06);border:1px solid var(--border-light);text-align:center;transition:var(--transition-base)}
+        .integration-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,.1)}
+        .integration-icon{font-size:3rem;margin-bottom:1rem}
+        .integration-card h4{font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
+        .integration-card p{color:var(--text-gray);font-size:.95rem;line-height:1.6}
+
+        .faq-section{margin-top:4rem}
+        .faq-section>h3{font-size:2rem;font-weight:800;text-align:center;margin-bottom:2rem}
+        .faq-item{background:#fff;border-radius:18px;margin-bottom:1rem;border:1px solid var(--border-light);overflow:hidden}
+        .faq-question{padding:1.5rem 2rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+        .faq-question:hover{color:var(--primary)}
+        .faq-icon{font-size:1.5rem;color:var(--primary);transition:var(--transition-base)}
+        .faq-item.active .faq-icon{transform:rotate(45deg)}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}
+        .faq-item.active .faq-answer{max-height:500px}
+        .faq-answer-content{padding:0 2rem 1.5rem;color:var(--text-gray);line-height:1.8}
+
+        /* CTA Section */
+        .cta-section{max-width:1000px;margin:0 auto 4rem;padding:4rem;background:var(--bg-dark);border-radius:32px;text-align:center;position:relative;overflow:hidden;z-index:2}
+        .cta-section h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#fff;margin-bottom:1rem;position:relative}
+        .cta-section p{font-size:1.15rem;color:rgba(255,255,255,.7);margin-bottom:2.5rem;position:relative}
+        .cta-buttons{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;position:relative}
+        .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:1.25rem 3rem;border-radius:14px;text-decoration:none;font-weight:700;font-size:1.05rem;transition:var(--transition-base);box-shadow:0 10px 35px var(--accent-glow)}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 50px var(--accent-glow)}
+        .btn-secondary{background:transparent;color:#fff;padding:1.25rem 3rem;border-radius:14px;text-decoration:none;font-weight:700;font-size:1.05rem;border:2px solid rgba(255,255,255,.25);transition:var(--transition-base)}
+        .btn-secondary:hover{background:rgba(255,255,255,.08);border-color:#fff}
+
+        /* Footer */
+        footer{padding:6rem 2rem 2rem;background:var(--bg-dark);color:#fff;position:relative;z-index:2}
+        footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.3),transparent)}
+        .footer-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+        .footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;text-decoration:none}
+        .footer-logo img{width:52px;height:52px;border-radius:50%;border:2px solid var(--primary);box-shadow:0 4px 15px var(--accent-glow);transition:var(--transition-base)}
+        .footer-logo:hover img{transform:scale(1.1)}
+        .footer-logo h3{font-size:1.5rem;font-weight:800;color:#fff;margin:0}
+        .footer-company p{color:rgba(255,255,255,.6);line-height:1.8;font-size:1rem;max-width:400px}
+        .footer-links h4{font-size:.9rem;font-weight:700;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.1em}
+        .footer-links ul{list-style:none}.footer-links li{margin-bottom:1rem}
+        .footer-links a{color:rgba(255,255,255,.6);text-decoration:none;transition:var(--transition-fast);font-size:1rem}
+        .footer-links a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.9rem}
+
+        /* Responsive */
+        @media(max-width:1024px){.demo-container{grid-template-columns:1fr}.right-panel{order:-1}.stats-grid{grid-template-columns:repeat(2,1fr)}.journey-timeline::before{left:30px}.step-number{left:30px;width:60px;height:60px;font-size:1.5rem}.step-content{width:calc(100% - 80px);margin-left:80px!important;margin-right:0!important}.use-cases-grid,.integration-grid{grid-template-columns:1fr 1fr}.footer-content{grid-template-columns:1fr;gap:3rem;text-align:center}.footer-company{text-align:center}.footer-company p{margin:0 auto}}
+        @media(max-width:768px){*{max-width:100%!important}html,body{overflow-x:hidden!important;width:100%!important}body{padding-top:140px}.demo-hero::before,.cta-section::before,.phone-setup-showcase::before,.phone-screen::before,.caller-avatar::before,.caller-avatar::after{display:none!important}#particles-js{display:none}nav{padding:1rem 1rem}.header-text{font-size:1.1rem}.logo-container{padding:.75rem 1rem 0;padding-bottom:2rem}.logo-container img{height:50px;width:50px}.logo-container.hidden{display:none}.menu-toggle{display:flex}.nav-links{display:none;position:fixed;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:1.5rem;border-bottom:1px solid var(--border);gap:1.25rem;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.1);max-height:70vh;overflow-y:auto;overflow-x:hidden}.nav-links.active{display:flex}.dropdown{width:100%}.dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-light);margin-top:1rem;display:none;min-width:100%;border-radius:12px}.dropdown.active .dropdown-menu{display:block}.dropdown-menu a{justify-content:center;text-align:center;padding:1rem;border-radius:8px}.dropdown-menu a .dropdown-icon{display:none}.dropdown-menu a .dropdown-content p{display:none}.dropdown-toggle{justify-content:center;width:100%;padding:.75rem}.login-btn{width:100%;justify-content:center}.account-dropdown{width:100%}.account-toggle{width:100%;justify-content:center}.account-menu{position:static;transform:none;box-shadow:none;margin-top:1rem;display:none;min-width:100%;background:var(--bg-light);border-radius:12px}.account-dropdown.active .account-menu{display:block}.demo-hero{padding:2.5rem 1rem 2rem;overflow:hidden}.demo-hero h1{font-size:1.6rem}.demo-hero p{font-size:.95rem}.hero-stats{gap:.75rem}.hero-stat{padding:.75rem;min-width:70px}.hero-stat-value{font-size:1.25rem}.hero-stat-label{font-size:.75rem}.tab-navigation{gap:.35rem;padding:0 .5rem}.tab-btn{padding:.65rem 1rem;font-size:.8rem}.demo-container{padding:0 1rem;gap:1.5rem}.phone-interface{padding:.75rem;border-radius:28px}.phone-screen{min-height:450px;padding:2rem 1rem;border-radius:24px}.caller-avatar{width:80px;height:80px;font-size:2rem;margin-bottom:1rem}.caller-name{font-size:1.15rem}.caller-subtitle{font-size:.85rem}.call-status{font-size:.85rem}.waveform{height:80px;gap:4px}.wave-bar{width:4px}.call-controls{gap:1rem;padding:1rem 0}.control-btn{width:55px;height:55px;font-size:1.35rem}.click-indicator{top:-45px;padding:.5rem 1rem;font-size:.75rem}.scenario-panel,.transcript-panel{padding:1.25rem;border-radius:18px}.scenario-panel h3,.transcript-panel h3{font-size:1rem}.scenario-item{padding:.85rem}.scenario-item h4{font-size:.85rem}.scenario-item p{font-size:.7rem}.transcript-panel{max-height:300px}.stats-grid{grid-template-columns:1fr 1fr;gap:.75rem}.stat-card{padding:1.25rem;border-radius:16px}.stat-icon{font-size:1.5rem;margin-bottom:.5rem}.stat-value{font-size:1.35rem}.stat-label{font-size:.75rem}.process-section,.implementation-section{padding:0 1rem 3rem;overflow:hidden}.process-header{margin-bottom:2rem}.process-header h2{font-size:1.4rem}.process-header p{font-size:.9rem}.journey-timeline::before{left:20px}.step-number{width:40px;height:40px;font-size:1rem;left:20px}.step-content{width:calc(100% - 55px);margin-left:55px!important;padding:1.25rem;border-radius:16px}.step-icon{font-size:1.75rem;margin-bottom:.75rem}.step-content h3{font-size:1.15rem;margin-bottom:.75rem}.step-content>p{font-size:.85rem;margin-bottom:1rem}.step-details{padding:1rem;border-radius:10px}.step-details h4{font-size:.75rem;margin-bottom:.5rem}.step-details li{font-size:.8rem;padding:.35rem 0;padding-left:1.25rem}.step-timeline{font-size:.8rem}.use-cases-section h3,.integration-section>h3,.faq-section>h3{font-size:1.4rem;margin-bottom:1.5rem}.use-cases-grid,.integration-grid{grid-template-columns:1fr;gap:1rem}.use-case-card,.integration-card{padding:1.5rem;border-radius:18px}.use-case-icon,.integration-icon{font-size:2.25rem;margin-bottom:.75rem}.use-case-card h4,.integration-card h4{font-size:1.1rem;margin-bottom:.5rem}.use-case-card p,.integration-card p{font-size:.85rem;margin-bottom:.75rem}.use-case-features li{font-size:.8rem}.phone-setup-showcase{padding:2rem 1.25rem;border-radius:20px;margin-bottom:2rem}.phone-setup-showcase h3{font-size:1.15rem}.phone-number-display{padding:1.25rem 1.5rem;border-radius:14px}.phone-number{font-size:1.35rem;letter-spacing:1px}.phone-label{font-size:.8rem}.setup-features{gap:1rem}.setup-feature{font-size:.8rem}.faq-item{border-radius:14px}.faq-question{padding:1rem 1.25rem;font-size:.9rem}.faq-icon{font-size:1.25rem}.faq-answer-content{padding:0 1.25rem 1rem;font-size:.85rem}.cta-section{padding:2rem 1.25rem;margin:0 1rem 3rem;border-radius:20px}.cta-section h2{font-size:1.35rem}.cta-section p{font-size:.9rem;margin-bottom:1.5rem}.cta-buttons{flex-direction:column;gap:.75rem}.btn-primary,.btn-secondary{width:100%;text-align:center;padding:1rem 1.5rem;font-size:.9rem}footer{padding:3rem 1rem 1.5rem}.footer-content{gap:2rem}.footer-logo{flex-direction:column;justify-content:center}.footer-logo h3{font-size:1.15rem}.footer-links{text-align:center}.footer-links h4{margin-bottom:.75rem;font-size:.8rem}.footer-company{text-align:center}.footer-company p{text-align:center;margin:0 auto;font-size:.85rem}.footer-bottom{font-size:.8rem}}
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <header>
+        <nav>
+            <a href="/" class="header-text">JAYISAAC AI</a>
+            <ul class="nav-links">
+                <li class="dropdown services-dropdown"><div class="dropdown-toggle" onclick="toggleDropdown('services')">Solutions<span class="dropdown-arrow">▼</span></div><div class="dropdown-menu"><a href="/ai-chatbot/"><div class="dropdown-icon">💬</div><div class="dropdown-content"><h4>AI Chatbots</h4><p>24/7 intelligent support</p></div></a><a href="/ai-receptionist/"><div class="dropdown-icon">📞</div><div class="dropdown-content"><h4>AI Receptionist</h4><p>Never miss a call</p></div></a></div></li>
+                <li class="dropdown receptionist-dropdown"><div class="dropdown-toggle" onclick="toggleDropdown('receptionist')">AI Receptionist<span class="dropdown-arrow">▼</span></div><div class="dropdown-menu"><a href="/ai-receptionist/"><div class="dropdown-icon">📞</div><div class="dropdown-content"><h4>Overview</h4><p>Features & benefits</p></div></a><a href="/ai-receptionist/pricing.html"><div class="dropdown-icon">💰</div><div class="dropdown-content"><h4>Pricing</h4><p>Plans & purchase</p></div></a><a href="/ai-receptionist/demo.html"><div class="dropdown-icon">🎯</div><div class="dropdown-content"><h4>Demo</h4><p>Try it live</p></div></a></div></li>
+                <li><a href="/policies.html">Policies</a></li>
+                <li><a href="/login.html" class="login-btn">Get Started</a></li>
+                <li class="account-dropdown"><div class="account-toggle" onclick="toggleAccountDropdown()"><img src="" alt="Profile" class="account-photo"><span class="account-name">Account</span><span class="account-arrow">▼</span></div><div class="account-menu"><div class="account-header"><span class="account-name">Account</span><span class="user-email">email@example.com</span></div><a href="/myorders.html"><span class="menu-icon">📦</span>My Orders</a><a href="/support.html"><span class="menu-icon">💬</span>Support</a><button class="logout-btn" onclick="handleLogout()"><span class="menu-icon">🚪</span>Sign Out</button></div></li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+            <div class="logo-container"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="demo-hero">
+            <div class="hero-badge">📞 AI-Powered Reception</div>
+            <h1>Your 24/7 <span class="gradient-text">AI Receptionist</span></h1>
+            <p>Never miss another call. Our AI receptionist answers every call, books appointments, takes messages, and transfers urgent calls.</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="hero-stat-value">100%</div><div class="hero-stat-label">Answered</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">24/7</div><div class="hero-stat-label">Available</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">0.3s</div><div class="hero-stat-label">Response</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">90%</div><div class="hero-stat-label">Savings</div></div>
+            </div>
+        </section>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('demo')">Live Demo</button>
+            <button class="tab-btn" onclick="showTab('process')">How It Works</button>
+            <button class="tab-btn" onclick="showTab('implementation')">Implementation</button>
+        </div>
+
+        <div class="tab-content active" id="demo-tab">
+            <div class="demo-container">
+                <div class="phone-interface">
+                    <div class="phone-screen">
+                        <div class="call-header">
+                            <div class="caller-avatar">👩‍💼</div>
+                            <div class="caller-name">Sarah</div>
+                            <div class="caller-subtitle">AI Receptionist</div>
+                            <div class="call-status" id="callStatus">Tap to simulate call</div>
+                            <div class="call-timer" id="callTimer">00:00</div>
+                        </div>
+                        <div class="waveform-container">
+                            <div class="waveform" id="waveform">
+                                <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                            </div>
+                        </div>
+                        <div class="call-controls">
+                            <button class="control-btn mute-btn" id="muteBtn" onclick="toggleMute()">🎤</button>
+                            <button class="control-btn call-btn" id="callBtn" onclick="startCall()"><span class="click-indicator" id="clickIndicator">📞 Call</span>📞</button>
+                            <button class="control-btn end-btn" id="endBtn" onclick="endCall()">📴</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="scenario-panel">
+                        <h3>📋 Scenarios</h3>
+                        <div class="scenario-list">
+                            <div class="scenario-item active" onclick="loadScenario('appointment', this)"><h4>📅 Book Appointment</h4><p>Schedule meetings</p></div>
+                            <div class="scenario-item" onclick="loadScenario('inquiry', this)"><h4>❓ General Inquiry</h4><p>Answer questions</p></div>
+                            <div class="scenario-item" onclick="loadScenario('transfer', this)"><h4>🔀 Call Transfer</h4><p>Route calls</p></div>
+                            <div class="scenario-item" onclick="loadScenario('message', this)"><h4>📝 Take Message</h4><p>Capture info</p></div>
+                            <div class="scenario-item" onclick="loadScenario('afterhours', this)"><h4>🌙 After Hours</h4><p>24/7 handling</p></div>
+                        </div>
+                    </div>
+                    <div class="transcript-panel">
+                        <h3>📝 Transcript</h3>
+                        <div class="transcript-content" id="transcriptContent"><div class="transcript-empty"><div class="icon">📞</div><p>Start a call to see transcript</p></div></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon">📞</div><div class="stat-value primary" id="callsAnswered">1,247</div><div class="stat-label">Calls Today</div></div>
+                    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value success" id="appointmentsBooked">89</div><div class="stat-label">Booked</div></div>
+                    <div class="stat-card"><div class="stat-icon">📝</div><div class="stat-value primary">156</div><div class="stat-label">Messages</div></div>
+                    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-value success">4.9</div><div class="stat-label">Rating</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="process-tab">
+            <section class="process-section">
+                <div class="process-header">
+                    <h2>Your <span class="gradient-text">AI Receptionist</span> Journey</h2>
+                    <p>From sign-up to answering your first call.</p>
+                </div>
+                <div class="journey-timeline">
+                    <div class="journey-step"><div class="step-number">1</div><div class="step-content"><div class="step-icon">🎯</div><h3>Sign Up & Discovery</h3><p>Choose your plan and hop on a quick call.</p><div class="step-details"><h4>What happens:</h4><ul><li>Select your plan</li><li>30-minute discovery call</li><li>Define greeting and flows</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>Same day</strong></div></div></div>
+                    <div class="journey-step"><div class="step-number">2</div><div class="step-content"><div class="step-icon">📋</div><h3>Business Setup</h3><p>Provide info your receptionist needs.</p><div class="step-details"><h4>What we need:</h4><ul><li>Business hours</li><li>Services & pricing</li><li>Team members</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>1-2 days</strong></div></div></div>
+                    <div class="journey-step"><div class="step-number">3</div><div class="step-content"><div class="step-icon">🎙️</div><h3>Voice Setup</h3><p>Configure voice and personality.</p><div class="step-details"><h4>Customization:</h4><ul><li>Choose voice</li><li>Set name</li><li>Define tone</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>1-2 days</strong></div></div></div>
+                    <div class="journey-step"><div class="step-number">4</div><div class="step-content"><div class="step-icon">🔗</div><h3>Integration</h3><p>Connect calendar and tools.</p><div class="step-details"><h4>Integrations:</h4><ul><li>Google Calendar</li><li>CRM systems</li><li>Slack / Email</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>2-3 days</strong></div></div></div>
+                    <div class="journey-step"><div class="step-number">5</div><div class="step-content"><div class="step-icon">🧪</div><h3>Testing</h3><p>Run test calls and fine-tune.</p><div class="step-details"><h4>Testing:</h4><ul><li>50+ scenarios</li><li>Private test number</li><li>Unlimited adjustments</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>2-3 days</strong></div></div></div>
+                    <div class="journey-step"><div class="step-number">6</div><div class="step-content"><div class="step-icon">🚀</div><h3>Go Live!</h3><p>Start answering calls.</p><div class="step-details"><h4>You get:</h4><ul><li>Dedicated number</li><li>Real-time dashboard</li><li>Call recordings</li></ul></div><div class="step-timeline"><span>⏱️</span><strong>Same day</strong></div></div></div>
+                </div>
+            </section>
+        </div>
+
+        <div class="tab-content" id="implementation-tab">
+            <section class="implementation-section">
+                <div class="process-header">
+                    <h2>Perfect For <span class="gradient-text">Your Business</span></h2>
+                    <p>See how businesses use AI receptionists.</p>
+                </div>
+                <div class="use-cases-section">
+                    <h3>Industries We Serve</h3>
+                    <div class="use-cases-grid">
+                        <div class="use-case-card"><div class="use-case-icon">🏥</div><h4>Medical & Dental</h4><p>Book appointments, handle refills.</p><ul class="use-case-features"><li>HIPAA compliant</li><li>Scheduling</li><li>Insurance verification</li></ul></div>
+                        <div class="use-case-card"><div class="use-case-icon">⚖️</div><h4>Law Firms</h4><p>Screen clients, schedule consultations.</p><ul class="use-case-features"><li>Client intake</li><li>Booking</li><li>Urgent routing</li></ul></div>
+                        <div class="use-case-card"><div class="use-case-icon">🏠</div><h4>Real Estate</h4><p>Capture leads, schedule showings.</p><ul class="use-case-features"><li>24/7 capture</li><li>Showing scheduling</li><li>Property info</li></ul></div>
+                        <div class="use-case-card"><div class="use-case-icon">🔧</div><h4>Home Services</h4><p>Book appointments, provide quotes.</p><ul class="use-case-features"><li>Scheduling</li><li>Quote requests</li><li>Emergency routing</li></ul></div>
+                        <div class="use-case-card"><div class="use-case-icon">💼</div><h4>Professional</h4><p>Qualify leads, schedule meetings.</p><ul class="use-case-features"><li>Lead qualification</li><li>Meeting scheduling</li><li>Team routing</li></ul></div>
+                        <div class="use-case-card"><div class="use-case-icon">💇</div><h4>Salons & Spas</h4><p>Book with specific stylists.</p><ul class="use-case-features"><li>Stylist booking</li><li>Service info</li><li>Waitlist</li></ul></div>
+                    </div>
+                </div>
+                <div class="phone-setup-showcase">
+                    <h3>Your AI Phone Line</h3>
+                    <div class="phone-number-display"><div class="phone-number">+1 (555) YOUR-LINE</div><div class="phone-label">Dedicated or forward existing</div></div>
+                    <div class="setup-features">
+                        <div class="setup-feature"><span class="check">✓</span> Local</div>
+                        <div class="setup-feature"><span class="check">✓</span> Toll-free</div>
+                        <div class="setup-feature"><span class="check">✓</span> Port existing</div>
+                        <div class="setup-feature"><span class="check">✓</span> Unlimited</div>
+                    </div>
+                </div>
+                <div class="integration-section">
+                    <h3>Connects With Your Tools</h3>
+                    <div class="integration-grid">
+                        <div class="integration-card"><div class="integration-icon">📅</div><h4>Calendar</h4><p>Google, Outlook, Calendly.</p></div>
+                        <div class="integration-card"><div class="integration-icon">💼</div><h4>CRM</h4><p>Salesforce, HubSpot, Zoho.</p></div>
+                        <div class="integration-card"><div class="integration-icon">📱</div><h4>SMS & Email</h4><p>Confirmations & notifications.</p></div>
+                        <div class="integration-card"><div class="integration-icon">💬</div><h4>Slack & Teams</h4><p>Instant alerts.</p></div>
+                        <div class="integration-card"><div class="integration-icon">📞</div><h4>Phone Systems</h4><p>PBX or VoIP.</p></div>
+                        <div class="integration-card"><div class="integration-icon">🔌</div><h4>Custom API</h4><p>Any system.</p></div>
+                    </div>
+                </div>
+                <div class="faq-section">
+                    <h3>Common Questions</h3>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How natural does it sound?<span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-content"><strong>Incredibly natural.</strong> Most can't tell it's AI.</div></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What if caller needs a person?<span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-content"><strong>Seamless transfer.</strong> AI recognizes when to escalate.</div></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Can it book real appointments?<span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-content"><strong>Yes, 100%.</strong> Connected to your calendar.</div></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">After-hours calls?<span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-content"><strong>That's where AI shines.</strong> Works 24/7/365.</div></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Cost vs human receptionist?<span class="faq-icon">+</span></div><div class="faq-answer"><div class="faq-answer-content"><strong>About 90% less.</strong> No sick days, handles multiple calls.</div></div></div>
+                </div>
+            </section>
+        </div>
+
+        <section class="cta-section">
+            <h2>Never Miss a Call Again</h2>
+            <p>Join businesses using AI receptionists</p>
+            <div class="cta-buttons">
+                <a href="/ai-receptionist/pricing.html" class="btn-primary">View Pricing</a>
+                <a href="/#contact" class="btn-secondary">Book Demo</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-company">
+                <a href="/" class="footer-logo"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"><h3>JAYISAAC AI</h3></a>
+                <p>Intelligent automation for businesses.</p>
+            </div>
+            <div class="footer-links"><h4>Solutions</h4><ul><li><a href="/ai-chatbot/">AI Chatbots</a></li><li><a href="/ai-receptionist/">AI Receptionist</a></li></ul></div>
+            <div class="footer-links"><h4>Company</h4><ul><li><a href="/policies.html">Privacy Policy</a></li><li><a href="/policies.html">Terms</a></li><li><a href="/#contact">Contact</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 JAYISAAC AI. All rights reserved.</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        if(window.innerWidth>768){particlesJS('particles-js',{particles:{number:{value:50,density:{enable:true,value_area:1200}},color:{value:'#f97316'},shape:{type:'circle'},opacity:{value:0.25,random:true},size:{value:2.5,random:true},line_linked:{enable:true,distance:180,color:'#f97316',opacity:0.15,width:1},move:{enable:true,speed:1,direction:'none',random:true,out_mode:'bounce'}},interactivity:{detect_on:'canvas',events:{onhover:{enable:true,mode:'grab'},resize:true},modes:{grab:{distance:150,line_linked:{opacity:0.4}}}},retina_detect:true})}
+        window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',window.scrollY>50));
+        function toggleMenu(){document.querySelector('.menu-toggle').classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active');document.querySelector('.logo-container')?.classList.toggle('hidden')}
+        function toggleDropdown(t){const sd=document.querySelector('.services-dropdown'),rd=document.querySelector('.receptionist-dropdown'),ad=document.querySelector('.account-dropdown');if(t==='services'){sd.classList.toggle('active');rd?.classList.remove('active')}else if(t==='receptionist'){rd.classList.toggle('active');sd?.classList.remove('active')}ad?.classList.remove('active')}
+        function toggleAccountDropdown(){document.querySelector('.account-dropdown').classList.toggle('active');document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active'))}
+        function handleLogout(){if(window.firebaseAuth)window.firebaseAuth.signOut();document.querySelector('.account-dropdown')?.classList.remove('active')}
+        document.addEventListener('click',e=>{document.querySelectorAll('.dropdown').forEach(d=>{if(!d.contains(e.target))d.classList.remove('active')});if(!e.target.closest('.account-dropdown'))document.querySelector('.account-dropdown')?.classList.remove('active')});
+        function showTab(tabName){document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(tab=>tab.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabName+'-tab').classList.add('active')}
+        function toggleFaq(el){const item=el.closest('.faq-item');document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('active')});item.classList.toggle('active')}
+        const scenarios={appointment:[{speaker:'ai',text:"Good morning! Thank you for calling. This is Sarah, how may I help you?"},{speaker:'customer',text:"Hi, I'd like to schedule a consultation."},{speaker:'ai',text:"I'd be happy to help. May I have your name?"},{speaker:'customer',text:"Michael Johnson."},{speaker:'ai',text:"Thank you, Michael. We have tomorrow at 10 AM, 2 PM, or Thursday at 9 AM."},{speaker:'customer',text:"Tomorrow at 2 PM."},{speaker:'ai',text:"Perfect! You're booked for tomorrow at 2 PM. You'll receive a confirmation."}],inquiry:[{speaker:'ai',text:"Thank you for calling. This is Sarah, how can I assist?"},{speaker:'customer',text:"What services do you offer?"},{speaker:'ai',text:"We offer consulting, financial planning, and advisory services."},{speaker:'customer',text:"I'm interested in financial planning."},{speaker:'ai',text:"Great! Would you like to schedule a free consultation?"}],transfer:[{speaker:'ai',text:"Good afternoon! How may I direct your call?"},{speaker:'customer',text:"I need to speak with John about my account."},{speaker:'ai',text:"May I ask who's calling?"},{speaker:'customer',text:"David Chen, account 45892."},{speaker:'ai',text:"John is in a meeting. Would you like a callback?"},{speaker:'customer',text:"Yes please."},{speaker:'ai',text:"I'll have John call you back within the hour."}],message:[{speaker:'ai',text:"Thank you for calling. How can I help?"},{speaker:'customer',text:"I'm trying to reach Lisa."},{speaker:'ai',text:"Lisa is unavailable. May I take a message?"},{speaker:'customer',text:"Tell her Tom from Acme called about Q2."},{speaker:'ai',text:"What's the best callback number?"},{speaker:'customer',text:"555-123-4567, it's urgent."},{speaker:'ai',text:"Marked as urgent. Lisa will get this right away."}],afterhours:[{speaker:'ai',text:"Thank you for calling. Our office is closed. How can I help?"},{speaker:'customer',text:"I wanted to book an appointment."},{speaker:'ai',text:"I can help! We have tomorrow at 9 AM, 11 AM, or 3 PM."},{speaker:'customer',text:"9 AM works."},{speaker:'ai',text:"May I have your name and phone?"},{speaker:'customer',text:"Jennifer Walsh, 555-987-6543."},{speaker:'ai',text:"You're set for 9 AM. You'll get a confirmation text!"}]};
+        let currentScenario='appointment',isCallActive=false,messageIndex=0,callTimer=0,timerInterval=null,messageInterval=null,isMuted=false;
+        function loadScenario(scenario,el){currentScenario=scenario;document.querySelectorAll('.scenario-item').forEach(item=>item.classList.remove('active'));el.classList.add('active');if(isCallActive){endCall();setTimeout(()=>startCall(),500)}}
+        function startCall(){isCallActive=true;messageIndex=0;callTimer=0;document.getElementById('callStatus').textContent='Ringing...';document.getElementById('callStatus').classList.add('ringing');document.getElementById('clickIndicator').style.display='none';setTimeout(()=>{if(!isCallActive)return;document.getElementById('callBtn').style.display='none';document.getElementById('endBtn').style.display='flex';document.getElementById('muteBtn').style.display='flex';document.getElementById('callStatus').textContent='Connected';document.getElementById('callStatus').classList.remove('ringing');document.getElementById('callStatus').classList.add('active');document.getElementById('callTimer').classList.add('active');document.getElementById('transcriptContent').innerHTML='';document.querySelectorAll('.wave-bar').forEach(bar=>bar.classList.add('animating'));timerInterval=setInterval(()=>{callTimer++;document.getElementById('callTimer').textContent=Math.floor(callTimer/60).toString().padStart(2,'0')+':'+(callTimer%60).toString().padStart(2,'0')},1000);playConversation()},1500)}
+        function playConversation(){if(messageIndex<scenarios[currentScenario].length&&isCallActive){const msg=scenarios[currentScenario][messageIndex];addTranscriptMessage(msg.speaker,msg.text);messageIndex++;messageInterval=setTimeout(playConversation,2000+msg.text.length*25)}else if(messageIndex>=scenarios[currentScenario].length){setTimeout(()=>{if(isCallActive)endCall()},2000)}}
+        function addTranscriptMessage(speaker,text){const content=document.getElementById('transcriptContent');content.innerHTML+='<div class="transcript-message"><div class="message-speaker '+speaker+'"><div class="speaker-icon '+speaker+'">'+(speaker==='ai'?'👩‍💼':'👤')+'</div>'+(speaker==='ai'?'Sarah':'Caller')+'</div><div class="message-text '+speaker+'">'+text+'</div></div>';content.scrollTop=content.scrollHeight}
+        function endCall(){isCallActive=false;clearInterval(timerInterval);clearTimeout(messageInterval);document.getElementById('callBtn').style.display='flex';document.getElementById('endBtn').style.display='none';document.getElementById('muteBtn').style.display='none';document.getElementById('clickIndicator').style.display='block';document.getElementById('callStatus').textContent='Call ended';document.getElementById('callStatus').classList.remove('active','ringing');document.getElementById('callTimer').classList.remove('active');document.querySelectorAll('.wave-bar').forEach(bar=>bar.classList.remove('animating'));document.getElementById('callsAnswered').textContent=(parseInt(document.getElementById('callsAnswered').textContent.replace(',',''))+1).toLocaleString();if(currentScenario==='appointment')document.getElementById('appointmentsBooked').textContent=parseInt(document.getElementById('appointmentsBooked').textContent)+1;setTimeout(()=>{if(!isCallActive){document.getElementById('callStatus').textContent='Tap to simulate call';document.getElementById('callTimer').textContent='00:00'}},2000)}
+        function toggleMute(){isMuted=!isMuted;document.getElementById('muteBtn').classList.toggle('muted',isMuted);document.getElementById('muteBtn').textContent=isMuted?'🔇':'🎤'}
+    </script>
+</body>
+</html>

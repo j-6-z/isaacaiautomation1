@@ -1,355 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17580740260"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17580740260');
-    </script>
-    <!-- Twitter conversion tracking base code -->
-    <script>
-        !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-        },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
-        a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-        twq('config','qik5c');
-    </script>
-    <!-- Firebase Configuration with Google Auth -->
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'AW-17580740260');</script>
+    <script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','qik5c');</script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
-            authDomain: "jayisaac-ai.firebaseapp.com",
-            projectId: "jayisaac-ai",
-            storageBucket: "jayisaac-ai.firebasestorage.app",
-            messagingSenderId: "967801239356",
-            appId: "1:967801239356:web:0df3f35af72ce6e79b9039",
-            measurementId: "G-V91DS21PGE"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        
-        window.firebaseAuth = {
-            signInWithGoogle: async function() {
-                try {
-                    const result = await signInWithPopup(auth, provider);
-                    console.log("Signed in:", result.user.displayName);
-                    return result.user;
-                } catch (error) {
-                    console.error("Sign in error:", error.message);
-                    alert("Sign in failed: " + error.message);
-                }
-            },
-            signOut: async function() {
-                try {
-                    await signOut(auth);
-                    console.log("Signed out");
-                } catch (error) {
-                    console.error("Sign out error:", error.message);
-                }
-            },
-            getCurrentUser: function() {
-                return auth.currentUser;
-            }
-        };
-        
-        onAuthStateChanged(auth, (user) => {
-            const loginBtn = document.querySelector('.login-btn');
-            const accountDropdown = document.querySelector('.account-dropdown');
-            const contactName = document.getElementById('contactName');
-            const contactEmail = document.getElementById('contactEmail');
-            
-            if (user) {
-                if (loginBtn) loginBtn.style.display = 'none';
-                if (accountDropdown) {
-                    accountDropdown.style.display = 'block';
-                    const userPhoto = accountDropdown.querySelector('.account-photo');
-                    const userEmailDisplay = accountDropdown.querySelector('.user-email');
-                    accountDropdown.querySelectorAll('.account-name').forEach(el => {
-                        el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
-                    });
-                    if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';
-                    if (userEmailDisplay) userEmailDisplay.textContent = user.email;
-                }
-                // Pre-fill contact form with user info
-                if (contactName && user.displayName) contactName.value = user.displayName;
-                if (contactEmail && user.email) contactEmail.value = user.email;
-            } else {
-                if (loginBtn) {
-                    loginBtn.style.display = 'inline-flex';
-                    loginBtn.textContent = 'Login/Signup';
-                    loginBtn.href = '/login.html';
-                    loginBtn.onclick = null;
-                }
-                if (accountDropdown) accountDropdown.style.display = 'none';
-                if (contactName) contactName.value = '';
-                if (contactEmail) contactEmail.value = '';
-            }
-        });
+        const firebaseConfig = {apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",authDomain: "jayisaac-ai.firebaseapp.com",projectId: "jayisaac-ai",storageBucket: "jayisaac-ai.firebasestorage.app",messagingSenderId: "967801239356",appId: "1:967801239356:web:0df3f35af72ce6e79b9039",measurementId: "G-V91DS21PGE"};
+        const app = initializeApp(firebaseConfig);const analytics = getAnalytics(app);const auth = getAuth(app);const provider = new GoogleAuthProvider();
+        window.firebaseAuth = {signInWithGoogle: async function() {try {const result = await signInWithPopup(auth, provider);return result.user;} catch (error) {alert("Sign in failed: " + error.message);}},signOut: async function() {try {await signOut(auth);} catch (error) {console.error("Sign out error:", error.message);}},getCurrentUser: function() {return auth.currentUser;}};
+        onAuthStateChanged(auth, (user) => {const loginBtn = document.querySelector('.login-btn');const accountDropdown = document.querySelector('.account-dropdown');const contactName = document.getElementById('contactName');const contactEmail = document.getElementById('contactEmail');if (user) {if (loginBtn) loginBtn.style.display = 'none';if (accountDropdown) {accountDropdown.style.display = 'block';const userPhoto = accountDropdown.querySelector('.account-photo');const userEmailDisplay = accountDropdown.querySelector('.user-email');accountDropdown.querySelectorAll('.account-name').forEach(el => {el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';});if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';if (userEmailDisplay) userEmailDisplay.textContent = user.email;}if (contactName && user.displayName) contactName.value = user.displayName;if (contactEmail && user.email) contactEmail.value = user.email;} else {if (loginBtn) {loginBtn.style.display = 'inline-flex';loginBtn.textContent = 'Login/Signup';loginBtn.href = '/login.html';loginBtn.onclick = null;}if (accountDropdown) accountDropdown.style.display = 'none';if (contactName) contactName.value = '';if (contactEmail) contactEmail.value = '';}});
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #10b981; --warning: #f59e0b; --error: #ef4444; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
-        body { background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; min-height: 100vh; }
-        #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
-        header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
-        .header-text { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; text-decoration: none; transition: opacity 0.3s ease; }
-        .header-text:hover { opacity: 0.8; }
-        .logo-container { position: absolute; left: 50%; transform: translateX(-50%); top: 100%; z-index: 1002; background: #ffffff; padding: 1rem 1.25rem 0 1.25rem; border-radius: 50% 50% 0 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; align-items: center; gap: 0; clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%); padding-bottom: 2.5rem; }
-        .logo-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #ffffff; border-radius: 50% 50% 0 0; z-index: -1; }
-        .logo-container img { height: 70px; width: 70px; border-radius: 50%; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 3px solid var(--primary); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4), 0 0 20px rgba(249, 115, 22, 0.2); position: relative; z-index: 1; object-fit: cover; }
-        .logo-container img:hover { transform: scale(1.15) rotate(5deg); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5), 0 0 30px rgba(249, 115, 22, 0.3); border-color: var(--secondary); }
-        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; position: relative; }
-        .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--primary); }
-        .dropdown { position: relative; }
-        .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-gray); font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
-        .dropdown-toggle:hover { color: var(--primary); }
-        .dropdown-arrow { font-size: 0.7rem; transition: transform 0.3s ease; }
-        .dropdown.active .dropdown-arrow { transform: rotate(180deg); }
-        .dropdown-menu { position: absolute; top: calc(100% + 1rem); left: 50%; transform: translateX(-50%); background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 280px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; }
-        .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; }
-        .dropdown-menu a { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid var(--border); }
-        .dropdown-menu a:last-child { border-bottom: none; }
-        .dropdown-menu a:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
-        .dropdown-icon { font-size: 1.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 10px; }
-        .dropdown-content h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; }
-        .dropdown-content p { font-size: 0.8rem; color: var(--text-gray); line-height: 1.4; }
-        .login-btn { background: transparent; color: var(--primary); padding: 0.75rem 1.75rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-flex; align-items: center; }
-        .login-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); }
-        .account-dropdown { position: relative; display: none; }
-        .account-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 12px; border: 2px solid var(--primary); transition: all 0.3s ease; }
-        .account-toggle:hover { background: rgba(249, 115, 22, 0.1); }
-        .account-photo { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-        .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); }
-        .account-arrow { font-size: 0.7rem; color: var(--text-gray); transition: transform 0.3s ease; }
-        .account-dropdown.active .account-arrow { transform: rotate(180deg); }
-        .account-menu { position: absolute; top: calc(100% + 1rem); right: 0; background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 260px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; overflow: hidden; }
-        .account-dropdown.active .account-menu { opacity: 1; visibility: visible; }
-        .account-header { padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-bottom: 1px solid var(--border); }
-        .account-header .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; display: block; }
-        .user-email { font-size: 0.8rem; color: var(--text-gray); }
-        .account-menu a, .account-menu button { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border: none; background: none; width: 100%; font-size: 0.95rem; cursor: pointer; border-bottom: 1px solid var(--border); font-family: inherit; }
-        .account-menu a:last-child, .account-menu button:last-child { border-bottom: none; }
-        .account-menu a:hover, .account-menu button:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
-        .account-menu .menu-icon { font-size: 1.25rem; width: 32px; text-align: center; }
-        .logout-btn { color: #ef4444 !important; }
-        .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
-        .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#f97316;--primary-dark:#ea580c;--primary-light:#fb923c;--accent-glow:rgba(249,115,22,0.4);--success:#10b981;--warning:#f59e0b;--error:#ef4444;--bg-white:#fff;--bg-light:#fafafa;--bg-gray:#f3f4f6;--bg-dark:#0a0a0a;--text-dark:#111827;--text-gray:#6b7280;--text-light:#9ca3af;--border:#e5e7eb;--border-light:#f3f4f6;--transition-fast:0.15s ease;--transition-base:0.3s cubic-bezier(0.4,0,0.2,1);--transition-spring:0.5s cubic-bezier(0.34,1.56,0.64,1)}
+        html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-light);color:var(--text-dark);line-height:1.6;overflow-x:hidden;padding-top:160px;min-height:100vh;-webkit-font-smoothing:antialiased}
+        ::selection{background:var(--primary);color:#fff}::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg-light)}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:5px}
+        #particles-js{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:.7}
 
-        /* Hero Section */
-        .support-hero { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.03)); padding: 4rem 2rem; text-align: center; position: relative; z-index: 2; }
-        .support-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
-        .support-hero p { font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto; }
-        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Header */
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.06);transition:var(--transition-base)}
+        header.scrolled{background:rgba(255,255,255,.98);box-shadow:0 1px 3px rgba(0,0,0,.05),0 10px 40px rgba(0,0,0,.03)}
+        nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;position:relative}
+        .header-text{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+        .logo-container{position:absolute;left:50%;transform:translateX(-50%);top:100%;z-index:1002;background:linear-gradient(180deg,#fff 0%,#fafafa 100%);padding:1rem 1.25rem 0;border-radius:0 0 50% 50%;box-shadow:0 8px 32px rgba(0,0,0,.08);clip-path:polygon(0% 0%,100% 0%,100% 70%,50% 100%,0% 70%);padding-bottom:2.5rem}
+        .logo-container img{height:72px;width:72px;border-radius:50%;transition:var(--transition-spring);border:3px solid var(--primary);box-shadow:0 4px 20px var(--accent-glow);object-fit:cover}
+        .logo-container img:hover{transform:scale(1.12) rotate(5deg)}
+        .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text-gray);text-decoration:none;font-size:.95rem;font-weight:500;transition:var(--transition-fast);position:relative;padding:.5rem 0}
+        .nav-links>li>a:not(.login-btn)::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--primary);transition:var(--transition-base)}
+        .nav-links>li>a:not(.login-btn):hover::after{width:100%}
+        .nav-links a:hover{color:var(--primary)}
+        .dropdown{position:relative}.dropdown-toggle{display:flex;align-items:center;gap:.5rem;cursor:pointer;color:var(--text-gray);font-size:.95rem;font-weight:500;transition:var(--transition-fast);padding:.5rem 0}
+        .dropdown-toggle:hover{color:var(--primary)}.dropdown-arrow{font-size:.65rem;transition:var(--transition-base);opacity:.7}
+        .dropdown.active .dropdown-arrow{transform:rotate(180deg)}
+        .dropdown-menu{position:absolute;top:calc(100% + 1rem);left:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:300px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1005;overflow:hidden}
+        .dropdown.active .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .dropdown-menu a{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border-bottom:1px solid var(--border-light)}
+        .dropdown-menu a:last-child{border-bottom:none}.dropdown-menu a:hover{background:linear-gradient(90deg,rgba(249,115,22,.04),transparent);padding-left:2rem}
+        .dropdown-menu a:hover .dropdown-icon{transform:scale(1.05)}
+        .dropdown-icon{font-size:1.5rem;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(251,146,60,.08));border-radius:12px;transition:var(--transition-base)}
+        .dropdown-content h4{font-size:.95rem;font-weight:600;margin-bottom:.25rem}.dropdown-content p{font-size:.8rem;color:var(--text-gray)}
+        .login-btn{background:transparent;color:var(--primary)!important;padding:.75rem 1.75rem;border-radius:12px;text-decoration:none;font-weight:600;border:2px solid var(--primary);display:inline-flex;transition:var(--transition-base);position:relative;overflow:hidden}
+        .login-btn::after{content:'→';margin-left:.5rem;transition:var(--transition-base);opacity:0;transform:translateX(-10px)}
+        .login-btn:hover::after{opacity:1;transform:translateX(0)}
+        .login-btn:hover{color:#fff!important;background:var(--primary);transform:translateY(-2px);box-shadow:0 8px 25px var(--accent-glow);padding-right:2.25rem}
+        .account-dropdown{position:relative;display:none}.account-toggle{display:flex;align-items:center;gap:.75rem;cursor:pointer;padding:.5rem 1rem;border-radius:12px;border:2px solid var(--primary);transition:var(--transition-base)}
+        .account-toggle:hover{background:rgba(249,115,22,.08)}.account-photo{width:32px;height:32px;border-radius:50%;object-fit:cover}.account-name{font-size:.95rem;font-weight:600}
+        .account-arrow{font-size:.65rem;color:var(--text-gray);transition:var(--transition-base)}.account-dropdown.active .account-arrow{transform:rotate(180deg)}
+        .account-menu{position:absolute;top:calc(100% + 1rem);right:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);min-width:280px;opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);z-index:1001;overflow:hidden}
+        .account-dropdown.active .account-menu{opacity:1;visibility:visible;transform:translateY(0)}
+        .account-header{padding:1.5rem;background:linear-gradient(135deg,rgba(249,115,22,.03),rgba(251,146,60,.03));border-bottom:1px solid var(--border-light)}
+        .account-header .account-name{font-size:1rem;font-weight:600;display:block;margin-bottom:.25rem}.user-email{font-size:.85rem;color:var(--text-gray)}
+        .account-menu a,.account-menu button{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;color:var(--text-dark);text-decoration:none;transition:var(--transition-fast);border:none;background:none;width:100%;font-size:.95rem;cursor:pointer;border-bottom:1px solid var(--border-light);font-family:inherit}
+        .account-menu a:hover,.account-menu button:hover{background:var(--bg-light);color:var(--primary);padding-left:2rem}
+        .menu-icon{font-size:1.25rem;width:32px;text-align:center}.logout-btn{color:#ef4444!important}.logout-btn:hover{background:rgba(239,68,68,.08)!important;color:#dc2626!important}
+        .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}
+        .menu-toggle span{width:24px;height:2px;background:var(--text-dark);transition:var(--transition-base);border-radius:2px}
+        .menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
-        /* Quick Help Cards */
-        .quick-help { max-width: 1200px; margin: -2rem auto 0; padding: 0 2rem; position: relative; z-index: 3; }
-        .quick-help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .quick-help-card { background: white; padding: 2rem; border-radius: 16px; text-align: center; border: 1px solid var(--border); transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; }
-        .quick-help-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
-        .quick-help-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .quick-help-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .quick-help-card p { font-size: 0.9rem; color: var(--text-gray); }
+        /* Hero */
+        .support-hero{padding:5rem 2rem 4rem;text-align:center;position:relative;z-index:2}
+        .support-hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:150%;height:200%;background:radial-gradient(ellipse at center,rgba(249,115,22,.06) 0%,transparent 60%);pointer-events:none}
+        .support-hero h1{font-size:clamp(2.25rem,5vw,3.5rem);font-weight:900;margin-bottom:1rem;letter-spacing:-.03em;position:relative}
+        .gradient-text{background:linear-gradient(135deg,var(--primary),var(--primary-dark),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradientShift 5s ease-in-out infinite}
+        @keyframes gradientShift{0%,100%{background-position:0% center}50%{background-position:100% center}}
+        .support-hero p{font-size:clamp(1.05rem,2vw,1.2rem);color:var(--text-gray);max-width:600px;margin:0 auto;line-height:1.8;position:relative}
 
-        /* Main Content */
-        .support-content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
-        .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        /* Quick Help */
+        .quick-help{max-width:1200px;margin:-2rem auto 0;padding:0 2rem;position:relative;z-index:3}
+        .quick-help-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+        .quick-help-card{background:#fff;padding:2rem;border-radius:20px;text-align:center;border:1px solid var(--border-light);transition:var(--transition-base);cursor:pointer;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+        .quick-help-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transition:transform .4s ease}
+        .quick-help-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08);border-color:rgba(249,115,22,.2)}
+        .quick-help-card:hover::before{transform:scaleX(1)}
+        .quick-help-icon{font-size:2.75rem;margin-bottom:1.25rem;display:block}
+        .quick-help-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-.01em}
+        .quick-help-card p{font-size:.9rem;color:var(--text-gray);line-height:1.6}
+
+        /* Support Content */
+        .support-content{max-width:1200px;margin:0 auto;padding:4rem 2rem;position:relative;z-index:2}
+        .support-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
 
         /* FAQ Section */
-        .faq-section { background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); }
-        .faq-section h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
-        .faq-list { display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
-        .faq-item:hover { border-color: var(--primary); }
-        .faq-item.active { border-color: var(--primary); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.1); }
-        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; background: var(--bg-light); transition: all 0.3s ease; }
-        .faq-item.active .faq-question { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); }
-        .faq-question:hover { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); }
-        .faq-toggle { font-size: 1.25rem; color: var(--primary); transition: transform 0.3s ease; }
-        .faq-item.active .faq-toggle { transform: rotate(45deg); }
-        .faq-answer { padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: all 0.3s ease; }
-        .faq-item.active .faq-answer { padding: 1.25rem; max-height: 500px; }
-        .faq-answer p { color: var(--text-gray); line-height: 1.8; font-size: 0.95rem; }
+        .faq-section{background:#fff;border-radius:24px;padding:2.5rem;border:1px solid var(--border-light);box-shadow:0 10px 40px rgba(0,0,0,.04)}
+        .faq-section h2{font-size:1.75rem;font-weight:800;margin-bottom:2rem;display:flex;align-items:center;gap:.75rem;letter-spacing:-.01em}
+        .faq-list{display:flex;flex-direction:column;gap:1rem}
+        .faq-item{border:1px solid var(--border-light);border-radius:14px;overflow:hidden;transition:var(--transition-base)}
+        .faq-item:hover{border-color:rgba(249,115,22,.3)}
+        .faq-item.active{border-color:var(--primary);box-shadow:0 8px 25px rgba(249,115,22,.1)}
+        .faq-question{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;cursor:pointer;font-weight:600;font-size:.95rem;background:var(--bg-light);transition:var(--transition-base)}
+        .faq-item.active .faq-question{background:linear-gradient(135deg,rgba(249,115,22,.05),rgba(251,146,60,.03))}
+        .faq-question:hover{background:linear-gradient(135deg,rgba(249,115,22,.05),rgba(251,146,60,.03))}
+        .faq-toggle{font-size:1.5rem;color:var(--primary);transition:var(--transition-base);font-weight:400}
+        .faq-item.active .faq-toggle{transform:rotate(45deg)}
+        .faq-answer{padding:0 1.5rem;max-height:0;overflow:hidden;transition:all .4s ease}
+        .faq-item.active .faq-answer{padding:0 1.5rem 1.5rem;max-height:500px}
+        .faq-answer p{color:var(--text-gray);line-height:1.85;font-size:.95rem}
 
-        /* Contact Form */
-        .contact-section { background: white; border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); }
-        .contact-section h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
-        .contact-section > p { color: var(--text-gray); margin-bottom: 2rem; }
-        .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
-        .form-group input, .form-group select, .form-group textarea { padding: 1rem; border: 1px solid var(--border); border-radius: 10px; font-size: 0.95rem; transition: all 0.3s ease; font-family: inherit; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1); }
-        .form-group textarea { min-height: 150px; resize: vertical; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .submit-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.1rem 2rem; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4); }
-        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-
-        /* Success Message */
-        .success-message { display: none; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid var(--success); border-radius: 12px; padding: 1.5rem; text-align: center; }
-        .success-message.show { display: block; animation: fadeIn 0.5s ease; }
-        .success-message h3 { color: var(--success); font-size: 1.25rem; margin-bottom: 0.5rem; }
-        .success-message p { color: var(--text-gray); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Contact Info */
-        .contact-info { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-        .contact-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
-        .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
-        .contact-method { display: flex; align-items: center; gap: 1rem; }
-        .contact-method-icon { width: 40px; height: 40px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
-        .contact-method-text { display: flex; flex-direction: column; }
-        .contact-method-label { font-size: 0.8rem; color: var(--text-gray); }
-        .contact-method-value { font-weight: 600; color: var(--text-dark); }
+        /* Contact Section */
+        .contact-section{background:#fff;border-radius:24px;padding:2.5rem;border:1px solid var(--border-light);box-shadow:0 10px 40px rgba(0,0,0,.04)}
+        .contact-section h2{font-size:1.75rem;font-weight:800;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem;letter-spacing:-.01em}
+        .contact-section>p{color:var(--text-gray);margin-bottom:2rem;line-height:1.7}
+        .contact-form{display:flex;flex-direction:column;gap:1.25rem}
+        .form-group{display:flex;flex-direction:column;gap:.5rem}
+        .form-group label{font-size:.9rem;font-weight:600;color:var(--text-dark)}
+        .form-group input,.form-group select,.form-group textarea{padding:1rem 1.25rem;border:2px solid var(--border);border-radius:12px;font-size:.95rem;transition:var(--transition-base);font-family:inherit;background:#fff}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(249,115,22,.1)}
+        .form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-light)}
+        .form-group textarea{min-height:150px;resize:vertical}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .submit-btn{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:1.15rem 2.5rem;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:var(--transition-base);box-shadow:0 8px 25px var(--accent-glow);font-family:inherit}
+        .submit-btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px var(--accent-glow)}
+        .submit-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+        .checkbox-group{display:flex;align-items:flex-start;gap:.75rem;margin-top:.5rem}
+        .checkbox-group input[type="checkbox"]{width:20px;height:20px;accent-color:var(--primary);cursor:pointer;margin-top:.1rem;flex-shrink:0}
+        .checkbox-group label{font-size:.9rem;color:var(--text-gray);line-height:1.5;cursor:pointer}
+        .checkbox-group label a{color:var(--primary);text-decoration:none;font-weight:500}
+        .checkbox-group label a:hover{text-decoration:underline}
+        .contact-info{margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border-light)}
+        .contact-info h3{font-size:1.1rem;font-weight:700;margin-bottom:1.25rem}
+        .contact-methods{display:flex;flex-direction:column;gap:1rem}
+        .contact-method{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--bg-light);border-radius:12px;transition:var(--transition-base)}
+        .contact-method:hover{background:linear-gradient(135deg,rgba(249,115,22,.05),rgba(251,146,60,.03))}
+        .contact-method-icon{width:48px;height:48px;background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(251,146,60,.1));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.35rem}
+        .contact-method-text{display:flex;flex-direction:column;gap:.15rem}
+        .contact-method-label{font-size:.8rem;color:var(--text-gray);text-transform:uppercase;letter-spacing:.05em}
+        .contact-method-value{font-weight:600;color:var(--text-dark)}
 
         /* Footer */
-        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; margin-top: 4rem; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; }
-        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; }
-        .footer-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; text-decoration: none; }
-        .footer-logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; }
-        .footer-logo:hover img { transform: scale(1.1); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
-        .footer-logo h3 { font-size: 1.75rem; font-weight: 900; color: white; margin: 0; }
-        .footer-links h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 1rem; }
-        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; }
-        .footer-links a:hover { color: white; }
-        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
+        footer{padding:6rem 2rem 2rem;background:var(--bg-dark);color:#fff;position:relative;z-index:2;margin-top:4rem}
+        footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.3),transparent)}
+        .footer-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+        .footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;text-decoration:none}
+        .footer-logo img{width:52px;height:52px;border-radius:50%;border:2px solid var(--primary);box-shadow:0 4px 15px var(--accent-glow);transition:var(--transition-base)}
+        .footer-logo:hover img{transform:scale(1.1)}
+        .footer-logo h3{font-size:1.5rem;font-weight:800;color:#fff;margin:0}
+        .footer-company p{color:rgba(255,255,255,.6);line-height:1.8;font-size:1rem;max-width:400px}
+        .footer-links h4{font-size:.9rem;font-weight:700;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.1em}
+        .footer-links ul{list-style:none}.footer-links li{margin-bottom:1rem}
+        .footer-links a{color:rgba(255,255,255,.6);text-decoration:none;transition:var(--transition-fast);font-size:1rem}
+        .footer-links a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.9rem}
 
-        @media (max-width: 1024px) {
-            .support-grid { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            body { padding-top: 140px; }
-            .header-text { font-size: 1rem; }
-            .logo-container { padding: 0.75rem 1rem 0 1rem; padding-bottom: 2rem; }
-            .logo-container img { height: 55px; width: 55px; }
-            .logo-container.hidden { display: none; }
-            .menu-toggle { display: flex; }
-            .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
-            .nav-links.active { display: flex; }
-            .dropdown { width: 100%; }
-            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
-            .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-menu a { justify-content: center; text-align: center; padding: 1rem; }
-            .dropdown-menu a .dropdown-icon { display: none; }
-            .dropdown-menu a .dropdown-content h4 { font-size: 1rem; }
-            .dropdown-menu a .dropdown-content p { display: none; }
-            .dropdown-toggle { justify-content: center; gap: 0.5rem; width: 100%; padding: 0.5rem 0; }
-            .login-btn { width: 100%; text-align: center; justify-content: center; }
-            .account-dropdown { width: 100%; }
-            .account-toggle { width: 100%; justify-content: center; }
-            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
-            .account-dropdown.active .account-menu { display: block; }
-            .support-hero { padding: 3rem 1.5rem; }
-            .support-hero h1 { font-size: 2.25rem; }
-            .quick-help { padding: 0 1.5rem; }
-            .support-content { padding: 3rem 1.5rem; }
-            .faq-section, .contact-section { padding: 1.5rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .footer-logo { flex-direction: column; text-align: center; }
-        }
+        /* Responsive */
+        @media(max-width:1024px){.quick-help-grid{grid-template-columns:repeat(2,1fr)}.support-grid{grid-template-columns:1fr}.footer-content{grid-template-columns:1fr;gap:3rem;text-align:center}.footer-company p{margin:0 auto}}
+        @media(max-width:768px){body{padding-top:140px}nav{padding:1rem 1.5rem}.header-text{font-size:1.15rem}.logo-container{padding:.75rem 1rem 0;padding-bottom:2rem}.logo-container img{height:56px;width:56px}.logo-container.hidden{display:none}.menu-toggle{display:flex}.nav-links{display:none;position:fixed;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:2rem;border-bottom:1px solid var(--border);gap:1.5rem;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.1);max-height:70vh;overflow-y:auto}.nav-links.active{display:flex}.dropdown{width:100%}.dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-light);margin-top:1rem;display:none;min-width:100%;border-radius:12px}.dropdown.active .dropdown-menu{display:block}.dropdown-menu a{justify-content:center;text-align:center;padding:1rem;border-radius:8px}.dropdown-menu a .dropdown-icon{display:none}.dropdown-menu a .dropdown-content p{display:none}.dropdown-toggle{justify-content:center;width:100%;padding:.75rem}.login-btn{width:100%;justify-content:center}.account-dropdown{width:100%}.account-toggle{width:100%;justify-content:center}.account-menu{position:static;transform:none;box-shadow:none;margin-top:1rem;display:none;min-width:100%;background:var(--bg-light);border-radius:12px}.account-dropdown.active .account-menu{display:block}.support-hero{padding:3rem 1.5rem 2rem}.quick-help{padding:0 1.5rem;margin-top:-1rem}.quick-help-grid{grid-template-columns:1fr 1fr;gap:1rem}.quick-help-card{padding:1.5rem}.quick-help-icon{font-size:2rem;margin-bottom:1rem}.support-content{padding:3rem 1.5rem}.faq-section,.contact-section{padding:1.75rem;border-radius:20px}.faq-question{padding:1rem 1.25rem}.form-row{grid-template-columns:1fr}.footer-logo{flex-direction:column}.footer-links{text-align:center}.footer-company p{text-align:center;margin:0 auto}}
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    
     <header>
         <nav>
             <a href="/" class="header-text">JAYISAAC AI</a>
             <ul class="nav-links">
-                <li class="dropdown">
-                    <div class="dropdown-toggle" onclick="toggleDropdown()">
-                        Services
-                        <span class="dropdown-arrow">▼</span>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="/ai-chatbot/">
-                            <div class="dropdown-icon">💬</div>
-                            <div class="dropdown-content">
-                                <h4>AI Chatbots</h4>
-                                <p>24/7 intelligent support</p>
-                            </div>
-                        </a>
-                        <a href="/ai-voiceagents/">
-                            <div class="dropdown-icon">🎙️</div>
-                            <div class="dropdown-content">
-                                <h4>Voice Agents</h4>
-                                <p>Natural voice AI</p>
-                            </div>
-                        </a>
-                        <a href="/ai-maintenanceop/">
-                            <div class="dropdown-icon">⚙️</div>
-                            <div class="dropdown-content">
-                                <h4>Maintenance AI</h4>
-                                <p>Predictive optimization</p>
-                            </div>
-                        </a>
-                        <a href="/ai-recruitassistant/">
-                            <div class="dropdown-icon">👥</div>
-                            <div class="dropdown-content">
-                                <h4>Recruiting AI</h4>
-                                <p>Automated hiring</p>
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li><a href="/Policies.html">Policies</a></li>
-                <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
-                <li class="account-dropdown">
-                    <div class="account-toggle" onclick="toggleAccountDropdown()">
-                        <img src="" alt="Profile" class="account-photo">
-                        <span class="account-name">Account</span>
-                        <span class="account-arrow">▼</span>
-                    </div>
-                    <div class="account-menu">
-                        <div class="account-header">
-                            <span class="account-name">Account</span>
-                            <span class="user-email">email@example.com</span>
-                        </div>
-                        <a href="/my-orders.html">
-                            <span class="menu-icon">📦</span>
-                            My Orders
-                        </a>
-                        <a href="/support.html">
-                            <span class="menu-icon">💬</span>
-                            Support
-                        </a>
-                        <button class="logout-btn" onclick="handleLogout()">
-                            <span class="menu-icon">🚪</span>
-                            Logout
-                        </button>
-                    </div>
-                </li>
+                <li class="dropdown services-dropdown"><div class="dropdown-toggle" onclick="toggleDropdown('services')">Solutions<span class="dropdown-arrow">▼</span></div><div class="dropdown-menu"><a href="/ai-chatbot/"><div class="dropdown-icon">💬</div><div class="dropdown-content"><h4>AI Chatbots</h4><p>24/7 intelligent support</p></div></a><a href="/ai-receptionist/"><div class="dropdown-icon">📞</div><div class="dropdown-content"><h4>AI Receptionist</h4><p>Never miss a call</p></div></a></div></li>
+                <li><a href="/policies.html">Policies</a></li>
+                <li><a href="/login.html" class="login-btn">Get Started</a></li>
+                <li class="account-dropdown"><div class="account-toggle" onclick="toggleAccountDropdown()"><img src="" alt="Profile" class="account-photo"><span class="account-name">Account</span><span class="account-arrow">▼</span></div><div class="account-menu"><div class="account-header"><span class="account-name">Account</span><span class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2b7bfb3bbbe92b7aab3bfa2beb7fcb1bdbf">[email&#160;protected]</a></span></div><a href="/myorders.html"><span class="menu-icon">📦</span>My Orders</a><a href="/support.html"><span class="menu-icon">💬</span>Support</a><button class="logout-btn" onclick="handleLogout()"><span class="menu-icon">🚪</span>Sign Out</button></div></li>
             </ul>
-            <button class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="logo-container">
-                <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
-            </div>
+            <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+            <div class="logo-container"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"></div>
         </nav>
     </header>
 
@@ -360,149 +176,44 @@
 
     <div class="quick-help">
         <div class="quick-help-grid">
-            <a href="#faq" class="quick-help-card">
-                <div class="quick-help-icon">❓</div>
-                <h3>FAQs</h3>
-                <p>Find quick answers to common questions</p>
-            </a>
-            <a href="#contact" class="quick-help-card">
-                <div class="quick-help-icon">✉️</div>
-                <h3>Contact Us</h3>
-                <p>Send us a message directly</p>
-            </a>
-            <a href="/Policies.html" class="quick-help-card">
-                <div class="quick-help-icon">📄</div>
-                <h3>Documentation</h3>
-                <p>Read our policies and guides</p>
-            </a>
-            <a href="/my-orders.html" class="quick-help-card">
-                <div class="quick-help-icon">📦</div>
-                <h3>Order Issues</h3>
-                <p>Track or manage your orders</p>
-            </a>
+            <a href="#faq" class="quick-help-card"><div class="quick-help-icon">❓</div><h3>FAQs</h3><p>Find quick answers to common questions</p></a>
+            <a href="#contact" class="quick-help-card"><div class="quick-help-icon">✉️</div><h3>Contact Us</h3><p>Send us a message directly</p></a>
+            <a href="/policies.html" class="quick-help-card"><div class="quick-help-icon">📄</div><h3>Documentation</h3><p>Read our policies and guides</p></a>
+            <a href="/myorders.html" class="quick-help-card"><div class="quick-help-icon">📦</div><h3>Order Issues</h3><p>Track or manage your orders</p></a>
         </div>
     </div>
 
     <div class="support-content">
         <div class="support-grid">
-            <!-- FAQ Section -->
             <section class="faq-section" id="faq">
                 <h2>❓ Frequently Asked Questions</h2>
                 <div class="faq-list">
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>How do I get started with JAYISAAC AI?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Getting started is easy! Simply choose a plan that fits your needs, sign up with your Google account, and our team will guide you through the onboarding process. We'll help you set up your AI chatbot, voice agent, or other solution within 24-48 hours.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>Can I change my subscription plan?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes! You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. To change your plan, contact our support team or manage it through your account dashboard.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>What payment methods do you accept?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise plans. All payments are processed securely through our payment provider.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>Is there a free trial available?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes! We offer a 14-day free trial for all our plans. You can test our AI solutions with full features before committing. No credit card required to start your trial.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>How do I cancel my subscription?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>You can cancel your subscription at any time through your account dashboard or by contacting our support team. Your service will remain active until the end of your current billing period.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>Do you offer refunds?</span>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We offer a 30-day money-back guarantee for new customers. If you're not satisfied with our service within the first 30 days, contact us for a full refund. Please review our refund policy for complete details.</p>
-                        </div>
-                    </div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>How do I get started with JAYISAAC AI?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>Getting started is easy! Simply choose a plan that fits your needs, sign up with your Google account, and our team will guide you through the onboarding process.</p></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Can I change my subscription plan?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>Yes! You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle.</p></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>What payment methods do you accept?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>We accept all major credit cards (Visa, MasterCard, American Express) through our secure payment processor, Stripe.</p></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Is there a free trial available?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>Yes! We offer a 14-day free trial for all our plans. No credit card required to start your trial.</p></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>How do I cancel my subscription?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>You can cancel your subscription at any time through your account dashboard or by contacting our support team.</p></div></div>
+                    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Do you offer refunds?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p>We offer a 30-day money-back guarantee for new customers. Contact us for a full refund within the first 30 days.</p></div></div>
                 </div>
             </section>
 
-            <!-- Contact Form -->
             <section class="contact-section" id="contact">
                 <h2>✉️ Contact Support</h2>
                 <p>Can't find what you're looking for? Send us a message and we'll get back to you within 24 hours.</p>
-                
-                <div class="success-message" id="successMessage">
-                    <h3>✅ Message Sent!</h3>
-                    <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
-                </div>
-
-                <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+                <form class="contact-form" action="https://formspree.io/f/mqavdkwr" method="POST">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="contactName">Full Name</label>
-                            <input type="text" id="contactName" name="name" placeholder="Your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address</label>
-                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
-                        </div>
+                        <div class="form-group"><label for="contactName">Full Name</label><input type="text" id="contactName" name="name" placeholder="Your name" required></div>
+                        <div class="form-group"><label for="contactEmail">Email Address</label><input type="email" id="contactEmail" name="email" placeholder="you@example.com" required></div>
                     </div>
-                    <div class="form-group">
-                        <label for="contactSubject">Subject</label>
-                        <select id="contactSubject" name="subject" required>
-                            <option value="">Select a topic...</option>
-                            <option value="billing">Billing & Payments</option>
-                            <option value="technical">Technical Support</option>
-                            <option value="account">Account Issues</option>
-                            <option value="sales">Sales Inquiry</option>
-                            <option value="feedback">Feedback & Suggestions</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactMessage">Message</label>
-                        <textarea id="contactMessage" name="message" placeholder="Describe your issue or question in detail..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+                    <div class="form-group"><label for="contactSubject">Subject</label><select id="contactSubject" name="subject" required><option value="">Select a topic...</option><option value="billing">Billing & Payments</option><option value="technical">Technical Support</option><option value="account">Account Issues</option><option value="sales">Sales Inquiry</option><option value="feedback">Feedback & Suggestions</option><option value="other">Other</option></select></div>
+                    <div class="form-group"><label for="contactMessage">Message</label><textarea id="contactMessage" name="message" placeholder="Describe your issue or question in detail..." required></textarea></div>
+                    <div class="checkbox-group"><input type="checkbox" id="consent" name="consent" required><label for="consent">I agree to the <a href="/policies.html">Privacy Policy</a> and consent to being contacted.</label></div>
+                    <button type="submit" class="submit-btn">Send Message</button>
                 </form>
-
                 <div class="contact-info">
-                    <h3>Other ways to reach us</h3>
+                    <h3>What to expect</h3>
                     <div class="contact-methods">
-                        <div class="contact-method">
-                            <div class="contact-method-icon">📧</div>
-                            <div class="contact-method-text">
-                                <span class="contact-method-label">Email</span>
-                                <span class="contact-method-value">support@jayisaac.ai</span>
-                            </div>
-                        </div>
-                        <div class="contact-method">
-                            <div class="contact-method-icon">⏰</div>
-                            <div class="contact-method-text">
-                                <span class="contact-method-label">Response Time</span>
-                                <span class="contact-method-value">Within 24 hours</span>
-                            </div>
-                        </div>
+                        <div class="contact-method"><div class="contact-method-icon">⏰</div><div class="contact-method-text"><span class="contact-method-label">Response Time</span><span class="contact-method-value">Within 24 hours</span></div></div>
                     </div>
                 </div>
             </section>
@@ -512,130 +223,29 @@
     <footer>
         <div class="footer-content">
             <div class="footer-company">
-                <a href="/" class="footer-logo">
-                    <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
-                    <h3>JAYISAAC AI</h3>
-                </a>
-                <p>Intelligent automation solutions that help businesses streamline operations, enhance customer experiences, and accelerate sustainable growth.</p>
+                <a href="/" class="footer-logo"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"><h3>JAYISAAC AI</h3></a>
+                <p>Intelligent automation solutions that help businesses streamline operations and enhance customer experiences.</p>
             </div>
-            <div class="footer-links">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="ai-chatbot/index.html">AI Chatbots</a></li>
-                    <li><a href="ai-voiceagents/index.html">Voice Agents</a></li>
-                    <li><a href="/ai-maintenanceop/index.html">Maintenance</a></li>
-                    <li><a href="/ai-recruitassistant/index.html">Recruiting</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="policies.html">Privacy Policy</a></li>
-                    <li><a href="policies.html">Terms of Service</a></li>
-                    <li><a href="index.html">Contact</a></li>
-                </ul>
-            </div>
+            <div class="footer-links"><h4>Solutions</h4><ul><li><a href="/ai-chatbot/">AI Chatbots</a></li><li><a href="/ai-receptionist/">AI Receptionist</a></li></ul></div>
+            <div class="footer-links"><h4>Company</h4><ul><li><a href="/policies.html">Privacy Policy</a></li><li><a href="/policies.html">Terms of Service</a></li><li><a href="/#contact">Contact</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
-        </div>
+        <div class="footer-bottom"><p>© 2026 JAYISAAC AI. All rights reserved.</p></div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
-        if (window.innerWidth > 768) {
-            particlesJS('particles-js', {
-                particles: { number: { value: 60, density: { enable: true, value_area: 1000 } }, color: { value: '#f97316' }, shape: { type: 'circle' }, opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: '#f97316', opacity: 0.2, width: 1 }, move: { enable: true, speed: 1.5, direction: 'none', random: true, straight: false, out_mode: 'bounce' } },
-                interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' }, resize: true }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } } } },
-                retina_detect: true
-            });
-        }
-
-        window.addEventListener('scroll', function() {
-            var header = document.querySelector('header');
-            if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
-        });
-
-        function toggleMenu() {
-            var menuToggle = document.querySelector('.menu-toggle');
-            var navLinks = document.querySelector('.nav-links');
-            var logoContainer = document.querySelector('.logo-container');
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            if (logoContainer) logoContainer.classList.toggle('hidden');
-        }
-
-        function toggleDropdown() {
-            var dropdown = document.querySelector('.dropdown');
-            dropdown.classList.toggle('active');
-            var accountDropdown = document.querySelector('.account-dropdown');
-            if (accountDropdown) accountDropdown.classList.remove('active');
-        }
-
-        function toggleAccountDropdown() {
-            var accountDropdown = document.querySelector('.account-dropdown');
-            accountDropdown.classList.toggle('active');
-            var servicesDropdown = document.querySelector('.dropdown');
-            if (servicesDropdown) servicesDropdown.classList.remove('active');
-        }
-
-        function handleLogout() {
-            if (window.firebaseAuth) {
-                window.firebaseAuth.signOut();
-                var accountDropdown = document.querySelector('.account-dropdown');
-                if (accountDropdown) accountDropdown.classList.remove('active');
-            }
-        }
-
-        function toggleFaq(element) {
-            var faqItem = element.parentElement;
-            var allItems = document.querySelectorAll('.faq-item');
-            allItems.forEach(function(item) {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                }
-            });
-            faqItem.classList.toggle('active');
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-            var submitBtn = document.getElementById('submitBtn');
-            var form = document.getElementById('contactForm');
-            var successMessage = document.getElementById('successMessage');
-            
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            // Simulate form submission (replace with actual backend integration)
-            setTimeout(function() {
-                form.style.display = 'none';
-                successMessage.classList.add('show');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-            }, 1500);
-        }
-
-        document.addEventListener('click', function(event) {
-            var dropdown = document.querySelector('.dropdown');
-            if (dropdown && !dropdown.contains(event.target)) { dropdown.classList.remove('active'); }
-            var accountDropdown = document.querySelector('.account-dropdown');
-            if (accountDropdown && !accountDropdown.contains(event.target)) { accountDropdown.classList.remove('active'); }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-        });
+        if(window.innerWidth>768){particlesJS('particles-js',{particles:{number:{value:50,density:{enable:true,value_area:1200}},color:{value:'#f97316'},shape:{type:'circle'},opacity:{value:0.25,random:true},size:{value:2.5,random:true},line_linked:{enable:true,distance:180,color:'#f97316',opacity:0.15,width:1},move:{enable:true,speed:1,direction:'none',random:true,out_mode:'bounce'}},interactivity:{detect_on:'canvas',events:{onhover:{enable:true,mode:'grab'},resize:true},modes:{grab:{distance:150,line_linked:{opacity:0.4}}}},retina_detect:true})}
+        window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',window.scrollY>50));
+        function toggleMenu(){document.querySelector('.menu-toggle').classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active');document.querySelector('.logo-container')?.classList.toggle('hidden')}
+        function toggleDropdown(t){const sd=document.querySelector('.services-dropdown');const ad=document.querySelector('.account-dropdown');sd.classList.toggle('active');ad?.classList.remove('active')}
+        function toggleAccountDropdown(){document.querySelector('.account-dropdown').classList.toggle('active');document.querySelector('.services-dropdown')?.classList.remove('active')}
+        function handleLogout(){if(window.firebaseAuth)window.firebaseAuth.signOut();document.querySelector('.account-dropdown')?.classList.remove('active')}
+        function toggleFaq(el){const item=el.parentElement;document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('active')});item.classList.toggle('active')}
+        document.addEventListener('click',e=>{const sd=document.querySelector('.services-dropdown');if(sd&&!sd.contains(e.target))sd.classList.remove('active');const ad=document.querySelector('.account-dropdown');if(ad&&!ad.contains(e.target))ad.classList.remove('active')});
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const href=this.getAttribute('href');if(href!=='#'){e.preventDefault();const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}})});
+        // Scroll animations
+        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)'}})},{threshold:0.1});
+        document.querySelectorAll('.quick-help-card,.faq-item,.contact-method').forEach((el,i)=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity 0.5s ease '+(i%4*0.08)+'s, transform 0.5s ease '+(i%4*0.08)+'s';observer.observe(el)});
     </script>
 </body>
 </html>
