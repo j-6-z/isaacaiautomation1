@@ -6,330 +6,56 @@
     <title>Sign In / Sign Up - JAYISAAC AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         :root {
-            --primary: #f97316;
-            --primary-dark: #ea580c;
-            --secondary: #fb923c;
-            --accent: #fdba74;
-            --bg-white: #ffffff;
-            --bg-light: #fafafa;
-            --bg-gray: #f3f4f6;
-            --text-dark: #111827;
-            --text-gray: #6b7280;
-            --text-light: #9ca3af;
-            --border: #e5e7eb;
+            --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74;
+            --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6;
+            --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb;
         }
-        
-        body {
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .login-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .login-header nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .header-text {
-            font-size: 1.35rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-        
+        body { background: var(--bg-light); color: var(--text-dark); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+        .login-header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; position: relative; z-index: 10; }
+        .login-header nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .header-text { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; text-decoration: none; transition: opacity 0.3s ease; }
         .header-text:hover { opacity: 0.8; }
-        
-        .back-link {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s ease;
-        }
-        
+        .back-link { color: var(--text-gray); text-decoration: none; font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s ease; }
         .back-link:hover { color: var(--primary); }
-        
-        .login-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .login-card {
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            padding: 3rem;
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-        
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
-            margin: 0 auto 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        
+        .login-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; z-index: 2; }
+        .login-card { background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); padding: 3rem; width: 100%; max-width: 440px; text-align: center; position: relative; overflow: hidden; }
+        .login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .login-logo { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 8px 24px rgba(249,115,22,0.3); margin: 0 auto 1.5rem; transition: transform 0.3s ease; display: block; }
         .login-logo:hover { transform: scale(1.05); }
-        
-        .login-card h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-        
-        .login-card .subtitle {
-            color: var(--text-gray);
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-        
-        .divider span { padding: 0 1rem; }
-        
-        .auth-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            margin-bottom: 1rem;
-        }
-        
-        .auth-btn:hover {
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
-            transform: translateY(-2px);
-        }
-        
+        .login-card h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .login-card .subtitle { color: var(--text-gray); font-size: 1rem; margin-bottom: 2rem; }
+        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-btn { display: flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 1rem 1.5rem; background: white; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: all 0.3s ease; font-family: inherit; margin-bottom: 1rem; }
+        .auth-btn:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(249,115,22,0.15); transform: translateY(-2px); }
         .auth-btn:active { transform: translateY(0); }
         .auth-btn svg { width: 20px; height: 20px; }
-        
-        .auth-btn.loading {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-        
+        .auth-btn.loading { pointer-events: none; opacity: 0.7; }
         .auth-btn.loading .auth-icon { display: none; }
-        
-        .auth-btn .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        
+        .auth-btn .spinner { display: none; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         .auth-btn.loading .spinner { display: block; }
-        
         @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .github-btn {
-            background: #24292e;
-            color: white;
-            border-color: #24292e;
-        }
-        
-        .github-btn:hover {
-            background: #1b1f23;
-            border-color: #1b1f23;
-            box-shadow: 0 4px 12px rgba(36, 41, 46, 0.3);
-        }
-        
-        .message {
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            display: none;
-        }
-        
-        .message.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            display: block;
-        }
-        
-        .message.success {
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            display: block;
-        }
-        
-        .message.info {
-            background: rgba(59, 130, 246, 0.1);
-            color: #2563eb;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            display: block;
-        }
-        
-        .terms {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-        
-        .auth-note {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-        
+        .github-btn { background: #24292e; color: white; border-color: #24292e; }
+        .github-btn:hover { background: #1b1f23; border-color: #1b1f23; box-shadow: 0 4px 12px rgba(36,41,46,0.3); }
+        .github-btn .spinner { border-color: rgba(255,255,255,0.3); border-top-color: white; }
+        .message { padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; font-size: 0.9rem; display: none; }
+        .message.error { background: rgba(239,68,68,0.1); color: #dc2626; border: 1px solid rgba(239,68,68,0.2); display: block; }
+        .message.success { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.2); display: block; }
+        .message.info { background: rgba(59,130,246,0.1); color: #2563eb; border: 1px solid rgba(59,130,246,0.2); display: block; }
+        .terms { margin-top: 2rem; font-size: 0.8rem; color: var(--text-light); }
+        .auth-note { margin-top: 1rem; font-size: 0.85rem; color: var(--text-gray); }
         .terms a { color: var(--primary); text-decoration: none; }
         .terms a:hover { text-decoration: underline; }
-        
-        .features-list {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            text-align: left;
-        }
-        
-        .features-list h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .features-list ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-        }
-        
-        .features-list li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-        
-        .features-list li::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: 700;
-        }
-        
-        .login-footer {
-            text-align: center;
-            padding: 1.5rem 2rem;
-            color: var(--text-light);
-            font-size: 0.85rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .login-footer a {
-            color: var(--text-gray);
-            text-decoration: none;
-            margin: 0 0.75rem;
-        }
-        
+        .features-list { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: left; }
+        .features-list h3 { font-size: 0.85rem; font-weight: 600; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; text-align: center; }
+        .features-list ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .features-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-gray); }
+        .features-list li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+        .login-footer { text-align: center; padding: 1.5rem 2rem; color: var(--text-light); font-size: 0.85rem; position: relative; z-index: 2; }
+        .login-footer a { color: var(--text-gray); text-decoration: none; margin: 0 0.75rem; }
         .login-footer a:hover { color: var(--primary); }
-        
         @media (max-width: 480px) {
             .login-card { padding: 2rem 1.5rem; border-radius: 16px; }
             .login-card h1 { font-size: 1.5rem; }
@@ -340,23 +66,23 @@
 </head>
 <body>
     <div id="particles-js"></div>
-    
+
     <header class="login-header">
         <nav>
             <a href="/" class="header-text">JAYISAAC AI</a>
             <a href="/" class="back-link">← Back to Home</a>
         </nav>
     </header>
-    
+
     <main class="login-container">
         <div class="login-card">
             <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI" class="login-logo">
-            
+
             <h1>Sign In or <span class="gradient-text">Sign Up</span></h1>
             <p class="subtitle">Access your AI dashboard in seconds</p>
-            
+
             <div id="message" class="message"></div>
-            
+
             <button class="auth-btn" id="google-signin-btn" onclick="signInWithGoogle()">
                 <div class="spinner"></div>
                 <svg class="auth-icon" viewBox="0 0 24 24">
@@ -375,9 +101,9 @@
                 </svg>
                 <span id="github-btn-text">Continue with GitHub</span>
             </button>
-            
+
             <p class="auth-note">New to JAYISAAC AI? Your account will be created automatically.</p>
-            
+
             <div class="features-list">
                 <h3>What you get</h3>
                 <ul>
@@ -387,13 +113,13 @@
                     <li>Priority support</li>
                 </ul>
             </div>
-            
+
             <p class="terms">
                 By signing in, you agree to our <a href="/Policies.html">Terms of Service</a> and <a href="/Policies.html">Privacy Policy</a>.
             </p>
         </div>
     </main>
-    
+
     <footer class="login-footer">
         <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
         <div>
@@ -402,13 +128,12 @@
             <a href="/#contact">Contact</a>
         </div>
     </footer>
-    
-    <!-- Firebase — redirect-based auth, same as original -->
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        
+        import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
             authDomain: "jayisaac-ai.firebaseapp.com",
@@ -418,29 +143,40 @@
             appId: "1:967801239356:web:0df3f35af72ce6e79b9039",
             measurementId: "G-V91DS21PGE"
         };
-        
+
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
         const githubProvider = new GithubAuthProvider();
 
-        // Prevents onAuthStateChanged from redirecting when getRedirectResult
-        // is already handling a fresh login — this was the original bug
-        let handledByRedirectResult = false;
-        
+        let loggingIn = false;
+
+        function handleSuccess(user, isNewUser) {
+            const name = user.displayName || user.email || 'there';
+            const msg = isNewUser
+                ? 'Account created! Welcome, ' + name + '! Redirecting...'
+                : 'Welcome back, ' + name + '! Redirecting...';
+            showMessage('success', msg);
+            setTimeout(() => { window.location.href = '/index.html'; }, 1500);
+        }
+
         window.signInWithGoogle = async function() {
             const btn = document.getElementById('google-signin-btn');
             const btnText = document.getElementById('google-btn-text');
             btn.classList.add('loading');
-            btnText.textContent = 'Redirecting...';
+            btnText.textContent = 'Signing in...';
             try {
-                await signInWithRedirect(auth, googleProvider);
+                loggingIn = true;
+                const result = await signInWithPopup(auth, googleProvider);
+                handleSuccess(result.user, result.additionalUserInfo?.isNewUser);
             } catch (error) {
-                console.error("Google sign in error:", error);
-                showMessage('error', 'Sign in failed: ' + error.message);
+                loggingIn = false;
                 btn.classList.remove('loading');
                 btnText.textContent = 'Continue with Google';
+                if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
+                    showMessage('error', 'Sign in failed: ' + error.message);
+                }
             }
         };
 
@@ -448,60 +184,35 @@
             const btn = document.getElementById('github-signin-btn');
             const btnText = document.getElementById('github-btn-text');
             btn.classList.add('loading');
-            btnText.textContent = 'Redirecting...';
+            btnText.textContent = 'Signing in...';
             try {
-                await signInWithRedirect(auth, githubProvider);
+                loggingIn = true;
+                const result = await signInWithPopup(auth, githubProvider);
+                handleSuccess(result.user, result.additionalUserInfo?.isNewUser);
             } catch (error) {
-                console.error("GitHub sign in error:", error);
-                showMessage('error', 'GitHub sign in failed: ' + error.message);
+                loggingIn = false;
                 btn.classList.remove('loading');
                 btnText.textContent = 'Continue with GitHub';
+                if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
+                    showMessage('error', 'Sign in failed: ' + error.message);
+                }
             }
         };
-        
-        // This fires after Google/GitHub sends the user back to your page.
-        // Show the welcome message here, then redirect to index.html.
-        getRedirectResult(auth)
-            .then((result) => {
-                if (result && result.user) {
-                    handledByRedirectResult = true;
-                    const isNewUser = result.additionalUserInfo?.isNewUser;
-                    const name = result.user.displayName || result.user.email || 'there';
-                    const msg = isNewUser
-                        ? 'Account created! Welcome, ' + name + '! Redirecting...'
-                        : 'Welcome back, ' + name + '! Redirecting...';
-                    showMessage('success', msg);
-                    setTimeout(() => {
-                        window.location.href = '/index.html';
-                    }, 1500);
-                }
-            })
-            .catch((error) => {
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    console.error("Redirect result error:", error);
-                    showMessage('error', 'Authentication error: ' + error.message);
-                }
-            });
-        
-        // Only fires for users who were ALREADY logged in before hitting this page
+
+        // If already logged in, skip login page and go straight to home
         onAuthStateChanged(auth, (user) => {
-            if (user && !handledByRedirectResult) {
-                const name = user.displayName || user.email || 'there';
-                showMessage('info', 'Already signed in as ' + name + '. Redirecting...');
-                setTimeout(() => {
-                    window.location.href = '/index.html';
-                }, 1500);
+            if (user && !loggingIn) {
+                handleSuccess(user, false);
             }
         });
-        
+
         function showMessage(type, text) {
-            const messageEl = document.getElementById('message');
-            messageEl.className = 'message ' + type;
-            messageEl.textContent = text;
+            const el = document.getElementById('message');
+            el.className = 'message ' + type;
+            el.textContent = text;
         }
-        
     </script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         if (window.innerWidth > 768) {
