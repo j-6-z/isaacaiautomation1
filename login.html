@@ -435,8 +435,6 @@
             btn.classList.add('loading');
             btnText.textContent = 'Redirecting...';
             try {
-                const returnUrl = sessionStorage.getItem('returnUrl') || '/';
-                sessionStorage.setItem('returnUrl', returnUrl);
                 await signInWithRedirect(auth, googleProvider);
             } catch (error) {
                 console.error("Google sign in error:", error);
@@ -452,8 +450,6 @@
             btn.classList.add('loading');
             btnText.textContent = 'Redirecting...';
             try {
-                const returnUrl = sessionStorage.getItem('returnUrl') || '/';
-                sessionStorage.setItem('returnUrl', returnUrl);
                 await signInWithRedirect(auth, githubProvider);
             } catch (error) {
                 console.error("GitHub sign in error:", error);
@@ -464,7 +460,7 @@
         };
         
         // This fires after Google/GitHub sends the user back to your page.
-        // Show the welcome message here, then redirect to home (or returnUrl).
+        // Show the welcome message here, then redirect to index.html.
         getRedirectResult(auth)
             .then((result) => {
                 if (result && result.user) {
@@ -476,9 +472,7 @@
                         : 'Welcome back, ' + name + '! Redirecting...';
                     showMessage('success', msg);
                     setTimeout(() => {
-                        const returnUrl = sessionStorage.getItem('returnUrl') || '/';
-                        sessionStorage.removeItem('returnUrl');
-                        window.location.href = returnUrl;
+                        window.location.href = '/index.html';
                     }, 1500);
                 }
             })
@@ -495,9 +489,7 @@
                 const name = user.displayName || user.email || 'there';
                 showMessage('info', 'Already signed in as ' + name + '. Redirecting...');
                 setTimeout(() => {
-                    const returnUrl = sessionStorage.getItem('returnUrl') || '/';
-                    sessionStorage.removeItem('returnUrl');
-                    window.location.href = returnUrl;
+                    window.location.href = '/index.html';
                 }, 1500);
             }
         });
@@ -508,14 +500,6 @@
             messageEl.textContent = text;
         }
         
-        // Store return URL if coming from another page
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const returnUrl = urlParams.get('return') || document.referrer;
-            if (returnUrl && !returnUrl.includes('/login')) {
-                sessionStorage.setItem('returnUrl', returnUrl);
-            }
-        });
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
