@@ -307,10 +307,9 @@
             pro:{name:'Pro',monthly:435,annual:4176,minutes:'300 min'},
             enterprise:{name:'Enterprise',monthly:875,annual:8400,minutes:'Unlimited'}
         };
-        // TODO: Replace '#' with your new Stripe payment links for the updated prices
         var stripeLinks={
-            monthly:{starter:'#',pro:'#',enterprise:'#'},
-            annual:{starter:'#',pro:'#',enterprise:'#'}
+            monthly:{starter:'https://buy.stripe.com/7sY5kw4y77LV9R6cDvc3m0x',pro:'https://buy.stripe.com/00w14gfcL2rBd3i1YRc3m0y',enterprise:'https://buy.stripe.com/6oU4gsc0z8PZe7mbzrc3m0z'},
+            annual:{starter:'https://buy.stripe.com/9B6cMY6Gf6HR7IYcDvc3m0A',pro:'https://buy.stripe.com/fZu3co8On6HR9R646Zc3m0B',enterprise:'https://buy.stripe.com/00wcMY3u33vFaVa32Vc3m0C'}
         };
         function switchBilling(b){currentBilling=b;document.querySelectorAll('.billing-btn').forEach(btn=>btn.classList.remove('active'));document.querySelector('.billing-btn[data-billing="'+b+'"]').classList.add('active');document.querySelectorAll('.price-monthly').forEach(el=>el.classList.toggle('active',b==='monthly'));document.querySelectorAll('.price-annual').forEach(el=>el.classList.toggle('active',b==='annual'));if(selectedPlan)updatePlanDisplay();localStorage.setItem('preferred-billing',b)}
         function selectPlan(p){selectedPlan=p;document.querySelectorAll('.pricing-card').forEach(c=>c.classList.remove('selected'));document.querySelector('[data-plan="'+p+'"]').classList.add('selected');updatePlanDisplay();validateLoggedInForm();document.querySelector('.checkout-section').scrollIntoView({behavior:'smooth',block:'start'})}
