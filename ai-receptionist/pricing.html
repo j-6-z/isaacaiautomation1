@@ -187,9 +187,86 @@
             <h2>Choose Your Plan</h2>
             <div class="billing-toggle-container"><span class="usd-badge">🇺🇸 USD</span><div class="billing-toggle"><button class="billing-btn active" data-billing="monthly" onclick="switchBilling('monthly')">Monthly</button><button class="billing-btn" data-billing="annual" onclick="switchBilling('annual')">Annual</button></div><span class="save-badge">Save 20%</span></div>
             <div class="pricing-grid">
-                <div class="pricing-card" data-plan="starter" onclick="selectPlan('starter')"><h3>Starter</h3><div class="price-monthly active"><div class="price">$105<span>/month</span></div></div><div class="price-annual"><div class="original-price">$1,260/yr</div><div class="price">$955<span>/year</span></div></div><div class="minutes-included">📞 200 Minutes/month</div><ul><li>24/7 AI call answering</li><li>Message taking & delivery</li><li>Basic call screening</li><li>Email notifications</li><li>1 phone number</li><li>Voicemail transcription</li><li>Email support</li><li>Overage: $0.17/min</li></ul><button class="select-plan-btn">Select Starter</button></div>
-                <div class="pricing-card featured" data-plan="pro" onclick="selectPlan('pro')"><h3>Pro</h3><div class="price-monthly active"><div class="price">$155<span>/month</span></div></div><div class="price-annual"><div class="original-price">$1,860/yr</div><div class="price">$1,450<span>/year</span></div></div><div class="minutes-included">📞 300 Minutes/month</div><ul><li>Everything in Starter</li><li>Appointment scheduling</li><li>Calendar integration</li><li>Smart call transfers</li><li>Lead qualification</li><li>CRM integration</li><li>SMS notifications</li><li>Detailed analytics</li><li>Priority support</li><li>Overage: $0.14/min</li></ul><button class="select-plan-btn">Select Pro</button></div>
-                <div class="pricing-card" data-plan="enterprise" onclick="selectPlan('enterprise')"><h3>Enterprise</h3><div class="price-monthly active"><div class="price">Custom</div></div><div class="price-annual"><div class="price">Custom</div></div><div class="minutes-included">📞 Unlimited Minutes</div><ul><li>Everything in Pro</li><li>Unlimited call minutes</li><li>Multiple phone numbers</li><li>Custom AI training</li><li>Advanced analytics</li><li>API access</li><li>White-label options</li><li>Dedicated account manager</li><li>White-glove onboarding</li><li>SLA guarantee</li></ul><button class="select-plan-btn">Contact Sales</button></div>
+
+                <!-- STARTER -->
+                <div class="pricing-card" data-plan="starter" onclick="selectPlan('starter')">
+                    <h3>Starter</h3>
+                    <div class="price-monthly active">
+                        <div class="price">$290<span>/month</span></div>
+                    </div>
+                    <div class="price-annual">
+                        <div class="original-price">$3,480/yr</div>
+                        <div class="price">$2,784<span>/year</span></div>
+                        <div style="font-size:.85rem;color:var(--success);font-weight:600;margin-bottom:.5rem">$232/mo — save $696</div>
+                    </div>
+                    <div class="minutes-included">📞 200 Minutes/month</div>
+                    <ul>
+                        <li>24/7 AI call answering</li>
+                        <li>Message taking & delivery</li>
+                        <li>Basic call screening</li>
+                        <li>Email notifications</li>
+                        <li>1 phone number</li>
+                        <li>Voicemail transcription</li>
+                        <li>Email support</li>
+                        <li>Overage: $0.17/min</li>
+                    </ul>
+                    <button class="select-plan-btn">Select Starter</button>
+                </div>
+
+                <!-- PRO -->
+                <div class="pricing-card featured" data-plan="pro" onclick="selectPlan('pro')">
+                    <h3>Pro</h3>
+                    <div class="price-monthly active">
+                        <div class="price">$435<span>/month</span></div>
+                    </div>
+                    <div class="price-annual">
+                        <div class="original-price">$5,220/yr</div>
+                        <div class="price">$4,176<span>/year</span></div>
+                        <div style="font-size:.85rem;color:var(--success);font-weight:600;margin-bottom:.5rem">$348/mo — save $1,044</div>
+                    </div>
+                    <div class="minutes-included">📞 300 Minutes/month</div>
+                    <ul>
+                        <li>Everything in Starter</li>
+                        <li>Appointment scheduling</li>
+                        <li>Calendar integration</li>
+                        <li>Smart call transfers</li>
+                        <li>Lead qualification</li>
+                        <li>CRM integration</li>
+                        <li>SMS notifications</li>
+                        <li>Detailed analytics</li>
+                        <li>Priority support</li>
+                        <li>Overage: $0.14/min</li>
+                    </ul>
+                    <button class="select-plan-btn">Select Pro</button>
+                </div>
+
+                <!-- ENTERPRISE -->
+                <div class="pricing-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
+                    <h3>Enterprise</h3>
+                    <div class="price-monthly active">
+                        <div class="price">$875<span>/month</span></div>
+                    </div>
+                    <div class="price-annual">
+                        <div class="original-price">$10,500/yr</div>
+                        <div class="price">$8,400<span>/year</span></div>
+                        <div style="font-size:.85rem;color:var(--success);font-weight:600;margin-bottom:.5rem">$700/mo — save $1,050</div>
+                    </div>
+                    <div class="minutes-included">📞 Unlimited Minutes</div>
+                    <ul>
+                        <li>Everything in Pro</li>
+                        <li>Unlimited call minutes</li>
+                        <li>Multiple phone numbers</li>
+                        <li>Custom AI training</li>
+                        <li>Advanced analytics</li>
+                        <li>API access</li>
+                        <li>White-label options</li>
+                        <li>Dedicated account manager</li>
+                        <li>White-glove onboarding</li>
+                        <li>SLA guarantee</li>
+                    </ul>
+                    <button class="select-plan-btn">Contact Sales</button>
+                </div>
+
             </div>
         </div>
     </section>
@@ -213,7 +290,6 @@
                     <div class="form-group optional"><label for="logged-website-url">Website URL</label><input type="url" id="logged-website-url" name="website-url" placeholder="https://yourwebsite.com"></div>
                     <button type="submit" class="checkout-btn" id="logged-checkout-btn" disabled>Complete Purchase</button>
                 </form>
-                
                 <div class="delivery-disclaimer"><div class="disclaimer-checkbox"><input type="checkbox" id="logged-disclaimer-checkbox" onchange="validateLoggedInForm()"><label for="logged-disclaimer-checkbox">📧 <strong>I understand</strong> that depending on the product and pricing tier, delivery may take 1-14 days. Upon purchase, I will be contacted via email to discuss delivery and implementation details.</label></div></div>
                 <div class="security-badges"><div class="security-badge"><span>🔒</span><span>SSL Secured</span></div><div class="security-badge"><span>💳</span><span>Stripe Payments</span></div><div class="security-badge"><span>✓</span><span>Cancel Anytime</span></div></div>
             </div>
@@ -226,14 +302,22 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         var currentBilling='monthly',selectedPlan=null;
-        var planData={starter:{name:'Starter',monthly:105,annual:955,minutes:'200 min'},pro:{name:'Pro',monthly:155,annual:1450,minutes:'300 min'},enterprise:{name:'Enterprise',monthly:'Custom',annual:'Custom',minutes:'Unlimited'}};
-        var stripeLinks={monthly:{starter:'https://buy.stripe.com/bJe5kwe8H0jtaVagTLc3m0t',pro:'https://buy.stripe.com/aFadR2aWv5DN4wMfPHc3m0u'},annual:{starter:'https://buy.stripe.com/6oU3co1lVd6faVa8nfc3m0v',pro:'https://buy.stripe.com/7sYdR2fcLgir5AQcDvc3m0w'}};
+        var planData={
+            starter:{name:'Starter',monthly:290,annual:2784,minutes:'200 min'},
+            pro:{name:'Pro',monthly:435,annual:4176,minutes:'300 min'},
+            enterprise:{name:'Enterprise',monthly:875,annual:8400,minutes:'Unlimited'}
+        };
+        // TODO: Replace '#' with your new Stripe payment links for the updated prices
+        var stripeLinks={
+            monthly:{starter:'#',pro:'#',enterprise:'#'},
+            annual:{starter:'#',pro:'#',enterprise:'#'}
+        };
         function switchBilling(b){currentBilling=b;document.querySelectorAll('.billing-btn').forEach(btn=>btn.classList.remove('active'));document.querySelector('.billing-btn[data-billing="'+b+'"]').classList.add('active');document.querySelectorAll('.price-monthly').forEach(el=>el.classList.toggle('active',b==='monthly'));document.querySelectorAll('.price-annual').forEach(el=>el.classList.toggle('active',b==='annual'));if(selectedPlan)updatePlanDisplay();localStorage.setItem('preferred-billing',b)}
         function selectPlan(p){selectedPlan=p;document.querySelectorAll('.pricing-card').forEach(c=>c.classList.remove('selected'));document.querySelector('[data-plan="'+p+'"]').classList.add('selected');updatePlanDisplay();validateLoggedInForm();document.querySelector('.checkout-section').scrollIntoView({behavior:'smooth',block:'start'})}
-        function updatePlanDisplay(){var d=document.getElementById('selected-plan-display');if(selectedPlan&&planData[selectedPlan]){var p=planData[selectedPlan];if(p.monthly==='Custom'){d.textContent=p.name+' Plan — Contact for pricing ('+p.minutes+')'}else if(currentBilling==='annual'){d.textContent=p.name+' Plan — $'+p.annual.toLocaleString()+'/year ('+p.minutes+') USD'}else{d.textContent=p.name+' Plan — $'+p.monthly+'/month ('+p.minutes+') USD'}d.classList.add('has-plan')}else{d.textContent='Please select a plan above';d.classList.remove('has-plan')}}
-        function validateLoggedInForm(){var v=selectedPlan&&selectedPlan!=='enterprise'&&window.checkoutUserData;var at=document.getElementById('logged-account-type').value;if(at==='business'){var cn=document.getElementById('logged-company-name').value.trim();if(!cn)v=false}var dc=document.getElementById('logged-disclaimer-checkbox');if(dc&&!dc.checked)v=false;var btn=document.getElementById('logged-checkout-btn');btn.disabled=!v;if(selectedPlan==='enterprise'){btn.textContent='Contact Sales';btn.disabled=false}else{btn.textContent='Complete Purchase'}return v}
+        function updatePlanDisplay(){var d=document.getElementById('selected-plan-display');if(selectedPlan&&planData[selectedPlan]){var p=planData[selectedPlan];if(currentBilling==='annual'){d.textContent=p.name+' Plan — $'+p.annual.toLocaleString()+'/year ('+p.minutes+') USD'}else{d.textContent=p.name+' Plan — $'+p.monthly+'/month ('+p.minutes+') USD'}d.classList.add('has-plan')}else{d.textContent='Please select a plan above';d.classList.remove('has-plan')}}
+        function validateLoggedInForm(){var v=selectedPlan&&window.checkoutUserData;var at=document.getElementById('logged-account-type').value;if(at==='business'){var cn=document.getElementById('logged-company-name').value.trim();if(!cn)v=false}var dc=document.getElementById('logged-disclaimer-checkbox');if(dc&&!dc.checked)v=false;var btn=document.getElementById('logged-checkout-btn');btn.disabled=!v;btn.textContent='Complete Purchase';return v}
         function toggleLoggedInFields(){var at=document.getElementById('logged-account-type').value;document.getElementById('logged-business-fields').style.display=at==='business'?'block':'none';validateLoggedInForm()}
-        function handleLoggedInCheckout(e){e.preventDefault();if(selectedPlan==='enterprise'){window.location.href='/#contact';return}if(!validateLoggedInForm())return;var lk=stripeLinks[currentBilling][selectedPlan],em=window.checkoutUserData.email;if(em&&lk&&lk!=='#')lk+=(lk.includes('?')?'&':'?')+'prefilled_email='+encodeURIComponent(em);if(lk&&lk.startsWith('http')){window.location.href=lk}else{alert('Payment link not configured yet. Please contact support.')}}
+        function handleLoggedInCheckout(e){e.preventDefault();if(!validateLoggedInForm())return;var lk=stripeLinks[currentBilling][selectedPlan],em=window.checkoutUserData.email;if(em&&lk&&lk!=='#')lk+=(lk.includes('?')?'&':'?')+'prefilled_email='+encodeURIComponent(em);if(lk&&lk.startsWith('http')){window.location.href=lk}else{alert('Payment link not configured yet. Please contact support.')}}
         document.addEventListener('DOMContentLoaded',function(){var sb=localStorage.getItem('preferred-billing');if(sb)switchBilling(sb);document.getElementById('logged-in-form').addEventListener('submit',handleLoggedInCheckout);document.getElementById('logged-company-name').addEventListener('input',validateLoggedInForm);if(window.innerWidth>768){particlesJS('particles-js',{particles:{number:{value:50,density:{enable:true,value_area:1200}},color:{value:'#f97316'},shape:{type:'circle'},opacity:{value:0.25,random:true},size:{value:2.5,random:true},line_linked:{enable:true,distance:180,color:'#f97316',opacity:0.15,width:1},move:{enable:true,speed:1,direction:'none',random:true,out_mode:'bounce'}},interactivity:{detect_on:'canvas',events:{onhover:{enable:true,mode:'grab'},resize:true},modes:{grab:{distance:150,line_linked:{opacity:0.4}}}},retina_detect:true})}});
         window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',window.scrollY>50));
         function toggleMenu(){document.querySelector('.menu-toggle').classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active');document.querySelector('.logo-container')?.classList.toggle('hidden')}
