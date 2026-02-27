@@ -230,11 +230,6 @@
             border-color: #1b1f23;
             box-shadow: 0 4px 12px rgba(36, 41, 46, 0.3);
         }
-
-        .github-btn .spinner {
-            border-color: rgba(255,255,255,0.3);
-            border-top-color: white;
-        }
         
         .message {
             padding: 1rem;
@@ -408,10 +403,11 @@
         </div>
     </footer>
     
+    <!-- Firebase — redirect-based auth, same as original -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-        import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
@@ -429,128 +425,97 @@
         const googleProvider = new GoogleAuthProvider();
         const githubProvider = new GithubAuthProvider();
 
-        // Flag to prevent onAuthStateChanged from redirecting during initial load
-        // while we're still waiting for getRedirectResult to resolve
-        let redirectResultChecked = false;
-        let alreadyRedirecting = false;
-
-        function getReturnUrl() {
-            // Check URL param first, then sessionStorage, then default to home
-            const urlParams = new URLSearchParams(window.location.search);
-            const paramUrl = urlParams.get('return');
-            const storedUrl = sessionStorage.getItem('returnUrl');
-            // Avoid redirect loops back to login page
-            const url = paramUrl || storedUrl || '/';
-            if (url.includes('/login')) return '/';
-            return url;
-        }
-
-        function doRedirect(user, isNew) {
-            if (alreadyRedirecting) return;
-            alreadyRedirecting = true;
-
-            const name = user.displayName || user.email || 'there';
-            const msg = isNew
-                ? `Account created! Welcome, ${name}! Redirecting...`
-                : `Welcome back, ${name}! Redirecting...`;
-
-            showMessage('success', msg);
-            sessionStorage.removeItem('returnUrl');
-
-            setTimeout(() => {
-                window.location.href = getReturnUrl();
-            }, 1200);
-        }
-
-        // Store return URL from query param on page load
-        const urlParams = new URLSearchParams(window.location.search);
-        const returnParam = urlParams.get('return');
-        if (returnParam && !returnParam.includes('/login')) {
-            sessionStorage.setItem('returnUrl', returnParam);
-        }
-
-        // Try popup first (better UX — no page reload), fallback to redirect
-        async function doSignIn(provider, btnId, textId, providerName) {
-            const btn = document.getElementById(btnId);
-            const btnText = document.getElementById(textId);
-
+        // Prevents onAuthStateChanged from redirecting when getRedirectResult
+        // is already handling a fresh login — this was the original bug
+        let handledByRedirectResult = false;
+        
+        window.signInWithGoogle = async function() {
+            const btn = document.getElementById('google-signin-btn');
+            const btnText = document.getElementById('google-btn-text');
             btn.classList.add('loading');
-            btnText.textContent = 'Signing in...';
-
+            btnText.textContent = 'Redirecting...';
             try {
-                // Attempt popup
-                const result = await signInWithPopup(auth, provider);
-                const isNew = result.additionalUserInfo?.isNewUser ?? false;
-                doRedirect(result.user, isNew);
-            } catch (popupError) {
-                // Popup blocked or unsupported — fall back to redirect
-                if (
-                    popupError.code === 'auth/popup-blocked' ||
-                    popupError.code === 'auth/popup-closed-by-user' ||
-                    popupError.code === 'auth/cancelled-popup-request'
-                ) {
-                    if (popupError.code === 'auth/popup-closed-by-user' || popupError.code === 'auth/cancelled-popup-request') {
-                        // User closed the popup — just reset
-                        btn.classList.remove('loading');
-                        btnText.textContent = `Continue with ${providerName}`;
-                        return;
-                    }
-                    // Popup blocked — use redirect flow instead
-                    btnText.textContent = 'Redirecting...';
-                    try {
-                        await signInWithRedirect(auth, provider);
-                    } catch (redirectError) {
-                        showMessage('error', 'Sign in failed: ' + redirectError.message);
-                        btn.classList.remove('loading');
-                        btnText.textContent = `Continue with ${providerName}`;
-                    }
-                } else {
-                    showMessage('error', 'Sign in failed: ' + popupError.message);
-                    btn.classList.remove('loading');
-                    btnText.textContent = `Continue with ${providerName}`;
-                }
+                const returnUrl = sessionStorage.getItem('returnUrl') || '/';
+                sessionStorage.setItem('returnUrl', returnUrl);
+                await signInWithRedirect(auth, googleProvider);
+            } catch (error) {
+                console.error("Google sign in error:", error);
+                showMessage('error', 'Sign in failed: ' + error.message);
+                btn.classList.remove('loading');
+                btnText.textContent = 'Continue with Google';
             }
-        }
+        };
 
-        window.signInWithGoogle = () => doSignIn(googleProvider, 'google-signin-btn', 'google-btn-text', 'Google');
-        window.signInWithGithub = () => doSignIn(githubProvider, 'github-signin-btn', 'github-btn-text', 'GitHub');
-
-        // Handle redirect result (for cases where popup fallback was used)
+        window.signInWithGithub = async function() {
+            const btn = document.getElementById('github-signin-btn');
+            const btnText = document.getElementById('github-btn-text');
+            btn.classList.add('loading');
+            btnText.textContent = 'Redirecting...';
+            try {
+                const returnUrl = sessionStorage.getItem('returnUrl') || '/';
+                sessionStorage.setItem('returnUrl', returnUrl);
+                await signInWithRedirect(auth, githubProvider);
+            } catch (error) {
+                console.error("GitHub sign in error:", error);
+                showMessage('error', 'GitHub sign in failed: ' + error.message);
+                btn.classList.remove('loading');
+                btnText.textContent = 'Continue with GitHub';
+            }
+        };
+        
+        // This fires after Google/GitHub sends the user back to your page.
+        // Show the welcome message here, then redirect to home (or returnUrl).
         getRedirectResult(auth)
             .then((result) => {
-                redirectResultChecked = true;
                 if (result && result.user) {
-                    const isNew = result.additionalUserInfo?.isNewUser ?? false;
-                    doRedirect(result.user, isNew);
+                    handledByRedirectResult = true;
+                    const isNewUser = result.additionalUserInfo?.isNewUser;
+                    const name = result.user.displayName || result.user.email || 'there';
+                    const msg = isNewUser
+                        ? 'Account created! Welcome, ' + name + '! Redirecting...'
+                        : 'Welcome back, ' + name + '! Redirecting...';
+                    showMessage('success', msg);
+                    setTimeout(() => {
+                        const returnUrl = sessionStorage.getItem('returnUrl') || '/';
+                        sessionStorage.removeItem('returnUrl');
+                        window.location.href = returnUrl;
+                    }, 1500);
                 }
             })
             .catch((error) => {
-                redirectResultChecked = true;
-                if (error.code && error.code !== 'auth/popup-closed-by-user') {
-                    console.error('Redirect result error:', error);
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    console.error("Redirect result error:", error);
                     showMessage('error', 'Authentication error: ' + error.message);
                 }
             });
-
-        // onAuthStateChanged — only redirect if the user was already logged in
-        // and we're not in the middle of a fresh login flow
+        
+        // Only fires for users who were ALREADY logged in before hitting this page
         onAuthStateChanged(auth, (user) => {
-            if (user && !alreadyRedirecting) {
-                // Wait a tick to let getRedirectResult finish first
+            if (user && !handledByRedirectResult) {
+                const name = user.displayName || user.email || 'there';
+                showMessage('info', 'Already signed in as ' + name + '. Redirecting...');
                 setTimeout(() => {
-                    if (!alreadyRedirecting) {
-                        // User was already signed in before hitting this page
-                        doRedirect(user, false);
-                    }
-                }, 500);
+                    const returnUrl = sessionStorage.getItem('returnUrl') || '/';
+                    sessionStorage.removeItem('returnUrl');
+                    window.location.href = returnUrl;
+                }, 1500);
             }
         });
-
+        
         function showMessage(type, text) {
-            const el = document.getElementById('message');
-            el.className = 'message ' + type;
-            el.textContent = text;
+            const messageEl = document.getElementById('message');
+            messageEl.className = 'message ' + type;
+            messageEl.textContent = text;
         }
+        
+        // Store return URL if coming from another page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const returnUrl = urlParams.get('return') || document.referrer;
+            if (returnUrl && !returnUrl.includes('/login')) {
+                sessionStorage.setItem('returnUrl', returnUrl);
+            }
+        });
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
