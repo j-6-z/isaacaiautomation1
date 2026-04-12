@@ -48,18 +48,12 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:var(--text-dark);line-height:1.6;overflow-x:hidden;padding-top:160px;-webkit-font-smoothing:antialiased;}
 ::selection{background:var(--primary);color:#fff;}
-::-webkit-scrollbar{width:8px;}
-::-webkit-scrollbar-track{background:#fafaf9;}
-::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px;}
-
-/* ── SCROLL ANIMATIONS ── */
+::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-track{background:#fafaf9;}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px;}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
 
-/* ════════════════════════════════════
-   HEADER — identical to index.html
-════════════════════════════════════ */
+/* HEADER */
 header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,.94);backdrop-filter:blur(24px) saturate(200%);border-bottom:1px solid rgba(0,0,0,.05);transition:var(--t-base);}
 header.scrolled{background:rgba(255,255,255,.99);box-shadow:0 1px 20px rgba(0,0,0,.06);}
 nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;position:relative;}
@@ -117,9 +111,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .menu-toggle.active span:nth-child(2){opacity:0;}
 .menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
 
-/* ════════════════════════════════════
-   PAGE HERO
-════════════════════════════════════ */
+/* PAGE HERO */
 .page-hero{background:var(--bg-dark);padding:6rem 2rem 7rem;position:relative;overflow:hidden;}
 .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(249,115,22,.07) 0%,transparent 70%);}
 .page-hero-inner{max-width:1380px;margin:0 auto;position:relative;z-index:2;}
@@ -130,9 +122,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .page-hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .page-hero p{font-size:clamp(.98rem,1.6vw,1.15rem);color:rgba(255,255,255,.5);line-height:1.8;max-width:580px;font-weight:400;}
 
-/* ════════════════════════════════════
-   SHARED SECTION
-════════════════════════════════════ */
+/* SHARED SECTION */
 .sec{padding:7rem 2rem;}
 .sec-inner{max-width:1380px;margin:0 auto;}
 .sec-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.1);border-radius:100px;color:var(--primary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem;}
@@ -142,9 +132,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .sec-head.center{text-align:center;}
 .sec-head.center .sec-sub{margin:0 auto;}
 
-/* ════════════════════════════════════
-   VALUES
-════════════════════════════════════ */
+/* VALUES */
 .values{background:#fafaf9;}
 .val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
 .val-card{background:#fff;border:1px solid var(--border-light);border-radius:18px;padding:2.25rem;transition:var(--t-base);}
@@ -155,29 +143,19 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .val-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.01em;}
 .val-card p{font-size:.88rem;color:var(--text-gray);line-height:1.7;}
 
-/* ════════════════════════════════════
-   OPEN ROLES
-════════════════════════════════════ */
+/* NO OPENINGS */
 .roles{background:#fff;}
-.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.role-card{background:#fff;border:1px solid var(--border-light);border-radius:18px;padding:2.25rem;transition:var(--t-base);display:flex;flex-direction:column;position:relative;overflow:hidden;}
-.role-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transform-origin:left;transition:.4s ease;}
-.role-card:hover{transform:translateY(-5px);box-shadow:0 18px 45px rgba(0,0,0,.07);border-color:rgba(249,115,22,.12);}
-.role-card:hover::after{transform:scaleX(1);}
-.role-type{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:1.1rem;}
-.role-dot{width:5px;height:5px;border-radius:50%;background:var(--primary);}
-.role-card h3{font-size:1.15rem;font-weight:700;margin-bottom:.35rem;letter-spacing:-.02em;}
-.role-meta{font-size:.78rem;color:var(--text-light);margin-bottom:1.1rem;font-weight:500;}
-.role-card p{font-size:.88rem;color:var(--text-gray);line-height:1.7;flex:1;margin-bottom:1.5rem;}
-.role-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.75rem;}
-.role-tag{background:rgba(249,115,22,.06);color:#ea580c;font-size:.68rem;font-weight:600;padding:.22rem .65rem;border-radius:999px;border:1px solid rgba(249,115,22,.12);}
-.role-apply{display:inline-flex;align-items:center;gap:.4rem;color:var(--primary);font-size:.85rem;font-weight:700;text-decoration:none;letter-spacing:.02em;transition:var(--t-base);}
-.role-apply svg{width:14px;height:14px;transition:transform var(--t-base);}
-.role-apply:hover svg{transform:translateX(4px);}
+.no-openings{text-align:center;padding:4rem 2rem;border:1px solid var(--border-light);border-radius:20px;background:var(--bg-light);max-width:600px;margin:0 auto;}
+.no-openings-icon{width:64px;height:64px;background:var(--bg-dark);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
+.no-openings-icon svg{width:28px;height:28px;stroke:var(--primary);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.no-openings h3{font-size:1.35rem;font-weight:700;margin-bottom:.75rem;letter-spacing:-.02em;}
+.no-openings p{font-size:.95rem;color:var(--text-gray);line-height:1.75;margin-bottom:1.75rem;}
+.no-openings-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--bg-dark);color:#fff;padding:.9rem 2rem;border-radius:11px;font-weight:600;font-size:.9rem;text-decoration:none;transition:var(--t-base);}
+.no-openings-btn:hover{background:#1a1a1a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.no-openings-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-base);}
+.no-openings-btn:hover svg{transform:translateX(4px);}
 
-/* ════════════════════════════════════
-   PERKS
-════════════════════════════════════ */
+/* PERKS */
 .perks{background:var(--bg-dark);position:relative;overflow:hidden;}
 .perks::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.2),transparent);}
 .perks::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.1),transparent);}
@@ -192,9 +170,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .perk h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
 .perk p{font-size:.83rem;color:rgba(255,255,255,.45);line-height:1.65;}
 
-/* ════════════════════════════════════
-   OPEN APPLICATION CTA
-════════════════════════════════════ */
+/* OPEN APPLICATION */
 .open-app{background:#fff;}
 .open-app-box{background:var(--bg-dark);border-radius:20px;padding:4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;position:relative;overflow:hidden;}
 .open-app-box::before{content:'';position:absolute;top:-40%;right:-20%;width:60%;height:140%;background:radial-gradient(circle,rgba(249,115,22,.08),transparent 70%);pointer-events:none;}
@@ -208,9 +184,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:rgba(255,255,255,.65);padding:.9rem 2.25rem;border-radius:11px;font-weight:600;font-size:.88rem;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:var(--t-base);white-space:nowrap;}
 .btn-outline:hover{border-color:rgba(255,255,255,.35);color:#fff;}
 
-/* ════════════════════════════════════
-   FOOTER
-════════════════════════════════════ */
+/* FOOTER */
 footer{background:var(--bg-dark);color:#fff;padding:5.5rem 2rem 0;position:relative;}
 footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.18),transparent);}
 .foot-main{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.07);}
@@ -241,13 +215,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .foot-bot-links a{font-size:.78rem;color:rgba(255,255,255,.3);text-decoration:none;transition:.15s;}
 .foot-bot-links a:hover{color:rgba(255,255,255,.65);}
 
-/* ════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════ */
+/* RESPONSIVE */
 @media(max-width:1100px){
   .foot-main{grid-template-columns:1.5fr 1fr 1fr;gap:3rem;}
   .foot-main .foot-col:last-child{grid-column:1/-1;max-width:400px;}
-  .roles-grid{grid-template-columns:repeat(2,1fr);}
   .perks-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:1024px){
@@ -280,7 +251,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   .page-hero{padding:3.5rem 1.5rem 5rem;}
   .sec{padding:4.5rem 1.5rem;}
   .val-grid{grid-template-columns:1fr;}
-  .roles-grid{grid-template-columns:1fr;}
   .perks-grid{grid-template-columns:1fr;}
   .open-app-box{padding:2.5rem 1.75rem;}
   footer{padding:4rem 1.5rem 0;}
@@ -300,7 +270,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </head>
 <body>
 
-<!-- ════════ HEADER — exact match to index.html ════════ -->
 <header>
   <nav>
     <a href="/" class="header-text">JAYISAAC AI</a>
@@ -332,38 +301,27 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
             <span class="account-name">Account</span>
             <span class="user-email">email@example.com</span>
           </div>
-          <a href="/myorders.html">
-            <svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
-            My Orders
-          </a>
-          <a href="/support.html">
-            <svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Support
-          </a>
-          <button class="logout-btn" onclick="handleLogout()">
-            <svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            Sign Out
-          </button>
+          <a href="/myorders.html"><svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>My Orders</a>
+          <a href="/support.html"><svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</a>
+          <button class="logout-btn" onclick="handleLogout()"><svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
         </div>
       </li>
     </ul>
     <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
-    <div class="logo-container">
-      <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
-    </div>
+    <div class="logo-container"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"></div>
   </nav>
 </header>
 
-<!-- ════════ PAGE HERO ════════ -->
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-inner">
-    <div class="hero-eyebrow"><span class="hero-dot"></span>We're Hiring</div>
+    <div class="hero-eyebrow"><span class="hero-dot"></span>Careers</div>
     <h1>Build AI That Actually <em>Works.</em></h1>
     <p>We're a lean, high-output team. If you move fast, take ownership, and want your work to matter from day one — there's a seat here for you.</p>
   </div>
 </section>
 
-<!-- ════════ VALUES ════════ -->
+<!-- VALUES -->
 <section class="sec values">
   <div class="sec-inner">
     <div class="sec-head center">
@@ -406,7 +364,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 
-<!-- ════════ OPEN ROLES ════════ -->
+<!-- OPEN ROLES — NO OPENINGS STATE -->
 <section class="sec roles">
   <div class="sec-inner">
     <div class="sec-head center">
@@ -414,42 +372,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <h2 class="sec-title">Current Openings</h2>
       <p class="sec-sub">Every role is remote. Every role matters. Apply directly — no recruiters, no runaround.</p>
     </div>
-    <div class="roles-grid">
-      <div class="role-card reveal">
-        <div class="role-type"><span class="role-dot"></span>Full-Time &middot; Remote</div>
-        <h3>Sales Development Rep</h3>
-        <p class="role-meta">Commission + Base &middot; Start Immediately</p>
-        <p>Drive outreach to trades businesses across Canada and the US. Own your pipeline from first contact to close. If you can start conversations and build trust over the phone, we want to talk.</p>
-        <div class="role-tags">
-          <span class="role-tag">Cold Outreach</span><span class="role-tag">CRM</span><span class="role-tag">Trades Industry</span><span class="role-tag">Phone Sales</span>
-        </div>
-        <a href="mailto:careers@jayisaacai.com?subject=Sales Development Rep Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <div class="no-openings reveal">
+      <div class="no-openings-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
       </div>
-      <div class="role-card reveal">
-        <div class="role-type"><span class="role-dot"></span>Contract &middot; Remote</div>
-        <h3>AI Implementation Specialist</h3>
-        <p class="role-meta">Per-Project Rate &middot; Ongoing Work</p>
-        <p>Configure and deploy AI voice agents and chatbots for client accounts. You'll be the technical backbone of every onboarding — scripting, testing, integrations, and handoff.</p>
-        <div class="role-tags">
-          <span class="role-tag">Retell AI</span><span class="role-tag">Prompt Engineering</span><span class="role-tag">Webhooks</span><span class="role-tag">API Integrations</span>
-        </div>
-        <a href="mailto:careers@jayisaacai.com?subject=AI Implementation Specialist Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-type"><span class="role-dot"></span>Part-Time &middot; Remote</div>
-        <h3>Content &amp; Growth Strategist</h3>
-        <p class="role-meta">Hourly or Retainer &middot; Flexible Hours</p>
-        <p>Own social presence, case study creation, and inbound lead generation. Build content that converts trades owners — short-form video, written copy, and ad creative that actually performs.</p>
-        <div class="role-tags">
-          <span class="role-tag">Copywriting</span><span class="role-tag">Short-Form Video</span><span class="role-tag">Lead Gen</span><span class="role-tag">Social Media</span>
-        </div>
-        <a href="mailto:careers@jayisaacai.com?subject=Content Strategist Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      </div>
+      <h3>No Openings Right Now</h3>
+      <p>We don't have any active positions at the moment, but we're always growing. If you think you belong here, send us a message — the right people don't wait for a job posting.</p>
+      <a href="mailto:careers@jayisaacai.com" class="no-openings-btn">Reach Out Anyway <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
   </div>
 </section>
 
-<!-- ════════ PERKS ════════ -->
+<!-- PERKS -->
 <section class="sec perks">
   <div class="sec-inner">
     <div class="sec-head">
@@ -482,7 +416,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 
-<!-- ════════ OPEN APPLICATION ════════ -->
+<!-- OPEN APPLICATION -->
 <section class="sec open-app">
   <div class="sec-inner">
     <div class="open-app-box reveal">
@@ -498,7 +432,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 
-<!-- ════════ FOOTER ════════ -->
+<!-- FOOTER -->
 <footer>
   <div class="foot-main">
     <div class="foot-brand">
@@ -548,16 +482,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
 <script>
-window.addEventListener('scroll',()=>{
-  document.querySelector('header').classList.toggle('scrolled',window.scrollY>50);
-});
+window.addEventListener('scroll',()=>{document.querySelector('header').classList.toggle('scrolled',window.scrollY>50);});
 function toggleMenu(){
-  const toggle=document.querySelector('.menu-toggle');
-  const nav=document.querySelector('.nav-links');
-  const logo=document.querySelector('.logo-container');
-  toggle?.classList.toggle('active');
-  nav?.classList.toggle('active');
-  logo?.classList.toggle('hidden');
+  const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav-links'),logo=document.querySelector('.logo-container');
+  toggle?.classList.toggle('active');nav?.classList.toggle('active');logo?.classList.toggle('hidden');
   updateNavTop();
 }
 function toggleDropdown(type){
@@ -568,14 +496,9 @@ function toggleAccountDropdown(){
   document.querySelector('.account-dropdown').classList.toggle('active');
   document.querySelector('.services-dropdown')?.classList.remove('active');
 }
-function handleLogout(){
-  window.firebaseAuth?.signOut();
-  document.querySelector('.account-dropdown')?.classList.remove('active');
-}
+function handleLogout(){window.firebaseAuth?.signOut();document.querySelector('.account-dropdown')?.classList.remove('active');}
 document.addEventListener('click',(e)=>{
-  document.querySelectorAll('.dropdown,.account-dropdown').forEach(d=>{
-    if(!d.contains(e.target))d.classList.remove('active');
-  });
+  document.querySelectorAll('.dropdown,.account-dropdown').forEach(d=>{if(!d.contains(e.target))d.classList.remove('active');});
 });
 function updateNavTop(){
   const h=document.querySelector('header')?.offsetHeight||120;
@@ -584,7 +507,6 @@ function updateNavTop(){
 }
 window.addEventListener('resize',updateNavTop);
 updateNavTop();
-
 const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -24px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
