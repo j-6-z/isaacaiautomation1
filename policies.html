@@ -1,443 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Firebase Configuration with Google Auth -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",
-            authDomain: "jayisaac-ai.firebaseapp.com",
-            projectId: "jayisaac-ai",
-            storageBucket: "jayisaac-ai.firebasestorage.app",
-            messagingSenderId: "967801239356",
-            appId: "1:967801239356:web:0df3f35af72ce6e79b9039",
-            measurementId: "G-V91DS21PGE"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        
-        window.firebaseAuth = {
-            signInWithGoogle: async function() {
-                try {
-                    const result = await signInWithPopup(auth, provider);
-                    console.log("Signed in:", result.user.displayName);
-                    return result.user;
-                } catch (error) {
-                    console.error("Sign in error:", error.message);
-                    alert("Sign in failed: " + error.message);
-                }
-            },
-            
-            signOut: async function() {
-                try {
-                    await signOut(auth);
-                    console.log("Signed out");
-                } catch (error) {
-                    console.error("Sign out error:", error.message);
-                }
-            },
-            
-            getCurrentUser: function() {
-                return auth.currentUser;
-            }
-        };
-        
-        onAuthStateChanged(auth, (user) => {
-            const loginBtn = document.querySelector('.login-btn');
-            const accountDropdown = document.querySelector('.account-dropdown');
-            
-            if (user) {
-                if (loginBtn) loginBtn.style.display = 'none';
-                if (accountDropdown) {
-                    accountDropdown.style.display = 'block';
-                    const userPhoto = accountDropdown.querySelector('.account-photo');
-                    const userEmailDisplay = accountDropdown.querySelector('.user-email');
-                    
-                    accountDropdown.querySelectorAll('.account-name').forEach(el => {
-                        el.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Account';
-                    });
-                    if (userPhoto) userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=f97316&color=fff';
-                    if (userEmailDisplay) userEmailDisplay.textContent = user.email;
-                }
-            } else {
-                if (loginBtn) {
-                    loginBtn.style.display = 'inline-flex';
-                    loginBtn.textContent = 'Login/Signup';
-                    loginBtn.href = '/login.html';
-                    loginBtn.onclick = null;
-                }
-                if (accountDropdown) accountDropdown.style.display = 'none';
-            }
-        });
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Policies - JAYISAAC AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        :root { --primary: #f97316; --primary-dark: #ea580c; --secondary: #fb923c; --accent: #fdba74; --success: #f59e0b; --bg-white: #ffffff; --bg-light: #fafafa; --bg-gray: #f3f4f6; --text-dark: #111827; --text-gray: #6b7280; --text-light: #9ca3af; --border: #e5e7eb; }
-        body { background: var(--bg-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; padding-top: 160px; }
-        #particles-js { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); transition: all 0.3s ease; overflow: visible; }
-        header.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
-        .header-text { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; text-decoration: none; transition: opacity 0.3s ease; }
-        .header-text:hover { opacity: 0.8; }
-        .logo-container { position: absolute; left: 50%; transform: translateX(-50%); top: 100%; z-index: 1002; background: #ffffff; padding: 1rem 1.25rem 0 1.25rem; border-radius: 50% 50% 0 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; align-items: center; gap: 0; clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%); padding-bottom: 2.5rem; }
-        .logo-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #ffffff; border-radius: 50% 50% 0 0; z-index: -1; }
-        .logo-container img { height: 70px; width: 70px; border-radius: 50%; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 3px solid var(--primary); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4), 0 0 20px rgba(249, 115, 22, 0.2); position: relative; z-index: 1; object-fit: cover; }
-        .logo-container img:hover { transform: scale(1.15) rotate(5deg); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5), 0 0 30px rgba(249, 115, 22, 0.3); border-color: var(--secondary); }
-        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; position: relative; }
-        .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--primary); }
-        .dropdown { position: relative; }
-        .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-gray); font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
-        .dropdown-toggle:hover { color: var(--primary); }
-        .dropdown-arrow { font-size: 0.7rem; transition: transform 0.3s ease; }
-        .dropdown.active .dropdown-arrow { transform: rotate(180deg); }
-        .dropdown-menu { position: absolute; top: calc(100% + 1rem); left: 50%; transform: translateX(-50%); background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 280px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; }
-        .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; }
-        .dropdown-menu a { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid var(--border); }
-        .dropdown-menu a:last-child { border-bottom: none; }
-        .dropdown-menu a:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
-        .dropdown-icon { font-size: 1.5rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 10px; }
-        .dropdown-content h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; }
-        .dropdown-content p { font-size: 0.8rem; color: var(--text-gray); line-height: 1.4; }
-        .login-btn { background: transparent; color: var(--primary); padding: 0.75rem 1.75rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-flex; align-items: center; }
-        .login-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); }
-        .account-dropdown { position: relative; display: none; }
-        .account-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 12px; border: 2px solid var(--primary); transition: all 0.3s ease; }
-        .account-toggle:hover { background: rgba(249, 115, 22, 0.1); }
-        .account-photo { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-        .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); }
-        .account-arrow { font-size: 0.7rem; color: var(--text-gray); transition: transform 0.3s ease; }
-        .account-dropdown.active .account-arrow { transform: rotate(180deg); }
-        .account-menu { position: absolute; top: calc(100% + 1rem); right: 0; background: white; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); min-width: 260px; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; overflow: hidden; }
-        .account-dropdown.active .account-menu { opacity: 1; visibility: visible; }
-        .account-header { padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(251, 146, 60, 0.05)); border-bottom: 1px solid var(--border); }
-        .account-header .account-name { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; display: block; }
-        .user-email { font-size: 0.8rem; color: var(--text-gray); }
-        .account-menu a, .account-menu button { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; border: none; background: none; width: 100%; font-size: 0.95rem; cursor: pointer; border-bottom: 1px solid var(--border); font-family: inherit; }
-        .account-menu a:last-child, .account-menu button:last-child { border-bottom: none; }
-        .account-menu a:hover, .account-menu button:hover { background: var(--bg-light); color: var(--primary); padding-left: 2rem; }
-        .account-menu .menu-icon { font-size: 1.25rem; width: 32px; text-align: center; }
-        .logout-btn { color: #ef4444 !important; }
-        .logout-btn:hover { background: rgba(239, 68, 68, 0.1) !important; color: #dc2626 !important; }
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
-        .menu-toggle span { width: 25px; height: 2px; background: var(--text-dark); transition: all 0.3s ease; }
-        .policies-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 2; }
-        .policies-container h1 { font-size: 3.25rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center; letter-spacing: -1px; }
-        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .intro-text { font-size: 1.2rem; color: var(--text-gray); text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-        .policy-section { margin-bottom: 4rem; }
-        .section-tag { display: inline-block; padding: 0.5rem 1.25rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 50px; color: var(--primary); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
-        .policy-section h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 2rem; color: var(--text-dark); }
-        .policy-content { display: flex; flex-direction: column; gap: 1.5rem; }
-        .policy-item { background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; }
-        .policy-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-color: var(--primary); }
-        .policy-item h3 { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; }
-        .policy-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.8; }
-        .policy-item a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        .policy-item a:hover { text-decoration: underline; }
-        footer { padding: 5rem 2rem 2rem; background: #000000; color: white; position: relative; z-index: 2; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-company h3 { font-size: 1.75rem; font-weight: 900; margin-bottom: 1.25rem; color: white; }
-        .footer-company p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 1.05rem; }
-        .footer-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; text-decoration: none; }
-        .footer-logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; }
-        .footer-logo:hover img { transform: scale(1.1); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
-        .footer-logo h3 { font-size: 1.75rem; font-weight: 900; color: white; margin: 0; }
-        .footer-links h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 1rem; }
-        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 1.05rem; }
-        .footer-links a:hover { color: white; }
-        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) {
-            body { padding-top: 140px; }
-            .header-text { font-size: 1rem; }
-            .logo-container { padding: 0.75rem 1rem 0 1rem; padding-bottom: 2rem; }
-            .logo-container img { height: 55px; width: 55px; }
-            .logo-container.hidden { display: none; }
-            .menu-toggle { display: flex; }
-            .nav-links { display: none; position: fixed; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 2rem; border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: center; text-align: center; }
-            .nav-links.active { display: flex; }
-            .dropdown { width: 100%; }
-            .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; }
-            .dropdown.active .dropdown-menu { display: block; }
-            .dropdown-menu a { justify-content: center; text-align: center; padding: 1rem; }
-            .dropdown-menu a .dropdown-icon { display: none; }
-            .dropdown-menu a .dropdown-content h4 { font-size: 1rem; }
-            .dropdown-menu a .dropdown-content p { display: none; }
-            .dropdown-toggle { justify-content: center; gap: 0.5rem; width: 100%; padding: 0.5rem 0; }
-            .login-btn { width: 100%; text-align: center; justify-content: center; }
-            .account-dropdown { width: 100%; }
-            .account-toggle { width: 100%; justify-content: center; }
-            .account-menu { position: static; transform: none; box-shadow: none; border: none; margin-top: 1rem; display: none; min-width: 100%; }
-            .account-dropdown.active .account-menu { display: block; }
-            .policies-container { padding: 3rem 1.5rem; }
-            .policies-container h1 { font-size: 2.25rem; }
-            .policy-section h2 { font-size: 1.75rem; }
-            .policy-item { padding: 1.5rem; }
-            .footer-logo { flex-direction: column; text-align: center; }
-        }
-    </style>
+<link rel="icon" type="image/png" href="/my-favicon/favicon-96x96.png" sizes="96x96"/>
+<link rel="icon" type="image/svg+xml" href="/my-favicon/favicon.svg"/>
+<link rel="shortcut icon" href="/my-favicon/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/my-favicon/apple-touch-icon.png"/>
+<link rel="manifest" href="/my-favicon/site.webmanifest"/>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17580740260');</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import{getAnalytics}from"https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+  import{getAuth,signInWithPopup,GoogleAuthProvider,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+  const app=initializeApp({apiKey:"AIzaSyDHs92C3ariQ285KUkodOHV04sEVKr_dQ8",authDomain:"jayisaac-ai.firebaseapp.com",projectId:"jayisaac-ai",storageBucket:"jayisaac-ai.firebasestorage.app",messagingSenderId:"967801239356",appId:"1:967801239356:web:0df3f35af72ce6e79b9039",measurementId:"G-V91DS21PGE"});
+  getAnalytics(app);const auth=getAuth(app);const provider=new GoogleAuthProvider();
+  window.firebaseAuth={signInWithGoogle:async()=>{try{return(await signInWithPopup(auth,provider)).user;}catch(e){alert("Sign in failed: "+e.message);}},signOut:async()=>{try{await signOut(auth);}catch(e){console.error(e.message);}},getCurrentUser:()=>auth.currentUser};
+  onAuthStateChanged(auth,(user)=>{
+    const btn=document.querySelector('.nav-cta'),drop=document.getElementById('acct-drop');
+    if(user){if(btn)btn.style.display='none';
+      if(drop){drop.style.display='block';
+        drop.querySelectorAll('.account-name').forEach(el=>el.textContent=user.displayName?user.displayName.split(' ')[0]:'Account');
+        const photo=drop.querySelector('.acct-photo'),email=drop.querySelector('.user-email');
+        if(photo)photo.src=user.photoURL||'https://ui-avatars.com/api/?name='+encodeURIComponent(user.displayName||'User')+'&background=f97316&color=fff';
+        if(email)email.textContent=user.email;}
+    }else{
+      if(btn)btn.style.display='inline-flex';
+      if(drop)drop.style.display='none';
+    }
+  });
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JAYISAAC AI Policies — Terms of Service, Privacy Policy, and Cookie Policy.">
+<title>Policies — JAYISAAC AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#f97316;--primary-dark:#ea580c;--primary-light:#fb923c;
+  --glow:rgba(249,115,22,.3);
+  --bg-dark:#080808;
+  --text-dark:#0f0f0f;--text-gray:#6b7280;--text-muted:#9ca3af;
+  --border:#e5e7eb;--border-light:#f0f0ef;
+  --ease:.28s cubic-bezier(.4,0,.2,1);--spring:.5s cubic-bezier(.34,1.56,.64,1);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:var(--text-dark);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--primary);color:#fff;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#fafaf9;}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+/* ════════════════════════════════════
+   HEADER
+════════════════════════════════════ */
+header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,.93);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.06);transition:var(--ease);}
+header.scrolled{background:rgba(255,255,255,.99);box-shadow:0 1px 16px rgba(0,0,0,.07);}
+nav{max-width:1380px;margin:0 auto;padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;position:relative;}
+.nav-brand{font-size:1.25rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--primary-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;letter-spacing:-.5px;}
+.logo-drop{position:absolute;left:50%;transform:translateX(-50%);top:100%;z-index:1002;background:#fff;padding:.85rem 1rem 2rem;border-radius:0 0 50% 50%;box-shadow:0 8px 30px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);transition:var(--ease);}
+.logo-drop img{width:64px;height:64px;border-radius:50%;border:2.5px solid var(--primary);box-shadow:0 4px 18px var(--glow);object-fit:cover;transition:var(--spring);}
+.logo-drop img:hover{transform:scale(1.1) rotate(5deg);}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a:not(.nav-cta){color:var(--text-gray);text-decoration:none;font-size:.88rem;font-weight:500;transition:.15s;position:relative;padding:.4rem 0;}
+.nav-links a:not(.nav-cta)::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--primary);transition:var(--ease);}
+.nav-links a:not(.nav-cta):hover,.nav-links a.active-page{color:var(--primary);}
+.nav-links a.active-page::after,.nav-links a:not(.nav-cta):hover::after{width:100%;}
+.nav-dropdown{position:relative;}
+.nav-dtoggle{display:flex;align-items:center;gap:.35rem;cursor:pointer;color:var(--text-gray);font-size:.88rem;font-weight:500;transition:.15s;padding:.4rem 0;}
+.nav-dtoggle:hover{color:var(--primary);}
+.nav-darrow{font-size:.55rem;opacity:.55;transition:var(--ease);}
+.nav-dropdown.open .nav-darrow{transform:rotate(180deg);}
+.nav-dmenu{position:absolute;top:calc(100% + .9rem);left:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.1);min-width:280px;opacity:0;visibility:hidden;transform:translateY(8px);transition:var(--ease);z-index:1005;overflow:hidden;}
+.nav-dropdown.open .nav-dmenu{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dmenu a{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;color:var(--text-dark);text-decoration:none;transition:.15s;border-bottom:1px solid var(--border-light);}
+.nav-dmenu a:last-child{border-bottom:none;}
+.nav-dmenu a:hover{background:rgba(249,115,22,.03);padding-left:1.6rem;}
+.dicon{width:40px;height:40px;background:var(--bg-dark);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--ease);}
+.dicon svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.nav-dmenu a:hover .dicon{background:var(--primary);}
+.dtxt h4{font-size:.88rem;font-weight:700;margin-bottom:.15rem;color:var(--text-dark);}
+.dtxt p{font-size:.75rem;color:var(--text-gray);}
+.nav-cta{background:var(--primary);color:#fff!important;padding:.6rem 1.4rem;border-radius:9px;font-weight:700;font-size:.85rem;text-decoration:none;transition:var(--ease);display:inline-flex;align-items:center;letter-spacing:.01em;-webkit-text-fill-color:#fff!important;}
+.nav-cta:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 6px 20px var(--glow);}
+.acct-drop{position:relative;display:none;}
+.acct-toggle{display:flex;align-items:center;gap:.6rem;cursor:pointer;padding:.4rem .85rem;border-radius:9px;border:1.5px solid var(--primary);transition:var(--ease);}
+.acct-toggle:hover{background:rgba(249,115,22,.05);}
+.acct-photo{width:28px;height:28px;border-radius:50%;object-fit:cover;}
+.account-name{font-size:.85rem;font-weight:600;}
+.account-arrow{font-size:.55rem;opacity:.55;transition:var(--ease);}
+.acct-drop.open .account-arrow{transform:rotate(180deg);}
+.acct-menu{position:absolute;top:calc(100% + .9rem);right:0;background:#fff;border:1px solid var(--border-light);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.1);min-width:260px;opacity:0;visibility:hidden;transform:translateY(8px);transition:var(--ease);z-index:1001;overflow:hidden;}
+.acct-drop.open .acct-menu{opacity:1;visibility:visible;transform:translateY(0);}
+.acct-head{padding:1.25rem 1.4rem;border-bottom:1px solid var(--border-light);}
+.acct-head .account-name{font-size:.9rem;font-weight:700;display:block;margin-bottom:.2rem;}
+.user-email{font-size:.78rem;color:var(--text-gray);}
+.acct-menu a,.acct-menu button{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.4rem;color:var(--text-dark);text-decoration:none;font-size:.88rem;font-weight:500;transition:.15s;border:none;background:none;width:100%;cursor:pointer;border-bottom:1px solid var(--border-light);font-family:inherit;}
+.acct-menu a:last-child,.acct-menu button:last-child{border-bottom:none;}
+.acct-menu a:hover,.acct-menu button:hover{background:#fafaf9;color:var(--primary);}
+.ico{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sign-out{color:#ef4444!important;}
+.sign-out:hover{background:rgba(239,68,68,.05)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem;}
+.hamburger span{width:22px;height:1.5px;background:var(--text-dark);border-radius:2px;transition:var(--ease);}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
+
+/* ════════════════════════════════════
+   PAGE HERO
+════════════════════════════════════ */
+.page-hero{background:var(--bg-dark);padding:9rem 2rem 7rem;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 50%,rgba(249,115,22,.07) 0%,transparent 65%);}
+.page-hero-inner{max-width:1380px;margin:0 auto;position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;padding:.55rem 1.1rem;border:1px solid rgba(249,115,22,.2);border-radius:100px;color:var(--primary);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:2rem;}
+.hero-dot{width:5px;height:5px;background:var(--primary);border-radius:50%;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.page-hero h1{font-size:clamp(2.6rem,6vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-.05em;color:#fff;margin-bottom:1.25rem;max-width:700px;}
+.page-hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:clamp(.95rem,1.6vw,1.1rem);color:rgba(255,255,255,.5);line-height:1.8;max-width:560px;font-weight:400;}
+
+/* ════════════════════════════════════
+   TOC NAV
+════════════════════════════════════ */
+.toc-bar{background:#fff;border-bottom:1px solid var(--border-light);position:sticky;top:0;z-index:100;padding:0 2rem;}
+.toc-bar-inner{max-width:1380px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.toc-bar-inner::-webkit-scrollbar{display:none;}
+.toc-link{display:inline-flex;align-items:center;gap:.4rem;padding:1rem 1.25rem;font-size:.82rem;font-weight:600;color:var(--text-gray);text-decoration:none;border-bottom:2px solid transparent;transition:var(--ease);white-space:nowrap;flex-shrink:0;}
+.toc-link:hover,.toc-link.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+/* ════════════════════════════════════
+   CONTENT
+════════════════════════════════════ */
+.policies-wrap{max-width:1380px;margin:0 auto;padding:6rem 2rem 5rem;display:grid;grid-template-columns:220px 1fr;gap:4rem;align-items:start;}
+.policies-sidebar{position:sticky;top:5rem;}
+.sidebar-nav{display:flex;flex-direction:column;gap:.25rem;}
+.sidebar-link{display:flex;align-items:center;gap:.6rem;padding:.6rem .85rem;font-size:.83rem;font-weight:500;color:var(--text-gray);text-decoration:none;border-radius:9px;transition:var(--ease);}
+.sidebar-link:hover,.sidebar-link.active{background:rgba(249,115,22,.06);color:var(--primary);}
+.sidebar-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;opacity:.6;}
+.sidebar-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);padding:.35rem .85rem;margin-top:.5rem;}
+
+.policies-content{min-width:0;}
+.policy-section{margin-bottom:5rem;scroll-margin-top:5rem;}
+.sec-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.1);border-radius:100px;color:var(--primary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem;}
+.policy-section h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.03em;margin-bottom:2rem;color:var(--text-dark);}
+.policy-items{display:flex;flex-direction:column;gap:1rem;}
+.policy-item{background:#fff;border:1px solid var(--border-light);border-radius:16px;padding:2rem;transition:var(--ease);position:relative;overflow:hidden;}
+.policy-item::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--primary),var(--primary-light));transform:scaleY(0);transform-origin:top;transition:.35s ease;}
+.policy-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.06);border-color:rgba(249,115,22,.1);transform:translateX(4px);}
+.policy-item:hover::before{transform:scaleY(1);}
+.policy-item h3{font-size:1.05rem;font-weight:700;color:var(--text-dark);margin-bottom:.65rem;letter-spacing:-.01em;}
+.policy-item p{font-size:.9rem;color:var(--text-gray);line-height:1.8;}
+.policy-item a{color:var(--primary);text-decoration:none;font-weight:600;}
+.policy-item a:hover{text-decoration:underline;}
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer{background:var(--bg-dark);color:#fff;padding:5.5rem 2rem 0;position:relative;}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.18),transparent);}
+.foot-main{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.foot-brand a{display:flex;align-items:center;gap:.85rem;text-decoration:none;margin-bottom:1.35rem;}
+.foot-brand img{width:44px;height:44px;border-radius:50%;border:2px solid var(--primary);object-fit:cover;}
+.foot-brand span{font-size:1.2rem;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.foot-brand p{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.8;max-width:340px;}
+.foot-col h4{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.8);margin-bottom:1.35rem;}
+.foot-col ul{list-style:none;}
+.foot-col li{margin-bottom:.8rem;}
+.foot-col a{color:rgba(255,255,255,.45);text-decoration:none;font-size:.88rem;transition:.15s;display:inline-block;}
+.foot-col a:hover{color:#fff;transform:translateX(3px);}
+.foot-nl p{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1rem;line-height:1.6;}
+.nl-row{display:flex;gap:.5rem;}
+.nl-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .9rem;font-size:.82rem;color:#fff;font-family:inherit;outline:none;transition:var(--ease);}
+.nl-input::placeholder{color:rgba(255,255,255,.28);}
+.nl-input:focus{border-color:rgba(249,115,22,.35);}
+.nl-btn{background:var(--primary);border:none;border-radius:8px;padding:.6rem .9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--ease);flex-shrink:0;}
+.nl-btn:hover{background:var(--primary-dark);}
+.nl-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.foot-mid{max-width:1380px;margin:0 auto;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.foot-badge{display:flex;align-items:center;gap:.45rem;padding:.38rem .85rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:7px;}
+.foot-badge svg{width:13px;height:13px;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.foot-badge span{font-size:.72rem;color:rgba(255,255,255,.5);font-weight:500;}
+.foot-bot{max-width:1380px;margin:0 auto;padding:1.5rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
+.foot-bot p{font-size:.78rem;color:rgba(255,255,255,.3);}
+.foot-bot-links{display:flex;gap:1.5rem;}
+.foot-bot-links a{font-size:.78rem;color:rgba(255,255,255,.3);text-decoration:none;transition:.15s;}
+.foot-bot-links a:hover{color:rgba(255,255,255,.65);}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media(max-width:1100px){
+  .foot-main{grid-template-columns:1.5fr 1fr 1fr;gap:3rem;}
+  .foot-main .foot-col:last-child{grid-column:1/-1;max-width:400px;}
+  .policies-wrap{grid-template-columns:1fr;gap:0;}
+  .policies-sidebar{display:none;}
+}
+@media(max-width:768px){
+  .logo-drop{display:none;}
+  .hamburger{display:flex;}
+  .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;flex-direction:column;padding:5rem 2rem 2rem;gap:0;align-items:stretch;overflow-y:auto;z-index:998;}
+  .nav-links.open{display:flex;}
+  .nav-links li{border-bottom:1px solid var(--border-light);}
+  .nav-links a:not(.nav-cta){padding:.85rem 0;font-size:1rem;color:var(--text-dark);}
+  .nav-links a:not(.nav-cta)::after{display:none;}
+  .nav-dtoggle{padding:.85rem 0;font-size:1rem;color:var(--text-dark);justify-content:space-between;width:100%;}
+  .nav-dmenu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;background:#fafaf9;border-radius:10px;display:none;margin:.5rem 0;}
+  .nav-dropdown.open .nav-dmenu{display:block;}
+  .nav-dmenu a{padding:.75rem 1rem;}
+  .nav-cta{margin-top:1rem;justify-content:center;padding:.9rem;}
+  .acct-drop{width:100%;}
+  .acct-toggle{justify-content:center;width:100%;}
+  .acct-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;background:#fafaf9;border-radius:10px;display:none;margin:.5rem 0;}
+  .acct-drop.open .acct-menu{display:block;}
+  nav{padding:1rem 1.5rem;}
+  .page-hero{padding:6.5rem 1.5rem 5rem;}
+  .policies-wrap{padding:4rem 1.5rem 4rem;}
+  footer{padding:4rem 1.5rem 0;}
+  .foot-main{grid-template-columns:1fr;gap:2.5rem;}
+  .foot-bot{flex-direction:column;text-align:center;}
+  .foot-bot-links{justify-content:center;}
+}
+</style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    
-    <header>
-        <nav>
-            <a href="/" class="header-text">JAYISAAC AI</a>
-            <ul class="nav-links">
-                <li class="dropdown">
-                    <div class="dropdown-toggle" onclick="toggleDropdown()">
-                        Services
-                        <span class="dropdown-arrow">▼</span>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="/ai-chatbot/">
-                            <div class="dropdown-icon">💬</div>
-                            <div class="dropdown-content">
-                                <h4>AI Chatbots</h4>
-                                <p>24/7 intelligent support</p>
-                            </div>
-                        </a>
-                        <a href="/ai-receptionist/">
-                            <div class="dropdown-icon">📞</div>
-                            <div class="dropdown-content">
-                                <h4>AI Receptionist</h4>
-                                <p>Never miss a call</p>
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li><a href="/policies.html">Policies</a></li>
-                <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
-                <li class="account-dropdown">
-                    <div class="account-toggle" onclick="toggleAccountDropdown()">
-                        <img src="" alt="Profile" class="account-photo">
-                        <span class="account-name">Account</span>
-                        <span class="account-arrow">▼</span>
-                    </div>
-                    <div class="account-menu">
-                        <div class="account-header">
-                            <span class="account-name">Account</span>
-                            <span class="user-email">email@example.com</span>
-                        </div>
-                        <a href="/myorders.html">
-                            <span class="menu-icon">📦</span>
-                            My Orders
-                        </a>
-                        <a href="/support.html">
-                            <span class="menu-icon">💬</span>
-                            Support
-                        </a>
-                        <button class="logout-btn" onclick="handleLogout()">
-                            <span class="menu-icon">🚪</span>
-                            Logout
-                        </button>
-                    </div>
-                </li>
-            </ul>
-            <button class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="logo-container">
-                <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
-            </div>
-        </nav>
-    </header>
 
-    <section class="policies-container">
-        <h1>Our <span class="gradient-text">Policies</span></h1>
-        <p class="intro-text">Transparency and trust are at the core of everything we do. Review our policies to understand how we protect your data and operate our services.</p>
-        
-        <div class="policy-section">
-            <div class="section-tag">Legal</div>
-            <h2>Terms of Service</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Introduction</h3>
-                    <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Services</h3>
-                    <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Payment Terms</h3>
-                    <p>JAYISAAC AI Automation collects only your name and email for account and communication purposes. All payment information is securely collected and processed by our third-party payment processor, Stripe. We do not collect or store payment details. You are responsible for providing accurate billing information to Stripe. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Intellectual Property</h3>
-                    <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Limitation of Liability</h3>
-                    <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
-                </div>
-            </div>
+<!-- ════════ HEADER ════════ -->
+<header id="site-header">
+  <nav>
+    <a href="/" class="nav-brand">JAYISAAC AI</a>
+    <ul class="nav-links" id="nav-links">
+      <li class="nav-dropdown" id="sol-drop">
+        <div class="nav-dtoggle" onclick="toggleDrop('sol-drop')">Solutions <span class="nav-darrow">&#9660;</span></div>
+        <div class="nav-dmenu">
+          <a href="/ai-chatbot/">
+            <div class="dicon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="dtxt"><h4>AI Chatbots</h4><p>24/7 intelligent customer support</p></div>
+          </a>
+          <a href="/ai-receptionist/">
+            <div class="dicon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.4 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="dtxt"><h4>AI Receptionist</h4><p>Never miss another call</p></div>
+          </a>
         </div>
+      </li>
+      <li><a href="/careers.html">Careers</a></li>
+      <li><a href="/policies.html" class="active-page">Policies</a></li>
+      <li><a href="/login.html" class="nav-cta">Get Started</a></li>
+      <li class="acct-drop" id="acct-drop">
+        <div class="acct-toggle" onclick="toggleDrop('acct-drop')">
+          <img src="" alt="" class="acct-photo">
+          <span class="account-name">Account</span>
+          <span class="account-arrow">&#9660;</span>
+        </div>
+        <div class="acct-menu">
+          <div class="acct-head">
+            <span class="account-name"></span>
+            <span class="user-email"></span>
+          </div>
+          <a href="/myorders.html"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>My Orders</a>
+          <a href="/support.html"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support</a>
+          <button class="sign-out" onclick="handleLogout()"><svg class="ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
+        </div>
+      </li>
+    </ul>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="logo-drop">
+      <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
+    </div>
+  </nav>
+</header>
 
-        <div class="policy-section">
-            <div class="section-tag">Privacy</div>
-            <h2>Privacy Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. Information Collection</h3>
-                    <p>We collect only your name and email when you use our services or contact us. Payment information, such as credit card details, is collected and processed securely by our third-party payment processor, Stripe, and is not stored by JAYISAAC AI Automation. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Use of Information</h3>
-                    <p>Your name and email are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled securely by Stripe to ensure safe transactions. For details on how Stripe uses your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Data Sharing</h3>
-                    <p>We do not sell your personal data. We may share your name and email with trusted third-party service providers to facilitate our services, such as customer support or delivery of services, subject to confidentiality agreements. Payment information is managed solely by Stripe and is not shared with us. For details on how Stripe shares your payment information, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Data Security</h3>
-                    <p>We implement reasonable security measures to protect your name and email. Payment information is secured by Stripe's systems, and we do not have access to it. For details on Stripe's security measures, please see their <a href="https://stripe.com/privacy">Privacy Policy</a>. However, no system is completely secure, and you use our services at your own risk.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>5. Your Rights</h3>
-                    <p>You have the right to access, correct, or delete your personal data held by us, such as your name and email. Contact us through our website to exercise these rights. For payment-related data, please contact Stripe directly through their <a href="https://stripe.com/privacy">Privacy Policy</a>.</p>
-                </div>
-            </div>
-        </div>
+<!-- ════════ PAGE HERO ════════ -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-eyebrow"><span class="hero-dot"></span>Legal &amp; Privacy</div>
+    <h1>Our <em>Policies</em></h1>
+    <p>Transparency and trust are at the core of everything we do. Review our policies to understand how we protect your data and operate our services.</p>
+  </div>
+</section>
 
-        <div class="policy-section">
-            <div class="section-tag">Cookies</div>
-            <h2>Cookie Policy</h2>
-            <div class="policy-content">
-                <div class="policy-item">
-                    <h3>1. What Are Cookies</h3>
-                    <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>2. Types of Cookies</h3>
-                    <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>3. Managing Cookies</h3>
-                    <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
-                </div>
-                <div class="policy-item">
-                    <h3>4. Third-Party Cookies</h3>
-                    <p>Some cookies are set by third-party services (e.g., analytics tools). These are governed by their respective privacy policies.</p>
-                </div>
-            </div>
+<!-- ════════ CONTENT ════════ -->
+<div class="policies-wrap">
+
+  <!-- Sidebar -->
+  <aside class="policies-sidebar">
+    <div class="sidebar-label">Jump to</div>
+    <nav class="sidebar-nav">
+      <a href="#terms" class="sidebar-link active">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Terms of Service
+      </a>
+      <a href="#privacy" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Privacy Policy
+      </a>
+      <a href="#cookies" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Cookie Policy
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Policy content -->
+  <div class="policies-content">
+
+    <!-- Terms of Service -->
+    <section class="policy-section reveal" id="terms">
+      <div class="sec-tag">Legal</div>
+      <h2>Terms of Service</h2>
+      <div class="policy-items">
+        <div class="policy-item">
+          <h3>1. Introduction</h3>
+          <p>Welcome to JAYISAAC AI Automation. By using our services, you agree to these Terms of Service. Please read them carefully.</p>
         </div>
+        <div class="policy-item">
+          <h3>2. Use of Services</h3>
+          <p>Our AI chatbot services are provided for business automation purposes. You agree to use them in compliance with applicable laws and not for any unlawful activities.</p>
+        </div>
+        <div class="policy-item">
+          <h3>3. Payment Terms</h3>
+          <p>JAYISAAC AI Automation collects only your name and email for account and communication purposes. All payment information is securely collected and processed by our third-party payment processor, Stripe. We do not collect or store payment details. You are responsible for providing accurate billing information to Stripe. For details on how Stripe handles your payment information, please see their <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>. Payments for subscriptions or one-time purchases are non-refundable unless otherwise stated.</p>
+        </div>
+        <div class="policy-item">
+          <h3>4. Intellectual Property</h3>
+          <p>All content and technology provided by JAYISAAC AI Automation are our property or licensed to us. You may not reproduce or distribute without permission.</p>
+        </div>
+        <div class="policy-item">
+          <h3>5. Limitation of Liability</h3>
+          <p>JAYISAAC AI Automation is not liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
+        </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-company">
-                <a href="/" class="footer-logo">
-                    <img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI">
-                    <h3>JAYISAAC AI</h3>
-                </a>
-                <p>Intelligent automation solutions that help businesses streamline operations, enhance customer experiences, and accelerate sustainable growth.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="/ai-chatbot/">AI Chatbots</a></li>
-                    <li><a href="/ai-receptionist/">AI Receptionist</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/policies.html">Privacy Policy</a></li>
-                    <li><a href="/policies.html">Terms of Service</a></li>
-                    <li><a href="/">Contact</a></li>
-                </ul>
-            </div>
+    <!-- Privacy Policy -->
+    <section class="policy-section reveal" id="privacy">
+      <div class="sec-tag">Privacy</div>
+      <h2>Privacy Policy</h2>
+      <div class="policy-items">
+        <div class="policy-item">
+          <h3>1. Information Collection</h3>
+          <p>We collect only your name and email when you use our services or contact us. Payment information is collected and processed securely by Stripe and is not stored by JAYISAAC AI Automation. For details, see <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a>.</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
+        <div class="policy-item">
+          <h3>2. Use of Information</h3>
+          <p>Your name and email are used to provide and improve our services, communicate with you about your account or inquiries, and fulfill your requests. Payment processing is handled securely by Stripe. For details on how Stripe uses your payment information, see their <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
         </div>
-    </footer>
+        <div class="policy-item">
+          <h3>3. Data Sharing</h3>
+          <p>We do not sell your personal data. We may share your name and email with trusted third-party service providers to facilitate our services, subject to confidentiality agreements. Payment information is managed solely by Stripe and is not shared with us.</p>
+        </div>
+        <div class="policy-item">
+          <h3>4. Data Security</h3>
+          <p>We implement reasonable security measures to protect your name and email. Payment information is secured by Stripe's systems, and we do not have access to it. No system is completely secure, and you use our services at your own risk.</p>
+        </div>
+        <div class="policy-item">
+          <h3>5. Your Rights</h3>
+          <p>You have the right to access, correct, or delete your personal data held by us. Contact us through our website to exercise these rights. For payment-related data, please contact Stripe directly through their <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+        </div>
+      </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script>
-        if (window.innerWidth > 768) {
-            particlesJS('particles-js', {
-                particles: { number: { value: 60, density: { enable: true, value_area: 1000 } }, color: { value: '#f97316' }, shape: { type: 'circle' }, opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: '#f97316', opacity: 0.2, width: 1 }, move: { enable: true, speed: 1.5, direction: 'none', random: true, straight: false, out_mode: 'bounce' } },
-                interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' }, resize: true }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } } } },
-                retina_detect: true
-            });
-        }
+    <!-- Cookie Policy -->
+    <section class="policy-section reveal" id="cookies">
+      <div class="sec-tag">Cookies</div>
+      <h2>Cookie Policy</h2>
+      <div class="policy-items">
+        <div class="policy-item">
+          <h3>1. What Are Cookies</h3>
+          <p>Cookies are small text files stored on your device to enhance your experience on our website, such as remembering your preferences.</p>
+        </div>
+        <div class="policy-item">
+          <h3>3. Types of Cookies</h3>
+          <p>We use essential cookies for site functionality, analytics cookies to track usage, and marketing cookies to personalize content.</p>
+        </div>
+        <div class="policy-item">
+          <h3>3. Managing Cookies</h3>
+          <p>You can manage cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
+        </div>
+        <div class="policy-item">
+          <h3>4. Third-Party Cookies</h3>
+          <p>Some cookies are set by third-party services such as analytics tools. These are governed by their respective privacy policies.</p>
+        </div>
+      </div>
+    </section>
 
-        window.addEventListener('scroll', function() {
-            var header = document.querySelector('header');
-            if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
-        });
+  </div>
+</div>
 
-        function toggleMenu() {
-            var menuToggle = document.querySelector('.menu-toggle');
-            var navLinks = document.querySelector('.nav-links');
-            var logoContainer = document.querySelector('.logo-container');
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            if (logoContainer) logoContainer.classList.toggle('hidden');
-        }
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <div class="foot-main">
+    <div class="foot-brand">
+      <a href="/"><img src="https://i.ibb.co/gB585zZ/new-logo1.jpg" alt="JAYISAAC AI"><span>JAYISAAC AI</span></a>
+      <p>Intelligent automation that helps trades and service businesses stop missing calls, book more jobs, and grow without adding headcount.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a href="/ai-chatbot/">AI Chatbots</a></li>
+        <li><a href="/ai-receptionist/">AI Receptionist</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/careers.html">Careers</a></li>
+        <li><a href="/policies.html">Privacy Policy</a></li>
+        <li><a href="/policies.html">Terms of Service</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col foot-nl">
+      <h4>Stay in the Loop</h4>
+      <p>AI insights and product updates — no spam.</p>
+      <div class="nl-row">
+        <input class="nl-input" type="email" placeholder="your@email.com">
+        <button class="nl-btn" aria-label="Subscribe"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="foot-mid">
+    <div class="foot-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>SOC 2 Ready</span></div>
+    <div class="foot-badge"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Data Encrypted</span></div>
+    <div class="foot-badge"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>PIPEDA Compliant</span></div>
+  </div>
+  <div class="foot-bot">
+    <p>&copy; 2026 JAYISAAC AI. All rights reserved.</p>
+    <div class="foot-bot-links">
+      <a href="/policies.html">Privacy</a>
+      <a href="/policies.html">Terms</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+</footer>
 
-        function toggleDropdown() {
-            var dropdown = document.querySelector('.dropdown');
-            dropdown.classList.toggle('active');
-            var accountDropdown = document.querySelector('.account-dropdown');
-            if (accountDropdown) accountDropdown.classList.remove('active');
-        }
+<script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/09/18/19/20250918193740-EZH2L63I.js" defer></script>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('site-header').classList.toggle('scrolled',scrollY>40));
 
-        function toggleAccountDropdown() {
-            var accountDropdown = document.querySelector('.account-dropdown');
-            accountDropdown.classList.toggle('active');
-            var servicesDropdown = document.querySelector('.dropdown');
-            if (servicesDropdown) servicesDropdown.classList.remove('active');
-        }
+function toggleNav(){
+  const h=document.getElementById('hamburger'),n=document.getElementById('nav-links');
+  h.classList.toggle('open');n.classList.toggle('open');
+  document.body.style.overflow=n.classList.contains('open')?'hidden':'';
+}
+function toggleDrop(id){
+  const el=document.getElementById(id);
+  document.querySelectorAll('.nav-dropdown,.acct-drop').forEach(d=>{if(d.id!==id)d.classList.remove('open');});
+  el.classList.toggle('open');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.nav-dropdown')&&!e.target.closest('.acct-drop'))
+    document.querySelectorAll('.nav-dropdown,.acct-drop').forEach(d=>d.classList.remove('open'));
+});
+function handleLogout(){window.firebaseAuth?.signOut();document.getElementById('acct-drop').classList.remove('open');}
 
-        function handleLogout() {
-            if (window.firebaseAuth) {
-                window.firebaseAuth.signOut();
-                var accountDropdown = document.querySelector('.account-dropdown');
-                if (accountDropdown) accountDropdown.classList.remove('active');
-            }
-        }
+// Sidebar active state on scroll
+const sections=document.querySelectorAll('.policy-section');
+const sidebarLinks=document.querySelectorAll('.sidebar-link');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      sidebarLinks.forEach(l=>l.classList.remove('active'));
+      const link=document.querySelector('.sidebar-link[href="#'+e.target.id+'"]');
+      if(link)link.classList.add('active');
+    }
+  });
+},{threshold:.4});
+sections.forEach(s=>observer.observe(s));
 
-        document.addEventListener('click', function(event) {
-            var dropdown = document.querySelector('.dropdown');
-            if (dropdown && !dropdown.contains(event.target)) { dropdown.classList.remove('active'); }
-            var accountDropdown = document.querySelector('.account-dropdown');
-            if (accountDropdown && !accountDropdown.contains(event.target)) { accountDropdown.classList.remove('active'); }
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        var navLinks = document.querySelector('.nav-links');
-                        if (navLinks) { navLinks.classList.remove('active'); }
-                    }
-                }
-            });
-        });
-    </script>
+// Scroll reveal
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -24px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
 </body>
 </html>

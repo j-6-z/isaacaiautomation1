@@ -17,27 +17,22 @@
   window.firebaseAuth={signInWithGoogle:async()=>{try{return(await signInWithPopup(auth,provider)).user;}catch(e){alert("Sign in failed: "+e.message);}},signOut:async()=>{try{await signOut(auth);}catch(e){console.error(e.message);}},getCurrentUser:()=>auth.currentUser};
   onAuthStateChanged(auth,(user)=>{
     const btn=document.querySelector('.login-btn'),drop=document.querySelector('.account-dropdown');
-    const nameEl=document.getElementById('contactName'),emailEl=document.getElementById('contactEmail');
     if(user){
       if(btn)btn.style.display='none';
       if(drop){drop.style.display='block';const photo=drop.querySelector('.account-photo'),email=drop.querySelector('.user-email');
       drop.querySelectorAll('.account-name').forEach(el=>el.textContent=user.displayName?user.displayName.split(' ')[0]:'Account');
       if(photo)photo.src=user.photoURL||'https://ui-avatars.com/api/?name='+encodeURIComponent(user.displayName||'User')+'&background=f97316&color=fff';
       if(email)email.textContent=user.email;}
-      if(nameEl&&user.displayName)nameEl.value=user.displayName;
-      if(emailEl&&user.email)emailEl.value=user.email;
     }else{
       if(btn){btn.style.display='inline-flex';btn.textContent='Login/Signup';btn.href='/login.html';btn.onclick=null;}
       if(drop)drop.style.display='none';
-      if(nameEl)nameEl.value='';
-      if(emailEl)emailEl.value='';
     }
   });
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="JAYISAAC AI Support — Get help, find answers, and contact our team.">
-<title>Support — JAYISAAC AI</title>
+<meta name="description" content="Careers at JAYISAAC AI — Join a lean, high-output team building AI that actually works for trades businesses.">
+<title>Careers — JAYISAAC AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -126,78 +121,92 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
    PAGE HERO
 ════════════════════════════════════ */
 .page-hero{background:var(--bg-dark);padding:6rem 2rem 7rem;position:relative;overflow:hidden;}
-.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 50%,rgba(249,115,22,.07) 0%,transparent 65%);}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(249,115,22,.07) 0%,transparent 70%);}
 .page-hero-inner{max-width:1380px;margin:0 auto;position:relative;z-index:2;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;padding:.55rem 1.1rem;border:1px solid rgba(249,115,22,.2);border-radius:100px;color:var(--primary);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:2rem;}
 .hero-dot{width:5px;height:5px;background:var(--primary);border-radius:50%;animation:blink 2s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-.page-hero h1{font-size:clamp(2.6rem,6vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-.05em;color:#fff;margin-bottom:1.25rem;max-width:700px;}
+.page-hero h1{font-size:clamp(2.6rem,6vw,4.75rem);font-weight:900;line-height:1.05;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;max-width:760px;}
 .page-hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.page-hero p{font-size:clamp(.95rem,1.6vw,1.1rem);color:rgba(255,255,255,.5);line-height:1.8;max-width:560px;font-weight:400;}
+.page-hero p{font-size:clamp(.98rem,1.6vw,1.15rem);color:rgba(255,255,255,.5);line-height:1.8;max-width:580px;font-weight:400;}
 
 /* ════════════════════════════════════
-   QUICK LINKS
+   SHARED SECTION
 ════════════════════════════════════ */
-.quick-links{background:#fafaf9;border-bottom:1px solid var(--border-light);padding:2.5rem 2rem;}
-.quick-links-inner{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;}
-.ql-card{display:flex;align-items:center;gap:1rem;background:#fff;border:1px solid var(--border-light);border-radius:14px;padding:1.25rem 1.5rem;text-decoration:none;color:var(--text-dark);transition:var(--t-base);position:relative;overflow:hidden;}
-.ql-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transform-origin:left;transition:.35s ease;}
-.ql-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.07);border-color:rgba(249,115,22,.12);}
-.ql-card:hover::after{transform:scaleX(1);}
-.ql-icon{width:44px;height:44px;background:var(--bg-dark);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--t-base);}
-.ql-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
-.ql-card:hover .ql-icon{background:var(--primary);}
-.ql-text h3{font-size:.92rem;font-weight:700;margin-bottom:.15rem;}
-.ql-text p{font-size:.78rem;color:var(--text-gray);}
+.sec{padding:7rem 2rem;}
+.sec-inner{max-width:1380px;margin:0 auto;}
+.sec-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.1);border-radius:100px;color:var(--primary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem;}
+.sec-title{font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem;}
+.sec-sub{font-size:1.05rem;color:var(--text-gray);line-height:1.75;max-width:560px;}
+.sec-head{margin-bottom:4rem;}
+.sec-head.center{text-align:center;}
+.sec-head.center .sec-sub{margin:0 auto;}
 
 /* ════════════════════════════════════
-   MAIN CONTENT
+   VALUES
 ════════════════════════════════════ */
-.support-body{max-width:1380px;margin:0 auto;padding:5rem 2rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;}
+.values{background:#fafaf9;}
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.val-card{background:#fff;border:1px solid var(--border-light);border-radius:18px;padding:2.25rem;transition:var(--t-base);}
+.val-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.06);}
+.val-icon{width:48px;height:48px;background:var(--bg-dark);border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;transition:var(--t-spring);}
+.val-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.val-card:hover .val-icon{background:var(--primary);transform:scale(1.08);}
+.val-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.01em;}
+.val-card p{font-size:.88rem;color:var(--text-gray);line-height:1.7;}
 
-/* ── FAQ ── */
-.faq-panel{background:#fff;border:1px solid var(--border-light);border-radius:20px;padding:2.5rem;scroll-margin-top:5rem;}
-.panel-title{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;margin-bottom:2rem;display:flex;align-items:center;gap:.75rem;}
-.panel-title svg{width:22px;height:22px;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
-.faq-list{display:flex;flex-direction:column;gap:.75rem;}
-.faq-item{border:1px solid var(--border-light);border-radius:12px;overflow:hidden;transition:var(--t-base);}
-.faq-item:hover{border-color:rgba(249,115,22,.15);}
-.faq-item.open{border-color:rgba(249,115,22,.25);box-shadow:0 4px 16px rgba(249,115,22,.07);}
-.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.35rem;cursor:pointer;font-weight:600;font-size:.9rem;background:#fafaf9;transition:var(--t-base);gap:1rem;color:var(--text-dark);}
-.faq-item.open .faq-q{background:rgba(249,115,22,.03);color:var(--primary);}
-.faq-q:hover{color:var(--primary);}
-.faq-ic{width:26px;height:26px;border-radius:50%;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;font-weight:300;line-height:1;flex-shrink:0;transition:var(--t-base);}
-.faq-item.open .faq-ic{transform:rotate(45deg);background:var(--primary);}
-.faq-a{max-height:0;overflow:hidden;padding:0 1.35rem;color:var(--text-gray);font-size:.88rem;line-height:1.8;transition:all .38s ease;}
-.faq-item.open .faq-a{max-height:300px;padding-bottom:1.35rem;}
+/* ════════════════════════════════════
+   OPEN ROLES
+════════════════════════════════════ */
+.roles{background:#fff;}
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.role-card{background:#fff;border:1px solid var(--border-light);border-radius:18px;padding:2.25rem;transition:var(--t-base);display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.role-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transform-origin:left;transition:.4s ease;}
+.role-card:hover{transform:translateY(-5px);box-shadow:0 18px 45px rgba(0,0,0,.07);border-color:rgba(249,115,22,.12);}
+.role-card:hover::after{transform:scaleX(1);}
+.role-type{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:1.1rem;}
+.role-dot{width:5px;height:5px;border-radius:50%;background:var(--primary);}
+.role-card h3{font-size:1.15rem;font-weight:700;margin-bottom:.35rem;letter-spacing:-.02em;}
+.role-meta{font-size:.78rem;color:var(--text-light);margin-bottom:1.1rem;font-weight:500;}
+.role-card p{font-size:.88rem;color:var(--text-gray);line-height:1.7;flex:1;margin-bottom:1.5rem;}
+.role-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.75rem;}
+.role-tag{background:rgba(249,115,22,.06);color:#ea580c;font-size:.68rem;font-weight:600;padding:.22rem .65rem;border-radius:999px;border:1px solid rgba(249,115,22,.12);}
+.role-apply{display:inline-flex;align-items:center;gap:.4rem;color:var(--primary);font-size:.85rem;font-weight:700;text-decoration:none;letter-spacing:.02em;transition:var(--t-base);}
+.role-apply svg{width:14px;height:14px;transition:transform var(--t-base);}
+.role-apply:hover svg{transform:translateX(4px);}
 
-/* ── CONTACT FORM ── */
-.contact-panel{background:#fff;border:1px solid var(--border-light);border-radius:20px;padding:2.5rem;scroll-margin-top:5rem;}
-.panel-sub{font-size:.9rem;color:var(--text-gray);margin-bottom:2rem;line-height:1.65;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
-.fg{margin-bottom:1.35rem;}
-.fg label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.55rem;letter-spacing:.01em;}
-.fg input,.fg select,.fg textarea{width:100%;padding:.85rem 1.05rem;background:#fafaf9;border:1.5px solid transparent;border-radius:10px;font-size:.9rem;font-family:inherit;transition:var(--t-base);color:var(--text-dark);}
-.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(249,115,22,.07);}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--text-light);}
-.fg select{cursor:pointer;}
-.fg textarea{resize:vertical;min-height:130px;}
-.fg-check{display:flex;align-items:flex-start;gap:.65rem;margin-bottom:1.6rem;}
-.fg-check input[type=checkbox]{width:17px;height:17px;margin-top:3px;accent-color:var(--primary);flex-shrink:0;cursor:pointer;}
-.fg-check label{font-size:.82rem;color:var(--text-gray);line-height:1.5;}
-.fg-check a{color:var(--primary);font-weight:600;text-decoration:none;}
-.fg-check a:hover{text-decoration:underline;}
-.submit-btn{background:var(--bg-dark);color:#fff;padding:1rem 2.5rem;border:none;border-radius:11px;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;transition:var(--t-base);display:flex;align-items:center;justify-content:center;gap:.5rem;}
-.submit-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-base);}
-.submit-btn:hover{background:#1a1a1a;transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.18);}
-.submit-btn:hover svg{transform:translateX(4px);}
-.response-info{margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border-light);}
-.response-info h3{font-size:.88rem;font-weight:700;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);}
-.ri-item{display:flex;align-items:center;gap:.9rem;padding:1rem 1.1rem;background:#fafaf9;border-radius:11px;border:1px solid var(--border-light);}
-.ri-icon{width:38px;height:38px;background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.14);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ri-icon svg{width:18px;height:18px;stroke:var(--primary);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
-.ri-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);margin-bottom:.15rem;}
-.ri-val{font-size:.9rem;font-weight:600;color:var(--text-dark);}
+/* ════════════════════════════════════
+   PERKS
+════════════════════════════════════ */
+.perks{background:var(--bg-dark);position:relative;overflow:hidden;}
+.perks::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.2),transparent);}
+.perks::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.1),transparent);}
+.perks .sec-title{color:#fff;}
+.perks .sec-sub{color:rgba(255,255,255,.5);}
+.perks .sec-tag{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.18);}
+.perks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+.perk{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:2rem 1.75rem;transition:var(--t-base);}
+.perk:hover{background:rgba(255,255,255,.055);border-color:rgba(249,115,22,.15);}
+.perk-icon{width:44px;height:44px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;}
+.perk-icon svg{width:20px;height:20px;stroke:var(--primary);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.perk h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+.perk p{font-size:.83rem;color:rgba(255,255,255,.45);line-height:1.65;}
+
+/* ════════════════════════════════════
+   OPEN APPLICATION CTA
+════════════════════════════════════ */
+.open-app{background:#fff;}
+.open-app-box{background:var(--bg-dark);border-radius:20px;padding:4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;position:relative;overflow:hidden;}
+.open-app-box::before{content:'';position:absolute;top:-40%;right:-20%;width:60%;height:140%;background:radial-gradient(circle,rgba(249,115,22,.08),transparent 70%);pointer-events:none;}
+.open-app-box h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:.75rem;letter-spacing:-.03em;position:relative;}
+.open-app-box p{font-size:.98rem;color:rgba(255,255,255,.5);line-height:1.7;max-width:520px;position:relative;}
+.open-app-actions{display:flex;flex-direction:column;gap:.75rem;align-items:flex-end;flex-shrink:0;position:relative;}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--primary);color:#fff;padding:1rem 2.25rem;border-radius:11px;font-weight:700;font-size:.92rem;text-decoration:none;transition:var(--t-base);white-space:nowrap;}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow);}
+.btn-primary svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-base);}
+.btn-primary:hover svg{transform:translateX(4px);}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:rgba(255,255,255,.65);padding:.9rem 2.25rem;border-radius:11px;font-weight:600;font-size:.88rem;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:var(--t-base);white-space:nowrap;}
+.btn-outline:hover{border-color:rgba(255,255,255,.35);color:#fff;}
 
 /* ════════════════════════════════════
    FOOTER
@@ -238,10 +247,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 @media(max-width:1100px){
   .foot-main{grid-template-columns:1.5fr 1fr 1fr;gap:3rem;}
   .foot-main .foot-col:last-child{grid-column:1/-1;max-width:400px;}
+  .roles-grid{grid-template-columns:repeat(2,1fr);}
+  .perks-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:1024px){
-  .support-body{grid-template-columns:1fr;}
-  .quick-links-inner{grid-template-columns:repeat(2,1fr);}
+  .val-grid{grid-template-columns:repeat(2,1fr);}
+  .open-app-box{grid-template-columns:1fr;text-align:center;}
+  .open-app-actions{align-items:center;}
+  .open-app-box p{max-width:100%;}
 }
 @media(max-width:768px){
   body{padding-top:120px;}
@@ -265,20 +278,23 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   .account-menu{position:static;transform:none;box-shadow:none;border:none;margin-top:.75rem;display:none;min-width:100%;background:var(--bg-light);border-radius:12px;}
   .account-dropdown.active .account-menu{display:block;}
   .page-hero{padding:3.5rem 1.5rem 5rem;}
-  .quick-links{padding:2rem 1.5rem;}
-  .quick-links-inner{grid-template-columns:1fr 1fr;gap:1rem;}
-  .support-body{padding:3.5rem 1.5rem 4rem;gap:2rem;}
-  .faq-panel,.contact-panel{padding:1.75rem;}
-  .form-row{grid-template-columns:1fr;}
+  .sec{padding:4.5rem 1.5rem;}
+  .val-grid{grid-template-columns:1fr;}
+  .roles-grid{grid-template-columns:1fr;}
+  .perks-grid{grid-template-columns:1fr;}
+  .open-app-box{padding:2.5rem 1.75rem;}
   footer{padding:4rem 1.5rem 0;}
   .foot-main{grid-template-columns:1fr;gap:2.5rem;}
+  .foot-mid{gap:.75rem;}
   .foot-bot{flex-direction:column;text-align:center;}
   .foot-bot-links{justify-content:center;}
 }
 @media(max-width:480px){
   body{padding-top:110px;}
   .nav-links{top:110px;max-height:calc(100vh - 110px);}
-  .quick-links-inner{grid-template-columns:1fr;}
+  .page-hero h1{letter-spacing:-.04em;}
+  .open-app-actions{width:100%;}
+  .btn-primary,.btn-outline{width:100%;justify-content:center;}
 }
 </style>
 </head>
@@ -302,7 +318,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           </a>
         </div>
       </li>
-      <li><a href="/careers.html">Careers</a></li>
+      <li><a href="/careers.html" class="active-page">Careers</a></li>
       <li><a href="/policies.html">Policies</a></li>
       <li><a href="/login.html" class="login-btn">Login/Signup</a></li>
       <li class="account-dropdown">
@@ -320,7 +336,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
             <svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
             My Orders
           </a>
-          <a href="/support.html" class="active-page">
+          <a href="/support.html">
             <svg class="menu-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Support
           </a>
@@ -341,115 +357,146 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- ════════ PAGE HERO ════════ -->
 <section class="page-hero">
   <div class="page-hero-inner">
-    <div class="hero-eyebrow"><span class="hero-dot"></span>Help Center</div>
-    <h1>How Can We <em>Help You?</em></h1>
-    <p>Get answers fast, troubleshoot issues, or reach out to our team directly. We respond within 24 hours.</p>
+    <div class="hero-eyebrow"><span class="hero-dot"></span>We're Hiring</div>
+    <h1>Build AI That Actually <em>Works.</em></h1>
+    <p>We're a lean, high-output team. If you move fast, take ownership, and want your work to matter from day one — there's a seat here for you.</p>
   </div>
 </section>
 
-<!-- ════════ QUICK LINKS ════════ -->
-<div class="quick-links">
-  <div class="quick-links-inner">
-    <a href="#faq" class="ql-card reveal">
-      <div class="ql-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <div class="ql-text"><h3>FAQs</h3><p>Quick answers to common questions</p></div>
-    </a>
-    <a href="#contact" class="ql-card reveal">
-      <div class="ql-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-      <div class="ql-text"><h3>Contact Us</h3><p>Send us a message directly</p></div>
-    </a>
-    <a href="/policies.html" class="ql-card reveal">
-      <div class="ql-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-      <div class="ql-text"><h3>Policies</h3><p>Terms, privacy &amp; cookie info</p></div>
-    </a>
-    <a href="/myorders.html" class="ql-card reveal">
-      <div class="ql-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div>
-      <div class="ql-text"><h3>My Orders</h3><p>Track and manage your orders</p></div>
-    </a>
+<!-- ════════ VALUES ════════ -->
+<section class="sec values">
+  <div class="sec-inner">
+    <div class="sec-head center">
+      <div class="sec-tag">How We Work</div>
+      <h2 class="sec-title">What We're About</h2>
+      <p class="sec-sub">No bloat. No bureaucracy. Just a small team doing meaningful work for real businesses.</p>
+    </div>
+    <div class="val-grid">
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><polyline points="13 2 13 9 20 9"/><path d="M20 14.5V7l-5-5H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8"/><polyline points="17 21 22 16 17 11"/></svg></div>
+        <h3>Ownership Over Everything</h3>
+        <p>You own your work end to end. No hand-holding, no micromanagement. You ship it, you stand behind it, you improve it.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Speed Is a Feature</h3>
+        <p>We move fast because our clients need results now. Iteration beats perfection. Done and learning beats waiting.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Small Team, Real Impact</h3>
+        <p>Every person here has a direct line to the founder. Your ideas get heard. Your work ships. Your name is on the output.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Performance Gets Rewarded</h3>
+        <p>We don't do corporate ladders. If you produce results, you get compensated for it. Clear expectations, clear upside.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Remote First</h3>
+        <p>Work from wherever you're most effective. We don't care where you are — we care what you deliver.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>Always Building</h3>
+        <p>This is early stage. Things change, things break, things get built from scratch. If that excites you, you'll fit right in.</p>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- ════════ MAIN CONTENT ════════ -->
-<div class="support-body">
-
-  <!-- FAQ -->
-  <section class="faq-panel reveal" id="faq">
-    <h2 class="panel-title">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Frequently Asked Questions
-    </h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q">How do I get started with JAYISAAC AI?<div class="faq-ic">+</div></div>
-        <div class="faq-a">Getting started is simple. Choose a plan, sign up with your Google account, and our team will guide you through the full onboarding process — usually within 1–2 weeks.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I change my subscription plan?<div class="faq-ic">+</div></div>
-        <div class="faq-a">Yes. You can upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What payment methods do you accept?<div class="faq-ic">+</div></div>
-        <div class="faq-a">We accept all major credit cards — Visa, MasterCard, American Express — processed securely through Stripe.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Is there a free trial available?<div class="faq-ic">+</div></div>
-        <div class="faq-a">We offer a demo so you can see the AI in action before committing. Reach out through the contact form to book yours.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How do I cancel my subscription?<div class="faq-ic">+</div></div>
-        <div class="faq-a">Monthly plans can be cancelled anytime. Annual plans are billed upfront. Contact support and we'll handle the cancellation for you.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Do you offer refunds?<div class="faq-ic">+</div></div>
-        <div class="faq-a">Payments are generally non-refundable unless otherwise stated at time of purchase. If you have a specific concern, contact us and we'll work through it with you.</div>
-      </div>
+<!-- ════════ OPEN ROLES ════════ -->
+<section class="sec roles">
+  <div class="sec-inner">
+    <div class="sec-head center">
+      <div class="sec-tag">Open Roles</div>
+      <h2 class="sec-title">Current Openings</h2>
+      <p class="sec-sub">Every role is remote. Every role matters. Apply directly — no recruiters, no runaround.</p>
     </div>
-  </section>
-
-  <!-- Contact Form -->
-  <section class="contact-panel reveal" id="contact">
-    <h2 class="panel-title">
-      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      Contact Support
-    </h2>
-    <p class="panel-sub">Can't find what you need? Send us a message and we'll get back to you within 24 hours.</p>
-    <form action="https://formspree.io/f/mqavdkwr" method="POST">
-      <div class="form-row">
-        <div class="fg"><label>Full Name</label><input type="text" id="contactName" name="name" placeholder="John Smith" required></div>
-        <div class="fg"><label>Email Address</label><input type="email" id="contactEmail" name="email" placeholder="you@example.com" required></div>
-      </div>
-      <div class="fg">
-        <label>Subject</label>
-        <select name="subject" required>
-          <option value="">Select a topic...</option>
-          <option value="billing">Billing &amp; Payments</option>
-          <option value="technical">Technical Support</option>
-          <option value="account">Account Issues</option>
-          <option value="sales">Sales Inquiry</option>
-          <option value="feedback">Feedback &amp; Suggestions</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="fg"><label>Message</label><textarea name="message" placeholder="Describe your issue or question in detail..." required></textarea></div>
-      <div class="fg-check">
-        <input type="checkbox" id="consent" name="consent" required>
-        <label for="consent">I agree to the <a href="/policies.html">Privacy Policy</a> and consent to being contacted.</label>
-      </div>
-      <button type="submit" class="submit-btn">Send Message <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </form>
-    <div class="response-info">
-      <h3>What to Expect</h3>
-      <div class="ri-item">
-        <div class="ri-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <div>
-          <div class="ri-label">Response Time</div>
-          <div class="ri-val">Within 24 hours — usually faster</div>
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <div class="role-type"><span class="role-dot"></span>Full-Time &middot; Remote</div>
+        <h3>Sales Development Rep</h3>
+        <p class="role-meta">Commission + Base &middot; Start Immediately</p>
+        <p>Drive outreach to trades businesses across Canada and the US. Own your pipeline from first contact to close. If you can start conversations and build trust over the phone, we want to talk.</p>
+        <div class="role-tags">
+          <span class="role-tag">Cold Outreach</span><span class="role-tag">CRM</span><span class="role-tag">Trades Industry</span><span class="role-tag">Phone Sales</span>
         </div>
+        <a href="mailto:careers@jayisaacai.com?subject=Sales Development Rep Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-type"><span class="role-dot"></span>Contract &middot; Remote</div>
+        <h3>AI Implementation Specialist</h3>
+        <p class="role-meta">Per-Project Rate &middot; Ongoing Work</p>
+        <p>Configure and deploy AI voice agents and chatbots for client accounts. You'll be the technical backbone of every onboarding — scripting, testing, integrations, and handoff.</p>
+        <div class="role-tags">
+          <span class="role-tag">Retell AI</span><span class="role-tag">Prompt Engineering</span><span class="role-tag">Webhooks</span><span class="role-tag">API Integrations</span>
+        </div>
+        <a href="mailto:careers@jayisaacai.com?subject=AI Implementation Specialist Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-type"><span class="role-dot"></span>Part-Time &middot; Remote</div>
+        <h3>Content &amp; Growth Strategist</h3>
+        <p class="role-meta">Hourly or Retainer &middot; Flexible Hours</p>
+        <p>Own social presence, case study creation, and inbound lead generation. Build content that converts trades owners — short-form video, written copy, and ad creative that actually performs.</p>
+        <div class="role-tags">
+          <span class="role-tag">Copywriting</span><span class="role-tag">Short-Form Video</span><span class="role-tag">Lead Gen</span><span class="role-tag">Social Media</span>
+        </div>
+        <a href="mailto:careers@jayisaacai.com?subject=Content Strategist Application" class="role-apply">Apply Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
+<!-- ════════ PERKS ════════ -->
+<section class="sec perks">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <div class="sec-tag">What You Get</div>
+      <h2 class="sec-title">Why Work Here</h2>
+      <p class="sec-sub">We can't offer a Fortune 500 benefits package. We can offer something better.</p>
+    </div>
+    <div class="perks-grid">
+      <div class="perk reveal">
+        <div class="perk-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Fully Remote</h3>
+        <p>Work from home, a coffee shop, or anywhere with reliable internet. No office, no commute, no dress code.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Flexible Hours</h3>
+        <p>We care about results, not when you're online. Build your schedule around your life.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Performance Upside</h3>
+        <p>Sales roles have real commission structures. Strong performance means strong pay — no ceiling.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+        <h3>Ground Floor Access</h3>
+        <p>Join early and grow with the company. Your impact on the direction of the product is real and immediate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ OPEN APPLICATION ════════ -->
+<section class="sec open-app">
+  <div class="sec-inner">
+    <div class="open-app-box reveal">
+      <div>
+        <h2>Don't See Your Role?</h2>
+        <p>We hire for attitude and output first. If you think you belong here and can bring something real to the table, send us a message and tell us why.</p>
+      </div>
+      <div class="open-app-actions">
+        <a href="mailto:careers@jayisaacai.com" class="btn-primary">Send a Message <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="/" class="btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ════════ FOOTER ════════ -->
 <footer>
@@ -538,26 +585,6 @@ function updateNavTop(){
 window.addEventListener('resize',updateNavTop);
 updateNavTop();
 
-// FAQ
-document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
-  const item=q.parentElement,was=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
-  if(!was)item.classList.add('open');
-}));
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-  const t=document.querySelector(a.getAttribute('href'));
-  if(!t)return;
-  e.preventDefault();
-  const hh=document.querySelector('header').offsetHeight;
-  window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-hh-16,behavior:'smooth'});
-  document.querySelector('.nav-links')?.classList.remove('active');
-  document.querySelector('.menu-toggle')?.classList.remove('active');
-  document.querySelector('.logo-container')?.classList.remove('hidden');
-}));
-
-// Scroll reveal
 const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -24px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
