@@ -195,6 +195,7 @@ nav{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-con
 .avatar-jt{background:#f97316;}
 .avatar-cg{background:#ea580c;}
 .avatar-jr{background:#c2410c;}
+.avatar-tm{background:#9a3412;}
 .team-online{position:absolute;bottom:2px;right:2px;width:12px;height:12px;background:#22c55e;border-radius:50%;border:2px solid #fff;}
 .team-card h3{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-dark);margin-bottom:.25rem;}
 .team-role{font-size:.72rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:.7rem;}
@@ -531,21 +532,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <span class="team-online"></span>
         </div>
         <h3>Cassandra G.</h3>
-        <p class="team-role">Sales Manager &amp; Client Relations</p>
-        <div class="team-divider"></div>
-        <p class="team-bio">Owns the client relationship from first call to onboarding. Makes sure every business gets the right solution.</p>
-        <div class="team-tags">
-          <span class="team-tag">Sales</span>
-          <span class="team-tag">Client Success</span>
-          <span class="team-tag">Outreach</span>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar-wrap">
-          <div class="team-avatar avatar-jr">JR</div>
-          <span class="team-online"></span>
-        </div>
-        <h3>Julius D.</h3>
         <p class="team-role">Sales Representative</p>
         <div class="team-divider"></div>
         <p class="team-bio">Front line of client outreach. Connects trades companies to AI solutions that save them time and money.</p>
@@ -553,6 +539,21 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <span class="team-tag">Sales</span>
           <span class="team-tag">Outreach</span>
           <span class="team-tag">Support</span>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar-wrap">
+          <div class="team-avatar avatar-jr">TM</div>
+          <span class="team-online"></span>
+        </div>
+        <h3>Thomas M.</h3>
+        <p class="team-role">Sales Manager &amp; Client Relations</p>
+        <div class="team-divider"></div>
+        <p class="team-bio">Owns the client relationship from first call to onboarding. Makes sure every business gets the right solution.</p>
+        <div class="team-tags">
+          <span class="team-tag">Sales</span>
+          <span class="team-tag">Client Success</span>
+          <span class="team-tag">Outreach</span>
         </div>
       </div>
     </div>
@@ -632,7 +633,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <h3>JAYISAAC AI</h3>
       </a>
       <p>Intelligent automation solutions that help businesses streamline operations, enhance customer experiences, and accelerate sustainable growth.</p>
-
     </div>
     <div class="footer-col">
       <h4>Solutions</h4>
@@ -752,7 +752,7 @@ function updateNavTop(){
 window.addEventListener('resize', updateNavTop);
 updateNavTop();
 
-// IntersectionObserver scroll-in — add CSS class to prevent FOUC
+// IntersectionObserver scroll-in
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
 }),{threshold:.07,rootMargin:'0px 0px -30px 0px'});
@@ -768,7 +768,7 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   let DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let CW, CH; // logical (CSS) dimensions
+  let CW, CH;
 
   function resize(){
     const wrap = canvas.parentElement;
@@ -778,7 +778,7 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     canvas.height = CH * DPR;
     canvas.style.width = CW + 'px';
     canvas.style.height = CH + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // reset + apply scale cleanly
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
   resize();
 
@@ -810,7 +810,6 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     ctx.globalAlpha = alpha;
     ctx.shadowBlur = 40;
     ctx.shadowColor = 'rgba(249,115,22,0.2)';
-    // Black outline
     ctx.beginPath();
     ctx.lineWidth = sw + 7;
     ctx.strokeStyle = '#1a1a1a';
@@ -818,7 +817,6 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     pts.forEach(([x,y],i) => i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y));
     ctx.closePath(); ctx.stroke();
     ctx.shadowBlur = 0;
-    // Orange gradient stroke
     const g = ctx.createLinearGradient(cx-r, cy-r, cx+r, cy+r);
     g.addColorStop(0,   '#fb923c');
     g.addColorStop(0.35,'#f97316');
@@ -829,7 +827,6 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     ctx.strokeStyle = g;
     pts.forEach(([x,y],i) => i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y));
     ctx.closePath(); ctx.stroke();
-    // Salt dots
     ctx.shadowBlur = 0;
     const salts = [
       [cx - r*.58, cy - r*.28], [cx + r*.52, cy - r*.38],
@@ -870,13 +867,11 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, w, h);
-    // Subtle warm radial wash
     const wash = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w*.6);
     wash.addColorStop(0, 'rgba(249,115,22,0.04)');
     wash.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = wash;
     ctx.fillRect(0, 0, w, h);
-    // Specks
     specks.forEach(s => {
       s.angle += s.drift;
       s.x += Math.cos(s.angle) * s.speed / Math.max(w,1);
@@ -890,11 +885,8 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     });
     const cx = w/2, cy = h/2;
     const r = Math.min(w,h) * 0.3;
-    // Ghost pretzel
     drawPretzel(cx, cy, r * 1.08, t * 0.28, 0.07);
-    // Main pretzel
     drawPretzel(cx, cy, r, t * 0.55, 1);
-    // Pulsing center knot
     const pulse = 0.85 + 0.15 * Math.sin(t * 3.2);
     ctx.save();
     ctx.shadowBlur = 16;
@@ -909,7 +901,6 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
     ctx.globalAlpha = 0.95;
     ctx.fill();
     ctx.restore();
-    // Orbiting ring
     ctx.save();
     ctx.globalAlpha = 0.1;
     ctx.strokeStyle = '#f97316';
@@ -934,7 +925,6 @@ document.querySelectorAll('.service-card,.benefit-item,.faq-item,.stat-item,.tea
   }
   frame();
 
-  // Pause animation when tab hidden (perf)
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){ cancelAnimationFrame(rafId); }
     else { frame(); }
